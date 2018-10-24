@@ -2,14 +2,16 @@ package dk.aau.ds304e18;
 
 
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.models.Employee;
+import dk.aau.ds304e18.models.Project;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
-        ResultSet rs = DatabaseManager.query("SELECT * FROM employees");
 
+        /*ResultSet rs = DatabaseManager.query("SELECT * FROM employees");
         try {
             if (rs == null) return;
             while (rs.next()) {
@@ -17,6 +19,17 @@ public class Main {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
+
+        Employee rasmus = new Employee("Rasmus Smit Lindholt");
+        Project testProj = new Project("Dank communication things to communicate with things");
+
+        DatabaseManager.addEmployees(rasmus);
+        testProj.addNewEmployee(rasmus);
+        DatabaseManager.addProject(testProj);
+
+        System.out.println(rasmus.getId());
+        System.out.println(testProj.getId());
+
     }
 }
