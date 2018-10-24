@@ -29,9 +29,9 @@ public class DatabaseManager {
     private static void connect() {
         String url = "jdbc:postgresql://molae.duckdns.org/P3";
         Properties props = new Properties();
-        props.setProperty("user", "postgres");
+        props.setProperty("user", "projectplanner");
         //TODO: Load from file or other, something better than just having it as plain text
-        props.setProperty("password", "5$m4!x1D3$3sh&KxhcP60t8dzCz2Zkla9F0zPSajN#*6MshiiHbbWvKwKuaBeQmP");
+        props.setProperty("password", "Ng^PjafXoj94zNAQECYA&484NRIG%9!p");
         try {
             dbConnection = DriverManager.getConnection(url, props);
         } catch (SQLException e) {
