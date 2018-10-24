@@ -1,5 +1,8 @@
 package dk.aau.ds304e18.database;
 
+import dk.aau.ds304e18.models.Employee;
+import dk.aau.ds304e18.models.Task;
+
 import java.sql.*;
 import java.util.Properties;
 
@@ -9,6 +12,7 @@ public class DatabaseManager {
 
     /**
      * Sends a query to the DB and returns the result.
+     *
      * @param query The search query.
      * @return The result from the DB.
      */
@@ -37,5 +41,32 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Boolean addEmployess(Employee emp) {
+        if (dbConnection == null) connect();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employees (name, currenttasks," +
+                    " previoustasks, projectid) values (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, emp.getName());
+            statement.setArray(2, dbConnection.createArrayOf("INTEGER",
+                    emp.getCurrentTask().stream().map(Task::getId).toArray()
+            ));
+            statement.setArray(3, dbConnection.createArrayOf("INTEGER",
+                    emp.getPreviousTask().stream().map(Task::getId).toArray()
+            ));
+
+            if (emp.getProject() != null) statement.setInt(4, emp.getProject().getId());
+            else statement.setInt(4, 0);
+
+            statement.execute();
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) emp.setId(rs.getInt(1));
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
