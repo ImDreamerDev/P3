@@ -1,6 +1,7 @@
 package dk.aau.ds304e18.database;
 
 import dk.aau.ds304e18.models.Employee;
+import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 
 import java.sql.*;
@@ -45,6 +46,7 @@ public class DatabaseManager {
 
     /**
      * Adds an employee to the database and fetches the unique employee ID. and adds to employee.
+     *
      * @param emp Employee to add.
      * @return bool to indicate whether the operation was successful.
      */
@@ -64,10 +66,38 @@ public class DatabaseManager {
             if (emp.getProject() != null) statement.setInt(4, emp.getProject().getId());
             else statement.setInt(4, 0);
 
-            if (!statement.execute()) return false;
+            if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) emp.setId(rs.getInt(1));
 
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Adds a project to the database and fetches the unique project ID and adds to project.
+     * @param project the project to add.
+     * @return bool to indicate whether the operation was successful.
+     */
+    public static Boolean addProject(Project project) {
+        if (dbConnection == null) connect();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projects " +
+                    "(name, state, tasks, employees) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, project.getName());
+            statement.setInt(2, project.getState().getValue());
+            statement.setArray(3, dbConnection.createArrayOf("INTEGER",
+                    project.getTasks().stream().map(Task::getId).toArray()));
+            statement.setArray(4, dbConnection.createArrayOf("INTEGER",
+                    project.getEmployees().stream().map(Employee::getId).toArray()));
+
+            if (statement.execute()) return false;
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) project.setId(rs.getInt(1));
 
         } catch (SQLException e) {
             e.printStackTrace();
