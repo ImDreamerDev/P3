@@ -40,7 +40,7 @@ public class Project {
      * Assign a new employee to the project.
      * @param employee the employee to add to the project.
      */
-    private void addNewEmployee(Employee employee) {
+    public void addNewEmployee(Employee employee) {
         employees.add(employee);
     }
 
