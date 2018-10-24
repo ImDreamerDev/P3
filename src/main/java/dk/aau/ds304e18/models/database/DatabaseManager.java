@@ -7,6 +7,11 @@ public class DatabaseManager {
 
     private static Connection dbConnection;
 
+    /**
+     * Sends a query to the DB and returns the result.
+     * @param query The search query.
+     * @return The result from the DB.
+     */
     public static ResultSet query(String query) {
         if (dbConnection == null) connect();
         try {

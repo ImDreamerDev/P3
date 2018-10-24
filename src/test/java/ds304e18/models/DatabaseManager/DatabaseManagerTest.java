@@ -8,6 +8,11 @@ import java.sql.ResultSet;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DatabaseManagerTest {
+
+
+    /**
+     * Tests that the result from the employees table is not null.
+     */
     @Test
     void assertQuery() {
         ResultSet rs = DatabaseManager.query("SELECT * FROM employees");
