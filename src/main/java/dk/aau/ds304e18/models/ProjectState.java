@@ -5,5 +5,14 @@ public enum ProjectState {
     /**
      * The states that a given project can have.
      */
-    ONGOING, COMPLETED, ARCHIVED,
+    ONGOING(1), COMPLETED(2), ARCHIVED(3);
+    private final int value;
+
+    ProjectState(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
 }
