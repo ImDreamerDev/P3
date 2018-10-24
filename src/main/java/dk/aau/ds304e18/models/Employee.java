@@ -46,12 +46,4 @@ public class Employee {
     public void setProject(Project project) {
         this.project = project;
     }
-
-    public void setCurrentTask(List<Task> currentTask) {
-        this.currentTask = currentTask;
-    }
-
-    public void setPreviousTask(List<Task> previousTask) {
-        this.previousTask = previousTask;
-    }
 }
