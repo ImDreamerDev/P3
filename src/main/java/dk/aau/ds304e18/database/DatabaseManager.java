@@ -43,7 +43,12 @@ public class DatabaseManager {
         }
     }
 
-    public static Boolean addEmployess(Employee emp) {
+    /**
+     * Adds an employee to the database and fetches the unique employee ID. and adds to employee.
+     * @param emp Employee to add.
+     * @return bool to indicate whether the operation was successful.
+     */
+    public static Boolean addEmployees(Employee emp) {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employees (name, currenttasks," +
@@ -59,14 +64,15 @@ public class DatabaseManager {
             if (emp.getProject() != null) statement.setInt(4, emp.getProject().getId());
             else statement.setInt(4, 0);
 
-            statement.execute();
+            if (!statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) emp.setId(rs.getInt(1));
 
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
+        return true;
     }
 }
