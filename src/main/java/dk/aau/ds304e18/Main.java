@@ -1,6 +1,7 @@
-package dk.aau.ds304e18.models;
+package dk.aau.ds304e18;
 
-import dk.aau.ds304e18.models.database.DatabaseManager;
+
+import dk.aau.ds304e18.database.DatabaseManager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

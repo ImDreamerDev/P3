@@ -1,4 +1,4 @@
-package dk.aau.ds304e18.models.database;
+package dk.aau.ds304e18.database;
 
 import java.sql.*;
 import java.util.Properties;

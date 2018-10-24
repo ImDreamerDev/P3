@@ -1,6 +1,6 @@
-package ds304e18.models.DatabaseManager;
+package ds304e18.database;
 
-import dk.aau.ds304e18.models.database.DatabaseManager;
+import dk.aau.ds304e18.database.DatabaseManager;
 import org.junit.jupiter.api.Test;
 
 import java.sql.ResultSet;
