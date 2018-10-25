@@ -75,7 +75,7 @@ public class Task {
     /**
      * The getter for the id.
      *
-     * @return id The unique id of the task
+     * @return id - The unique id of the task
      */
     public int getId() {
         return id;
