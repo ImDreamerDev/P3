@@ -2,7 +2,9 @@ package dk.aau.ds304e18.models;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The class representing of a project
+ */
 public class Project {
 
     private int id;
