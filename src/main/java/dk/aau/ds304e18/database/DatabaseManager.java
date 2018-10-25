@@ -5,6 +5,8 @@ import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class DatabaseManager {
@@ -80,6 +82,7 @@ public class DatabaseManager {
 
     /**
      * Adds a project to the database and fetches the unique project ID and adds to project.
+     *
      * @param project the project to add.
      * @return bool to indicate whether the operation was successful.
      */
@@ -104,5 +107,27 @@ public class DatabaseManager {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Gets all employees from database.
+     * @return list of all employees.
+     */
+    public static List<Employee> getAllEmployees() {
+        if (dbConnection == null) connect();
+        List<Employee> empList = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
+            while (rs.next()) {
+                Employee emp = new Employee(rs.getString(2));
+                emp.setId(rs.getInt(1));
+                //TODO get tasks and projectID
+                empList.add(emp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return empList;
     }
 }

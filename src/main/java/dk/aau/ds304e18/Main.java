@@ -7,6 +7,7 @@ import dk.aau.ds304e18.models.Project;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,7 +22,7 @@ public class Main {
             e.printStackTrace();
         }*/
 
-        Employee rasmus = new Employee("Rasmus Smit Lindholt");
+/*        Employee rasmus = new Employee("Rasmus Smit Lindholt");
         Project testProj = new Project("Dank communication things to communicate with things");
 
         DatabaseManager.addEmployees(rasmus);
@@ -29,7 +30,10 @@ public class Main {
         DatabaseManager.addProject(testProj);
 
         System.out.println(rasmus.getId());
-        System.out.println(testProj.getId());
+        System.out.println(testProj.getId());*/
+
+        List<Employee> empList = DatabaseManager.getAllEmployees();
+        empList.forEach(emp-> System.out.println(emp.getId() + " " + emp.getName()));
 
     }
 }
