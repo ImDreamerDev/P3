@@ -14,7 +14,7 @@ public class Project {
     private int id;
 
     /**
-     * The nam eof the project.
+     * The name of the project.
      */
     private String name;
 
