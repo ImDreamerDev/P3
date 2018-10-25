@@ -67,6 +67,7 @@
     <session id="-1055705834">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.19" value="1" />
           <entry key="project.opened" value="2" />
@@ -74,13 +75,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="1" />
+          <entry key="java" value="2" />
           <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="1" />
+          <entry key="JAVA" value="2" />
           <entry key="XML" value="1" />
         </counts>
       </usages-collector>
@@ -342,6 +343,14 @@
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="P3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="P3" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ds304e18" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -501,8 +510,7 @@
     <option name="totallyTimeSpent" value="16622000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="22" width="1936" height="1066" extended-state="6" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14232409" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -549,7 +557,6 @@
     <entry file="file://$PROJECT_DIR$/src/test/java/ds304e18/models/Worker.java" />
     <entry file="file://$PROJECT_DIR$/src/test/java/ds304e18/main.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/dk/aau/ds304e18/models/Worker.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/dk/aau/ds304e18/Main.java" />
     <entry file="file://$PROJECT_DIR$/src/test/java/ds304e18/models/TestProject.java" />
     <entry file="file://$PROJECT_DIR$/src/test/java/ds304e18/models/TestTask.java" />
     <entry file="file://$PROJECT_DIR$/pom.xml">
@@ -620,6 +627,13 @@
             <element signature="e#3904#3905#0" expanded="true" />
             <element signature="e#3944#3945#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dk/aau/ds304e18/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="12" column="13" lean-forward="true" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
         </state>
       </provider>
     </entry>
