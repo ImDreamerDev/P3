@@ -43,7 +43,7 @@ public class Employee {
 
     /**
      * A function to add a new task to the currentTask list.
-     * @param task The specific Task object which is to be added to the list.
+     * @param task - The specific Task object which is to be added to the list.
      */
     public void addNewTask(Task task) {
         currentTask.add(task);
@@ -51,7 +51,7 @@ public class Employee {
 
     /**
      * The getter for the id
-     * @return id The id of the employee.
+     * @return id - The id of the employee.
      */
     public int getId() {
         return id;
@@ -60,7 +60,7 @@ public class Employee {
     /**
      * The getter for the name.
      *
-     * @return name The name of the Employee
+     * @return name - The name of the Employee
      */
     public String getName() {
         return name;
@@ -68,7 +68,7 @@ public class Employee {
 
     /**
      * The getter for the project
-     * @return The project that the employee is assigned.
+     * @return project - The project that the employee is assigned.
      */
     public Project getProject() {
         return project;
@@ -76,7 +76,7 @@ public class Employee {
 
     /**
      * the getter for the currentTask
-     * @return a list of the currentTasks that the employee is assigned to
+     * @return currenTask - a list of the currentTasks that the employee is assigned to
      */
     public List<Task> getCurrentTask() {
         return currentTask;
@@ -84,7 +84,7 @@ public class Employee {
 
     /**
      * The getter for prevousTask.
-     * @return a list of the previous tasks that the employee is no longer working on.
+     * @return previousTask - a list of the previous tasks that the employee is no longer working on.
      */
     public List<Task> getPreviousTask() {
         return previousTask;
@@ -92,7 +92,7 @@ public class Employee {
 
     /**
      * The setter for the id
-     * @param id The unique id for the employee.
+     * @param id - The unique id for the employee.
      */
     public void setId(int id) {
         this.id = id;
@@ -100,7 +100,7 @@ public class Employee {
 
     /**
      * The setter for the project
-     * @param project The project object that the employee will work on.
+     * @param project - The project object that the employee will work on.
      */
     public void setProject(Project project) {
         this.project = project;

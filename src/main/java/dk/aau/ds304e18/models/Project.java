@@ -35,7 +35,7 @@ public class Project {
 
     /**
      * Constructor for project.
-     * @param name the name of the project.
+     * @param name - The name of the project.
      */
     public Project(String name) {
         this.name = name;
@@ -44,7 +44,7 @@ public class Project {
 
     /**
      * Adds a new task to the project.
-     * @param task the task to add.
+     * @param task - The task to add.
      */
     private void addNewTask(Task task) {
         tasks.add(task);
@@ -52,7 +52,7 @@ public class Project {
 
     /**
      * Removes task from tasks.
-     * @param task Task to remove.
+     * @param task - Task to remove.
      */
     private void removeTask(Task task) {
         tasks.remove(task);
@@ -60,7 +60,7 @@ public class Project {
 
     /**
      * Assign a new employee to the project.
-     * @param employee the employee to add to the project.
+     * @param employee - The employee to add to the project.
      */
     public void addNewEmployee(Employee employee) {
         employees.add(employee);
@@ -68,7 +68,7 @@ public class Project {
 
     /**
      * Removes employee from project.
-     * @param employee the employee to remove.
+     * @param employee - The employee to remove.
      */
     private void removeEmployee(Employee employee) {
         employees.remove(employee);
@@ -76,7 +76,7 @@ public class Project {
 
     /**
      * Returns project unique ID.
-     * @return Project ID
+     * @return id - Project ID
      */
     public int getId() {
         return id;
@@ -84,7 +84,7 @@ public class Project {
 
     /**
      * Returns the project name.
-     * @return String project name.
+     * @return name - String project name.
      */
     public String getName() {
         return name;
@@ -92,7 +92,7 @@ public class Project {
 
     /**
      * Returns the current state og the project.
-     * @return the current state of the project.
+     * @return state - The current state of the project.
      */
     public ProjectState getState() {
         return state;
@@ -100,15 +100,15 @@ public class Project {
 
     /**
      * Returns the list of all tasks in the project.
-     * @return list of all tasks.
+     * @return tasks - List of all tasks.
      */
     public List<Task> getTasks() {
         return tasks;
     }
 
     /**
-     * Returns allt he employees assigned to the project.
-     * @return all employees assigned to the project.
+     * Returns all the employees assigned to the project.
+     * @return employees - a list of all the employees assigned to the project.
      */
     public List<Employee> getEmployees() {
         return employees;
@@ -116,7 +116,7 @@ public class Project {
 
     /**
      * Sets the unique ID.
-     * @param id the unique ID.
+     * @param id - the unique ID.
      */
     public void setId(int id) {
         this.id = id;
@@ -124,7 +124,7 @@ public class Project {
 
     /**
      * Sets the current state of the project.
-     * @param state the new state to set.
+     * @param state - the new state to set.
      */
     public void setState(ProjectState state) {
         this.state = state;

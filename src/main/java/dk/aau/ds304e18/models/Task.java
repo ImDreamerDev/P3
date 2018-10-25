@@ -84,7 +84,7 @@ public class Task {
     /**
      * The getter for the name.
      *
-     * @return name The name of the task.
+     * @return name - The name of the task.
      */
     public String getName() {
         return name;
@@ -93,7 +93,7 @@ public class Task {
     /**
      * The getter for the estimated completion time
      *
-     * @return estimatedTime The estimated completion time.
+     * @return estimatedTime - The estimated completion time.
      */
     public int getEstimatedTime() {
         return estimatedTime;
@@ -102,7 +102,7 @@ public class Task {
     /**
      * The getter for the Employees list.
      *
-     * @return employees The list of employees.
+     * @return employees - The list of employees.
      */
     public List<Employee> getEmployees() {
         return employees;
@@ -111,7 +111,7 @@ public class Task {
     /**
      * The getter for the depencies list.
      *
-     * @return dependencies The list of dependencies
+     * @return dependencies - The list of dependencies
      */
     public List<Task> getDependencies() {
         return dependencies;
@@ -120,7 +120,7 @@ public class Task {
     /**
      * The getter for the start date
      *
-     * @return startDate The date the task was started.
+     * @return startDate - The date the task was started.
      */
     public LocalDate getStartDate() {
         return startDate;
@@ -129,7 +129,7 @@ public class Task {
     /**
      * The getter for the end date of the task.
      *
-     * @return endDate The date at which the task should be completed.
+     * @return endDate - The date at which the task should be completed.
      */
     public LocalDate getEndDate() {
         return endDate;
@@ -138,7 +138,7 @@ public class Task {
     /**
      * The getter for the priority
      *
-     * @return priority The priority of the task
+     * @return priority - The priority of the task
      */
     public int getPriority() {
         return priority;
@@ -147,7 +147,7 @@ public class Task {
     /**
      * The getter for the project.
      *
-     * @return project The project which the task is assigned to.
+     * @return project - The project which the task is assigned to.
      */
     public Project getProject() {
         return project;
@@ -156,7 +156,7 @@ public class Task {
     /**
      * The setter for the id
      *
-     * @param id The unique id for the task
+     * @param id - The unique id for the task
      */
     public void setId(int id) {
         this.id = id;
@@ -165,7 +165,7 @@ public class Task {
     /**
      * the setter for the Estimated time
      *
-     * @param estimatedTime The amount of time that it takes for the task to be completed.
+     * @param estimatedTime - The amount of time that it takes for the task to be completed.
      */
     public void setEstimatedTime(int estimatedTime) {
         this.estimatedTime = estimatedTime;
@@ -174,7 +174,7 @@ public class Task {
     /**
      * The setter for the end date.
      *
-     * @param endDate The date at which the task should be completed
+     * @param endDate - The date at which the task should be completed
      */
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
@@ -183,7 +183,7 @@ public class Task {
     /**
      * The setter for the priority of the task.
      *
-     * @param priority The priority of the task.
+     * @param priority - The priority of the task.
      */
     public void setPriority(int priority) {
         this.priority = priority;
