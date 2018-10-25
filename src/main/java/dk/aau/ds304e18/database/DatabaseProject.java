@@ -22,6 +22,7 @@ public class DatabaseProject {
      * The state of the project.
      */
     public ProjectState state;
+    public List<Integer> tasks = new ArrayList<>();
 
     /**
      * The list of tasks that are a part of the project.

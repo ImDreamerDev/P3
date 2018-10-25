@@ -16,6 +16,7 @@ public class DatabaseEmployee {
      * The name of the employee.
      */
     public String name;
+    public List<Integer> currentTaskId = new ArrayList<>();
 
     /**
      * The list of ids of tasks.
@@ -32,4 +33,6 @@ public class DatabaseEmployee {
      */
     public int projectId;
 
+    public DatabaseEmployee() {
+    }
 }

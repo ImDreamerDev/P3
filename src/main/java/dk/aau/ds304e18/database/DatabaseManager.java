@@ -1,8 +1,8 @@
 package dk.aau.ds304e18.database;
 
-import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
+import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 
 import java.sql.*;
@@ -112,24 +112,27 @@ public class DatabaseManager {
     }
 
     /**
-     * Gets all employees from database.
+     * Gets all DatabaseEmployees from database.
      *
-     * @return list of all employees.
+     * @return list of all DatabaseEmployees.
      */
-    public static List<Employee> getAllEmployees() {
+    public static List<DatabaseEmployee> getAllEmployees() {
         if (dbConnection == null) connect();
-        List<Employee> empList = new ArrayList<>();
+        List<DatabaseEmployee> empList = new ArrayList<>();
         ResultSet rs = null;
         try {
             rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
             while (rs.next()) {
-                Employee emp = new Employee(rs.getString(2));
-                emp.setId(rs.getInt(1));
-                Integer[] currentTaskIds = (Integer[]) rs.getArray(3).getArray();
-                ArrayList<Task> tasksForEmp = new ArrayList<>();
-                Arrays.asList(currentTaskIds).forEach(taskid -> {
-                    tasksForEmp.add(LocalObjStorage.getTaskById(taskid));
-                });
+                DatabaseEmployee emp = new DatabaseEmployee();
+
+                emp.name = rs.getString(2);
+                emp.id = (rs.getInt(1));
+
+                emp.currentTaskId = Arrays.asList((Integer[]) rs.getArray(3).getArray());
+
+                emp.preTaskId = Arrays.asList((Integer[]) rs.getArray(4).getArray());
+
+                emp.projectId = rs.getInt(5);
                 //TODO get tasks and projectID
                 empList.add(emp);
             }
@@ -137,5 +140,31 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return empList;
+    }
+
+    public static List<DatabaseProject> getAllProjects() {
+        if (dbConnection == null) connect();
+        List<DatabaseProject> databaseProjects = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            rs = dbConnection.createStatement().executeQuery("SELECT * FROM projects");
+            while (rs.next()) {
+                DatabaseProject project = new DatabaseProject();
+
+                project.name = rs.getString(2);
+                project.id = (rs.getInt(1));
+
+                project.state = ProjectState.values()[rs.getInt(3)];
+
+                project.tasks = Arrays.asList((Integer[]) rs.getArray(4).getArray());
+
+                project.employeeIds = Arrays.asList((Integer[]) rs.getArray(5).getArray());
+
+                databaseProjects.add(project);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return databaseProjects;
     }
 }
