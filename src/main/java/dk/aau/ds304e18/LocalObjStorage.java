@@ -6,6 +6,9 @@ import dk.aau.ds304e18.models.Task;
 
 import java.util.ArrayList;
 
+/**
+ * Contains all the local lists of employees, projects and tasks.
+ */
 public class LocalObjStorage {
     private static ArrayList<Employee> employeeList;
     private static ArrayList<Project> projectList;

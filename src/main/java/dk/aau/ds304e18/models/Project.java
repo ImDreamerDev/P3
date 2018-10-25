@@ -2,15 +2,35 @@ package dk.aau.ds304e18.models;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * The class representing of a project
  */
 public class Project {
 
+    /**
+     * The unique project ID.
+     */
     private int id;
+
+    /**
+     * The nam eof the project.
+     */
     private String name;
+
+    /**
+     * The current state of the project.
+     */
     private ProjectState state;
+
+    /**
+     * The list of tasks.
+     */
     private List<Task> tasks = new ArrayList<>();
+
+    /**
+     * The list of employees.
+     */
     private List<Employee> employees = new ArrayList<>();
 
     /**
