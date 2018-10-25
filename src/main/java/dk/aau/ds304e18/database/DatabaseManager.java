@@ -142,6 +142,11 @@ public class DatabaseManager {
         return empList;
     }
 
+    /**
+     * Return the databaseProjects from the database.
+     *
+     * @return list of all databaseProjects.
+     */
     public static List<DatabaseProject> getAllProjects() {
         if (dbConnection == null) connect();
         List<DatabaseProject> databaseProjects = new ArrayList<>();
@@ -166,5 +171,36 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return databaseProjects;
+    }
+
+    /**
+     * Get all databaseTasks.
+     *
+     * @return lsit of all database tasks.
+     */
+    public static List<DatabaseTask> getAllTasks() {
+        if (dbConnection == null) connect();
+
+        List<DatabaseTask> databaseTasks = new ArrayList<>();
+        ResultSet rs = null;
+
+        try {
+            rs = dbConnection.createStatement().executeQuery("SELECT * FROM tasks");
+            while (rs.next()) {
+                DatabaseTask task = new DatabaseTask();
+                task.id = rs.getInt(1);
+                task.name = rs.getString(2);
+                task.estimatedTime = rs.getInt(3);
+                task.employeeIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
+                task.startDate = rs.getDate(5).toLocalDate();
+                task.endDate = rs.getDate(6).toLocalDate();
+                task.priority = rs.getInt(7);
+                task.projectId = rs.getInt(8);
+                databaseTasks.add(task);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return databaseTasks;
     }
 }
