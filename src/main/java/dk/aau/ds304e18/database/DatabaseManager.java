@@ -1,11 +1,13 @@
 package dk.aau.ds304e18.database;
 
+import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -111,6 +113,7 @@ public class DatabaseManager {
 
     /**
      * Gets all employees from database.
+     *
      * @return list of all employees.
      */
     public static List<Employee> getAllEmployees() {
@@ -122,6 +125,11 @@ public class DatabaseManager {
             while (rs.next()) {
                 Employee emp = new Employee(rs.getString(2));
                 emp.setId(rs.getInt(1));
+                Integer[] currentTaskIds = (Integer[]) rs.getArray(3).getArray();
+                ArrayList<Task> tasksForEmp = new ArrayList<>();
+                Arrays.asList(currentTaskIds).forEach(taskid -> {
+                    tasksForEmp.add(LocalObjStorage.getTaskById(taskid));
+                });
                 //TODO get tasks and projectID
                 empList.add(emp);
             }

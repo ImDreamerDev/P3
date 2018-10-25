@@ -1,4 +1,7 @@
-package dk.aau.ds304e18.models;
+package dk.aau.ds304e18.database;
+
+import dk.aau.ds304e18.models.ProjectState;
+import dk.aau.ds304e18.models.Task;
 
 import java.util.ArrayList;
 import java.util.List;

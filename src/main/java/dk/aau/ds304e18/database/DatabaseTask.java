@@ -1,4 +1,4 @@
-package dk.aau.ds304e18.models;
+package dk.aau.ds304e18.database;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

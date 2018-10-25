@@ -26,12 +26,12 @@ public class Employee {
     /**
      * The task he is currently assigned.
      */
-    private List<Task> currentTask = new ArrayList<>();
+    public List<Task> currentTask = new ArrayList<>();
 
     /**
      * The tasks that the employee has previously worked on.
      */
-    private List<Task> previousTask = new ArrayList<>();
+    public List<Task> previousTask = new ArrayList<>();
 
     /**
      * The constructor for the employee class
@@ -45,7 +45,7 @@ public class Employee {
      * A function to add a new task to the currentTask list.
      * @param task The specific Task object which is to be added to the list.
      */
-    private void addNewTask(Task task) {
+    public void addNewTask(Task task) {
         currentTask.add(task);
     }
 
@@ -105,4 +105,5 @@ public class Employee {
     public void setProject(Project project) {
         this.project = project;
     }
+
 }
