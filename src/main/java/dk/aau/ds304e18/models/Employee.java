@@ -12,18 +12,22 @@ public class Employee {
      * The id given by the database.
      */
     private int id;
+
     /**
      * The name of the Employee
      */
     private String name;
+
     /**
      * The project he is currently assigned.
      */
     private Project project;
+
     /**
      * The task he is currently assigned.
      */
     private List<Task> currentTask = new ArrayList<>();
+
     /**
      * The tasks that the employee has previously worked on.
      */
@@ -39,7 +43,7 @@ public class Employee {
 
     /**
      * A function to add a new task to the currentTask list.
-     * @param task
+     * @param task The specific Task object which is to be added to the list.
      */
     private void addNewTask(Task task) {
         currentTask.add(task);
@@ -47,7 +51,7 @@ public class Employee {
 
     /**
      * The getter for the id
-     * @return id
+     * @return id The id of the employee.
      */
     public int getId() {
         return id;
@@ -55,7 +59,8 @@ public class Employee {
 
     /**
      * The getter for the name.
-     * @return name.
+     *
+     * @return name The name of the Employee
      */
     public String getName() {
         return name;
@@ -65,7 +70,6 @@ public class Employee {
      * The getter for the project
      * @return The project that the employee is assigned.
      */
-
     public Project getProject() {
         return project;
     }
@@ -74,7 +78,6 @@ public class Employee {
      * the getter for the currentTask
      * @return a list of the currentTasks that the employee is assigned to
      */
-
     public List<Task> getCurrentTask() {
         return currentTask;
     }
@@ -89,16 +92,15 @@ public class Employee {
 
     /**
      * The setter for the id
-     * @param id
+     * @param id The unique id for the employee.
      */
-
     public void setId(int id) {
         this.id = id;
     }
 
     /**
      * The setter for the project
-     * @param project
+     * @param project The project object that the employee will work on.
      */
     public void setProject(Project project) {
         this.project = project;
