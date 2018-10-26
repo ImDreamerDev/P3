@@ -72,6 +72,15 @@ public class Task {
         this.startDate = LocalDate.now();
     }
 
+    public Task(int id, String name, int estimatedTime, LocalDate startDate, LocalDate endDate, int priority) {
+        this.id = id;
+        this.name = name;
+        this.estimatedTime = estimatedTime;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.priority = priority;
+    }
+
     /**
      * The getter for the id.
      *
