@@ -30,7 +30,7 @@ gradle-app.setting
 .idea/codeStyles
 
 # Generated files
-.idea/**/contentModel.xml
+.idea/contentModel.xml
 
 # Sensitive or high-churn files
 .idea/dataSources/
