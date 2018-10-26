@@ -26,12 +26,12 @@ public class Employee {
     /**
      * The task he is currently assigned.
      */
-    public List<Task> currentTask = new ArrayList<>();
+    private List<Task> currentTask = new ArrayList<>();
 
     /**
      * The tasks that the employee has previously worked on.
      */
-    public List<Task> previousTask = new ArrayList<>();
+    private List<Task> previousTask = new ArrayList<>();
 
     /**
      * The constructor for the employee class
@@ -47,6 +47,10 @@ public class Employee {
      */
     public void addNewTask(Task task) {
         currentTask.add(task);
+    }
+
+    public void setCurrentTask(List<Task> currentTask) {
+        this.currentTask = currentTask;
     }
 
     /**
@@ -88,6 +92,10 @@ public class Employee {
      */
     public List<Task> getPreviousTask() {
         return previousTask;
+    }
+
+    public void addPreviousTask(Task task) {
+        this.previousTask.add(task);
     }
 
     /**
