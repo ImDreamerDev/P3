@@ -27,12 +27,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/P3$All_Features_in__test.ic" NAME="All Features in: test Coverage Results" MODIFIED="1536934613596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>cucumber.api.cli.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/P3$All_in_P3.ic" NAME="All in P3 Coverage Results" MODIFIED="1536934721334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/P3$TestTask.ic" NAME="TestTask Coverage Results" MODIFIED="1536934500423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>ds304e18.models.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/P3$All_in_P3.ic" NAME="All in P3 Coverage Results" MODIFIED="1536934721334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/P3$All_Features_in__test.ic" NAME="All Features in: test Coverage Results" MODIFIED="1536934613596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>cucumber.api.cli.*</FILTER>
     </SUITE>
   </component>
   <component name="CoverageViewManager">
@@ -492,6 +492,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
