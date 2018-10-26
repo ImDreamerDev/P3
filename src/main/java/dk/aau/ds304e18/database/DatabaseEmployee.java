@@ -21,7 +21,7 @@ public class DatabaseEmployee {
     /**
      * The list of ids of tasks.
      */
-    public List<Integer> taskId = new ArrayList<>();
+    public List<Integer> currentTaskIds = new ArrayList<>();
 
     /**
      * The list of ids of previous tasks.
