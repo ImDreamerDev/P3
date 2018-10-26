@@ -22,7 +22,7 @@ class Main {
         Employee rasmus = new Employee("Rasmus Smit Lindholt");
         Project testProj = new Project("Dank communication things to communicate with things");
 
-        DatabaseManager.addEmployees(rasmus);
+        DatabaseManager.addEmployee(rasmus);
         testProj.addNewEmployee(rasmus);
         DatabaseManager.addProject(testProj);
 

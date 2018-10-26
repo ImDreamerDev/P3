@@ -2,6 +2,7 @@ package dk.aau.ds304e18.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -115,10 +116,6 @@ public class Task {
         return employees;
     }
 
-    public void addEmployee(Employee emp) {
-        this.employees.add(emp);
-    }
-
     /**
      * The getter for the depencies list.
      *
@@ -126,10 +123,6 @@ public class Task {
      */
     public List<Task> getDependencies() {
         return dependencies;
-    }
-
-    public void addDependency(Task task) {
-        this.dependencies.add(task);
     }
 
     /**
@@ -206,5 +199,21 @@ public class Task {
      */
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    /**
+     * Assign employees to the Task.
+     * @param employee - The employees to add to the Task.
+     */
+    public void addEmployee(Employee... employee) {
+        employees.addAll(Arrays.asList(employee));
+    }
+
+    /**
+     * Assign Dependencies to the Task
+     * @param task - The tasks to add to dependencies
+     */
+    public void addDependency(Task... task) {
+        dependencies.addAll(Arrays.asList(task));
     }
 }
