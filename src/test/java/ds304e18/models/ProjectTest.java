@@ -14,20 +14,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ProjectTest {
 
+    /**
+     *
+     */
     @Test
     public void TestProjectConstructor01() {
         Project newProject = new Project("Test Project");
         assertEquals("Test Project", newProject.getName());
     }
 
+    /**
+     *
+     */
     @Test
     public void TestAddNewTask01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 2, 1, newProject);
         newProject.addNewTask(newTask);
-        assertEquals(newTask,newProject.getTasks().get(0));
+        assertEquals(newTask, newProject.getTasks().get(0));
     }
 
+    /**
+     *
+     */
     @Test
     public void TestRemoveTask01() {
         Project newProject = new Project("Test Project");
@@ -37,14 +46,20 @@ public class ProjectTest {
         assertTrue(newProject.getTasks().isEmpty());
     }
 
+    /**
+     *
+     */
     @Test
     public void TestAddNewEmployee01() {
         Project newProject = new Project("Test Project");
         Employee newEmployee = new Employee("Test Person");
         newProject.addNewEmployee(newEmployee);
-        assertEquals(newEmployee,newProject.getEmployees().get(0));
+        assertEquals(newEmployee, newProject.getEmployees().get(0));
     }
 
+    /**
+     *
+     */
     @Test
     public void TestRemoveEmployee01() {
         Project newProject = new Project("Test Project");
@@ -54,39 +69,54 @@ public class ProjectTest {
         assertTrue(newProject.getEmployees().isEmpty());
     }
 
+    /**
+     *
+     */
     @Test
     public void TestGetId01() {
         Project newProject = new Project("Test Project");
         newProject.setId(5);
-        assertEquals(5,newProject.getId());
+        assertEquals(5, newProject.getId());
     }
 
+    /**
+     *
+     */
     @Test
     public void TestGetName01() {
         Project newProject = new Project("Test Project");
         assertEquals("Test Project", newProject.getName());
     }
 
+    /**
+     *
+     */
     @Test
     public void TestGetState01() {
         Project newProject = new Project("Test Project");
         assertEquals(ProjectState.ONGOING, newProject.getState());
     }
 
+    /**
+     *
+     */
     @Test
     public void TestGetTasks01() {
         Project newProject = new Project("Test Project");
-        Task newTask01 = new Task("Test Task01", 2,5,newProject);
-        Task newTask02 = new Task("Test Task02", 1, 2,newProject);
-        newProject.addNewTask(newTask01,newTask02);
+        Task newTask01 = new Task("Test Task01", 2, 5, newProject);
+        Task newTask02 = new Task("Test Task02", 1, 2, newProject);
+        newProject.addNewTask(newTask01, newTask02);
 
         List testList = new ArrayList();
         testList.add(newTask01);
         testList.add(newTask02);
 
-        assertEquals(testList,newProject.getTasks());
+        assertEquals(testList, newProject.getTasks());
     }
 
+    /**
+     *
+     */
     @Test
     public void TestGetEmployees01() {
         Project newProject = new Project("Test Project");
@@ -101,6 +131,9 @@ public class ProjectTest {
         assertEquals(testList, newProject.getEmployees());
     }
 
+    /**
+     *
+     */
     @Test
     public void TestSetId01() {
         Project newProject = new Project("Test Project");
@@ -108,6 +141,9 @@ public class ProjectTest {
         assertEquals(3, newProject.getId());
     }
 
+    /**
+     *
+     */
     @Test
     public void TestSetState01() {
         Project newProject = new Project("Test Project");
