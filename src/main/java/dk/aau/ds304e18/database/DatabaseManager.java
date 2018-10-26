@@ -6,6 +6,9 @@ import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,12 +43,27 @@ public class DatabaseManager {
         String url = "jdbc:postgresql://molae.duckdns.org/P3";
         Properties props = new Properties();
         props.setProperty("user", "projectplanner");
-        //TODO: Load from file or other, something better than just having it as plain text
-        props.setProperty("password", "Ng^PjafXoj94zNAQECYA&484NRIG%9!p");
+
+        props.setProperty("password", loadPassword());
         try {
             dbConnection = DriverManager.getConnection(url, props);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads the password from a file on disk.
+     *
+     * @return Returns the password for the database.
+     */
+    private static String loadPassword() {
+        try {
+            return Files.readString(Paths.get("pass.txt"));
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return "";
         }
     }
 
