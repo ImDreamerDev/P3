@@ -92,6 +92,7 @@ public class DatabaseManager {
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) emp.setId(rs.getInt(1));
+            LocalObjStorage.addEmployee(emp);
 
 
         } catch (SQLException e) {
@@ -122,6 +123,7 @@ public class DatabaseManager {
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) project.setId(rs.getInt(1));
+            LocalObjStorage.addProject(project);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -264,7 +266,7 @@ public class DatabaseManager {
     public static void updateEmployee(Employee employee) {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET currenttasks = ?" +
-                    ", previoustasks = ?, projectid = ? WHERE id == ?");
+                    ", previoustasks = ?, projectid = ? WHERE id = ?");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER",
                     employee.getCurrentTask().stream().map(Task::getId).toArray()
             ));
@@ -273,6 +275,7 @@ public class DatabaseManager {
             ));
             statement.setInt(3, employee.getProject().getId());
             statement.setInt(4,employee.getId());
+            statement.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
