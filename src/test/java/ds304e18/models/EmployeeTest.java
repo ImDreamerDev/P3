@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class EmployeeTest {
 
     /**
-     *
+     * Tests that the Employee constructor initialises the employee correctly.
      */
     @Test
     public void TestEmployeeConstructor01() {
@@ -19,7 +19,7 @@ public class EmployeeTest {
     }
 
     /**
-     *
+     * Tests that adding a task to the employee works.
      */
     @Test
     public void TestEmployeeAddNewTask01() {
@@ -31,7 +31,7 @@ public class EmployeeTest {
     }
 
     /**
-     *
+     * Testing getting the id of the employee.
      */
     @Test
     public void TestEmployeeGetId01() {
@@ -41,7 +41,7 @@ public class EmployeeTest {
     }
 
     /**
-     *
+     * Tests getting the name of the employee.
      */
     @Test
     public void TestEmployeeGetName01() {
@@ -50,7 +50,7 @@ public class EmployeeTest {
     }
 
     /**
-     *
+     * Tests getting the employee's assigned project.
      */
     @Test
     public void TestEmployeeGetProject01() {
@@ -61,7 +61,7 @@ public class EmployeeTest {
     }
 
     /**
-     *
+     * Tests getting the employee's current tasks.
      */
     @Test
     public void TestEmployeeGetCurrentTask01() {
@@ -79,7 +79,7 @@ public class EmployeeTest {
 */
 
     /**
-     *
+     * Tests setting the employee's id.
      */
     @Test
     public void TestEmployeeSetId01() {
@@ -89,7 +89,7 @@ public class EmployeeTest {
     }
 
     /**
-     *
+     * Tests setting the employee's project.
      */
     @Test
     public void TestEmployeeSetProject01() {
