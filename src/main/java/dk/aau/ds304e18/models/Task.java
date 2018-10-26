@@ -1,9 +1,7 @@
 package dk.aau.ds304e18.models;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -117,6 +115,10 @@ public class Task {
         return employees;
     }
 
+    public void addEmployee(Employee emp) {
+        this.employees.add(emp);
+    }
+
     /**
      * The getter for the depencies list.
      *
@@ -124,6 +126,10 @@ public class Task {
      */
     public List<Task> getDependencies() {
         return dependencies;
+    }
+
+    public void addDependency(Task task) {
+        this.dependencies.add(task);
     }
 
     /**
