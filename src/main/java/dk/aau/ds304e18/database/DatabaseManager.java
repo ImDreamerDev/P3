@@ -258,7 +258,6 @@ public class DatabaseManager {
             dbProjectList.get(i).tasks.forEach(taskId -> LocalObjStorage.getProjectList().get(finalI)
                     .addNewTask(LocalObjStorage.getTaskById(taskId)));
         }
-        System.out.println("Done");
     }
 
 
