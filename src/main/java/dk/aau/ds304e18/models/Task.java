@@ -162,6 +162,10 @@ public class Task {
         return project;
     }
 
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
     /**
      * The setter for the id
      *
