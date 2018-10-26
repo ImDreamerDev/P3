@@ -5,6 +5,6 @@ public class Main {
 
         InverseGaussian invG = new InverseGaussian(11.03,66.661341);
 
-        System.out.println(invG.getProbability(5));
+        System.out.println(invG.getProbability(18));
     }
 }
