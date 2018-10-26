@@ -71,12 +71,19 @@ public class EmployeeTest {
         newEmployee.addNewTask(newTask);
         assertEquals(newTask, newEmployee.getCurrentTask().get(0));
     }
-/*
+
+    /**
+     * Tests getting the previous tasks of the employee.
+     */
     @Test
-    public void TestEmployeeGetPreviousTask01 () {
-        Mangler en funktion som kan tilføje tasks til PreviousTask listen....
+    public void TestEmployeeGetPreviousTask01() {
+        Employee newEmployee = new Employee("Test Employee");
+        Project newProject = new Project("Test Project");
+        Task newTask = new Task("Test Task", 5, 1, newProject);
+        newEmployee.addPreviousTask(newTask);
+        assertEquals(newTask, newEmployee.getPreviousTask().get(0));
     }
-*/
+
 
     /**
      * Tests setting the employee's id.
