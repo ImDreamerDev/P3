@@ -54,7 +54,7 @@ public class DatabaseManager {
      * @param emp Employee to add.
      * @return bool to indicate whether the operation was successful.
      */
-    public static Boolean addEmployees(Employee emp) {
+    public static boolean addEmployees(Employee emp) {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employees (name, currenttasks," +
@@ -119,19 +119,14 @@ public class DatabaseManager {
     public static List<DatabaseEmployee> getAllEmployees() {
         if (dbConnection == null) connect();
         List<DatabaseEmployee> empList = new ArrayList<>();
-        ResultSet rs = null;
         try {
-            rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
+            ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
             while (rs.next()) {
                 DatabaseEmployee emp = new DatabaseEmployee();
-
                 emp.name = rs.getString(2);
                 emp.id = (rs.getInt(1));
-
                 emp.currentTaskId = Arrays.asList((Integer[]) rs.getArray(3).getArray());
-
                 emp.preTaskId = Arrays.asList((Integer[]) rs.getArray(4).getArray());
-
                 emp.projectId = rs.getInt(5);
                 //TODO get tasks and projectID
                 empList.add(emp);
@@ -150,21 +145,15 @@ public class DatabaseManager {
     public static List<DatabaseProject> getAllProjects() {
         if (dbConnection == null) connect();
         List<DatabaseProject> databaseProjects = new ArrayList<>();
-        ResultSet rs = null;
         try {
-            rs = dbConnection.createStatement().executeQuery("SELECT * FROM projects");
+            ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM projects");
             while (rs.next()) {
                 DatabaseProject project = new DatabaseProject();
-
                 project.name = rs.getString(2);
                 project.id = (rs.getInt(1));
-
                 project.state = ProjectState.values()[rs.getInt(3)];
-
                 project.tasks = Arrays.asList((Integer[]) rs.getArray(4).getArray());
-
                 project.employeeIds = Arrays.asList((Integer[]) rs.getArray(5).getArray());
-
                 databaseProjects.add(project);
             }
         } catch (SQLException e) {
@@ -182,10 +171,9 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
 
         List<DatabaseTask> databaseTasks = new ArrayList<>();
-        ResultSet rs = null;
 
         try {
-            rs = dbConnection.createStatement().executeQuery("SELECT * FROM tasks");
+            ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM tasks");
             while (rs.next()) {
                 DatabaseTask task = new DatabaseTask();
                 task.id = rs.getInt(1);
