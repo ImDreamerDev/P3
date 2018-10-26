@@ -1,5 +1,6 @@
 package dk.aau.ds304e18.database;
 
+import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
@@ -190,5 +191,74 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return databaseTasks;
+    }
+
+    public static void distributeModels() {
+        List<DatabaseEmployee> dbEmpList = getAllEmployees();
+        List<DatabaseTask> dbTaskList = getAllTasks();
+        List<DatabaseProject> dbProjectList = getAllProjects();
+
+        dbEmpList.forEach(dbEmp -> LocalObjStorage.addEmployee((convertEmployee(dbEmp))));
+        dbTaskList.forEach(dbTask -> LocalObjStorage.addTask(convertTask(dbTask)));
+        dbProjectList.forEach(dbProj -> LocalObjStorage.addProject((convertProject(dbProj))));
+
+        //Distribute employees
+        for (int i = 0; i < LocalObjStorage.getEmployeeList().size(); i++) {
+            LocalObjStorage.getEmployeeList().get(i).setProject(
+                    LocalObjStorage.getProjectById(dbEmpList.get(i).projectId));
+
+            int finalI = i;
+            dbEmpList.get(i).currentTaskIds.forEach(taskId -> LocalObjStorage.getEmployeeList().get(finalI)
+                    .addNewTask(LocalObjStorage.getTaskById(taskId)));
+
+            dbEmpList.get(i).preTaskId.forEach(taskId -> LocalObjStorage.getEmployeeList().get(finalI)
+                    .addPreviousTask(LocalObjStorage.getTaskById(taskId)));
+        }
+
+        //Distribute tasks
+        for (int i = 0; i < LocalObjStorage.getTaskList().size(); i++) {
+
+            //Set project
+            LocalObjStorage.getTaskList().get(i).setProject(
+                    LocalObjStorage.getProjectById(dbTaskList.get(i).projectId));
+
+            int finalI = i;
+            //Set employees
+            dbTaskList.get(i).employeeIds.forEach(empId -> LocalObjStorage.getTaskList().get(finalI).addEmployee(LocalObjStorage.getEmployeeById(empId)));
+
+            //Set Dependencies
+            dbTaskList.get(i).dependencieIds.forEach(taskId -> LocalObjStorage.getTaskList().get(finalI)
+                    .addDependency(LocalObjStorage.getTaskById(taskId)));
+        }
+
+        //Distribute projects
+        for (int i = 0; i < LocalObjStorage.getProjectList().size(); i++) {
+            int finalI = i;
+            dbProjectList.get(i).employeeIds.forEach(empId -> LocalObjStorage.getProjectList().get(finalI)
+                    .addNewEmployee(LocalObjStorage.getEmployeeById(empId)));
+
+            dbProjectList.get(i).tasks.forEach(taskId -> LocalObjStorage.getProjectList().get(finalI)
+                    .addNewTask(LocalObjStorage.getTaskById(taskId)));
+        }
+        System.out.println("Done");
+    }
+
+
+    private static Project convertProject(DatabaseProject dbProj) {
+        Project project = new Project(dbProj.name);
+        project.setId(dbProj.id);
+        project.setState(dbProj.state);
+        //TODO
+        return project;
+    }
+
+    private static Task convertTask(DatabaseTask dbTask) {
+        return new Task(dbTask.id, dbTask.name, dbTask.estimatedTime, dbTask.startDate, dbTask.endDate, dbTask.priority);
+    }
+
+    private static Employee convertEmployee(DatabaseEmployee dbEmp) {
+        Employee emp = new Employee(dbEmp.name);
+        emp.setId(dbEmp.id);
+        return emp;
     }
 }
