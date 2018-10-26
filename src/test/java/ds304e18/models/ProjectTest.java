@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ProjectTest {
 
     /**
-     *
+     * Tests that the Project constructor initialises the project correctly.
      */
     @Test
     public void TestProjectConstructor01() {
@@ -24,7 +24,7 @@ public class ProjectTest {
     }
 
     /**
-     *
+     * Tests adding a new task to the project.
      */
     @Test
     public void TestAddNewTask01() {
@@ -35,7 +35,7 @@ public class ProjectTest {
     }
 
     /**
-     *
+     * Tests removing a task from the project.
      */
     @Test
     public void TestRemoveTask01() {
@@ -47,7 +47,7 @@ public class ProjectTest {
     }
 
     /**
-     *
+     * Tests adding a new employee to the project.
      */
     @Test
     public void TestAddNewEmployee01() {
@@ -58,7 +58,7 @@ public class ProjectTest {
     }
 
     /**
-     *
+     * Tests removing a employee from the project.
      */
     @Test
     public void TestRemoveEmployee01() {
@@ -70,7 +70,7 @@ public class ProjectTest {
     }
 
     /**
-     *
+     * Tests getting the id of the project.
      */
     @Test
     public void TestGetId01() {
@@ -80,7 +80,7 @@ public class ProjectTest {
     }
 
     /**
-     *
+     * Tests getting the name of the project.
      */
     @Test
     public void TestGetName01() {
@@ -89,7 +89,7 @@ public class ProjectTest {
     }
 
     /**
-     *
+     * Tests getting the project state of the project.
      */
     @Test
     public void TestGetState01() {
@@ -98,7 +98,7 @@ public class ProjectTest {
     }
 
     /**
-     *
+     * Tests getting the project's tasks.
      */
     @Test
     public void TestGetTasks01() {
@@ -115,7 +115,7 @@ public class ProjectTest {
     }
 
     /**
-     *
+     * Tests getting the employees of the project.
      */
     @Test
     public void TestGetEmployees01() {
@@ -132,7 +132,7 @@ public class ProjectTest {
     }
 
     /**
-     *
+     * Tests setting the id of the project.
      */
     @Test
     public void TestSetId01() {
@@ -142,7 +142,7 @@ public class ProjectTest {
     }
 
     /**
-     *
+     * Tests setting the state of the project.
      */
     @Test
     public void TestSetState01() {
