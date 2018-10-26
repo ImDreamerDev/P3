@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseTask {
+class DatabaseTask {
 
     /**
      * The id of the task.
@@ -29,7 +29,7 @@ public class DatabaseTask {
     /**
      * The list of ids of dependencies the task has.
      */
-    public List<Integer> dependencieIds = new ArrayList<>();
+    public final List<Integer> dependencieIds = new ArrayList<>();
 
     /**
      * The starting date of the task.

@@ -1,10 +1,14 @@
 package dk.aau.ds304e18.database;
 
+import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,12 +43,27 @@ public class DatabaseManager {
         String url = "jdbc:postgresql://molae.duckdns.org/P3";
         Properties props = new Properties();
         props.setProperty("user", "projectplanner");
-        //TODO: Load from file or other, something better than just having it as plain text
-        props.setProperty("password", "Ng^PjafXoj94zNAQECYA&484NRIG%9!p");
+
+        props.setProperty("password", loadPassword());
         try {
             dbConnection = DriverManager.getConnection(url, props);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Loads the password from a file on disk.
+     *
+     * @return Returns the password for the database.
+     */
+    private static String loadPassword() {
+        try {
+            return Files.readString(Paths.get("pass.txt"));
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return "";
         }
     }
 
@@ -116,7 +135,7 @@ public class DatabaseManager {
      *
      * @return list of all DatabaseEmployees.
      */
-    public static List<DatabaseEmployee> getAllEmployees() {
+    private static List<DatabaseEmployee> getAllEmployees() {
         if (dbConnection == null) connect();
         List<DatabaseEmployee> empList = new ArrayList<>();
         try {
@@ -142,7 +161,7 @@ public class DatabaseManager {
      *
      * @return list of all databaseProjects.
      */
-    public static List<DatabaseProject> getAllProjects() {
+    private static List<DatabaseProject> getAllProjects() {
         if (dbConnection == null) connect();
         List<DatabaseProject> databaseProjects = new ArrayList<>();
         try {
@@ -167,7 +186,7 @@ public class DatabaseManager {
      *
      * @return lsit of all database tasks.
      */
-    public static List<DatabaseTask> getAllTasks() {
+    private static List<DatabaseTask> getAllTasks() {
         if (dbConnection == null) connect();
 
         List<DatabaseTask> databaseTasks = new ArrayList<>();
@@ -190,5 +209,74 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return databaseTasks;
+    }
+
+    public static void distributeModels() {
+        List<DatabaseEmployee> dbEmpList = getAllEmployees();
+        List<DatabaseTask> dbTaskList = getAllTasks();
+        List<DatabaseProject> dbProjectList = getAllProjects();
+
+        dbEmpList.forEach(dbEmp -> LocalObjStorage.addEmployee((Converter.convertEmployee(dbEmp))));
+        dbTaskList.forEach(dbTask -> LocalObjStorage.addTask(Converter.convertTask(dbTask)));
+        dbProjectList.forEach(dbProj -> LocalObjStorage.addProject((Converter.convertProject(dbProj))));
+
+        //Distribute employees
+        for (int i = 0; i < LocalObjStorage.getEmployeeList().size(); i++) {
+            LocalObjStorage.getEmployeeList().get(i).setProject(
+                    LocalObjStorage.getProjectById(dbEmpList.get(i).projectId));
+
+            int finalI = i;
+            dbEmpList.get(i).currentTaskIds.forEach(taskId -> LocalObjStorage.getEmployeeList().get(finalI)
+                    .addNewTask(LocalObjStorage.getTaskById(taskId)));
+
+            dbEmpList.get(i).preTaskId.forEach(taskId -> LocalObjStorage.getEmployeeList().get(finalI)
+                    .addPreviousTask(LocalObjStorage.getTaskById(taskId)));
+        }
+
+        //Distribute tasks
+        for (int i = 0; i < LocalObjStorage.getTaskList().size(); i++) {
+
+            //Set project
+            LocalObjStorage.getTaskList().get(i).setProject(
+                    LocalObjStorage.getProjectById(dbTaskList.get(i).projectId));
+
+            int finalI = i;
+            //Set employees
+            dbTaskList.get(i).employeeIds.forEach(empId -> LocalObjStorage.getTaskList().get(finalI).addEmployee(LocalObjStorage.getEmployeeById(empId)));
+
+            //Set Dependencies
+            dbTaskList.get(i).dependencieIds.forEach(taskId -> LocalObjStorage.getTaskList().get(finalI)
+                    .addDependency(LocalObjStorage.getTaskById(taskId)));
+        }
+
+        //Distribute projects
+        for (int i = 0; i < LocalObjStorage.getProjectList().size(); i++) {
+            int finalI = i;
+            dbProjectList.get(i).employeeIds.forEach(empId -> LocalObjStorage.getProjectList().get(finalI)
+                    .addNewEmployee(LocalObjStorage.getEmployeeById(empId)));
+
+            dbProjectList.get(i).tasks.forEach(taskId -> LocalObjStorage.getProjectList().get(finalI)
+                    .addNewTask(LocalObjStorage.getTaskById(taskId)));
+        }
+        System.out.println("Done");
+    }
+
+
+    public static void updateEmployee(Employee employee) {
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET currenttasks = ?" +
+                    ", previoustasks = ?, projectid = ? WHERE id == ?");
+            statement.setArray(1, dbConnection.createArrayOf("INTEGER",
+                    employee.getCurrentTask().stream().map(Task::getId).toArray()
+            ));
+            statement.setArray(2, dbConnection.createArrayOf("INTEGER",
+                    employee.getPreviousTask().stream().map(Task::getId).toArray()
+            ));
+            statement.setInt(3, employee.getProject().getId());
+            statement.setInt(4,employee.getId());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

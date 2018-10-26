@@ -2,13 +2,11 @@ package dk.aau.ds304e18;
 
 
 import dk.aau.ds304e18.database.DatabaseManager;
-import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
-public class Main {
+class Main {
     public static void main(String[] args) {
 
 /*        ResultSet rs = DatabaseManager.query("SELECT * FROM employees");
@@ -20,7 +18,7 @@ public class Main {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-*/
+
         Employee rasmus = new Employee("Rasmus Smit Lindholt");
         Project testProj = new Project("Dank communication things to communicate with things");
 
@@ -31,6 +29,8 @@ public class Main {
         DatabaseManager.getAllEmployees().stream().forEach(emp-> {
             System.out.println(emp.id + " " + emp.name + " " + emp.projectId);
         });
-
+*/
+        DatabaseManager.distributeModels();
+        List<Project> employeeList = LocalObjStorage.getProjectList();
     }
 }

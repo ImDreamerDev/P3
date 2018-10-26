@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * The class representing the employee in the database.
  */
-public class DatabaseEmployee {
+class DatabaseEmployee {
     /**
      * the Unique id of the employee.
      */
@@ -21,7 +21,7 @@ public class DatabaseEmployee {
     /**
      * The list of ids of tasks.
      */
-    public List<Integer> taskId = new ArrayList<>();
+    public final List<Integer> currentTaskIds = new ArrayList<>();
 
     /**
      * The list of ids of previous tasks.

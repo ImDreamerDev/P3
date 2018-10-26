@@ -1,9 +1,7 @@
 package dk.aau.ds304e18.models;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +17,7 @@ public class Task {
     /**
      * The name of the task.
      */
-    private String name;
+    private final String name;
 
     /**
      * The estimated completion time of the task
@@ -29,17 +27,17 @@ public class Task {
     /**
      * The list of the employees assigned to the task
      */
-    private List<Employee> employees = new ArrayList<>();
+    private final List<Employee> employees = new ArrayList<>();
 
     /**
      * The list of tasks which the task has dependencies upon.
      */
-    private List<Task> dependencies = new ArrayList<>();
+    private final List<Task> dependencies = new ArrayList<>();
 
     /**
      * The date that the task starts.
      */
-    private LocalDate startDate;
+    private final LocalDate startDate;
 
     /**
      * The date the task should be completed.
@@ -117,6 +115,10 @@ public class Task {
         return employees;
     }
 
+    public void addEmployee(Employee emp) {
+        this.employees.add(emp);
+    }
+
     /**
      * The getter for the depencies list.
      *
@@ -124,6 +126,10 @@ public class Task {
      */
     public List<Task> getDependencies() {
         return dependencies;
+    }
+
+    public void addDependency(Task task) {
+        this.dependencies.add(task);
     }
 
     /**
@@ -160,6 +166,10 @@ public class Task {
      */
     public Project getProject() {
         return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     /**

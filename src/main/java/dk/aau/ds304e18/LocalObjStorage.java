@@ -14,19 +14,19 @@ public class LocalObjStorage {
     /**
      * The list of employees.
      */
-    private static ArrayList<Employee> employeeList;
+    private static ArrayList<Employee> employeeList = new ArrayList<>();
 
 
     /**
      * The list of projects.
      */
-    private static ArrayList<Project> projectList;
+    private static ArrayList<Project> projectList = new ArrayList<>();
 
 
     /**
      * The list of tasks.
      */
-    private static ArrayList<Task> taskList;
+    private static ArrayList<Task> taskList = new ArrayList<>();
 
     /**
      * Gets list of employees.
