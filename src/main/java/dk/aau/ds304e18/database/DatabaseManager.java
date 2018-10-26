@@ -216,9 +216,9 @@ public class DatabaseManager {
         List<DatabaseTask> dbTaskList = getAllTasks();
         List<DatabaseProject> dbProjectList = getAllProjects();
 
-        dbEmpList.forEach(dbEmp -> LocalObjStorage.addEmployee((convertEmployee(dbEmp))));
-        dbTaskList.forEach(dbTask -> LocalObjStorage.addTask(convertTask(dbTask)));
-        dbProjectList.forEach(dbProj -> LocalObjStorage.addProject((convertProject(dbProj))));
+        dbEmpList.forEach(dbEmp -> LocalObjStorage.addEmployee((Converter.convertEmployee(dbEmp))));
+        dbTaskList.forEach(dbTask -> LocalObjStorage.addTask(Converter.convertTask(dbTask)));
+        dbProjectList.forEach(dbProj -> LocalObjStorage.addProject((Converter.convertProject(dbProj))));
 
         //Distribute employees
         for (int i = 0; i < LocalObjStorage.getEmployeeList().size(); i++) {
@@ -262,21 +262,20 @@ public class DatabaseManager {
     }
 
 
-    private static Project convertProject(DatabaseProject dbProj) {
-        Project project = new Project(dbProj.name);
-        project.setId(dbProj.id);
-        project.setState(dbProj.state);
-        //TODO
-        return project;
-    }
+    public static void updateEmployee(Employee employee) {
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET currenttasks = ?" +
+                    ", previoustasks = ?, projectid = ?");
+            statement.setArray(1, dbConnection.createArrayOf("INTEGER",
+                    employee.getCurrentTask().stream().map(Task::getId).toArray()
+            ));
+            statement.setArray(2, dbConnection.createArrayOf("INTEGER",
+                    employee.getPreviousTask().stream().map(Task::getId).toArray()
+            ));
+            statement.setInt(3, employee.getProject().getId());
 
-    private static Task convertTask(DatabaseTask dbTask) {
-        return new Task(dbTask.id, dbTask.name, dbTask.estimatedTime, dbTask.startDate, dbTask.endDate, dbTask.priority);
-    }
-
-    private static Employee convertEmployee(DatabaseEmployee dbEmp) {
-        Employee emp = new Employee(dbEmp.name);
-        emp.setId(dbEmp.id);
-        return emp;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -36,6 +36,7 @@ public class Project {
 
     /**
      * Constructor for project.
+     *
      * @param name - The name of the project.
      */
     public Project(String name) {
@@ -45,6 +46,7 @@ public class Project {
 
     /**
      * Adds a new task to the project.
+     *
      * @param task - The task to add.
      */
     public void addNewTask(Task... task) {
@@ -53,6 +55,7 @@ public class Project {
 
     /**
      * Removes task from tasks.
+     *
      * @param task - Task to remove.
      */
     public void removeTask(Task task) {
@@ -61,14 +64,19 @@ public class Project {
 
     /**
      * Assign a new employee to the project.
+     *
      * @param employee - The employee to add to the project.
      */
     public void addNewEmployee(Employee... employee) {
+        for (Employee emp : employee) {
+            emp.setProject(this);
+        }
         employees.addAll(Arrays.asList(employee));
     }
 
     /**
      * Removes employee from project.
+     *
      * @param employee - The employee to remove.
      */
     public void removeEmployee(Employee employee) {
@@ -77,6 +85,7 @@ public class Project {
 
     /**
      * Returns project unique ID.
+     *
      * @return id - Project ID
      */
     public int getId() {
@@ -85,6 +94,7 @@ public class Project {
 
     /**
      * Returns the project name.
+     *
      * @return name - String project name.
      */
     public String getName() {
@@ -93,6 +103,7 @@ public class Project {
 
     /**
      * Returns the current state og the project.
+     *
      * @return state - The current state of the project.
      */
     public ProjectState getState() {
@@ -101,6 +112,7 @@ public class Project {
 
     /**
      * Returns the list of all tasks in the project.
+     *
      * @return tasks - List of all tasks.
      */
     public List<Task> getTasks() {
@@ -109,6 +121,7 @@ public class Project {
 
     /**
      * Returns all the employees assigned to the project.
+     *
      * @return employees - a list of all the employees assigned to the project.
      */
     public List<Employee> getEmployees() {
@@ -117,6 +130,7 @@ public class Project {
 
     /**
      * Sets the unique ID.
+     *
      * @param id - the unique ID.
      */
     public void setId(int id) {
@@ -125,6 +139,7 @@ public class Project {
 
     /**
      * Sets the current state of the project.
+     *
      * @param state - the new state to set.
      */
     public void setState(ProjectState state) {
