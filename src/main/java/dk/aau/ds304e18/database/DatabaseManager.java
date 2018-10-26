@@ -265,7 +265,7 @@ public class DatabaseManager {
     public static void updateEmployee(Employee employee) {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET currenttasks = ?" +
-                    ", previoustasks = ?, projectid = ?");
+                    ", previoustasks = ?, projectid = ? WHERE id == ?");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER",
                     employee.getCurrentTask().stream().map(Task::getId).toArray()
             ));
@@ -273,6 +273,7 @@ public class DatabaseManager {
                     employee.getPreviousTask().stream().map(Task::getId).toArray()
             ));
             statement.setInt(3, employee.getProject().getId());
+            statement.setInt(4,employee.getId());
 
         } catch (SQLException e) {
             e.printStackTrace();
