@@ -1,6 +1,7 @@
 package dk.aau.ds304e18.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,15 +47,15 @@ public class Project {
      * Adds a new task to the project.
      * @param task - The task to add.
      */
-    private void addNewTask(Task task) {
-        tasks.add(task);
+    public void addNewTask(Task... task) {
+        tasks.addAll(Arrays.asList(task));
     }
 
     /**
      * Removes task from tasks.
      * @param task - Task to remove.
      */
-    private void removeTask(Task task) {
+    public void removeTask(Task task) {
         tasks.remove(task);
     }
 
@@ -62,15 +63,15 @@ public class Project {
      * Assign a new employee to the project.
      * @param employee - The employee to add to the project.
      */
-    public void addNewEmployee(Employee employee) {
-        employees.add(employee);
+    public void addNewEmployee(Employee... employee) {
+        employees.addAll(Arrays.asList(employee));
     }
 
     /**
      * Removes employee from project.
      * @param employee - The employee to remove.
      */
-    private void removeEmployee(Employee employee) {
+    public void removeEmployee(Employee employee) {
         employees.remove(employee);
     }
 
