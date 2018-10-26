@@ -26,7 +26,7 @@ public class Employee {
     /**
      * The task he is currently assigned.
      */
-    private List<Task> currentTask = new ArrayList<>();
+    private final List<Task> currentTask = new ArrayList<>();
 
     /**
      * The tasks that the employee has previously worked on.
@@ -35,6 +35,7 @@ public class Employee {
 
     /**
      * The constructor for the employee class
+     *
      * @param name - The name of the employee.
      */
     public Employee(String name) {
@@ -43,18 +44,16 @@ public class Employee {
 
     /**
      * A function to add a new task to the currentTask list.
+     *
      * @param task - The specific Task object which is to be added to the list.
      */
     public void addNewTask(Task task) {
         currentTask.add(task);
     }
 
-    public void setCurrentTask(List<Task> currentTask) {
-        this.currentTask = currentTask;
-    }
-
     /**
      * The getter for the id
+     *
      * @return id - The id of the employee.
      */
     public int getId() {
@@ -72,6 +71,7 @@ public class Employee {
 
     /**
      * The getter for the project
+     *
      * @return project - The project that the employee is assigned.
      */
     public Project getProject() {
@@ -80,6 +80,7 @@ public class Employee {
 
     /**
      * the getter for the currentTask
+     *
      * @return currenTask - a list of the currentTasks that the employee is assigned to
      */
     public List<Task> getCurrentTask() {
@@ -88,6 +89,7 @@ public class Employee {
 
     /**
      * The getter for prevousTask.
+     *
      * @return previousTask - a list of the previous tasks that the employee is no longer working on.
      */
     public List<Task> getPreviousTask() {
@@ -100,6 +102,7 @@ public class Employee {
 
     /**
      * The setter for the id
+     *
      * @param id - The unique id for the employee.
      */
     public void setId(int id) {
@@ -108,6 +111,7 @@ public class Employee {
 
     /**
      * The setter for the project
+     *
      * @param project - The project object that the employee will work on.
      */
     public void setProject(Project project) {
