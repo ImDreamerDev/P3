@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -272,95 +272,110 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addDependency(dk.aau.ds304e18.models.Task)">addDependency</a></span>&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEmployee(dk.aau.ds304e18.models.Employee)">addEmployee</a></span>&#8203;(<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&nbsp;emp)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDependencies()">getDependencies</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the depencies list.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEmployees()">getEmployees</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the Employees list.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.time.LocalDate</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEndDate()">getEndDate</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the end date of the task.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEstimatedTime()">getEstimatedTime</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the estimated completion time</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getId()">getId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the id.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the name.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPriority()">getPriority</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the priority</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProject()">getProject</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the project.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.time.LocalDate</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStartDate()">getStartDate</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the start date</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEndDate(java.time.LocalDate)">setEndDate</a></span>&#8203;(java.time.LocalDate&nbsp;endDate)</code></th>
 <td class="colLast">
 <div class="block">The setter for the end date.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEstimatedTime(int)">setEstimatedTime</a></span>&#8203;(int&nbsp;estimatedTime)</code></th>
 <td class="colLast">
 <div class="block">the setter for the Estimated time</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(int)">setId</a></span>&#8203;(int&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">The setter for the id</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPriority(int)">setPriority</a></span>&#8203;(int&nbsp;priority)</code></th>
 <td class="colLast">
 <div class="block">The setter for the priority of the task.</div>
 </td>
+</tr>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProject(dk.aau.ds304e18.models.Project)">setProject</a></span>&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -586,6 +601,15 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="addEmployee(dk.aau.ds304e18.models.Employee)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addEmployee</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addEmployee&#8203;(<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&nbsp;emp)</pre>
+</li>
+</ul>
 <a id="getDependencies()">
 <!--   -->
 </a>
@@ -598,6 +622,15 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>dependencies - The list of dependencies</dd>
 </dl>
+</li>
+</ul>
+<a id="addDependency(dk.aau.ds304e18.models.Task)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addDependency</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addDependency&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</pre>
 </li>
 </ul>
 <a id="getStartDate()">
@@ -654,6 +687,15 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>project - The project which the task is assigned to.</dd>
 </dl>
+</li>
+</ul>
+<a id="setProject(dk.aau.ds304e18.models.Project)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setProject</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setProject&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</pre>
 </li>
 </ul>
 <a id="setId(int)">
