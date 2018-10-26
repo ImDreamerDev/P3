@@ -117,7 +117,7 @@ public class DatabaseManager {
      *
      * @return list of all DatabaseEmployees.
      */
-    public static List<DatabaseEmployee> getAllEmployees() {
+    private static List<DatabaseEmployee> getAllEmployees() {
         if (dbConnection == null) connect();
         List<DatabaseEmployee> empList = new ArrayList<>();
         try {
@@ -143,7 +143,7 @@ public class DatabaseManager {
      *
      * @return list of all databaseProjects.
      */
-    public static List<DatabaseProject> getAllProjects() {
+    private static List<DatabaseProject> getAllProjects() {
         if (dbConnection == null) connect();
         List<DatabaseProject> databaseProjects = new ArrayList<>();
         try {
@@ -168,7 +168,7 @@ public class DatabaseManager {
      *
      * @return lsit of all database tasks.
      */
-    public static List<DatabaseTask> getAllTasks() {
+    private static List<DatabaseTask> getAllTasks() {
         if (dbConnection == null) connect();
 
         List<DatabaseTask> databaseTasks = new ArrayList<>();

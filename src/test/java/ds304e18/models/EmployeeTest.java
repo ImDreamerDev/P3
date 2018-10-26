@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EmployeeTest {
+class EmployeeTest {
 
     /**
      * Tests that the Employee constructor initialises the employee correctly.
      */
     @Test
-    public void TestEmployeeConstructor01() {
+    void TestEmployeeConstructor01() {
         Employee newEmployee = new Employee("Abraham");
         assertEquals("Abraham", newEmployee.getName());
     }
@@ -22,7 +22,7 @@ public class EmployeeTest {
      * Tests that adding a task to the employee works.
      */
     @Test
-    public void TestEmployeeAddNewTask01() {
+    void TestEmployeeAddNewTask01() {
         Employee newEmployee = new Employee("Slim Shady");
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 5, 1, newProject);
@@ -34,7 +34,7 @@ public class EmployeeTest {
      * Testing getting the id of the employee.
      */
     @Test
-    public void TestEmployeeGetId01() {
+    void TestEmployeeGetId01() {
         Employee newEmployee = new Employee("The Real Slim Shady");
         newEmployee.setId(1);
         assertEquals(1, newEmployee.getId());
@@ -44,7 +44,7 @@ public class EmployeeTest {
      * Tests getting the name of the employee.
      */
     @Test
-    public void TestEmployeeGetName01() {
+    void TestEmployeeGetName01() {
         Employee newEmployee = new Employee("Employee");
         assertEquals("Employee", newEmployee.getName());
     }
@@ -53,7 +53,7 @@ public class EmployeeTest {
      * Tests getting the employee's assigned project.
      */
     @Test
-    public void TestEmployeeGetProject01() {
+    void TestEmployeeGetProject01() {
         Employee newEmployee = new Employee("Employee");
         Project newProject = new Project("Test Project");
         newEmployee.setProject(newProject);
@@ -64,7 +64,7 @@ public class EmployeeTest {
      * Tests getting the employee's current tasks.
      */
     @Test
-    public void TestEmployeeGetCurrentTask01() {
+    void TestEmployeeGetCurrentTask01() {
         Employee newEmployee = new Employee("Test Employee");
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 5, 1, newProject);
@@ -76,7 +76,7 @@ public class EmployeeTest {
      * Tests getting the previous tasks of the employee.
      */
     @Test
-    public void TestEmployeeGetPreviousTask01() {
+    void TestEmployeeGetPreviousTask01() {
         Employee newEmployee = new Employee("Test Employee");
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 5, 1, newProject);
@@ -89,7 +89,7 @@ public class EmployeeTest {
      * Tests setting the employee's id.
      */
     @Test
-    public void TestEmployeeSetId01() {
+    void TestEmployeeSetId01() {
         Employee newEmployee = new Employee("Employee");
         newEmployee.setId(5);
         assertEquals(5, newEmployee.getId());
@@ -99,7 +99,7 @@ public class EmployeeTest {
      * Tests setting the employee's project.
      */
     @Test
-    public void TestEmployeeSetProject01() {
+    void TestEmployeeSetProject01() {
         Employee newEmployee = new Employee("Employee");
         Project newProject = new Project("Test Project");
         newEmployee.setProject(newProject);

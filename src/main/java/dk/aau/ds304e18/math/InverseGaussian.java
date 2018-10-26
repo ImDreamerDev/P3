@@ -1,6 +1,6 @@
 package dk.aau.ds304e18.math;
 
-public class InverseGaussian {
+class InverseGaussian {
 
     private double mu;
     private double lambda;
@@ -23,7 +23,7 @@ public class InverseGaussian {
         }
     }
 
-    public static double cdf(double mu, double lambda, double x) {
+    private static double cdf(double mu, double lambda, double x) {
         if (mu <= 0.0D) {
             throw new IllegalArgumentException("mu <= 0");
         } else if (lambda <= 0.0D) {
@@ -38,7 +38,7 @@ public class InverseGaussian {
         }
     }
     
-    public static double cdf01(double x) {
+    private static double cdf01(double x) {
         if (x <= -100.0D) {
             return 0.0D;
         } else if (x >= 100.0D) {
@@ -60,7 +60,7 @@ public class InverseGaussian {
         }
     }
 
-    public static double evalCheby(double[] a, int n, double x) {
+    private static double evalCheby(double[] a, int n, double x) {
         if (Math.abs(x) > 1.0D) {
             System.err.println("Chebychev polynomial evaluated at x outside [-1, 1]");
         }

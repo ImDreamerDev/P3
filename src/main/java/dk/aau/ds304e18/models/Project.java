@@ -17,7 +17,7 @@ public class Project {
     /**
      * The name of the project.
      */
-    private String name;
+    private final String name;
 
     /**
      * The current state of the project.
@@ -27,12 +27,12 @@ public class Project {
     /**
      * The list of tasks.
      */
-    private List<Task> tasks = new ArrayList<>();
+    private final List<Task> tasks = new ArrayList<>();
 
     /**
      * The list of employees.
      */
-    private List<Employee> employees = new ArrayList<>();
+    private final List<Employee> employees = new ArrayList<>();
 
     /**
      * Constructor for project.

@@ -16,7 +16,7 @@ public class Employee {
     /**
      * The name of the Employee
      */
-    private String name;
+    private final String name;
 
     /**
      * The project he is currently assigned.
@@ -31,7 +31,7 @@ public class Employee {
     /**
      * The tasks that the employee has previously worked on.
      */
-    private List<Task> previousTask = new ArrayList<>();
+    private final List<Task> previousTask = new ArrayList<>();
 
     /**
      * The constructor for the employee class

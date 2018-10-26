@@ -2,12 +2,11 @@ package dk.aau.ds304e18;
 
 
 import dk.aau.ds304e18.database.DatabaseManager;
-import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 
 import java.util.List;
 
-public class Main {
+class Main {
     public static void main(String[] args) {
 
 /*        ResultSet rs = DatabaseManager.query("SELECT * FROM employees");
