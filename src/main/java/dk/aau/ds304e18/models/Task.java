@@ -1,6 +1,5 @@
 package dk.aau.ds304e18.models;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +41,7 @@ public class Task {
     /**
      * The date the task should be completed.
      */
-    private double endDate;
+    private double endTime;
 
     /**
      * The level of priority that the task has compared to other tasks.
@@ -69,12 +68,12 @@ public class Task {
         this.project = project;
     }
 
-    public Task(int id, String name, double estimatedTime, double startTime, double endDate, int priority) {
+    public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority) {
         this.id = id;
         this.name = name;
         this.estimatedTime = estimatedTime;
         this.startTime = startTime;
-        this.endDate = endDate;
+        this.endTime = endTime;
         this.priority = priority;
     }
 
@@ -143,10 +142,10 @@ public class Task {
     /**
      * The getter for the end date of the task.
      *
-     * @return endDate - The date at which the task should be completed.
+     * @return endTime - The date at which the task should be completed.
      */
-    public double getEndDate() {
-        return endDate;
+    public double getEndTime() {
+        return endTime;
     }
 
     /**
@@ -192,10 +191,10 @@ public class Task {
     /**
      * The setter for the end date.
      *
-     * @param endDate - The date at which the task should be completed
+     * @param endTime - The date at which the task should be completed
      */
-    public void setEndDate(double endDate) {
-        this.endDate = endDate;
+    public void setEndTime(double endTime) {
+        this.endTime = endTime;
     }
 
     /**

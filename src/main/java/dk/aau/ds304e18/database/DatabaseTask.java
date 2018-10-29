@@ -34,12 +34,12 @@ class DatabaseTask {
     /**
      * The starting date of the task.
      */
-    public double startDate;
+    public double startTime;
 
     /**
      * The estimated completion date of the task.
      */
-    public double endDate;
+    public double endTime;
 
     /**
      * The priority of the task.
