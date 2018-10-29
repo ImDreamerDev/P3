@@ -29,7 +29,7 @@ class Main {
 
         Task task = new Task("Test task", 100, 1, LocalObjStorage.getProjectById(10));
         task.addEmployee(LocalObjStorage.getEmployeeById(10));
-        task.setEndDate(LocalDate.now().plusDays(task.getEstimatedTime()));
+        task.setEndDate(LocalDate.now().plusDays((int) task.getEstimatedTime()));
 
         DatabaseManager.addTask(task);
     }

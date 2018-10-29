@@ -172,7 +172,7 @@ public class DatabaseManager {
             statement.setArray(4, dbConnection.createArrayOf("INTEGER",
                     task.getDependencies().stream().map(Task::getId).toArray()
             ));
-            statement.setDate(5, Date.valueOf(task.getStartDate()));
+            statement.setDouble(5, (task.getStartTime()));
             statement.setDate(6, Date.valueOf(task.getEndDate()));
             statement.setInt(7, task.getPriority());
 
@@ -235,7 +235,7 @@ public class DatabaseManager {
                 task.name = rs.getString(2);
                 task.estimatedTime = rs.getDouble(3);
                 task.employeeIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
-                task.startDate = rs.getDate(5).toLocalDate();
+                task.startDate = rs.getDouble(5);
                 task.endDate = rs.getDate(6).toLocalDate();
                 task.priority = rs.getInt(7);
                 task.projectId = rs.getInt(8);

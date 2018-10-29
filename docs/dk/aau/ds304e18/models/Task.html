@@ -177,7 +177,7 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>private int</code></td>
+<td class="colFirst"><code>private double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimatedTime">estimatedTime</a></span></code></th>
 <td class="colLast">
 <div class="block">The estimated completion time of the task</div>
@@ -212,8 +212,8 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>private java.time.LocalDate</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startDate">startDate</a></span></code></th>
+<td class="colFirst"><code>private double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startTime">startTime</a></span></code></th>
 <td class="colLast">
 <div class="block">The date that the task starts.</div>
 </td>
@@ -236,17 +236,17 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String,int,java.time.LocalDate,java.time.LocalDate,int)">Task</a></span>&#8203;(int&nbsp;id,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String,double,double,java.time.LocalDate,int)">Task</a></span>&#8203;(int&nbsp;id,
     java.lang.String&nbsp;name,
-    int&nbsp;estimatedTime,
-    java.time.LocalDate&nbsp;startDate,
+    double&nbsp;estimatedTime,
+    double&nbsp;startTime,
     java.time.LocalDate&nbsp;endDate,
     int&nbsp;priority)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,int,int,dk.aau.ds304e18.models.Project)">Task</a></span>&#8203;(java.lang.String&nbsp;name,
-    int&nbsp;estimatedTime,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,double,int,dk.aau.ds304e18.models.Project)">Task</a></span>&#8203;(java.lang.String&nbsp;name,
+    double&nbsp;estimatedTime,
     int&nbsp;priority,
     <a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">
@@ -303,7 +303,7 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>int</code></td>
+<td class="colFirst"><code>double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEstimatedTime()">getEstimatedTime</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the estimated completion time</div>
@@ -338,8 +338,8 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>java.time.LocalDate</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStartDate()">getStartDate</a></span>()</code></th>
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStartTime()">getStartTime</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the start date</div>
 </td>
@@ -417,7 +417,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>name</h4>
-<pre>private&nbsp;java.lang.String name</pre>
+<pre>private final&nbsp;java.lang.String name</pre>
 <div class="block">The name of the task.</div>
 </li>
 </ul>
@@ -427,7 +427,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>estimatedTime</h4>
-<pre>private&nbsp;int estimatedTime</pre>
+<pre>private&nbsp;double estimatedTime</pre>
 <div class="block">The estimated completion time of the task</div>
 </li>
 </ul>
@@ -437,7 +437,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>employees</h4>
-<pre>private&nbsp;java.util.List&lt;<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt; employees</pre>
+<pre>private final&nbsp;java.util.List&lt;<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt; employees</pre>
 <div class="block">The list of the employees assigned to the task</div>
 </li>
 </ul>
@@ -447,17 +447,17 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>dependencies</h4>
-<pre>private&nbsp;java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt; dependencies</pre>
+<pre>private final&nbsp;java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt; dependencies</pre>
 <div class="block">The list of tasks which the task has dependencies upon.</div>
 </li>
 </ul>
-<a id="startDate">
+<a id="startTime">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>startDate</h4>
-<pre>private&nbsp;java.time.LocalDate startDate</pre>
+<h4>startTime</h4>
+<pre>private&nbsp;double startTime</pre>
 <div class="block">The date that the task starts.</div>
 </li>
 </ul>
@@ -501,14 +501,14 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.lang.String,int,int,dk.aau.ds304e18.models.Project)">
+<a id="&lt;init&gt;(java.lang.String,double,int,dk.aau.ds304e18.models.Project)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>Task</h4>
 <pre>public&nbsp;Task&#8203;(java.lang.String&nbsp;name,
-            int&nbsp;estimatedTime,
+            double&nbsp;estimatedTime,
             int&nbsp;priority,
             <a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</pre>
 <div class="block">The Constructor of the task.</div>
@@ -521,7 +521,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(int,java.lang.String,int,java.time.LocalDate,java.time.LocalDate,int)">
+<a id="&lt;init&gt;(int,java.lang.String,double,double,java.time.LocalDate,int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -529,8 +529,8 @@ extends java.lang.Object</pre>
 <h4>Task</h4>
 <pre>public&nbsp;Task&#8203;(int&nbsp;id,
             java.lang.String&nbsp;name,
-            int&nbsp;estimatedTime,
-            java.time.LocalDate&nbsp;startDate,
+            double&nbsp;estimatedTime,
+            double&nbsp;startTime,
             java.time.LocalDate&nbsp;endDate,
             int&nbsp;priority)</pre>
 </li>
@@ -579,7 +579,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getEstimatedTime</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;getEstimatedTime()</pre>
+<pre class="methodSignature">public&nbsp;double&nbsp;getEstimatedTime()</pre>
 <div class="block">The getter for the estimated completion time</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -633,17 +633,17 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;void&nbsp;addDependency&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</pre>
 </li>
 </ul>
-<a id="getStartDate()">
+<a id="getStartTime()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getStartDate</h4>
-<pre class="methodSignature">public&nbsp;java.time.LocalDate&nbsp;getStartDate()</pre>
+<h4>getStartTime</h4>
+<pre class="methodSignature">public&nbsp;double&nbsp;getStartTime()</pre>
 <div class="block">The getter for the start date</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>startDate - The date the task was started.</dd>
+<dd>startTime - The date the task was started.</dd>
 </dl>
 </li>
 </ul>

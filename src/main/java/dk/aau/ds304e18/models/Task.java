@@ -37,7 +37,7 @@ public class Task {
     /**
      * The date that the task starts.
      */
-    private final LocalDate startDate;
+    private double startTime;
 
     /**
      * The date the task should be completed.
@@ -67,14 +67,13 @@ public class Task {
         this.estimatedTime = estimatedTime;
         this.priority = priority;
         this.project = project;
-        this.startDate = LocalDate.now();
     }
 
-    public Task(int id, String name, double estimatedTime, LocalDate startDate, LocalDate endDate, int priority) {
+    public Task(int id, String name, double estimatedTime, double startTime, LocalDate endDate, int priority) {
         this.id = id;
         this.name = name;
         this.estimatedTime = estimatedTime;
-        this.startDate = startDate;
+        this.startTime = startTime;
         this.endDate = endDate;
         this.priority = priority;
     }
@@ -135,10 +134,10 @@ public class Task {
     /**
      * The getter for the start date
      *
-     * @return startDate - The date the task was started.
+     * @return startTime - The date the task was started.
      */
-    public LocalDate getStartDate() {
-        return startDate;
+    public double getStartTime() {
+        return startTime;
     }
 
     /**

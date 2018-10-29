@@ -34,7 +34,7 @@ class DatabaseTask {
     /**
      * The starting date of the task.
      */
-    public LocalDate startDate;
+    public double startDate;
 
     /**
      * The estimated completion date of the task.
