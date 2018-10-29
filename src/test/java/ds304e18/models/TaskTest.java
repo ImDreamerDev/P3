@@ -47,7 +47,7 @@ public class TaskTest {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         newTask.setId(5);
-        assertEquals(5,newTask.getId());
+        assertEquals(5, newTask.getId());
     }
 
     @Test
@@ -68,7 +68,7 @@ public class TaskTest {
     public void TestTaskGetPriority01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 2, newProject);
-        assertEquals(2,newTask.getPriority());
+        assertEquals(2, newTask.getPriority());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class TaskTest {
         Task newTask = new Task("Test Task", 1, 1, newProject);
         Task dependencie01 = new Task("Dependencie01", 1, 1, newProject);
         Task dependencie02 = new Task("Dependencie02", 1, 1, newProject);
-        newTask.addDependency(dependencie01,dependencie02);
+        newTask.addDependency(dependencie01, dependencie02);
 
         List<Task> testList = new ArrayList<>();
         testList.add(dependencie01);
@@ -100,40 +100,40 @@ public class TaskTest {
 
         assertEquals(testList, newTask.getDependencies());
     }
-/* TODO: Fix
+
     @Test
     public void TestTaskGetStartDate01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
 
-        assertEquals(LocalDate.now(),newTask.getStartDate());
+        assertEquals(0, newTask.getStartTime());
     }
 
     @Test
     public void TestTaskGetEndDate01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
-        newTask.setEndDate(LocalDate.of(2020,1,1));
+        newTask.setEndTime(1010);
 
-        assertEquals(LocalDate.of(2020,1,1),newTask.getEndDate());
-    }*/
+        assertEquals(1010, newTask.getEndTime());
+    }
 
     @Test
     public void TestTaskGetProject01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
 
-        assertEquals(newProject,newTask.getProject());
+        assertEquals(newProject, newTask.getProject());
     }
-/* //TODO:
+
     @Test
     public void TestTaskSetEndDate01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
-        newTask.setEndDate(LocalDate.of(2019, Month.JANUARY,30));
+        newTask.setEndTime(12.4);
 
-        assertEquals(LocalDate.of(2019,1,30),newTask.getEndDate());
-    }*/
+        assertEquals(12.4, newTask.getEndTime());
+    }
 
     @Test
     public void TestTaskSetPriority01() {
@@ -141,7 +141,7 @@ public class TaskTest {
         Task newTask = new Task("Test Task", 1, 1, newProject);
         newTask.setPriority(5);
 
-        assertEquals(5,newTask.getPriority());
+        assertEquals(5, newTask.getPriority());
     }
 
     @Test
@@ -160,7 +160,7 @@ public class TaskTest {
         testList.add(newEmployee02);
         testList.add(newEmployee03);
 
-        assertEquals(testList,newTask.getEmployees());
+        assertEquals(testList, newTask.getEmployees());
     }
 
     @Test
@@ -179,21 +179,23 @@ public class TaskTest {
 
         assertEquals(testList, newTask.getDependencies());
     }
-/*//TODO:
+
     @Test
     public void TestTaskSetProject() {
-        Task newTask = new Task(1,"Test Task",3,LocalDate.of(2018,10,26),LocalDate.of(2019,1,30),1);
+        Project project = new Project("Reeer");
+        Task newTask = new Task("Test", 2, 10, project);
         Project newProject = new Project("Test Project");
         newTask.setProject(newProject);
 
-        assertEquals(newProject,newTask.getProject());
+        assertEquals(newProject, newTask.getProject());
     }
 
     @Test
     public void TestSetEstimatedTime() {
-        Task newTask = new Task(1,"Test Task",3,LocalDate.of(2018,10,26),LocalDate.of(2019,1,30),1);
+        Project project = new Project("Reeer");
+        Task newTask = new Task("Test", 2, 10, project);
         newTask.setEstimatedTime(9);
 
-        assertEquals(9,newTask.getEstimatedTime());
-    }*/
+        assertEquals(9, newTask.getEstimatedTime());
+    }
 }
