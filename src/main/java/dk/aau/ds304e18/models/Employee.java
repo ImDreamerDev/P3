@@ -119,9 +119,7 @@ public class Employee {
      * @param project - The project object that the employee will work on.
      */
     public void setProject(Project project) {
-        if (project == null) {
-        }
-        else {
+        if (project != null) {
             this.project = project;
             DatabaseManager.updateEmployee(this);
         }

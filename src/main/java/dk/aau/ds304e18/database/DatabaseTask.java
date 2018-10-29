@@ -19,7 +19,7 @@ class DatabaseTask {
     /**
      * The estimated completion of the task.
      */
-    public int estimatedTime;
+    public double estimatedTime;
 
     /**
      * The list of ids of employees assigned to the task.

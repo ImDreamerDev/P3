@@ -22,7 +22,7 @@ public class Task {
     /**
      * The estimated completion time of the task
      */
-    private int estimatedTime;
+    private double estimatedTime;
 
     /**
      * The list of the employees assigned to the task
@@ -62,7 +62,7 @@ public class Task {
      * @param priority      The priority value of the task.
      * @param project       The project that that the task is a part of.
      */
-    public Task(String name, int estimatedTime, int priority, Project project) {
+    public Task(String name, double estimatedTime, int priority, Project project) {
         this.name = name;
         this.estimatedTime = estimatedTime;
         this.priority = priority;
@@ -70,7 +70,7 @@ public class Task {
         this.startDate = LocalDate.now();
     }
 
-    public Task(int id, String name, int estimatedTime, LocalDate startDate, LocalDate endDate, int priority) {
+    public Task(int id, String name, double estimatedTime, LocalDate startDate, LocalDate endDate, int priority) {
         this.id = id;
         this.name = name;
         this.estimatedTime = estimatedTime;
@@ -102,7 +102,7 @@ public class Task {
      *
      * @return estimatedTime - The estimated completion time.
      */
-    public int getEstimatedTime() {
+    public double getEstimatedTime() {
         return estimatedTime;
     }
 

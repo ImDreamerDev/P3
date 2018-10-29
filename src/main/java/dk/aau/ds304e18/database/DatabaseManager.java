@@ -163,9 +163,9 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO tasks (name, estimatedtime," +
-                    " employees, dependencies, startdate,enddate,priority,projectid) values (?, ?, ?, ?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                    " employees, dependencies, startdate, enddate, priority, projectid) values (?, ?, ?, ?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, task.getName());
-            statement.setInt(2, task.getEstimatedTime());
+            statement.setDouble(2, task.getEstimatedTime());
             statement.setArray(3, dbConnection.createArrayOf("INTEGER",
                     task.getEmployees().stream().map(Employee::getId).toArray()
             ));
@@ -233,7 +233,7 @@ public class DatabaseManager {
                 DatabaseTask task = new DatabaseTask();
                 task.id = rs.getInt(1);
                 task.name = rs.getString(2);
-                task.estimatedTime = rs.getInt(3);
+                task.estimatedTime = rs.getDouble(3);
                 task.employeeIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
                 task.startDate = rs.getDate(5).toLocalDate();
                 task.endDate = rs.getDate(6).toLocalDate();

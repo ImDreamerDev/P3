@@ -4,7 +4,9 @@ package dk.aau.ds304e18;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
+import dk.aau.ds304e18.models.Task;
 
+import java.time.LocalDate;
 import java.util.List;
 
 class Main {
@@ -25,11 +27,10 @@ class Main {
         Project testProj = new Project("Dank communication things to communicate with things");
         DatabaseManager.distributeModels();
 
-        DatabaseManager.addEmployees(rasmus);
-        DatabaseManager.addProject(testProj);
+        Task task = new Task("Test task", 100, 1, LocalObjStorage.getProjectById(10));
+        task.addEmployee(LocalObjStorage.getEmployeeById(10));
+        task.setEndDate(LocalDate.now().plusDays(task.getEstimatedTime()));
 
-        LocalObjStorage.getProjectById(testProj.getId())
-                .addNewEmployee(LocalObjStorage.getEmployeeById(rasmus.getId()));
-
+        DatabaseManager.addTask(task);
     }
 }
