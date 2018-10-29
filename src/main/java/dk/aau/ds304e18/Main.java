@@ -4,8 +4,7 @@ package dk.aau.ds304e18;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
-
-import java.util.List;
+import dk.aau.ds304e18.models.Task;
 
 class Main {
     public static void main(String[] args) {
@@ -20,16 +19,21 @@ class Main {
             e.printStackTrace();
         }
         */
-
+        DatabaseManager.distributeModels();
         Employee rasmus = new Employee("Rasmus Smit Lindholt");
         Project testProj = new Project("Dank communication things to communicate with things");
-        DatabaseManager.distributeModels();
 
-        DatabaseManager.addEmployees(rasmus);
-        DatabaseManager.addProject(testProj);
 
-        LocalObjStorage.getProjectById(testProj.getId())
-                .addNewEmployee(LocalObjStorage.getEmployeeById(rasmus.getId()));
-
+        Task task = new Task("Test task", 100, 1, testProj);
+        task.addEmployee(rasmus);
+        /* Test performance
+        Instant start = java.time.Instant.now();
+        Thread.sleep(1000);
+        Instant end = java.time.Instant.now();
+        Duration between = java.time.Duration.between(start, end);
+        System.out.println( between ); // PT1.001S
+        System.out.format("%dD, %02d:%02d:%02d.%04d \n", between.toDays(),
+        between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001 
+         */
     }
 }

@@ -1,8 +1,12 @@
 package dk.aau.ds304e18.models;
 
+import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.database.DatabaseProject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The class representing of a project
@@ -17,7 +21,7 @@ public class Project {
     /**
      * The name of the project.
      */
-    private final String name;
+    private String name;
 
     /**
      * The current state of the project.
@@ -42,6 +46,18 @@ public class Project {
     public Project(String name) {
         this.name = name;
         this.state = ProjectState.ONGOING;
+        DatabaseManager.addProject(this);
+    }
+
+    /**
+     * Constructor for a project using data from database.
+     *
+     * @param databaseProject - Project object from database.
+     */
+    public Project(DatabaseProject databaseProject) {
+        id = databaseProject.id;
+        state = databaseProject.state;
+        name = databaseProject.name;
     }
 
     /**
@@ -51,6 +67,7 @@ public class Project {
      */
     public void addNewTask(Task... task) {
         tasks.addAll(Arrays.asList(task));
+        DatabaseManager.updateProject(this);
     }
 
     /**
@@ -144,5 +161,18 @@ public class Project {
      */
     public void setState(ProjectState state) {
         this.state = state;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return id == project.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

@@ -14,19 +14,19 @@ public class LocalObjStorage {
     /**
      * The list of employees.
      */
-    private static ArrayList<Employee> employeeList = new ArrayList<>();
+    private static final ArrayList<Employee> employeeList = new ArrayList<>();
 
 
     /**
      * The list of projects.
      */
-    private static ArrayList<Project> projectList = new ArrayList<>();
+    private static final ArrayList<Project> projectList = new ArrayList<>();
 
 
     /**
      * The list of tasks.
      */
-    private static ArrayList<Task> taskList = new ArrayList<>();
+    private static final ArrayList<Task> taskList = new ArrayList<>();
 
     /**
      * Gets list of employees.
@@ -52,14 +52,6 @@ public class LocalObjStorage {
     public static Employee getEmployeeById(int id) {
         return LocalObjStorage.employeeList.stream().filter(emp -> emp.getId() == id)
                 .findFirst().orElse(null);
-    }
-
-    /**
-     * Sets the employeeList to the new employeeList.
-     * @param employeeList the new list of employees to set.
-     */
-    public static void setEmployeeList(ArrayList<Employee> employeeList) {
-        LocalObjStorage.employeeList = employeeList;
     }
 
     /**
@@ -89,14 +81,6 @@ public class LocalObjStorage {
     }
 
     /**
-     * Sets the current projectList to the projectList passed as an argument.
-     * @param projectList the new projectlist to set.
-     */
-    public static void setProjectList(ArrayList<Project> projectList) {
-        LocalObjStorage.projectList = projectList;
-    }
-
-    /**
      * Gets the list of tasks.
      * @return the list of tasks.
      */
@@ -120,13 +104,5 @@ public class LocalObjStorage {
     public static Task getTaskById(int id) {
         return LocalObjStorage.taskList.stream().filter(task -> task.getId() == id)
                 .findFirst().orElse(null);
-    }
-
-    /**
-     * Sets the current taskList to the passed taskList.
-     * @param taskList the new task list to set.
-     */
-    public static void setTaskList(ArrayList<Task> taskList) {
-        LocalObjStorage.taskList = taskList;
     }
 }

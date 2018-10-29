@@ -1,11 +1,13 @@
 package ds304e18.models;
 
+import dk.aau.ds304e18.database.DatabaseEmployee;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class EmployeeTest {
 
@@ -16,6 +18,24 @@ class EmployeeTest {
     void TestEmployeeConstructor01() {
         Employee newEmployee = new Employee("Abraham");
         assertEquals("Abraham", newEmployee.getName());
+    }
+
+    @Test
+    void TestEmployeeConstructor02() {
+        DatabaseEmployee newDatabaseEmployee = new DatabaseEmployee();
+        newDatabaseEmployee.id = 1;
+        Employee newEmployee = new Employee(newDatabaseEmployee);
+
+        assertEquals(1,newEmployee.getId());
+    }
+
+    @Test
+    void TestEmployeeConstructor03() {
+        DatabaseEmployee newDatabaseEmployee = new DatabaseEmployee();
+        newDatabaseEmployee.name = "Person";
+        Employee newEmployee = new Employee(newDatabaseEmployee);
+
+        assertEquals("Person",newEmployee.getName());
     }
 
     /**
@@ -106,4 +126,43 @@ class EmployeeTest {
         assertEquals(newProject, newEmployee.getProject());
     }
 
+    @Test
+    void TestEmployeeEquals01() {
+        Employee employee1 = new Employee("Test Person1");
+        Employee employee2 = new Employee("Test Person2");
+        employee1.setId(1);
+        employee2.setId(1);
+
+        assertEquals(employee1, employee2);
+    }
+
+    @Test
+    void TestEmployeeEquals02() {
+        Employee employee1 = new Employee("Test Person1");
+        Employee employee2 = new Employee("Test Person2");
+        employee1.setId(1);
+        employee2.setId(2);
+
+        assertNotEquals(employee1, employee2);
+    }
+
+    @Test
+    void TestEmployeeHashcode01() {
+        Employee employee1 = new Employee("Test Person1");
+        Employee employee2 = new Employee("Test Person2");
+        employee1.setId(1);
+        employee2.setId(1);
+
+        assertEquals(employee1.hashCode(), employee2.hashCode());
+    }
+
+    @Test
+    void TestEmployeeHashcode02() {
+        Employee employee1 = new Employee("Test Person1");
+        Employee employee2 = new Employee("Test Person2");
+        employee1.setId(1);
+        employee2.setId(2);
+
+        assertNotEquals(employee1.hashCode(), employee2.hashCode());
+    }
 }

@@ -1,10 +1,12 @@
 package dk.aau.ds304e18.database;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-class DatabaseTask {
+/**
+ * The DatabaseTask is the representation of the task in the database.
+ */
+public class DatabaseTask {
 
     /**
      * The id of the task.
@@ -19,7 +21,7 @@ class DatabaseTask {
     /**
      * The estimated completion of the task.
      */
-    public int estimatedTime;
+    public double estimatedTime;
 
     /**
      * The list of ids of employees assigned to the task.
@@ -29,17 +31,17 @@ class DatabaseTask {
     /**
      * The list of ids of dependencies the task has.
      */
-    public final List<Integer> dependencieIds = new ArrayList<>();
+    public  List<Integer> dependenceIds = new ArrayList<>();
 
     /**
      * The starting date of the task.
      */
-    public LocalDate startDate;
+    public double startTime;
 
     /**
      * The estimated completion date of the task.
      */
-    public LocalDate endDate;
+    public double endTime;
 
     /**
      * The priority of the task.

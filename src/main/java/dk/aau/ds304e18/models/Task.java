@@ -1,8 +1,12 @@
 package dk.aau.ds304e18.models;
 
-import java.time.LocalDate;
+import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.database.DatabaseTask;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The class representing a task
@@ -22,7 +26,7 @@ public class Task {
     /**
      * The estimated completion time of the task
      */
-    private int estimatedTime;
+    private double estimatedTime;
 
     /**
      * The list of the employees assigned to the task
@@ -37,12 +41,12 @@ public class Task {
     /**
      * The date that the task starts.
      */
-    private final LocalDate startDate;
+    private double startTime;
 
     /**
      * The date the task should be completed.
      */
-    private LocalDate endDate;
+    private double endTime;
 
     /**
      * The level of priority that the task has compared to other tasks.
@@ -62,21 +66,26 @@ public class Task {
      * @param priority      The priority value of the task.
      * @param project       The project that that the task is a part of.
      */
-    public Task(String name, int estimatedTime, int priority, Project project) {
+    public Task(String name, double estimatedTime, int priority, Project project) {
         this.name = name;
         this.estimatedTime = estimatedTime;
         this.priority = priority;
         this.project = project;
-        this.startDate = LocalDate.now();
+        DatabaseManager.addTask(this);
     }
 
-    public Task(int id, String name, int estimatedTime, LocalDate startDate, LocalDate endDate, int priority) {
-        this.id = id;
-        this.name = name;
-        this.estimatedTime = estimatedTime;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.priority = priority;
+    /**
+     * The database based constructor for the task.
+     *
+     * @param databaseTask - The task object retrieved from the database.
+     */
+    public Task(DatabaseTask databaseTask) {
+        name = databaseTask.name;
+        id = databaseTask.id;
+        estimatedTime = databaseTask.estimatedTime;
+        startTime = databaseTask.startTime;
+        endTime = databaseTask.endTime;
+        priority = databaseTask.priority;
     }
 
     /**
@@ -102,7 +111,7 @@ public class Task {
      *
      * @return estimatedTime - The estimated completion time.
      */
-    public int getEstimatedTime() {
+    public double getEstimatedTime() {
         return estimatedTime;
     }
 
@@ -115,12 +124,8 @@ public class Task {
         return employees;
     }
 
-    public void addEmployee(Employee emp) {
-        this.employees.add(emp);
-    }
-
     /**
-     * The getter for the depencies list.
+     * The getter for the dependencies list.
      *
      * @return dependencies - The list of dependencies
      */
@@ -128,26 +133,22 @@ public class Task {
         return dependencies;
     }
 
-    public void addDependency(Task task) {
-        this.dependencies.add(task);
-    }
-
     /**
      * The getter for the start date
      *
-     * @return startDate - The date the task was started.
+     * @return startTime - The date the task was started.
      */
-    public LocalDate getStartDate() {
-        return startDate;
+    public double getStartTime() {
+        return startTime;
     }
 
     /**
      * The getter for the end date of the task.
      *
-     * @return endDate - The date at which the task should be completed.
+     * @return endTime - The date at which the task should be completed.
      */
-    public LocalDate getEndDate() {
-        return endDate;
+    public double getEndTime() {
+        return endTime;
     }
 
     /**
@@ -193,10 +194,10 @@ public class Task {
     /**
      * The setter for the end date.
      *
-     * @param endDate - The date at which the task should be completed
+     * @param endTime - The date at which the task should be completed
      */
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setEndTime(double endTime) {
+        this.endTime = endTime;
     }
 
     /**
@@ -206,5 +207,42 @@ public class Task {
      */
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    /**
+     * Assign employees to the Task.
+     *
+     * @param employee - The employees to add to the Task.
+     */
+    public void addEmployee(Employee... employee) {
+        employees.addAll(Arrays.asList(employee));
+        for (Employee emp :employee ) {
+            emp.setProject(project);
+            emp.addNewTask(this);
+        }
+        DatabaseManager.updateTask(this);
+        project.addNewTask(this);
+    }
+
+    /**
+     * Assign Dependencies to the Task
+     *
+     * @param task - The tasks to add to dependencies
+     */
+    public void addDependency(Task... task) {
+        dependencies.addAll(Arrays.asList(task));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id == task.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

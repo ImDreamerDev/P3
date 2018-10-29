@@ -19,6 +19,8 @@ public class DatabaseManager {
 
     private static Connection dbConnection;
 
+    public static boolean isTests = false;
+
     /**
      * Sends a query to the DB and returns the result.
      *
@@ -74,6 +76,7 @@ public class DatabaseManager {
      * @return bool to indicate whether the operation was successful.
      */
     public static boolean addEmployees(Employee emp) {
+        if (isTests) return false;
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employees (name, currenttasks," +
@@ -109,6 +112,7 @@ public class DatabaseManager {
      * @return bool to indicate whether the operation was successful.
      */
     public static Boolean addProject(Project project) {
+        if (isTests) return false;
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projects " +
@@ -149,13 +153,50 @@ public class DatabaseManager {
                 emp.currentTaskId = Arrays.asList((Integer[]) rs.getArray(3).getArray());
                 emp.preTaskId = Arrays.asList((Integer[]) rs.getArray(4).getArray());
                 emp.projectId = rs.getInt(5);
-                //TODO get tasks and projectID
                 empList.add(emp);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return empList;
+    }
+
+
+    public static boolean addTask(Task task) {
+        if (isTests) return false;
+        if (dbConnection == null) connect();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO tasks (name, estimatedtime," +
+                    " employees, dependencies, startdate, enddate, priority, projectid) values (?, ?, ?, ?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, task.getName());
+            statement.setDouble(2, task.getEstimatedTime());
+            if (task.getEmployees().size() == 0)
+                statement.setArray(3, null);
+            else
+                statement.setArray(3, dbConnection.createArrayOf("INTEGER",
+                        task.getEmployees().stream().map(Employee::getId).toArray()
+                ));
+            statement.setArray(4, dbConnection.createArrayOf("INTEGER",
+                    task.getDependencies().stream().map(Task::getId).toArray()
+            ));
+            statement.setDouble(5, (task.getStartTime()));
+            statement.setDouble(6, (task.getEndTime()));
+            statement.setInt(7, task.getPriority());
+
+            if (task.getProject() != null) statement.setInt(8, task.getProject().getId());
+            else statement.setInt(8, 0);
+
+            if (statement.execute()) return false;
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) task.setId(rs.getInt(1));
+            LocalObjStorage.addTask(task);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -186,7 +227,7 @@ public class DatabaseManager {
     /**
      * Get all databaseTasks.
      *
-     * @return lsit of all database tasks.
+     * @return list of all database tasks.
      */
     private static List<DatabaseTask> getAllTasks() {
         if (dbConnection == null) connect();
@@ -199,12 +240,14 @@ public class DatabaseManager {
                 DatabaseTask task = new DatabaseTask();
                 task.id = rs.getInt(1);
                 task.name = rs.getString(2);
-                task.estimatedTime = rs.getInt(3);
-                task.employeeIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
-                task.startDate = rs.getDate(5).toLocalDate();
-                task.endDate = rs.getDate(6).toLocalDate();
-                task.priority = rs.getInt(7);
-                task.projectId = rs.getInt(8);
+                task.estimatedTime = rs.getDouble(3);
+                if (rs.getArray(4) != null)
+                    task.employeeIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
+                task.dependenceIds = Arrays.asList((Integer[]) rs.getArray(5).getArray());
+                task.priority = rs.getInt(6);
+                task.projectId = rs.getInt(7);
+                task.startTime = rs.getDouble(8);
+                task.endTime = rs.getDouble(9);
                 databaseTasks.add(task);
             }
         } catch (SQLException e) {
@@ -218,52 +261,58 @@ public class DatabaseManager {
         List<DatabaseTask> dbTaskList = getAllTasks();
         List<DatabaseProject> dbProjectList = getAllProjects();
 
-        dbEmpList.forEach(dbEmp -> LocalObjStorage.addEmployee((Converter.convertEmployee(dbEmp))));
-        dbTaskList.forEach(dbTask -> LocalObjStorage.addTask(Converter.convertTask(dbTask)));
-        dbProjectList.forEach(dbProj -> LocalObjStorage.addProject((Converter.convertProject(dbProj))));
+        LocalObjStorage.getEmployeeList().clear();
+        LocalObjStorage.getTaskList().clear();
+        LocalObjStorage.getProjectList().clear();
+        
+        dbEmpList.forEach(dbEmp -> {
+            if (LocalObjStorage.getEmployeeList().stream().anyMatch(emp -> emp.getId() == dbEmp.id))
+                return;
+            LocalObjStorage.addEmployee((Converter.convertEmployee(dbEmp)));
+        });
+        dbTaskList.forEach(dbTask -> {
+            if (LocalObjStorage.getTaskList().stream().anyMatch(task -> task.getId() == dbTask.id))
+                return;
+            LocalObjStorage.addTask(Converter.convertTask(dbTask));
+        });
+        dbProjectList.forEach(dbProj -> {
+            if (LocalObjStorage.getProjectList().stream().anyMatch(project -> project.getId() == dbProj.id))
+                return;
+            LocalObjStorage.addProject((Converter.convertProject(dbProj)));
+        });
 
         //Distribute employees
-        for (int i = 0; i < LocalObjStorage.getEmployeeList().size(); i++) {
-            LocalObjStorage.getEmployeeList().get(i).setProject(
-                    LocalObjStorage.getProjectById(dbEmpList.get(i).projectId));
-
-            int finalI = i;
-            dbEmpList.get(i).currentTaskIds.forEach(taskId -> LocalObjStorage.getEmployeeList().get(finalI)
-                    .addNewTask(LocalObjStorage.getTaskById(taskId)));
-
-            dbEmpList.get(i).preTaskId.forEach(taskId -> LocalObjStorage.getEmployeeList().get(finalI)
-                    .addPreviousTask(LocalObjStorage.getTaskById(taskId)));
+        for (Employee emp : LocalObjStorage.getEmployeeList()) {
+            DatabaseEmployee dbEmp = dbEmpList.stream().filter(databaseEmployee -> databaseEmployee.id == emp.getId()).findFirst().orElse(null);
+            if (dbEmp == null) continue;
+            emp.setProject(LocalObjStorage.getProjectById(dbEmp.projectId));
+            dbEmp.currentTaskId.forEach(taskId -> emp.addNewTask(LocalObjStorage.getTaskById(taskId)));
+            dbEmp.preTaskId.forEach(taskId -> emp.addPreviousTask(LocalObjStorage.getTaskById(taskId)));
         }
 
         //Distribute tasks
-        for (int i = 0; i < LocalObjStorage.getTaskList().size(); i++) {
-
-            //Set project
-            LocalObjStorage.getTaskList().get(i).setProject(
-                    LocalObjStorage.getProjectById(dbTaskList.get(i).projectId));
-
-            int finalI = i;
-            //Set employees
-            dbTaskList.get(i).employeeIds.forEach(empId -> LocalObjStorage.getTaskList().get(finalI).addEmployee(LocalObjStorage.getEmployeeById(empId)));
-
-            //Set Dependencies
-            dbTaskList.get(i).dependencieIds.forEach(taskId -> LocalObjStorage.getTaskList().get(finalI)
-                    .addDependency(LocalObjStorage.getTaskById(taskId)));
+        for (Task task : LocalObjStorage.getTaskList()) {
+            DatabaseTask dbTask = dbTaskList.stream().filter(databaseTask -> databaseTask.id == task.getId()).findFirst().orElse(null);
+            if (dbTask == null) continue;
+            task.setProject(LocalObjStorage.getProjectById(dbTask.projectId));
+            dbTask.employeeIds.forEach(empId -> task.addEmployee(LocalObjStorage.getEmployeeById(empId)));
+            dbTask.dependenceIds.forEach(taskId -> task.addDependency(LocalObjStorage.getTaskById(taskId)));
         }
 
         //Distribute projects
-        for (int i = 0; i < LocalObjStorage.getProjectList().size(); i++) {
-            int finalI = i;
-            dbProjectList.get(i).employeeIds.forEach(empId -> LocalObjStorage.getProjectList().get(finalI)
-                    .addNewEmployee(LocalObjStorage.getEmployeeById(empId)));
-
-            dbProjectList.get(i).tasks.forEach(taskId -> LocalObjStorage.getProjectList().get(finalI)
-                    .addNewTask(LocalObjStorage.getTaskById(taskId)));
+        for (Project proj : LocalObjStorage.getProjectList()) {
+            if (LocalObjStorage.getProjectList().stream().anyMatch(project -> project.getId() == proj.getId()))
+                continue;
+            DatabaseProject dbProject = dbProjectList.stream().filter(databaseProject -> databaseProject.id == proj.getId()).findFirst().orElse(null);
+            if (dbProject == null) continue;
+            dbProject.employeeIds.forEach(empId -> proj.addNewEmployee(LocalObjStorage.getEmployeeById(empId)));
+            dbProject.tasks.forEach(taskId -> proj.addNewTask(LocalObjStorage.getTaskById(taskId)));
         }
     }
 
 
     public static void updateEmployee(Employee employee) {
+        if (isTests) return;
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET currenttasks = ?" +
                     ", previoustasks = ?, projectid = ? WHERE id = ?");
@@ -274,7 +323,50 @@ public class DatabaseManager {
                     employee.getPreviousTask().stream().map(Task::getId).toArray()
             ));
             statement.setInt(3, employee.getProject().getId());
-            statement.setInt(4,employee.getId());
+            statement.setInt(4, employee.getId());
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void updateTask(Task task){
+        if (isTests) return;
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("UPDATE tasks SET employees = ?" +
+                    ", dependencies = ?, projectid = ?, estimatedtime = ?, priority = ?, startdate = ?, enddate = ? WHERE id = ?");
+            statement.setArray(1, dbConnection.createArrayOf("INTEGER",
+                    task.getEmployees().stream().map(Employee::getId).toArray()
+            ));
+            statement.setArray(2, dbConnection.createArrayOf("INTEGER",
+                    task.getDependencies().stream().map(Task::getId).toArray()
+            ));
+            statement.setInt(3, task.getProject().getId());
+            statement.setDouble(4, task.getEstimatedTime());
+            statement.setInt(5, task.getPriority());
+            statement.setDouble(6,task.getStartTime());
+            statement.setDouble(7,task.getEndTime());
+            statement.setInt(8,task.getId());
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateProject(Project project) {
+        if (isTests) return;
+
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?," +
+                    " tasks = ?, employees = ? WHERE id = ?");
+            statement.setInt(1, project.getState().getValue());
+            statement.setArray(2, dbConnection.createArrayOf("INTEGER",
+                    project.getTasks().stream().map(Task::getId).toArray()));
+            statement.setArray(3, dbConnection.createArrayOf("INTEGER",
+                    project.getEmployees().stream().map(Employee::getId).toArray()));
+
+            statement.setInt(4, project.getId());
             statement.execute();
 
         } catch (SQLException e) {

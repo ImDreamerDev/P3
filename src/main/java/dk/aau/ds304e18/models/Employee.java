@@ -1,9 +1,11 @@
 package dk.aau.ds304e18.models;
 
+import dk.aau.ds304e18.database.DatabaseEmployee;
 import dk.aau.ds304e18.database.DatabaseManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The class representing the Employee
@@ -42,6 +44,17 @@ public class Employee {
      */
     public Employee(String name) {
         this.name = name;
+        DatabaseManager.addEmployees(this);
+    }
+
+    /**
+     * Constructor for the employee class using database.
+     *
+     * @param databaseEmployee - Database employee object.
+     */
+    public Employee(DatabaseEmployee databaseEmployee) {
+        name = databaseEmployee.name;
+        id = databaseEmployee.id;
     }
 
     /**
@@ -84,14 +97,14 @@ public class Employee {
     /**
      * the getter for the currentTask
      *
-     * @return currenTask - a list of the currentTasks that the employee is assigned to
+     * @return currentTask - a list of the currentTasks that the employee is assigned to
      */
     public List<Task> getCurrentTask() {
         return currentTask;
     }
 
     /**
-     * The getter for prevousTask.
+     * The getter for previousTask.
      *
      * @return previousTask - a list of the previous tasks that the employee is no longer working on.
      */
@@ -99,6 +112,10 @@ public class Employee {
         return previousTask;
     }
 
+    /**
+     * A function to add a task to the previousTask list.
+     * @param task - The task to add.
+     */
     public void addPreviousTask(Task task) {
         this.previousTask.add(task);
         DatabaseManager.updateEmployee(this);
@@ -119,12 +136,22 @@ public class Employee {
      * @param project - The project object that the employee will work on.
      */
     public void setProject(Project project) {
-        if (project == null) {
-        }
-        else {
+        if (project != null) {
             this.project = project;
             DatabaseManager.updateEmployee(this);
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return id == employee.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

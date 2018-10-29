@@ -15,6 +15,7 @@ class DatabaseManagerTest {
      */
     @Test
     void assertQuery() {
+        DatabaseManager.isTests = true;
         ResultSet rs = DatabaseManager.query("SELECT * FROM employees");
         assertNotNull(rs);
     }
