@@ -261,6 +261,10 @@ public class DatabaseManager {
         List<DatabaseTask> dbTaskList = getAllTasks();
         List<DatabaseProject> dbProjectList = getAllProjects();
 
+        LocalObjStorage.getEmployeeList().clear();
+        LocalObjStorage.getTaskList().clear();
+        LocalObjStorage.getProjectList().clear();
+        
         dbEmpList.forEach(dbEmp -> {
             if (LocalObjStorage.getEmployeeList().stream().anyMatch(emp -> emp.getId() == dbEmp.id))
                 return;
