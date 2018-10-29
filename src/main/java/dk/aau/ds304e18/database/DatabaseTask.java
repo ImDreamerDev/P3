@@ -3,6 +3,9 @@ package dk.aau.ds304e18.database;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The DatabaseTask is the representation of the task in the database.
+ */
 public class DatabaseTask {
 
     /**

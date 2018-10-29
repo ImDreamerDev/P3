@@ -5,6 +5,9 @@ import dk.aau.ds304e18.models.ProjectState;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The DatabaseProject is the representation of the project in the database.
+ */
 public class DatabaseProject {
 
     /**
