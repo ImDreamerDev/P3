@@ -46,6 +46,11 @@ public class Employee {
         DatabaseManager.addEmployees(this);
     }
 
+    /**
+     * Constructor for the employee class using database.
+     *
+     * @param databaseEmployee - Database employee object.
+     */
     public Employee(DatabaseEmployee databaseEmployee) {
         name = databaseEmployee.name;
         id = databaseEmployee.id;
@@ -106,6 +111,10 @@ public class Employee {
         return previousTask;
     }
 
+    /**
+     * A function to add a task to the previousTask list.
+     * @param task - The task to add.
+     */
     public void addPreviousTask(Task task) {
         this.previousTask.add(task);
         DatabaseManager.updateEmployee(this);

@@ -49,6 +49,10 @@ public class Project {
         DatabaseManager.addProject(this);
     }
 
+    /**
+     * Constructor for a project using data from database.
+     * @param databaseProject - Project object from database.
+     */
     public Project(DatabaseProject databaseProject) {
         id = databaseProject.id;
         state = databaseProject.state;
