@@ -236,13 +236,10 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String,double,double,double,int)">Task</a></span>&#8203;(int&nbsp;id,
-    java.lang.String&nbsp;name,
-    double&nbsp;estimatedTime,
-    double&nbsp;startTime,
-    double&nbsp;endTime,
-    int&nbsp;priority)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(dk.aau.ds304e18.database.DatabaseTask)">Task</a></span>&#8203;(<a href="../database/DatabaseTask.html" title="class in dk.aau.ds304e18.database">DatabaseTask</a>&nbsp;databaseTask)</code></th>
+<td class="colLast">
+<div class="block">The database based constructor for the task.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,double,int,dk.aau.ds304e18.models.Project)">Task</a></span>&#8203;(java.lang.String&nbsp;name,
@@ -273,13 +270,17 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addDependency(dk.aau.ds304e18.models.Task)">addDependency</a></span>&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addDependency(dk.aau.ds304e18.models.Task...)">addDependency</a></span>&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>...&nbsp;task)</code></th>
+<td class="colLast">
+<div class="block">Assign Dependencies to the Task</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEmployee(dk.aau.ds304e18.models.Employee)">addEmployee</a></span>&#8203;(<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&nbsp;emp)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEmployee(dk.aau.ds304e18.models.Employee...)">addEmployee</a></span>&#8203;(<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>...&nbsp;employee)</code></th>
+<td class="colLast">
+<div class="block">Assign employees to the Task.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
@@ -521,18 +522,18 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(int,java.lang.String,double,double,double,int)">
+<a id="&lt;init&gt;(dk.aau.ds304e18.database.DatabaseTask)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Task</h4>
-<pre>public&nbsp;Task&#8203;(int&nbsp;id,
-            java.lang.String&nbsp;name,
-            double&nbsp;estimatedTime,
-            double&nbsp;startTime,
-            double&nbsp;endTime,
-            int&nbsp;priority)</pre>
+<pre>public&nbsp;Task&#8203;(<a href="../database/DatabaseTask.html" title="class in dk.aau.ds304e18.database">DatabaseTask</a>&nbsp;databaseTask)</pre>
+<div class="block">The database based constructor for the task.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>databaseTask</code> - - The task object retrieved from the database.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -601,15 +602,6 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="addEmployee(dk.aau.ds304e18.models.Employee)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addEmployee</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addEmployee&#8203;(<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&nbsp;emp)</pre>
-</li>
-</ul>
 <a id="getDependencies()">
 <!--   -->
 </a>
@@ -622,15 +614,6 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>dependencies - The list of dependencies</dd>
 </dl>
-</li>
-</ul>
-<a id="addDependency(dk.aau.ds304e18.models.Task)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addDependency</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addDependency&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</pre>
 </li>
 </ul>
 <a id="getStartTime()">
@@ -743,7 +726,7 @@ extends java.lang.Object</pre>
 <a id="setPriority(int)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setPriority</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setPriority&#8203;(int&nbsp;priority)</pre>
@@ -751,6 +734,34 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>priority</code> - - The priority of the task.</dd>
+</dl>
+</li>
+</ul>
+<a id="addEmployee(dk.aau.ds304e18.models.Employee...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addEmployee</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addEmployee&#8203;(<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>...&nbsp;employee)</pre>
+<div class="block">Assign employees to the Task.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>employee</code> - - The employees to add to the Task.</dd>
+</dl>
+</li>
+</ul>
+<a id="addDependency(dk.aau.ds304e18.models.Task...)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>addDependency</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addDependency&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>...&nbsp;task)</pre>
+<div class="block">Assign Dependencies to the Task</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>task</code> - - The tasks to add to dependencies</dd>
 </dl>
 </li>
 </ul>

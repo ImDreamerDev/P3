@@ -208,6 +208,12 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(dk.aau.ds304e18.database.DatabaseEmployee)">Employee</a></span>&#8203;(<a href="../database/DatabaseEmployee.html" title="class in dk.aau.ds304e18.database">DatabaseEmployee</a>&nbsp;databaseEmployee)</code></th>
+<td class="colLast">
+<div class="block">Constructor for the employee class using database.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">Employee</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">The constructor for the employee class</div>
@@ -241,7 +247,9 @@ extends java.lang.Object</pre>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addPreviousTask(dk.aau.ds304e18.models.Task)">addPreviousTask</a></span>&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">A function to add a task to the previousTask list.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
@@ -379,7 +387,7 @@ extends java.lang.Object</pre>
 <a id="&lt;init&gt;(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>Employee</h4>
 <pre>public&nbsp;Employee&#8203;(java.lang.String&nbsp;name)</pre>
@@ -387,6 +395,20 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - - The name of the employee.</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(dk.aau.ds304e18.database.DatabaseEmployee)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>Employee</h4>
+<pre>public&nbsp;Employee&#8203;(<a href="../database/DatabaseEmployee.html" title="class in dk.aau.ds304e18.database">DatabaseEmployee</a>&nbsp;databaseEmployee)</pre>
+<div class="block">Constructor for the employee class using database.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>databaseEmployee</code> - - Database employee object.</dd>
 </dl>
 </li>
 </ul>
@@ -491,6 +513,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>addPreviousTask</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;addPreviousTask&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</pre>
+<div class="block">A function to add a task to the previousTask list.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>task</code> - - The task to add.</dd>
+</dl>
 </li>
 </ul>
 <a id="setId(int)">

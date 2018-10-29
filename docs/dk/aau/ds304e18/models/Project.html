@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -208,6 +208,12 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(dk.aau.ds304e18.database.DatabaseProject)">Project</a></span>&#8203;(<a href="../database/DatabaseProject.html" title="class in dk.aau.ds304e18.database">DatabaseProject</a>&nbsp;databaseProject)</code></th>
+<td class="colLast">
+<div class="block">Constructor for a project using data from database.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">Project</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Constructor for project.</div>
@@ -303,6 +309,11 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setName(java.lang.String)">setName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setState(dk.aau.ds304e18.models.ProjectState)">setState</a></span>&#8203;(<a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a>&nbsp;state)</code></th>
 <td class="colLast">
 <div class="block">Sets the current state of the project.</div>
@@ -348,7 +359,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>name</h4>
-<pre>private final&nbsp;java.lang.String name</pre>
+<pre>private&nbsp;java.lang.String name</pre>
 <div class="block">The name of the project.</div>
 </li>
 </ul>
@@ -395,7 +406,7 @@ extends java.lang.Object</pre>
 <a id="&lt;init&gt;(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>Project</h4>
 <pre>public&nbsp;Project&#8203;(java.lang.String&nbsp;name)</pre>
@@ -403,6 +414,20 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - - The name of the project.</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(dk.aau.ds304e18.database.DatabaseProject)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>Project</h4>
+<pre>public&nbsp;Project&#8203;(<a href="../database/DatabaseProject.html" title="class in dk.aau.ds304e18.database">DatabaseProject</a>&nbsp;databaseProject)</pre>
+<div class="block">Constructor for a project using data from database.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>databaseProject</code> - - Project object from database.</dd>
 </dl>
 </li>
 </ul>
@@ -559,7 +584,7 @@ extends java.lang.Object</pre>
 <a id="setState(dk.aau.ds304e18.models.ProjectState)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setState</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setState&#8203;(<a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a>&nbsp;state)</pre>
@@ -568,6 +593,15 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>state</code> - - the new state to set.</dd>
 </dl>
+</li>
+</ul>
+<a id="setName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setName</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setName&#8203;(java.lang.String&nbsp;name)</pre>
 </li>
 </ul>
 </li>
