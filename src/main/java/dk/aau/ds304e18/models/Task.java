@@ -6,6 +6,7 @@ import dk.aau.ds304e18.database.DatabaseTask;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The class representing a task
@@ -230,5 +231,18 @@ public class Task {
      */
     public void addDependency(Task... task) {
         dependencies.addAll(Arrays.asList(task));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id == task.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
