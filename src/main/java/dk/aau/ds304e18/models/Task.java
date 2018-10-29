@@ -83,6 +83,7 @@ public class Task {
         id = databaseTask.id;
         estimatedTime = databaseTask.estimatedTime;
         startTime = databaseTask.startTime;
+        endTime = databaseTask.endTime;
         priority = databaseTask.priority;
     }
 
@@ -123,7 +124,7 @@ public class Task {
     }
 
     /**
-     * The getter for the depencies list.
+     * The getter for the dependencies list.
      *
      * @return dependencies - The list of dependencies
      */

@@ -27,7 +27,7 @@ class ProjectTest {
      * Tests adding a new task to the project.
      */
     @Test
-    public void TestProjectAddNewTask01() {
+    void TestProjectAddNewTask01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 2, 1, newProject);
         newProject.addNewTask(newTask);
@@ -38,7 +38,7 @@ class ProjectTest {
      * Tests removing a task from the project.
      */
     @Test
-    public void TestProjectRemoveTask01() {
+    void TestProjectRemoveTask01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 2, 1, newProject);
         newProject.addNewTask(newTask);
@@ -50,7 +50,7 @@ class ProjectTest {
      * Tests adding a new employee to the project.
      */
     @Test
-    public void TestProjectAddNewEmployee01() {
+    void TestProjectAddNewEmployee01() {
         Project newProject = new Project("Test Project");
         Employee newEmployee = new Employee("Test Person");
         newProject.addNewEmployee(newEmployee);
@@ -61,7 +61,7 @@ class ProjectTest {
      * Tests removing a employee from the project.
      */
     @Test
-    public void TestProjectRemoveEmployee01() {
+    void TestProjectRemoveEmployee01() {
         Project newProject = new Project("Test Project");
         Employee newEmployee = new Employee("Test Person");
         newProject.addNewEmployee(newEmployee);
@@ -73,7 +73,7 @@ class ProjectTest {
      * Tests getting the id of the project.
      */
     @Test
-    public void TestProjectGetId01() {
+    void TestProjectGetId01() {
         Project newProject = new Project("Test Project");
         newProject.setId(5);
         assertEquals(5, newProject.getId());
@@ -83,7 +83,7 @@ class ProjectTest {
      * Tests getting the name of the project.
      */
     @Test
-    public void TestProjectGetName01() {
+    void TestProjectGetName01() {
         Project newProject = new Project("Test Project");
         assertEquals("Test Project", newProject.getName());
     }
@@ -92,7 +92,7 @@ class ProjectTest {
      * Tests getting the project state of the project.
      */
     @Test
-    public void TestProjectGetState01() {
+    void TestProjectGetState01() {
         Project newProject = new Project("Test Project");
         assertEquals(ProjectState.ONGOING, newProject.getState());
     }
@@ -101,7 +101,7 @@ class ProjectTest {
      * Tests getting the project's tasks.
      */
     @Test
-    public void TestProjectGetTasks01() {
+    void TestProjectGetTasks01() {
         Project newProject = new Project("Test Project");
         Task newTask01 = new Task("Test Task01", 2, 5, newProject);
         Task newTask02 = new Task("Test Task02", 1, 2, newProject);
@@ -118,7 +118,7 @@ class ProjectTest {
      * Tests getting the employees of the project.
      */
     @Test
-    public void TestProjectGetEmployees01() {
+    void TestProjectGetEmployees01() {
         Project newProject = new Project("Test Project");
         Employee newEmployee01 = new Employee("Person01");
         Employee newEmployee02 = new Employee("Person02");
@@ -135,7 +135,7 @@ class ProjectTest {
      * Tests setting the id of the project.
      */
     @Test
-    public void TestProjectSetId01() {
+    void TestProjectSetId01() {
         Project newProject = new Project("Test Project");
         newProject.setId(3);
         assertEquals(3, newProject.getId());
@@ -145,7 +145,7 @@ class ProjectTest {
      * Tests setting the state of the project.
      */
     @Test
-    public void TestProjectSetState01() {
+    void TestProjectSetState01() {
         Project newProject = new Project("Test Project");
         newProject.setState(ProjectState.COMPLETED);
         assertEquals(ProjectState.COMPLETED, newProject.getState());

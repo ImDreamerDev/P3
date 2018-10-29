@@ -96,14 +96,14 @@ public class Employee {
     /**
      * the getter for the currentTask
      *
-     * @return currenTask - a list of the currentTasks that the employee is assigned to
+     * @return currentTask - a list of the currentTasks that the employee is assigned to
      */
     public List<Task> getCurrentTask() {
         return currentTask;
     }
 
     /**
-     * The getter for prevousTask.
+     * The getter for previousTask.
      *
      * @return previousTask - a list of the previous tasks that the employee is no longer working on.
      */

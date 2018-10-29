@@ -16,13 +16,12 @@ public class DatabaseEmployee {
      * The name of the employee.
      */
     public String name;
-    public List<Integer> currentTaskId = new ArrayList<>();
-
+    
     /**
      * The list of ids of tasks.
      */
-    public final List<Integer> currentTaskIds = new ArrayList<>();
-
+    public List<Integer> currentTaskId = new ArrayList<>();
+    
     /**
      * The list of ids of previous tasks.
      */

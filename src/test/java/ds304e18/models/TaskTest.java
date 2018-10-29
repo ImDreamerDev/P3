@@ -5,45 +5,43 @@ import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TaskTest {
+class TaskTest {
 
     @Test
-    public void TestTaskConstructor01() {
+    void TestTaskConstructor01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         assertEquals("Test Task", newTask.getName());
     }
 
     @Test
-    public void TestTaskConstructor02() {
+    void TestTaskConstructor02() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         assertEquals(1, newTask.getEstimatedTime());
     }
 
     @Test
-    public void TestTaskConstructor03() {
+    void TestTaskConstructor03() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         assertEquals(1, newTask.getPriority());
     }
 
     @Test
-    public void TestTaskConstructor04() {
+    void TestTaskConstructor04() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         assertEquals(newProject, newTask.getProject());
     }
 
     @Test
-    public void TestTaskGetId01() {
+    void TestTaskGetId01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         newTask.setId(5);
@@ -51,28 +49,28 @@ public class TaskTest {
     }
 
     @Test
-    public void TestTaskGetName01() {
+    void TestTaskGetName01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         assertEquals("Test Task", newTask.getName());
     }
 
     @Test
-    public void TestTaskGetEstimatedTime01() {
+    void TestTaskGetEstimatedTime01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 2, newProject);
         assertEquals(1, newTask.getEstimatedTime());
     }
 
     @Test
-    public void TestTaskGetPriority01() {
+    void TestTaskGetPriority01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 2, newProject);
         assertEquals(2, newTask.getPriority());
     }
 
     @Test
-    public void TestTaskGetEmployee01() {
+    void TestTaskGetEmployee01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         Employee newEmployee01 = new Employee("Person01");
@@ -87,7 +85,7 @@ public class TaskTest {
     }
 
     @Test
-    public void TestTaskGetDependencies01() {
+    void TestTaskGetDependencies01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         Task dependencie01 = new Task("Dependencie01", 1, 1, newProject);
@@ -102,7 +100,7 @@ public class TaskTest {
     }
 
     @Test
-    public void TestTaskGetStartDate01() {
+    void TestTaskGetStartDate01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
 
@@ -110,7 +108,7 @@ public class TaskTest {
     }
 
     @Test
-    public void TestTaskGetEndDate01() {
+    void TestTaskGetEndDate01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         newTask.setEndTime(1010);
@@ -119,7 +117,7 @@ public class TaskTest {
     }
 
     @Test
-    public void TestTaskGetProject01() {
+    void TestTaskGetProject01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
 
@@ -127,7 +125,7 @@ public class TaskTest {
     }
 
     @Test
-    public void TestTaskSetEndDate01() {
+    void TestTaskSetEndDate01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         newTask.setEndTime(12.4);
@@ -136,7 +134,7 @@ public class TaskTest {
     }
 
     @Test
-    public void TestTaskSetPriority01() {
+    void TestTaskSetPriority01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         newTask.setPriority(5);
@@ -145,7 +143,7 @@ public class TaskTest {
     }
 
     @Test
-    public void TestTaskAddEmployees01() {
+    void TestTaskAddEmployees01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
 
@@ -164,7 +162,7 @@ public class TaskTest {
     }
 
     @Test
-    public void TestTaskAddDependencies01() {
+    void TestTaskAddDependencies01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         Task dependencie01 = new Task("Dependencie01", 1, 1, newProject);
@@ -181,7 +179,7 @@ public class TaskTest {
     }
 
     @Test
-    public void TestTaskSetProject() {
+    void TestTaskSetProject() {
         Project project = new Project("Reeer");
         Task newTask = new Task("Test", 2, 10, project);
         Project newProject = new Project("Test Project");
@@ -191,7 +189,7 @@ public class TaskTest {
     }
 
     @Test
-    public void TestSetEstimatedTime() {
+    void TestSetEstimatedTime() {
         Project project = new Project("Reeer");
         Task newTask = new Task("Test", 2, 10, project);
         newTask.setEstimatedTime(9);

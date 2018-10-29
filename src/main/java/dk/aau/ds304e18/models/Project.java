@@ -3,7 +3,6 @@ package dk.aau.ds304e18.models;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.database.DatabaseProject;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -161,7 +160,4 @@ public class Project {
         this.state = state;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }

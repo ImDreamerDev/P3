@@ -5,7 +5,7 @@ public enum ProjectState {
     /**
      * The states that a given project can have.
      */
-    ONGOING(1), COMPLETED(2), ARCHIVED(3);
+    ONGOING(0), COMPLETED(1), ARCHIVED(2);
     private final int value;
 
     ProjectState(int value) {

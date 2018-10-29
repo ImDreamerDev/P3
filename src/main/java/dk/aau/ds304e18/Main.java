@@ -6,9 +6,6 @@ import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 
-import java.time.LocalDate;
-import java.util.List;
-
 class Main {
     public static void main(String[] args) {
 

@@ -1,6 +1,5 @@
 package dk.aau.ds304e18.database;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class DatabaseTask {
     /**
      * The list of ids of dependencies the task has.
      */
-    public  List<Integer> dependencieIds = new ArrayList<>();
+    public  List<Integer> dependenceIds = new ArrayList<>();
 
     /**
      * The starting date of the task.
