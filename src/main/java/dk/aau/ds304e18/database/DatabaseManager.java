@@ -92,6 +92,7 @@ public class DatabaseManager {
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) emp.setId(rs.getInt(1));
+            LocalObjStorage.addEmployee(emp);
 
 
         } catch (SQLException e) {
@@ -122,6 +123,7 @@ public class DatabaseManager {
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) project.setId(rs.getInt(1));
+            LocalObjStorage.addProject(project);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -154,6 +156,40 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return empList;
+    }
+
+
+    public static boolean addTask(Task task) {
+        if (dbConnection == null) connect();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO tasks (name, estimatedtime," +
+                    " employees, dependencies, startdate, enddate, priority, projectid) values (?, ?, ?, ?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, task.getName());
+            statement.setDouble(2, task.getEstimatedTime());
+            statement.setArray(3, dbConnection.createArrayOf("INTEGER",
+                    task.getEmployees().stream().map(Employee::getId).toArray()
+            ));
+            statement.setArray(4, dbConnection.createArrayOf("INTEGER",
+                    task.getDependencies().stream().map(Task::getId).toArray()
+            ));
+            statement.setDouble(5, (task.getStartTime()));
+            statement.setDouble(6, (task.getEndTime()));
+            statement.setInt(7, task.getPriority());
+
+            if (task.getProject() != null) statement.setInt(8, task.getProject().getId());
+            else statement.setInt(8, 0);
+
+            if (statement.execute()) return false;
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) task.setId(rs.getInt(1));
+            LocalObjStorage.addTask(task);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -197,10 +233,10 @@ public class DatabaseManager {
                 DatabaseTask task = new DatabaseTask();
                 task.id = rs.getInt(1);
                 task.name = rs.getString(2);
-                task.estimatedTime = rs.getInt(3);
+                task.estimatedTime = rs.getDouble(3);
                 task.employeeIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
-                task.startDate = rs.getDate(5).toLocalDate();
-                task.endDate = rs.getDate(6).toLocalDate();
+                task.startTime = rs.getDouble(5);
+                task.endTime = rs.getDouble(6);
                 task.priority = rs.getInt(7);
                 task.projectId = rs.getInt(8);
                 databaseTasks.add(task);
@@ -258,14 +294,13 @@ public class DatabaseManager {
             dbProjectList.get(i).tasks.forEach(taskId -> LocalObjStorage.getProjectList().get(finalI)
                     .addNewTask(LocalObjStorage.getTaskById(taskId)));
         }
-        System.out.println("Done");
     }
 
 
     public static void updateEmployee(Employee employee) {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET currenttasks = ?" +
-                    ", previoustasks = ?, projectid = ? WHERE id == ?");
+                    ", previoustasks = ?, projectid = ? WHERE id = ?");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER",
                     employee.getCurrentTask().stream().map(Task::getId).toArray()
             ));
@@ -273,7 +308,8 @@ public class DatabaseManager {
                     employee.getPreviousTask().stream().map(Task::getId).toArray()
             ));
             statement.setInt(3, employee.getProject().getId());
-            statement.setInt(4,employee.getId());
+            statement.setInt(4, employee.getId());
+            statement.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();

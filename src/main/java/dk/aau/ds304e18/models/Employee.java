@@ -1,5 +1,7 @@
 package dk.aau.ds304e18.models;
 
+import dk.aau.ds304e18.database.DatabaseManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +51,7 @@ public class Employee {
      */
     public void addNewTask(Task task) {
         currentTask.add(task);
+        DatabaseManager.updateEmployee(this);
     }
 
     /**
@@ -98,6 +101,7 @@ public class Employee {
 
     public void addPreviousTask(Task task) {
         this.previousTask.add(task);
+        DatabaseManager.updateEmployee(this);
     }
 
     /**
@@ -115,7 +119,10 @@ public class Employee {
      * @param project - The project object that the employee will work on.
      */
     public void setProject(Project project) {
-        this.project = project;
+        if (project != null) {
+            this.project = project;
+            DatabaseManager.updateEmployee(this);
+        }
     }
 
 }

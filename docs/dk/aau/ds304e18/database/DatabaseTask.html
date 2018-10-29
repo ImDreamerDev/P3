@@ -126,7 +126,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <span class="typeNameLabel">DatabaseTask</span>
+<pre>class <span class="typeNameLabel">DatabaseTask</span>
 extends java.lang.Object</pre>
 </li>
 </ul>
@@ -163,14 +163,14 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>java.time.LocalDate</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#endDate">endDate</a></span></code></th>
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#endTime">endTime</a></span></code></th>
 <td class="colLast">
 <div class="block">The estimated completion date of the task.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>int</code></td>
+<td class="colFirst"><code>double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimatedTime">estimatedTime</a></span></code></th>
 <td class="colLast">
 <div class="block">The estimated completion of the task.</div>
@@ -205,8 +205,8 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>java.time.LocalDate</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startDate">startDate</a></span></code></th>
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startTime">startTime</a></span></code></th>
 <td class="colLast">
 <div class="block">The starting date of the task.</div>
 </td>
@@ -292,7 +292,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>estimatedTime</h4>
-<pre>public&nbsp;int estimatedTime</pre>
+<pre>public&nbsp;double estimatedTime</pre>
 <div class="block">The estimated completion of the task.</div>
 </li>
 </ul>
@@ -312,27 +312,27 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>dependencieIds</h4>
-<pre>public&nbsp;java.util.List&lt;java.lang.Integer&gt; dependencieIds</pre>
+<pre>public final&nbsp;java.util.List&lt;java.lang.Integer&gt; dependencieIds</pre>
 <div class="block">The list of ids of dependencies the task has.</div>
 </li>
 </ul>
-<a id="startDate">
+<a id="startTime">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>startDate</h4>
-<pre>public&nbsp;java.time.LocalDate startDate</pre>
+<h4>startTime</h4>
+<pre>public&nbsp;double startTime</pre>
 <div class="block">The starting date of the task.</div>
 </li>
 </ul>
-<a id="endDate">
+<a id="endTime">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>endDate</h4>
-<pre>public&nbsp;java.time.LocalDate endDate</pre>
+<h4>endTime</h4>
+<pre>public&nbsp;double endTime</pre>
 <div class="block">The estimated completion date of the task.</div>
 </li>
 </ul>
@@ -372,7 +372,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DatabaseTask</h4>
-<pre>public&nbsp;DatabaseTask()</pre>
+<pre>DatabaseTask()</pre>
 </li>
 </ul>
 </li>

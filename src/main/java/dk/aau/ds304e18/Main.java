@@ -2,8 +2,11 @@ package dk.aau.ds304e18;
 
 
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
+import dk.aau.ds304e18.models.Task;
 
+import java.time.LocalDate;
 import java.util.List;
 
 class Main {
@@ -18,19 +21,15 @@ class Main {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        */
 
         Employee rasmus = new Employee("Rasmus Smit Lindholt");
         Project testProj = new Project("Dank communication things to communicate with things");
-
-        DatabaseManager.addEmployee(rasmus);
-        testProj.addNewEmployee(rasmus);
-        DatabaseManager.addProject(testProj);
-
-        DatabaseManager.getAllEmployees().stream().forEach(emp-> {
-            System.out.println(emp.id + " " + emp.name + " " + emp.projectId);
-        });
-*/
         DatabaseManager.distributeModels();
-        List<Project> employeeList = LocalObjStorage.getProjectList();
+
+        Task task = new Task("Test task", 100, 1, LocalObjStorage.getProjectById(10));
+        task.addEmployee(LocalObjStorage.getEmployeeById(10));
+
+        DatabaseManager.addTask(task);
     }
 }

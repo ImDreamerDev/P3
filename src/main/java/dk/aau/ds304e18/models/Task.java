@@ -1,6 +1,5 @@
 package dk.aau.ds304e18.models;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +22,7 @@ public class Task {
     /**
      * The estimated completion time of the task
      */
-    private int estimatedTime;
+    private double estimatedTime;
 
     /**
      * The list of the employees assigned to the task
@@ -38,12 +37,12 @@ public class Task {
     /**
      * The date that the task starts.
      */
-    private final LocalDate startDate;
+    private double startTime;
 
     /**
      * The date the task should be completed.
      */
-    private LocalDate endDate;
+    private double endTime;
 
     /**
      * The level of priority that the task has compared to other tasks.
@@ -63,20 +62,19 @@ public class Task {
      * @param priority      The priority value of the task.
      * @param project       The project that that the task is a part of.
      */
-    public Task(String name, int estimatedTime, int priority, Project project) {
+    public Task(String name, double estimatedTime, int priority, Project project) {
         this.name = name;
         this.estimatedTime = estimatedTime;
         this.priority = priority;
         this.project = project;
-        this.startDate = LocalDate.now();
     }
 
-    public Task(int id, String name, int estimatedTime, LocalDate startDate, LocalDate endDate, int priority) {
+    public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority) {
         this.id = id;
         this.name = name;
         this.estimatedTime = estimatedTime;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.priority = priority;
     }
 
@@ -103,7 +101,7 @@ public class Task {
      *
      * @return estimatedTime - The estimated completion time.
      */
-    public int getEstimatedTime() {
+    public double getEstimatedTime() {
         return estimatedTime;
     }
 
@@ -128,19 +126,19 @@ public class Task {
     /**
      * The getter for the start date
      *
-     * @return startDate - The date the task was started.
+     * @return startTime - The date the task was started.
      */
-    public LocalDate getStartDate() {
-        return startDate;
+    public double getStartTime() {
+        return startTime;
     }
 
     /**
      * The getter for the end date of the task.
      *
-     * @return endDate - The date at which the task should be completed.
+     * @return endTime - The date at which the task should be completed.
      */
-    public LocalDate getEndDate() {
-        return endDate;
+    public double getEndTime() {
+        return endTime;
     }
 
     /**
@@ -186,10 +184,10 @@ public class Task {
     /**
      * The setter for the end date.
      *
-     * @param endDate - The date at which the task should be completed
+     * @param endTime - The date at which the task should be completed
      */
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setEndTime(double endTime) {
+        this.endTime = endTime;
     }
 
     /**
