@@ -26,8 +26,14 @@ class Main {
 
         Task task = new Task("Test task", 100, 1, testProj);
         task.addEmployee(rasmus);
-
-       // DatabaseManager.addTask(task);
-       
+        /* Test performance
+        Instant start = java.time.Instant.now();
+        Thread.sleep(1000);
+        Instant end = java.time.Instant.now();
+        Duration between = java.time.Duration.between(start, end);
+        System.out.println( between ); // PT1.001S
+        System.out.format("%dD, %02d:%02d:%02d.%04d \n", between.toDays(),
+        between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001 
+         */
     }
 }
