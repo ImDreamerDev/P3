@@ -63,7 +63,7 @@ public class Employee {
      * @param task - The specific Task object which is to be added to the list.
      */
     public void addNewTask(Task task) {
-        currentTask.add(task);
+        if(!this.currentTask.contains(task)) currentTask.add(task);
         DatabaseManager.updateEmployee(this);
     }
 
@@ -119,6 +119,7 @@ public class Employee {
     public void addPreviousTask(Task task) {
         this.previousTask.add(task);
         DatabaseManager.updateEmployee(this);
+        if(!task.getEmployees().contains(this)) task.addEmployee(this);
     }
 
     /**
@@ -139,6 +140,7 @@ public class Employee {
         if (project != null) {
             this.project = project;
             DatabaseManager.updateEmployee(this);
+            if(!project.getEmployees().contains(this)) project.addNewEmployee(this);
         }
     }
 

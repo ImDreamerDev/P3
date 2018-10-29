@@ -216,12 +216,15 @@ public class Task {
      */
     public void addEmployee(Employee... employee) {
         employees.addAll(Arrays.asList(employee));
-        for (Employee emp :employee ) {
-            emp.setProject(project);
-            emp.addNewTask(this);
-        }
         DatabaseManager.updateTask(this);
-        project.addNewTask(this);
+
+        for (Employee emp :employee ) {
+            if (emp.getProject() == null || !emp.getProject().equals(project)) emp.setProject(project);
+            if(!emp.getCurrentTask().contains(this)) emp.addNewTask(this);
+        }
+
+        if(!project.getTasks().contains(this)) project.addNewTask(this);
+
     }
 
     /**

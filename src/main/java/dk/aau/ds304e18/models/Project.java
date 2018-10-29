@@ -61,12 +61,18 @@ public class Project {
     }
 
     /**
-     * Adds a new task to the project.
+     * Adds new tasks to the project.
      *
-     * @param task - The task to add.
+     * @param tasks - The tasks to add.
      */
-    public void addNewTask(Task... task) {
-        tasks.addAll(Arrays.asList(task));
+    public void addNewTask(Task... tasks) {
+
+        for (Task firstTask : tasks) {
+            if (!this.tasks.contains(firstTask)) this.tasks.add(firstTask);
+
+            if (!firstTask.getProject().equals(this)) firstTask.setProject(this);
+        }
+
         DatabaseManager.updateProject(this);
     }
 
@@ -85,10 +91,11 @@ public class Project {
      * @param employee - The employee to add to the project.
      */
     public void addNewEmployee(Employee... employee) {
-        for (Employee emp : employee) {
-            emp.setProject(this);
-        }
         employees.addAll(Arrays.asList(employee));
+        DatabaseManager.updateProject(this);
+        for (Employee emp : employee) {
+            if(!emp.getProject().equals(this)) emp.setProject(this);
+        }
     }
 
     /**
@@ -98,6 +105,8 @@ public class Project {
      */
     public void removeEmployee(Employee employee) {
         employees.remove(employee);
+        DatabaseManager.updateProject(this);
+        if (employee.getProject().equals(this)) employee.setProject(null);
     }
 
     /**
