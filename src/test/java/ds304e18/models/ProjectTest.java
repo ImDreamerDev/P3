@@ -1,5 +1,6 @@
 package ds304e18.models;
 
+import dk.aau.ds304e18.database.DatabaseProject;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
@@ -21,6 +22,33 @@ class ProjectTest {
     void TestProjectConstructor01() {
         Project newProject = new Project("Test Project");
         assertEquals("Test Project", newProject.getName());
+    }
+
+    @Test
+    void TestProjectConstructor02() {
+        DatabaseProject newDatabaseProject = new DatabaseProject();
+        newDatabaseProject.id = 1;
+        Project newProject = new Project(newDatabaseProject);
+
+        assertEquals(1, newProject.getId());
+    }
+
+    @Test
+    void TestProjectConstructor03() {
+        DatabaseProject newDatabaseProject = new DatabaseProject();
+        newDatabaseProject.name = "Test Project";
+        Project newProject = new Project(newDatabaseProject);
+
+        assertEquals("Test Project", newProject.getName());
+    }
+
+    @Test
+    void TestProjectConstructor04() {
+        DatabaseProject newDatabaseProject = new DatabaseProject();
+        newDatabaseProject.state = ProjectState.ONGOING;
+        Project newProject = new Project(newDatabaseProject);
+
+        assertEquals(ProjectState.ONGOING, newProject.getState());
     }
 
     /**

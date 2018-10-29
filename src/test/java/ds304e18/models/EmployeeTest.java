@@ -1,5 +1,6 @@
 package ds304e18.models;
 
+import dk.aau.ds304e18.database.DatabaseEmployee;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
@@ -16,6 +17,24 @@ class EmployeeTest {
     void TestEmployeeConstructor01() {
         Employee newEmployee = new Employee("Abraham");
         assertEquals("Abraham", newEmployee.getName());
+    }
+
+    @Test
+    void TestEmployeeConstructor02() {
+        DatabaseEmployee newDatabaseEmployee = new DatabaseEmployee();
+        newDatabaseEmployee.id = 1;
+        Employee newEmployee = new Employee(newDatabaseEmployee);
+
+        assertEquals(1,newEmployee.getId());
+    }
+
+    @Test
+    void TestEmployeeConstructor03() {
+        DatabaseEmployee newDatabaseEmployee = new DatabaseEmployee();
+        newDatabaseEmployee.name = "Person";
+        Employee newEmployee = new Employee(newDatabaseEmployee);
+
+        assertEquals("Person",newEmployee.getName());
     }
 
     /**

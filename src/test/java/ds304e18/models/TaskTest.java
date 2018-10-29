@@ -1,5 +1,6 @@
 package ds304e18.models;
 
+import dk.aau.ds304e18.database.DatabaseTask;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
@@ -38,6 +39,60 @@ class TaskTest {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         assertEquals(newProject, newTask.getProject());
+    }
+
+    @Test
+    void TestTaskConstructor05() {
+        DatabaseTask newDatabaseTask = new DatabaseTask();
+        newDatabaseTask.id = 1;
+        Task newTask = new Task(newDatabaseTask);
+
+        assertEquals(1,newTask.getId());
+    }
+
+    @Test
+    void TestTaskConstructor06() {
+        DatabaseTask newDatabaseTask = new DatabaseTask();
+        newDatabaseTask.name = "Test Task";
+        Task newTask = new Task(newDatabaseTask);
+
+        assertEquals("Test Task",newTask.getName());
+    }
+
+    @Test
+    void TestTaskConstructor07() {
+        DatabaseTask newDatabaseTask = new DatabaseTask();
+        newDatabaseTask.priority = 2;
+        Task newTask = new Task(newDatabaseTask);
+
+        assertEquals(2,newTask.getPriority());
+    }
+
+    @Test
+    void TestTaskConstructor08() {
+        DatabaseTask newDatabaseTask = new DatabaseTask();
+        newDatabaseTask.estimatedTime = 10;
+        Task newTask = new Task(newDatabaseTask);
+
+        assertEquals(10,newTask.getEstimatedTime());
+    }
+
+    @Test
+    void TestTaskConstructor09() {
+        DatabaseTask newDatabaseTask = new DatabaseTask();
+        newDatabaseTask.startTime = 3;
+        Task newTask = new Task(newDatabaseTask);
+
+        assertEquals(3,newTask.getStartTime());
+    }
+
+    @Test
+    void TestTaskConstructor10() {
+        DatabaseTask newDatabaseTask = new DatabaseTask();
+        newDatabaseTask.endTime = 6;
+        Task newTask = new Task(newDatabaseTask);
+
+        assertEquals(6,newTask.getEndTime());
     }
 
     @Test
@@ -100,7 +155,7 @@ class TaskTest {
     }
 
     @Test
-    void TestTaskGetStartDate01() {
+    void TestTaskGetStartTime01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
 
@@ -108,7 +163,7 @@ class TaskTest {
     }
 
     @Test
-    void TestTaskGetEndDate01() {
+    void TestTaskGetEndTime01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
         newTask.setEndTime(1010);
