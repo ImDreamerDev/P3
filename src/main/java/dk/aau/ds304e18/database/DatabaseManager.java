@@ -280,16 +280,16 @@ public class DatabaseManager {
         //Distribute employees
         for (Employee emp : LocalObjStorage.getEmployeeList()) {
             DatabaseEmployee dbEmp = dbEmpList.stream().filter(databaseEmployee -> databaseEmployee.id == emp.getId()).findFirst().orElse(null);
-            if(dbEmp == null) continue;
+            if (dbEmp == null) continue;
             emp.setProject(LocalObjStorage.getProjectById(dbEmp.projectId));
             dbEmp.currentTaskId.forEach(taskId -> emp.addNewTask(LocalObjStorage.getTaskById(taskId)));
             dbEmp.preTaskId.forEach(taskId -> emp.addPreviousTask(LocalObjStorage.getTaskById(taskId)));
         }
-        
+
         //Distribute tasks
         for (Task task : LocalObjStorage.getTaskList()) {
             DatabaseTask dbTask = dbTaskList.stream().filter(databaseTask -> databaseTask.id == task.getId()).findFirst().orElse(null);
-            if(dbTask == null) continue;
+            if (dbTask == null) continue;
             task.setProject(LocalObjStorage.getProjectById(dbTask.projectId));
             dbTask.employeeIds.forEach(empId -> task.addEmployee(LocalObjStorage.getEmployeeById(empId)));
             dbTask.dependenceIds.forEach(taskId -> task.addDependency(LocalObjStorage.getTaskById(taskId)));
@@ -321,6 +321,25 @@ public class DatabaseManager {
             statement.setInt(3, employee.getProject().getId());
             statement.setInt(4, employee.getId());
             statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateProject(Project project) {
+        if (isTests) return;
+
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?," +
+                    " tasks = ?, employees = ? WHERE id = ?");
+            statement.setInt(1, project.getState().getValue());
+            statement.setArray(2, dbConnection.createArrayOf("INTEGER",
+                    project.getTasks().stream().map(Task::getId).toArray()));
+            statement.setArray(3, dbConnection.createArrayOf("INTEGER",
+                    project.getEmployees().stream().map(Employee::getId).toArray()));
+
+            statement.setInt(4, project.getId());
 
         } catch (SQLException e) {
             e.printStackTrace();
