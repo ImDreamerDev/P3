@@ -14,7 +14,7 @@ class Converter {
     }
 
     static Task convertTask(DatabaseTask dbTask) {
-        return new Task(dbTask.id, dbTask.name, dbTask.estimatedTime, dbTask.startDate, dbTask.endDate, dbTask.priority);
+        return new Task(dbTask.id, dbTask.name, dbTask.estimatedTime, dbTask.startTime, dbTask.endTime, dbTask.priority);
     }
 
     static Employee convertEmployee(DatabaseEmployee dbEmp) {
