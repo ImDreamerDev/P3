@@ -158,6 +158,40 @@ public class DatabaseManager {
         return empList;
     }
 
+
+    public static boolean addTask(Task task) {
+        if (dbConnection == null) connect();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO tasks (name, estimatedtime," +
+                    " employees, dependencies, startdate,enddate,priority,projectid) values (?, ?, ?, ?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, task.getName());
+            statement.setInt(2, task.getEstimatedTime());
+            statement.setArray(3, dbConnection.createArrayOf("INTEGER",
+                    task.getEmployees().stream().map(Employee::getId).toArray()
+            ));
+            statement.setArray(4, dbConnection.createArrayOf("INTEGER",
+                    task.getDependencies().stream().map(Task::getId).toArray()
+            ));
+            statement.setDate(5, Date.valueOf(task.getStartDate()));
+            statement.setDate(6, Date.valueOf(task.getEndDate()));
+            statement.setInt(7,task.getPriority());
+
+            if (task.getProject() != null) statement.setInt(8, task.getProject().getId());
+            else statement.setInt(8, 0);
+
+            if (statement.execute()) return false;
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) task.setId(rs.getInt(1));
+            LocalObjStorage.addTask(task);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Return the databaseProjects from the database.
      *
@@ -274,7 +308,7 @@ public class DatabaseManager {
                     employee.getPreviousTask().stream().map(Task::getId).toArray()
             ));
             statement.setInt(3, employee.getProject().getId());
-            statement.setInt(4,employee.getId());
+            statement.setInt(4, employee.getId());
             statement.execute();
 
         } catch (SQLException e) {
