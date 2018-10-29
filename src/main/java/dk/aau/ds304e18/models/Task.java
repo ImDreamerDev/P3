@@ -73,6 +73,11 @@ public class Task {
         DatabaseManager.addTask(this);
     }
 
+    /**
+     * The database based constructor for the task.
+     *
+     * @param databaseTask - The task object retrieved from the database.
+     */
     public Task(DatabaseTask databaseTask) {
         name = databaseTask.name;
         id = databaseTask.id;
