@@ -7,6 +7,7 @@ import dk.aau.ds304e18.models.Task;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class EmployeeTest {
 
@@ -125,4 +126,43 @@ class EmployeeTest {
         assertEquals(newProject, newEmployee.getProject());
     }
 
+    @Test
+    void TestEmployeeEquals01() {
+        Employee employee1 = new Employee("Test Person1");
+        Employee employee2 = new Employee("Test Person2");
+        employee1.setId(1);
+        employee2.setId(1);
+
+        assertEquals(employee1, employee2);
+    }
+
+    @Test
+    void TestEmployeeEquals02() {
+        Employee employee1 = new Employee("Test Person1");
+        Employee employee2 = new Employee("Test Person2");
+        employee1.setId(1);
+        employee2.setId(2);
+
+        assertNotEquals(employee1, employee2);
+    }
+
+    @Test
+    void TestEmployeeHashcode01() {
+        Employee employee1 = new Employee("Test Person1");
+        Employee employee2 = new Employee("Test Person2");
+        employee1.setId(1);
+        employee2.setId(1);
+
+        assertEquals(employee1.hashCode(), employee2.hashCode());
+    }
+
+    @Test
+    void TestEmployeeHashcode02() {
+        Employee employee1 = new Employee("Test Person1");
+        Employee employee2 = new Employee("Test Person2");
+        employee1.setId(1);
+        employee2.setId(2);
+
+        assertNotEquals(employee1.hashCode(), employee2.hashCode());
+    }
 }
