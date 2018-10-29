@@ -5,23 +5,90 @@ import java.util.List;
 
 public class CalculateLambda {
 
-    /*
-    https://www.mathsisfun.com/data/random-variables-mean-variance.html
-    https://www.mathsisfun.com/data/frequency-grouped-mean-median-mode.html
-    https://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probability-and-statistics-spring-2014/readings/MIT18_05S14_Reading6a.pdf
+    //Optimizes mu and calculates lambda from the given probabilities
+    public static List<Double> calculateLambda(double mu, List<Probabilities> probabilities){
+        List<Double> returnVariables = new ArrayList<>();
 
-    Find expected value
-    EV = Mean, however we do not have full information, so we have to guesstimate
-    Square value of x and multiply it by probability and sum then up
-    Subtract the square of the expected value
-    You now have variance
+        //Lowest mu value to check
+        double minMu = mu/2;
 
-    Take mu^3 and divide it with the variance
+        //Largest mu value to check
+        double maxMu = mu+mu/2;
 
-    You can find mu by taking the values given, times them by their probability sum them together and divide by the summed up probability
-    Because of the nature of the inverse gaussian it's not necessarily right that if you give the value 90% we're done after 10 means in the cdf that 10x = 0,9y
-     */
+        //Current best mu value (Closest to wanted values)
+        double bestMu = mu;
 
-    private List<Double> days = new ArrayList<>();
+        //Current mu being checked
+        double currentMu = minMu;
+
+        //Lowest lambda to check
+        double startLambda = 0.1;
+
+        //Largest lambda to check
+        double endLambda = 1000;
+
+        //Current best mu value (Closest to wanted values)
+        double bestLambda = -1;
+
+        //Current lambda being checked
+        double currentLambda;
+
+        //bestValue should be as low as possible, as that means that all the probabilities are combined closest to the wanted values
+        double bestValue = -1;
+
+        //Check through all mu values
+        while(currentMu <= maxMu){
+
+            //(Re-)set currentLambda
+            currentLambda = startLambda;
+
+            //Go through all lambda values
+            while(currentLambda <= endLambda){
+
+                //Create an Inverse Gaussian distribution with the mu and lambda values so we can test
+                InverseGaussian invG = new InverseGaussian(currentMu, currentLambda);
+
+                //Temp value is to be checked against the best value
+                double tempValue = 0;
+
+                //For each probability
+                for (Probabilities probability : probabilities) {
+
+                    //Get the values of the probability
+                    var realProb = invG.getProbability(probability.getValue());
+                    var expectedProb = probability.getProbability();
+
+                    //Check which probability is largest to get the difference
+                    if (realProb > expectedProb) {
+                        tempValue += realProb - expectedProb;
+                    } else {
+                        tempValue += expectedProb - realProb;
+                    }
+
+                }
+
+                //If tempValue is lower than bestValue (and therefore better) or bestValue is -1 change the different bestValues so we save the current best values
+                if(tempValue < bestValue || bestValue == -1){
+                    bestValue = tempValue;
+                    bestLambda = currentLambda;
+                    bestMu = currentMu;
+                }
+
+                //TODO: Consider changing this amount
+                currentLambda += 0.1;
+
+            }
+
+            //TODO: Consider changing this amount
+            currentMu += mu/10;
+        }
+
+        //Add the best values to the variables to return
+        returnVariables.add(bestMu);
+        returnVariables.add(bestLambda);
+
+        //Return the best mu value and the best lambda value
+        return returnVariables;
+    }
 
 }

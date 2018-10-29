@@ -98,11 +98,11 @@ class InverseGaussian {
         return this.mu;
     }
 
-    public double getDensity(int x) {
+    public double getDensity(double x) {
         return density(this.mu, this.lambda, x);
     }
 
-    public double getProbability(int x) {
+    public double getProbability(double x) {
         return cdf(this.mu, this.lambda, x)*100;
     }
 
