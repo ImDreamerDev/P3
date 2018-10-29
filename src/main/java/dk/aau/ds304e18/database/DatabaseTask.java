@@ -29,7 +29,7 @@ public class DatabaseTask {
     /**
      * The list of ids of dependencies the task has.
      */
-    public final List<Integer> dependencieIds = new ArrayList<>();
+    public  List<Integer> dependencieIds = new ArrayList<>();
 
     /**
      * The starting date of the task.

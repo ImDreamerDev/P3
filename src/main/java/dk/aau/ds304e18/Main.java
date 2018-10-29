@@ -25,11 +25,12 @@ class Main {
 
         Employee rasmus = new Employee("Rasmus Smit Lindholt");
         Project testProj = new Project("Dank communication things to communicate with things");
-        DatabaseManager.distributeModels();
+
 
         Task task = new Task("Test task", 100, 1, LocalObjStorage.getProjectById(10));
-        task.addEmployee(LocalObjStorage.getEmployeeById(10));
+        task.addEmployee(rasmus);
 
         DatabaseManager.addTask(task);
+        DatabaseManager.distributeModels();
     }
 }
