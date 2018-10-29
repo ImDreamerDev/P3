@@ -19,15 +19,15 @@ class Main {
             e.printStackTrace();
         }
         */
-
+        DatabaseManager.distributeModels();
         Employee rasmus = new Employee("Rasmus Smit Lindholt");
         Project testProj = new Project("Dank communication things to communicate with things");
 
 
-        Task task = new Task("Test task", 100, 1, LocalObjStorage.getProjectById(10));
+        Task task = new Task("Test task", 100, 1, testProj);
         task.addEmployee(rasmus);
 
-        DatabaseManager.addTask(task);
-        DatabaseManager.distributeModels();
+       // DatabaseManager.addTask(task);
+       
     }
 }

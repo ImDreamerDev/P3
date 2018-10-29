@@ -50,6 +50,7 @@ public class Project {
 
     /**
      * Constructor for a project using data from database.
+     *
      * @param databaseProject - Project object from database.
      */
     public Project(DatabaseProject databaseProject) {
@@ -65,6 +66,7 @@ public class Project {
      */
     public void addNewTask(Task... task) {
         tasks.addAll(Arrays.asList(task));
+        DatabaseManager.updateProject(this);
     }
 
     /**

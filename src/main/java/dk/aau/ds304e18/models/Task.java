@@ -210,14 +210,22 @@ public class Task {
 
     /**
      * Assign employees to the Task.
+     *
      * @param employee - The employees to add to the Task.
      */
     public void addEmployee(Employee... employee) {
         employees.addAll(Arrays.asList(employee));
+        for (Employee emp :employee ) {
+            emp.setProject(project);
+            emp.addNewTask(this);
+        }
+        DatabaseManager.updateTask(this);
+        project.addNewTask(this);
     }
 
     /**
      * Assign Dependencies to the Task
+     *
      * @param task - The tasks to add to dependencies
      */
     public void addDependency(Task... task) {

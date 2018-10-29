@@ -326,6 +326,29 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
+    public static void updateTask(Task task){
+        if (isTests) return;
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("UPDATE tasks SET employees = ?" +
+                    ", dependencies = ?, projectid = ?, estimatedtime = ?, priority = ?, startdate = ?, enddate = ? WHERE id = ?");
+            statement.setArray(1, dbConnection.createArrayOf("INTEGER",
+                    task.getEmployees().stream().map(Employee::getId).toArray()
+            ));
+            statement.setArray(2, dbConnection.createArrayOf("INTEGER",
+                    task.getDependencies().stream().map(Task::getId).toArray()
+            ));
+            statement.setInt(3, task.getProject().getId());
+            statement.setDouble(4, task.getEstimatedTime());
+            statement.setInt(5, task.getPriority());
+            statement.setDouble(6,task.getStartTime());
+            statement.setDouble(7,task.getEndTime());
+            statement.setInt(8,task.getId());
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void updateProject(Project project) {
         if (isTests) return;
@@ -340,6 +363,7 @@ public class DatabaseManager {
                     project.getEmployees().stream().map(Employee::getId).toArray()));
 
             statement.setInt(4, project.getId());
+            statement.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
