@@ -174,7 +174,7 @@ public class DatabaseManager {
             ));
             statement.setDate(5, Date.valueOf(task.getStartDate()));
             statement.setDate(6, Date.valueOf(task.getEndDate()));
-            statement.setInt(7,task.getPriority());
+            statement.setInt(7, task.getPriority());
 
             if (task.getProject() != null) statement.setInt(8, task.getProject().getId());
             else statement.setInt(8, 0);
