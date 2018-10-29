@@ -39,7 +39,7 @@ class DatabaseTask {
     /**
      * The estimated completion date of the task.
      */
-    public LocalDate endDate;
+    public double endDate;
 
     /**
      * The priority of the task.

@@ -42,7 +42,7 @@ public class Task {
     /**
      * The date the task should be completed.
      */
-    private LocalDate endDate;
+    private double endDate;
 
     /**
      * The level of priority that the task has compared to other tasks.
@@ -69,7 +69,7 @@ public class Task {
         this.project = project;
     }
 
-    public Task(int id, String name, double estimatedTime, double startTime, LocalDate endDate, int priority) {
+    public Task(int id, String name, double estimatedTime, double startTime, double endDate, int priority) {
         this.id = id;
         this.name = name;
         this.estimatedTime = estimatedTime;
@@ -145,7 +145,7 @@ public class Task {
      *
      * @return endDate - The date at which the task should be completed.
      */
-    public LocalDate getEndDate() {
+    public double getEndDate() {
         return endDate;
     }
 
@@ -194,7 +194,7 @@ public class Task {
      *
      * @param endDate - The date at which the task should be completed
      */
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(double endDate) {
         this.endDate = endDate;
     }
 
