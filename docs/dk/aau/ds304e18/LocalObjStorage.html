@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -278,27 +278,6 @@ extends java.lang.Object</pre>
 <div class="block">Gets the list of tasks.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEmployeeList(java.util.ArrayList)">setEmployeeList</a></span>&#8203;(java.util.ArrayList&lt;<a href="models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;&nbsp;employeeList)</code></th>
-<td class="colLast">
-<div class="block">Sets the employeeList to the new employeeList.</div>
-</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProjectList(java.util.ArrayList)">setProjectList</a></span>&#8203;(java.util.ArrayList&lt;<a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;&nbsp;projectList)</code></th>
-<td class="colLast">
-<div class="block">Sets the current projectList to the projectList passed as an argument.</div>
-</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTaskList(java.util.ArrayList)">setTaskList</a></span>&#8203;(java.util.ArrayList&lt;<a href="models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;taskList)</code></th>
-<td class="colLast">
-<div class="block">Sets the current taskList to the passed taskList.</div>
-</td>
-</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -329,7 +308,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>employeeList</h4>
-<pre>private static&nbsp;java.util.ArrayList&lt;<a href="models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt; employeeList</pre>
+<pre>private static final&nbsp;java.util.ArrayList&lt;<a href="models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt; employeeList</pre>
 <div class="block">The list of employees.</div>
 </li>
 </ul>
@@ -339,7 +318,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>projectList</h4>
-<pre>private static&nbsp;java.util.ArrayList&lt;<a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt; projectList</pre>
+<pre>private static final&nbsp;java.util.ArrayList&lt;<a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt; projectList</pre>
 <div class="block">The list of projects.</div>
 </li>
 </ul>
@@ -349,7 +328,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>taskList</h4>
-<pre>private static&nbsp;java.util.ArrayList&lt;<a href="models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt; taskList</pre>
+<pre>private static final&nbsp;java.util.ArrayList&lt;<a href="models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt; taskList</pre>
 <div class="block">The list of tasks.</div>
 </li>
 </ul>
@@ -426,20 +405,6 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="setEmployeeList(java.util.ArrayList)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setEmployeeList</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;setEmployeeList&#8203;(java.util.ArrayList&lt;<a href="models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;&nbsp;employeeList)</pre>
-<div class="block">Sets the employeeList to the new employeeList.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>employeeList</code> - the new list of employees to set.</dd>
-</dl>
-</li>
-</ul>
 <a id="getProjectList()">
 <!--   -->
 </a>
@@ -484,20 +449,6 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="setProjectList(java.util.ArrayList)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setProjectList</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;setProjectList&#8203;(java.util.ArrayList&lt;<a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;&nbsp;projectList)</pre>
-<div class="block">Sets the current projectList to the projectList passed as an argument.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>projectList</code> - the new projectlist to set.</dd>
-</dl>
-</li>
-</ul>
 <a id="getTaskList()">
 <!--   -->
 </a>
@@ -529,7 +480,7 @@ extends java.lang.Object</pre>
 <a id="getTaskById(int)">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>getTaskById</h4>
 <pre class="methodSignature">public static&nbsp;<a href="models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;getTaskById&#8203;(int&nbsp;id)</pre>
@@ -539,20 +490,6 @@ extends java.lang.Object</pre>
 <dd><code>id</code> - the task id to find.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a task with id or null if not found.</dd>
-</dl>
-</li>
-</ul>
-<a id="setTaskList(java.util.ArrayList)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>setTaskList</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;setTaskList&#8203;(java.util.ArrayList&lt;<a href="models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;taskList)</pre>
-<div class="block">Sets the current taskList to the passed taskList.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>taskList</code> - the new task list to set.</dd>
 </dl>
 </li>
 </ul>
