@@ -5,7 +5,7 @@ import dk.aau.ds304e18.models.ProjectState;
 import java.util.ArrayList;
 import java.util.List;
 
-class DatabaseProject {
+public class DatabaseProject {
 
     /**
      * The unique id of the project.

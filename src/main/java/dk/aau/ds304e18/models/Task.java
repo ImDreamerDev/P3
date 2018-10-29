@@ -1,5 +1,8 @@
 package dk.aau.ds304e18.models;
 
+import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.database.DatabaseTask;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,15 +70,15 @@ public class Task {
         this.estimatedTime = estimatedTime;
         this.priority = priority;
         this.project = project;
+        DatabaseManager.addTask(this);
     }
 
-    public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority) {
-        this.id = id;
-        this.name = name;
-        this.estimatedTime = estimatedTime;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.priority = priority;
+    public Task(DatabaseTask databaseTask) {
+        name = databaseTask.name;
+        id = databaseTask.id;
+        estimatedTime = databaseTask.estimatedTime;
+        startTime = databaseTask.startTime;
+        priority = databaseTask.priority;
     }
 
     /**

@@ -19,6 +19,8 @@ public class DatabaseManager {
 
     private static Connection dbConnection;
 
+    public static boolean isTests = false;
+    
     /**
      * Sends a query to the DB and returns the result.
      *
@@ -74,6 +76,7 @@ public class DatabaseManager {
      * @return bool to indicate whether the operation was successful.
      */
     public static boolean addEmployees(Employee emp) {
+        if(isTests) return false;
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employees (name, currenttasks," +
@@ -109,6 +112,7 @@ public class DatabaseManager {
      * @return bool to indicate whether the operation was successful.
      */
     public static Boolean addProject(Project project) {
+        if(isTests) return false;
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projects " +
@@ -160,6 +164,7 @@ public class DatabaseManager {
 
 
     public static boolean addTask(Task task) {
+        if(isTests) return false;
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO tasks (name, estimatedtime," +
@@ -298,6 +303,7 @@ public class DatabaseManager {
 
 
     public static void updateEmployee(Employee employee) {
+        if(isTests) return;
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET currenttasks = ?" +
                     ", previoustasks = ?, projectid = ? WHERE id = ?");

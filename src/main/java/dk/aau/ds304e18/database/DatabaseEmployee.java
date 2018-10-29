@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * The class representing the employee in the database.
  */
-class DatabaseEmployee {
+public class DatabaseEmployee {
     /**
      * the Unique id of the employee.
      */

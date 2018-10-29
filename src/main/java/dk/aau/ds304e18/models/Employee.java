@@ -1,5 +1,6 @@
 package dk.aau.ds304e18.models;
 
+import dk.aau.ds304e18.database.DatabaseEmployee;
 import dk.aau.ds304e18.database.DatabaseManager;
 
 import java.util.ArrayList;
@@ -42,6 +43,12 @@ public class Employee {
      */
     public Employee(String name) {
         this.name = name;
+        DatabaseManager.addEmployees(this);
+    }
+
+    public Employee(DatabaseEmployee databaseEmployee) {
+        name = databaseEmployee.name;
+        id = databaseEmployee.id;
     }
 
     /**

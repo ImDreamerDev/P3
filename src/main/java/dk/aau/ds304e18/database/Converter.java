@@ -6,20 +6,14 @@ import dk.aau.ds304e18.models.Task;
 
 class Converter {
     static Project convertProject(DatabaseProject dbProj) {
-        Project project = new Project(dbProj.name);
-        project.setId(dbProj.id);
-        project.setState(dbProj.state);
-        //TODO
-        return project;
+        return new Project(dbProj);
     }
 
     static Task convertTask(DatabaseTask dbTask) {
-        return new Task(dbTask.id, dbTask.name, dbTask.estimatedTime, dbTask.startTime, dbTask.endTime, dbTask.priority);
+        return new Task(dbTask);
     }
 
     static Employee convertEmployee(DatabaseEmployee dbEmp) {
-        Employee emp = new Employee(dbEmp.name);
-        emp.setId(dbEmp.id);
-        return emp;
+        return new Employee(dbEmp);
     }
 }
