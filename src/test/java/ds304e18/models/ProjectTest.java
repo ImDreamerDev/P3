@@ -168,14 +168,4 @@ class ProjectTest {
         newProject.setId(3);
         assertEquals(3, newProject.getId());
     }
-
-    /**
-     * Tests setting the state of the project.
-     */
-    @Test
-    void TestProjectSetState01() {
-        Project newProject = new Project("Test Project");
-        newProject.setState(ProjectState.COMPLETED);
-        assertEquals(ProjectState.COMPLETED, newProject.getState());
-    }
 }

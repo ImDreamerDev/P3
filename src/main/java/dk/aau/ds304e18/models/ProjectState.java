@@ -9,16 +9,11 @@ public enum ProjectState {
      * The State that describes that the project is still being worked on.
      */
     ONGOING(0),
-
-    /**
-     * The State that describes that the project is done (completed).
-     */
-    COMPLETED(1),
-
+    
     /**
      * The State that describes that the project has been archived.
      */
-    ARCHIVED(2);
+    ARCHIVED(1);
 
     /**
      * The attribute Value, which is used to determine which state the project is in.

@@ -13,11 +13,6 @@ public class ProjectStateTest {
     }
 
     @Test
-    void TestProjectStateGetValue02() {
-        assertEquals(1,ProjectState.COMPLETED.getValue());
-    }
-
-    @Test
     void TestProjectStateGetValue03() {
         assertEquals(2,ProjectState.ARCHIVED.getValue());
     }
