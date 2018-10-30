@@ -1,6 +1,5 @@
 package dk.aau.ds304e18.models;
 
-import dk.aau.ds304e18.database.DatabaseEmployee;
 import dk.aau.ds304e18.database.DatabaseManager;
 
 import java.util.ArrayList;
@@ -47,14 +46,10 @@ public class Employee {
         DatabaseManager.addEmployees(this);
     }
 
-    /**
-     * Constructor for the employee class using database.
-     *
-     * @param databaseEmployee - Database employee object.
-     */
-    public Employee(DatabaseEmployee databaseEmployee) {
-        name = databaseEmployee.name;
-        id = databaseEmployee.id;
+
+    public Employee(int id, String name) {
+        this.name = name;
+        this.id = id;
     }
 
     /**
@@ -63,7 +58,7 @@ public class Employee {
      * @param task - The specific Task object which is to be added to the list.
      */
     public void addNewTask(Task task) {
-        if(!this.currentTask.contains(task)) currentTask.add(task);
+        if (!this.currentTask.contains(task)) currentTask.add(task);
         DatabaseManager.updateEmployee(this);
     }
 
@@ -114,12 +109,13 @@ public class Employee {
 
     /**
      * A function to add a task to the previousTask list.
+     *
      * @param task - The task to add.
      */
     public void addPreviousTask(Task task) {
         this.previousTask.add(task);
         DatabaseManager.updateEmployee(this);
-        if(!task.getEmployees().contains(this)) task.addEmployee(this);
+        if (!task.getEmployees().contains(this)) task.addEmployee(this);
     }
 
     /**
@@ -140,7 +136,7 @@ public class Employee {
         if (project != null) {
             this.project = project;
             DatabaseManager.updateEmployee(this);
-            if(!project.getEmployees().contains(this)) project.addNewEmployee(this);
+            if (!project.getEmployees().contains(this)) project.addNewEmployee(this);
         }
     }
 

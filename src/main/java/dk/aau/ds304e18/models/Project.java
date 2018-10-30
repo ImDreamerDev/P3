@@ -47,16 +47,11 @@ public class Project {
         this.state = ProjectState.ONGOING;
         DatabaseManager.addProject(this);
     }
-
-    /**
-     * Constructor for a project using data from database.
-     *
-     * @param databaseProject - Project object from database.
-     */
-    public Project(DatabaseProject databaseProject) {
-        id = databaseProject.id;
-        state = databaseProject.state;
-        name = databaseProject.name;
+    
+    public Project(int id, String name, ProjectState projectState) {
+       this.id = id;
+        this.state = projectState;
+        this.name = name;
     }
 
     /**

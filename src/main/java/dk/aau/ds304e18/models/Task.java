@@ -1,7 +1,6 @@
 package dk.aau.ds304e18.models;
 
 import dk.aau.ds304e18.database.DatabaseManager;
-import dk.aau.ds304e18.database.DatabaseTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,18 +73,13 @@ public class Task {
         DatabaseManager.addTask(this);
     }
 
-    /**
-     * The database based constructor for the task.
-     *
-     * @param databaseTask - The task object retrieved from the database.
-     */
-    public Task(DatabaseTask databaseTask) {
-        name = databaseTask.name;
-        id = databaseTask.id;
-        estimatedTime = databaseTask.estimatedTime;
-        startTime = databaseTask.startTime;
-        endTime = databaseTask.endTime;
-        priority = databaseTask.priority;
+    public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority) {
+        this.name = name;
+        this.id = id;
+        this.estimatedTime = estimatedTime;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.priority = priority;
     }
 
     /**
@@ -218,12 +212,12 @@ public class Task {
         employees.addAll(Arrays.asList(employee));
         DatabaseManager.updateTask(this);
 
-        for (Employee emp :employee ) {
+        for (Employee emp : employee) {
             if (emp.getProject() == null || !emp.getProject().equals(project)) emp.setProject(project);
-            if(!emp.getCurrentTask().contains(this)) emp.addNewTask(this);
+            if (!emp.getCurrentTask().contains(this)) emp.addNewTask(this);
         }
 
-        if(!project.getTasks().contains(this)) project.addNewTask(this);
+        if (!project.getTasks().contains(this)) project.addNewTask(this);
 
     }
 
