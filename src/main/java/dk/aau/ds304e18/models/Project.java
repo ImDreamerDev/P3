@@ -66,8 +66,6 @@ public class Project {
 
             if (!firstTask.getProject().equals(this)) firstTask.setProject(this);
         }
-
-        DatabaseManager.updateProject(this);
     }
 
     /**
@@ -86,7 +84,6 @@ public class Project {
      */
     public void addNewEmployee(Employee... employee) {
         employees.addAll(Arrays.asList(employee));
-        DatabaseManager.updateProject(this);
         for (Employee emp : employee) {
             if (emp.getProject() == null || !emp.getProject().equals(this))
                 emp.setProject(this);
@@ -100,7 +97,6 @@ public class Project {
      */
     public void removeEmployee(Employee employee) {
         employees.remove(employee);
-        DatabaseManager.updateProject(this);
         if (employee.getProject().equals(this)) employee.setProject(null);
     }
 
