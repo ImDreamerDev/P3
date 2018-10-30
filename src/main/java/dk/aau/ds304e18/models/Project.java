@@ -94,7 +94,8 @@ public class Project {
         employees.addAll(Arrays.asList(employee));
         DatabaseManager.updateProject(this);
         for (Employee emp : employee) {
-            if(!emp.getProject().equals(this)) emp.setProject(this);
+            if (emp.getProject() == null || !emp.getProject().equals(this))
+                emp.setProject(this);
         }
     }
 

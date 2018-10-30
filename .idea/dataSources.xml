@@ -8,5 +8,12 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://molae.duckdns.org/P3</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="TestP3@molae.duckdns.org" uuid="b9663667-c370-4c40-a20b-44c7e791e183">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <remarks>Miltons garbage server</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://molae.duckdns.org/TestP3</jdbc-url>
+    </data-source>
   </component>
 </project>

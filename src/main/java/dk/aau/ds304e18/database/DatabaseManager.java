@@ -42,7 +42,11 @@ public class DatabaseManager {
      * Connects to the database P3.
      */
     private static void connect() {
-        String url = "jdbc:postgresql://molae.duckdns.org/P3";
+        String url;
+        if (isTests)
+            url = "jdbc:postgresql://molae.duckdns.org/TestP3";
+        else
+            url = "jdbc:postgresql://molae.duckdns.org/P3";
         Properties props = new Properties();
         props.setProperty("user", "projectplanner");
 
@@ -76,7 +80,6 @@ public class DatabaseManager {
      * @return bool to indicate whether the operation was successful.
      */
     public static boolean addEmployees(Employee emp) {
-        if (isTests) return false;
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employees (name, currenttasks," +
@@ -112,7 +115,6 @@ public class DatabaseManager {
      * @return bool to indicate whether the operation was successful.
      */
     public static Boolean addProject(Project project) {
-        if (isTests) return false;
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projects " +
@@ -163,7 +165,6 @@ public class DatabaseManager {
 
 
     public static boolean addTask(Task task) {
-        if (isTests) return false;
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO tasks (name, estimatedtime," +
@@ -264,7 +265,7 @@ public class DatabaseManager {
         LocalObjStorage.getEmployeeList().clear();
         LocalObjStorage.getTaskList().clear();
         LocalObjStorage.getProjectList().clear();
-        
+
         dbEmpList.forEach(dbEmp -> {
             if (LocalObjStorage.getEmployeeList().stream().anyMatch(emp -> emp.getId() == dbEmp.id))
                 return;
@@ -312,7 +313,6 @@ public class DatabaseManager {
 
 
     public static void updateEmployee(Employee employee) {
-        if (isTests) return;
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET currenttasks = ?" +
                     ", previoustasks = ?, projectid = ? WHERE id = ?");
@@ -322,7 +322,11 @@ public class DatabaseManager {
             statement.setArray(2, dbConnection.createArrayOf("INTEGER",
                     employee.getPreviousTask().stream().map(Task::getId).toArray()
             ));
-            statement.setInt(3, employee.getProject().getId());
+            //TODO: Check if this is correct
+            if (employee.getProject() != null)
+                statement.setInt(3, employee.getProject().getId());
+            else
+                statement.setInt(3, 0);
             statement.setInt(4, employee.getId());
             statement.execute();
 
@@ -330,8 +334,8 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
-    public static void updateTask(Task task){
-        if (isTests) return;
+
+    public static void updateTask(Task task) {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE tasks SET employees = ?" +
                     ", dependencies = ?, projectid = ?, estimatedtime = ?, priority = ?, startdate = ?, enddate = ? WHERE id = ?");
@@ -344,9 +348,9 @@ public class DatabaseManager {
             statement.setInt(3, task.getProject().getId());
             statement.setDouble(4, task.getEstimatedTime());
             statement.setInt(5, task.getPriority());
-            statement.setDouble(6,task.getStartTime());
-            statement.setDouble(7,task.getEndTime());
-            statement.setInt(8,task.getId());
+            statement.setDouble(6, task.getStartTime());
+            statement.setDouble(7, task.getEndTime());
+            statement.setInt(8, task.getId());
             statement.execute();
 
         } catch (SQLException e) {
@@ -355,7 +359,6 @@ public class DatabaseManager {
     }
 
     public static void updateProject(Project project) {
-        if (isTests) return;
 
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?," +
