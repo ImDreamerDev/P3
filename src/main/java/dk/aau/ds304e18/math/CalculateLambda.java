@@ -86,6 +86,7 @@ public class CalculateLambda {
         //Add the best values to the variables to return
         returnVariables.add(bestMu);
         returnVariables.add(bestLambda);
+        returnVariables.add(bestValue);
 
         //Return the best mu value and the best lambda value
         return returnVariables;

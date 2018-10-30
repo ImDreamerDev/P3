@@ -10,14 +10,15 @@ class Main {
     public static void main(String[] args) {
         Instant start = java.time.Instant.now();
         //Guessed mu value
-        double muValue = 15;
+        double muValue = 150;
 
         //Create a list with probabilities
         List<Probabilities> probabilities = new ArrayList<>();
-        probabilities.add(new Probabilities(7d, 5d));
-        probabilities.add(new Probabilities(12d, 40d));
-        probabilities.add(new Probabilities(20d, 75d));
-        probabilities.add(new Probabilities(30d, 90d));
+        probabilities.add(new Probabilities(11.3959d, 10d));
+        probabilities.add(new Probabilities(21.3079d, 25d));
+        probabilities.add(new Probabilities(50.0898d, 50d));
+        probabilities.add(new Probabilities(138.065d, 75d));
+        probabilities.add(new Probabilities(362.342d, 90d));
 
         //Get the best mu and lambda values
         List<Double> muLambda = CalculateLambda.calculateLambda(muValue, probabilities);
@@ -30,10 +31,11 @@ class Main {
         
 
         //Check if they're close to correct
-        System.out.println(mu);
-        System.out.println(lambda);
+        System.out.println("Mu value: " + mu);
+        System.out.println("Lambda value: " + lambda);
+        System.out.println("Best value: " + muLambda.get(2));
         for (Probabilities probability : probabilities) {
-            System.out.println(invG.getProbability(probability.getValue()));
+            System.out.println(probability.getValue() + " : " + invG.getProbability(probability.getValue()));
         }
 
         Duration between = java.time.Duration.between(start, end);
