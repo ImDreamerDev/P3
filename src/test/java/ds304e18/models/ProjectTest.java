@@ -1,6 +1,5 @@
 package ds304e18.models;
 
-import dk.aau.ds304e18.database.DatabaseProject;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;

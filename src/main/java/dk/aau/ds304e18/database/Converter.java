@@ -5,10 +5,6 @@ import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 
 class Converter {
-    static Project convertProject(DatabaseProject dbProj) {
-        return new Project(dbProj);
-    }
-
     static Task convertTask(DatabaseTask dbTask) {
         return new Task(dbTask);
     }

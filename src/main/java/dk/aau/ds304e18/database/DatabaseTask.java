@@ -22,12 +22,7 @@ public class DatabaseTask {
      * The estimated completion of the task.
      */
     public double estimatedTime;
-
-    /**
-     * The list of ids of employees assigned to the task.
-     */
-    public List<Integer> employeeIds = new ArrayList<>();
-
+    
     /**
      * The list of ids of dependencies the task has.
      */

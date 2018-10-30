@@ -1,7 +1,6 @@
 package dk.aau.ds304e18.models;
 
 import dk.aau.ds304e18.database.DatabaseManager;
-import dk.aau.ds304e18.database.DatabaseProject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
