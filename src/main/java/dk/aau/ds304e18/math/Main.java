@@ -10,15 +10,15 @@ class Main {
     public static void main(String[] args) {
         Instant start = java.time.Instant.now();
         //Guessed mu value
-        double muValue = 150;
+        double muValue = 1;
 
         //Create a list with probabilities
         List<Probabilities> probabilities = new ArrayList<>();
-        probabilities.add(new Probabilities(11.3959d, 10d));
-        probabilities.add(new Probabilities(21.3079d, 25d));
-        probabilities.add(new Probabilities(50.0898d, 50d));
-        probabilities.add(new Probabilities(138.065d, 75d));
-        probabilities.add(new Probabilities(362.342d, 90d));
+        probabilities.add(new Probabilities(0.6d, 10d));
+        probabilities.add(new Probabilities(0.8d, 25d));
+        probabilities.add(new Probabilities(1d, 50d));
+        probabilities.add(new Probabilities(1.3d, 75d));
+        probabilities.add(new Probabilities(1.6d, 90d));
 
         //Get the best mu and lambda values
         List<Double> muLambda = CalculateLambda.calculateLambda(muValue, probabilities);

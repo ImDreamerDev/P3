@@ -25,7 +25,7 @@ public class CalculateLambda {
         double startLambda = 0.1;
 
         //Largest lambda to check
-        double endLambda = 1000;
+        double endLambda = 354.8; //Anything above this gives infinity because calculations are hard
 
         //Current best mu value (Closest to wanted values)
         double bestLambda = -1;
