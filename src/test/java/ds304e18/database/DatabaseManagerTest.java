@@ -3,9 +3,9 @@ package ds304e18.database;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
+import dk.aau.ds304e18.models.Task;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.postgresql.util.PSQLException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,9 +23,7 @@ class DatabaseManagerTest {
 
     /**
      * Asserts that addEmployee function in DatabaseManager works.
-     *
-     * @throws SQLException
-     */
+     **/
     @Test
     void testAddEmployee() {
         Employee testEmp = new Employee("Ur mum");
@@ -54,4 +52,18 @@ class DatabaseManagerTest {
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
     }
 
+    @Test
+    void testAddTask() throws SQLException {
+        Project testProj = new Project("TestProj");
+        Task testTask = new Task("TestTask", 10, 1, testProj);
+        ResultSet rs = DatabaseManager.query("SELECT * FROM tasks WHERE id = " + testTask.getId());
+        assertNotNull(rs);
+        rs.next();
+        assertEquals(testTask.getId(), rs.getInt(1));
+        assertEquals(testTask.getName(), rs.getString(2));
+        assertEquals(testTask.getEstimatedTime(), rs.getDouble(3), 0.001);
+        assertEquals(testTask.getProject().getId(), testProj.getId());
+        DatabaseManager.query("DELETE FROM tasks WHERE id = " + testTask.getId());
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
+    }
 }

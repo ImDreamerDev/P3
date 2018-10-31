@@ -234,6 +234,7 @@ public class DatabaseManager {
                 String name = rs.getString(2);
                 double estimatedTime = rs.getDouble(3);
                 int priority = rs.getInt(5);
+                int projectId = rs.getInt(6);
                 double startTime = rs.getDouble(7);
                 double endTime = rs.getDouble(8);
 
@@ -241,7 +242,7 @@ public class DatabaseManager {
                 //int projectId = rs.getInt(6);
                 List<Integer> dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
                 List<Integer> employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
-                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds);
+                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds, projectId);
                 databaseTasks.add(task);
             }
         } catch (SQLException e) {

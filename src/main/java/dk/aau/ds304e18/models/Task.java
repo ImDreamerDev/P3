@@ -3,7 +3,6 @@ package dk.aau.ds304e18.models;
 import dk.aau.ds304e18.database.DatabaseManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,6 +15,8 @@ public class Task {
      * The id of the task.
      */
     private int id;
+
+    private int projectId;
 
     /**
      * The name of the task.
@@ -77,7 +78,9 @@ public class Task {
         DatabaseManager.addTask(this);
     }
 
-    public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority, List<Integer> dependencyIds, List<Integer> employeeIds) {
+
+
+    public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority, List<Integer> dependencyIds, List<Integer> employeeIds, int projectId) {
         this.name = name;
         this.id = id;
         this.estimatedTime = estimatedTime;
@@ -86,6 +89,7 @@ public class Task {
         this.priority = priority;
         this.dependencyIds.addAll(dependencyIds);
         this.employeeIds.addAll(employeeIds);
+        this.projectId = projectId;
     }
 
     /**
@@ -95,6 +99,10 @@ public class Task {
      */
     public int getId() {
         return id;
+    }
+
+    public int getProjectId() {
+        return projectId;
     }
 
     /**
