@@ -22,6 +22,8 @@ public class Project {
      */
     private String name;
 
+    private String sequence;
+
     /**
      * The current state of the project.
      */
@@ -48,10 +50,11 @@ public class Project {
         DatabaseManager.addProject(this);
     }
     
-    public Project(int id, String name, ProjectState projectState) {
+    public Project(int id, String name, ProjectState projectState, String sequence) {
        this.id = id;
         this.state = projectState;
         this.name = name;
+        this.sequence = sequence;
     }
 
     /**
