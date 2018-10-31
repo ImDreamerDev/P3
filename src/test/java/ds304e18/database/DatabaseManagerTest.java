@@ -26,7 +26,7 @@ class DatabaseManagerTest {
      **/
     @Test
     void testAddEmployee() {
-        Employee testEmp = new Employee("Ur mum");
+        Employee testEmp = new Employee("Søren");
 
         ResultSet rs = DatabaseManager.query("SELECT * FROM employees WHERE id = " + testEmp.getId());
         assertNotNull(rs);
