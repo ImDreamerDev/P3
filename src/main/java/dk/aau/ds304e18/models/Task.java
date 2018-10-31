@@ -3,7 +3,6 @@ package dk.aau.ds304e18.models;
 import dk.aau.ds304e18.database.DatabaseManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,6 +15,8 @@ public class Task {
      * The id of the task.
      */
     private int id;
+
+    private int projectId;
 
     /**
      * The name of the task.
@@ -79,7 +80,9 @@ public class Task {
         DatabaseManager.addTask(this);
     }
 
-    public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority, List<Integer> dependencyIds, List<Integer> employeeIds) {
+
+
+    public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority, List<Integer> dependencyIds, List<Integer> employeeIds, int projectId) {
         this.name = name;
         this.id = id;
         this.estimatedTime = estimatedTime;
@@ -88,6 +91,7 @@ public class Task {
         this.priority = priority;
         this.dependencyIds.addAll(dependencyIds);
         this.employeeIds.addAll(employeeIds);
+        this.projectId = projectId;
     }
 
     /**
@@ -97,6 +101,10 @@ public class Task {
      */
     public int getId() {
         return id;
+    }
+
+    public int getProjectId() {
+        return projectId;
     }
 
     /**
@@ -217,16 +225,14 @@ public class Task {
      * @param employee - The employees to add to the Task.
      */
     public void addEmployee(Employee... employee) {
-        employees.addAll(Arrays.asList(employee));
-        DatabaseManager.updateTask(this);
-
         for (Employee emp : employee) {
+            if (!employees.contains(emp))
+                employees.add(emp);
             if (emp.getProject() == null || !emp.getProject().equals(project)) emp.setProject(project);
             if (!emp.getCurrentTask().contains(this)) emp.addNewTask(this);
         }
-
+        DatabaseManager.updateTask(this);
         if (!project.getTasks().contains(this)) project.addNewTask(this);
-
     }
 
     /**
@@ -235,7 +241,12 @@ public class Task {
      * @param task - The tasks to add to dependencies
      */
     public void addDependency(Task... task) {
-        dependencies.addAll(Arrays.asList(task));
+        for (Task tsk : task) {
+            if (tsk != this)
+                dependencies.add(tsk);
+        }
+        if (!project.getTasks().contains(this)) project.addNewTask(this);
+        DatabaseManager.updateTask(this);
     }
 
     @Override

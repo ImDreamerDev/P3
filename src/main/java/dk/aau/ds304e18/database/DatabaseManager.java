@@ -5,6 +5,7 @@ import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
+import org.postgresql.util.PSQLException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -32,6 +33,8 @@ public class DatabaseManager {
         try {
             Statement st = dbConnection.createStatement();
             return st.executeQuery(query);
+        } catch (PSQLException e) {
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -102,6 +105,14 @@ public class DatabaseManager {
             return false;
         }
         return true;
+    }
+
+    public static void removeEmployee(int id) {
+        DatabaseManager.query("DELETE FROM employees WHERE id = " + id);
+    }
+
+    public static void removeTask(int id) {
+        DatabaseManager.query("DELETE FROM tasks WHERE id = " + id);
     }
 
     /**
@@ -193,6 +204,35 @@ public class DatabaseManager {
         return true;
     }
 
+    public static Task getTask(int taskId) {
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM tasks WHERE id = ?");
+            statement.setInt(1, taskId);
+
+            ResultSet rs = statement.executeQuery();
+            if (!rs.next()) {
+                return null;
+            } else {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                double estimatedTime = rs.getDouble(3);
+                int priority = rs.getInt(5);
+                int projectId = rs.getInt(6);
+                double startTime = rs.getDouble(7);
+                double endTime = rs.getDouble(8);
+                
+                List<Integer> dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
+                List<Integer> employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
+                return new Task(id, name, estimatedTime, startTime, endTime,
+                        priority, dependenceIds, employeeIds, projectId);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * Return the projects from db which are ongoing.
      *
@@ -231,14 +271,12 @@ public class DatabaseManager {
                 String name = rs.getString(2);
                 double estimatedTime = rs.getDouble(3);
                 int priority = rs.getInt(5);
+                int projectId = rs.getInt(6);
                 double startTime = rs.getDouble(7);
                 double endTime = rs.getDouble(8);
-
-                //TODO: 
-                //int projectId = rs.getInt(6);
                 List<Integer> dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
                 List<Integer> employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
-                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds);
+                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds, projectId);
                 databaseTasks.add(task);
             }
         } catch (SQLException e) {
@@ -347,7 +385,6 @@ public class DatabaseManager {
     }
 
     public static void updateProject(Project project) {
-
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?, sequence = ?" +
                     "WHERE id = ?");
