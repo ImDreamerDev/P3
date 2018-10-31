@@ -67,8 +67,7 @@ public class DatabaseManager {
         try {
             return Files.readString(Paths.get("pass.txt"));
         } catch (IOException e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
+            System.err.println("Pass file not found");
             return "";
         }
     }
