@@ -15,8 +15,14 @@ import java.util.*;
 
 public class DatabaseManager {
 
+    /**
+     * The connection to the database.
+     */
     private static Connection dbConnection;
 
+    /**
+     * A variable that defines if we are running tests.
+     */
     public static boolean isTests = false;
 
     /**
@@ -104,10 +110,20 @@ public class DatabaseManager {
         return true;
     }
 
+    /**
+     * Removes an employee with id from the database.
+     *
+     * @param id id of the Employee to remove.
+     */
     public static void removeEmployee(int id) {
         DatabaseManager.query("DELETE FROM employees WHERE id = " + id);
     }
 
+    /**
+     * Removes a task with id from the database.
+     *
+     * @param id id of the task to remove.
+     */
     public static void removeTask(int id) {
         DatabaseManager.query("DELETE FROM tasks WHERE id = " + id);
     }
@@ -139,6 +155,12 @@ public class DatabaseManager {
         return true;
     }
 
+    /**
+     * Adds a single task to the db.
+     *
+     * @param task the task to add.
+     * @return Whether the operation was successful or not
+     */
     public static boolean addTask(Task task) {
         if (dbConnection == null) connect();
         try {
@@ -175,6 +197,12 @@ public class DatabaseManager {
         return true;
     }
 
+    /**
+     * Parses a ResultSet to Task(s).
+     *
+     * @param rs the ResultSet to parse.
+     * @return a list of Task that got parsed.
+     */
     private static List<Task> parseTasksFromResultSet(ResultSet rs) {
 
         List<Task> tasks = new ArrayList<>();
@@ -203,6 +231,12 @@ public class DatabaseManager {
 
     }
 
+    /**
+     * Parses a ResultSet to a list of Employees.
+     *
+     * @param rs the ResultSet to parse.
+     * @return list of Employees that got parsed or null.
+     */
     private static List<Employee> parseEmployeesFromResultSet(ResultSet rs) {
         List<Employee> empList = new ArrayList<>();
         try {
@@ -222,6 +256,12 @@ public class DatabaseManager {
         return empList;
     }
 
+    /**
+     * Parses a ResultSet to Projects.
+     *
+     * @param rs the ResultSet to parse.
+     * @return a list of Projects that got passed or null.
+     */
     private static List<Project> parseProjectsFromResultSet(ResultSet rs) {
         List<Project> projects = new ArrayList<>();
         try {
@@ -238,6 +278,12 @@ public class DatabaseManager {
         return projects;
     }
 
+    /**
+     * Gets a task with taskId from the database or null.
+     *
+     * @param taskId the id of the task to get from db.
+     * @return the Task with taskId or null.
+     */
     public static Task getTask(int taskId) {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM tasks WHERE id = ?");
@@ -252,11 +298,36 @@ public class DatabaseManager {
         return null;
     }
 
+    /**
+     * Gets a single employee with empId from the db.
+     *
+     * @param empId the id of the employee to get.
+     * @return the employee or null.
+     */
     public static Employee getEmployee(int empId) {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM employees WHERE id = ?");
+            statement.setInt(1, empId);
             ResultSet rs = statement.executeQuery();
             return Objects.requireNonNull(parseEmployeesFromResultSet(rs)).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Returns a project with projId from db.
+     *
+     * @param projId the id of the project to get.
+     * @return the project or null.
+     */
+    public static Project getProject(int projId) {
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projects WHERE id = ?");
+            statement.setInt(1, projId);
+            ResultSet rs = statement.executeQuery();
+            return Objects.requireNonNull(parseProjectsFromResultSet(rs)).get(0);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
