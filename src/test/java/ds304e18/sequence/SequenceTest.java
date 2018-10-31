@@ -37,16 +37,15 @@ class SequenceTest {
         tasks.add(task4);
 
         String sequencedTasks = Sequence.sequenceTasks(tasks);
-        StringBuilder assertedSequencedTasks = new StringBuilder();
-        assertedSequencedTasks.append(task1.getId()).append(",");
-        assertedSequencedTasks.append(task3.getId()).append("|");
-        assertedSequencedTasks.append(task2.getId()).append("(").append(task1.getId()).append(",").append(task3.getId()).append(")").append("|");
-        assertedSequencedTasks.append(task4.getId()).append("(").append(task2.getId()).append(")");
+        String assertedSequencedTasks = String.valueOf(task1.getId()) + "," +
+                task3.getId() + "|" +
+                task2.getId() + "(" + task1.getId() + "," + task3.getId() + ")" + "|" +
+                task4.getId() + "(" + task2.getId() + ")";
 
         /*System.out.println("First test:");
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
-        assertEquals(sequencedTasks, assertedSequencedTasks.toString());
+        assertEquals(sequencedTasks, assertedSequencedTasks);
 
     }
 
