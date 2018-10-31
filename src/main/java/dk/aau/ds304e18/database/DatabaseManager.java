@@ -82,18 +82,16 @@ public class DatabaseManager {
     public static boolean addEmployees(Employee emp) {
         if (dbConnection == null) connect();
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employees (name, currenttasks," +
-                    " previoustasks, projectid) values (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employees (name," +
+                    " previoustasks, projectid) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, emp.getName());
+
             statement.setArray(2, dbConnection.createArrayOf("INTEGER",
-                    emp.getCurrentTask().stream().map(Task::getId).toArray()
-            ));
-            statement.setArray(3, dbConnection.createArrayOf("INTEGER",
                     emp.getPreviousTask().stream().map(Task::getId).toArray()
             ));
 
-            if (emp.getProject() != null) statement.setInt(4, emp.getProject().getId());
-            else statement.setInt(4, 0);
+            if (emp.getProject() != null) statement.setInt(3, emp.getProject().getId());
+            else statement.setInt(3, 0);
 
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
@@ -304,20 +302,18 @@ public class DatabaseManager {
 
     public static void updateEmployee(Employee employee) {
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET currenttasks = ?" +
-                    ", previoustasks = ?, projectid = ? WHERE id = ?");
+            PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET " +
+                    " previoustasks = ?, projectid = ? WHERE id = ?");
+
             statement.setArray(1, dbConnection.createArrayOf("INTEGER",
-                    employee.getCurrentTask().stream().map(Task::getId).toArray()
-            ));
-            statement.setArray(2, dbConnection.createArrayOf("INTEGER",
                     employee.getPreviousTask().stream().map(Task::getId).toArray()
             ));
             //TODO: Check if this is correct
             if (employee.getProject() != null)
-                statement.setInt(3, employee.getProject().getId());
+                statement.setInt(2, employee.getProject().getId());
             else
-                statement.setInt(3, 0);
-            statement.setInt(4, employee.getId());
+                statement.setInt(2, 0);
+            statement.setInt(3, employee.getId());
             statement.execute();
 
         } catch (SQLException e) {
