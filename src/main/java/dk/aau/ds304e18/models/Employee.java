@@ -52,10 +52,10 @@ public class Employee {
     }
 
 
-    public Employee(int id, String name, List<Integer> prevoiusTaskIds) {
+    public Employee(int id, String name, List<Integer> previousTaskIds) {
         this.name = name;
         this.id = id;
-        this.previousTaskIds.addAll(prevoiusTaskIds);
+        this.previousTaskIds.addAll(previousTaskIds);
     }
 
     /**
@@ -133,6 +133,19 @@ public class Employee {
         this.id = id;
     }
 
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+    public List<Integer> getPreviousTaskIds() {
+        return previousTaskIds;
+    }
+    
+    
     /**
      * The setter for the project
      *

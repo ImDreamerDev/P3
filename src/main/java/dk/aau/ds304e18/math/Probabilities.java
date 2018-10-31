@@ -9,7 +9,7 @@ public class Probabilities {
         this.value = value;
         this.probability = probability;
     }
-
+    
     public double getValue(){
         return this.value;
     }
