@@ -100,7 +100,6 @@ public class DatabaseManager {
             if (rs.next()) emp.setId(rs.getInt(1));
             LocalObjStorage.addEmployee(emp);
 
-
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -118,13 +117,9 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projects " +
-                    "(name, state, tasks, employees) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    "(name, state) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, project.getName());
             statement.setInt(2, project.getState().getValue());
-            statement.setArray(3, dbConnection.createArrayOf("INTEGER",
-                    project.getTasks().stream().map(Task::getId).toArray()));
-            statement.setArray(4, dbConnection.createArrayOf("INTEGER",
-                    project.getEmployees().stream().map(Employee::getId).toArray()));
 
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
@@ -139,22 +134,21 @@ public class DatabaseManager {
     }
 
     /**
-     * Gets all DatabaseEmployees from database.
+     * Gets all DatabaseEmployees from database. Assumes projects are loaded.
      *
      * @return list of all DatabaseEmployees.
      */
-    private static List<DatabaseEmployee> getAllEmployees() {
+    private static List<Employee> getAllEmployees() {
         if (dbConnection == null) connect();
-        List<DatabaseEmployee> empList = new ArrayList<>();
+        List<Employee> empList = new ArrayList<>();
         try {
             ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
             while (rs.next()) {
-                DatabaseEmployee emp = new DatabaseEmployee();
-                emp.name = rs.getString(2);
-                emp.id = (rs.getInt(1));
-                emp.currentTaskId = Arrays.asList((Integer[]) rs.getArray(3).getArray());
-                emp.preTaskId = Arrays.asList((Integer[]) rs.getArray(4).getArray());
-                emp.projectId = rs.getInt(5);
+                Employee emp = new Employee(rs.getInt(1), rs.getString(2));
+
+                assert LocalObjStorage.getProjectById(rs.getInt(5)) != null;
+
+                LocalObjStorage.getProjectById(rs.getInt(5));
                 empList.add(emp);
             }
         } catch (SQLException e) {
@@ -201,22 +195,18 @@ public class DatabaseManager {
     }
 
     /**
-     * Return the databaseProjects from the database.
+     * Return the projects from db which are ongoing.
      *
-     * @return list of all databaseProjects.
+     * @return list of all ongoing projects.
      */
-    private static List<DatabaseProject> getAllProjects() {
+    private static List<Project> getAllOngoingProjects() {
         if (dbConnection == null) connect();
-        List<DatabaseProject> databaseProjects = new ArrayList<>();
+        List<Project> databaseProjects = new ArrayList<>();
         try {
-            ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM projects");
+            ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM projects WHERE state = 0");
             while (rs.next()) {
-                DatabaseProject project = new DatabaseProject();
-                project.name = rs.getString(2);
-                project.id = (rs.getInt(1));
-                project.state = ProjectState.values()[rs.getInt(3)];
-                project.tasks = Arrays.asList((Integer[]) rs.getArray(4).getArray());
-                project.employeeIds = Arrays.asList((Integer[]) rs.getArray(5).getArray());
+                Project project = new Project(rs.getInt(1), rs.getString(2),
+                        ProjectState.values()[rs.getInt(3)]);
                 databaseProjects.add(project);
             }
         } catch (SQLException e) {
@@ -230,25 +220,25 @@ public class DatabaseManager {
      *
      * @return list of all database tasks.
      */
-    private static List<DatabaseTask> getAllTasks() {
+    private static List<Task> getAllTasks() {
         if (dbConnection == null) connect();
 
-        List<DatabaseTask> databaseTasks = new ArrayList<>();
+        List<Task> databaseTasks = new ArrayList<>();
 
         try {
             ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM tasks");
             while (rs.next()) {
-                DatabaseTask task = new DatabaseTask();
-                task.id = rs.getInt(1);
-                task.name = rs.getString(2);
-                task.estimatedTime = rs.getDouble(3);
-                if (rs.getArray(4) != null)
-                    task.employeeIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
-                task.dependenceIds = Arrays.asList((Integer[]) rs.getArray(5).getArray());
-                task.priority = rs.getInt(6);
-                task.projectId = rs.getInt(7);
-                task.startTime = rs.getDouble(8);
-                task.endTime = rs.getDouble(9);
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                double estimatedTime = rs.getDouble(3);
+                int priority = rs.getInt(5);
+                double startTime = rs.getDouble(7);
+                double endTime = rs.getDouble(8);
+
+                //int projectId = rs.getInt(6);
+                //task.dependenceIds = Arrays.asList((Integer[]) rs.getArray(5).getArray());
+
+                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority);
                 databaseTasks.add(task);
             }
         } catch (SQLException e) {
@@ -258,9 +248,9 @@ public class DatabaseManager {
     }
 
     public static void distributeModels() {
-        List<DatabaseEmployee> dbEmpList = getAllEmployees();
+     /*   List<DatabaseEmployee> dbEmpList = getAllEmployees();
         List<DatabaseTask> dbTaskList = getAllTasks();
-        List<DatabaseProject> dbProjectList = getAllProjects();
+        List<DatabaseProject> dbProjectList = getAllOngoingProjects();
 
         LocalObjStorage.getEmployeeList().clear();
         LocalObjStorage.getTaskList().clear();
@@ -308,7 +298,7 @@ public class DatabaseManager {
             if (dbProject == null) continue;
             dbProject.employeeIds.forEach(empId -> proj.addNewEmployee(LocalObjStorage.getEmployeeById(empId)));
             dbProject.tasks.forEach(taskId -> proj.addNewTask(LocalObjStorage.getTaskById(taskId)));
-        }
+        }*/
     }
 
 
@@ -361,15 +351,11 @@ public class DatabaseManager {
     public static void updateProject(Project project) {
 
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?," +
-                    " tasks = ?, employees = ? WHERE id = ?");
+            PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?" +
+                    "WHERE id = ?");
             statement.setInt(1, project.getState().getValue());
-            statement.setArray(2, dbConnection.createArrayOf("INTEGER",
-                    project.getTasks().stream().map(Task::getId).toArray()));
-            statement.setArray(3, dbConnection.createArrayOf("INTEGER",
-                    project.getEmployees().stream().map(Employee::getId).toArray()));
 
-            statement.setInt(4, project.getId());
+            statement.setInt(2, project.getId());
             statement.execute();
 
         } catch (SQLException e) {
