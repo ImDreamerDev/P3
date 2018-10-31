@@ -5,6 +5,7 @@ import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
+import org.postgresql.util.PSQLException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -32,6 +33,8 @@ public class DatabaseManager {
         try {
             Statement st = dbConnection.createStatement();
             return st.executeQuery(query);
+        } catch (PSQLException e) {
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
