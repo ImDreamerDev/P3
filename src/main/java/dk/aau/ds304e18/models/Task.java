@@ -32,10 +32,14 @@ public class Task {
      */
     private final List<Employee> employees = new ArrayList<>();
 
+    private final List<Integer> employeeIds = new ArrayList<>();
+
     /**
      * The list of tasks which the task has dependencies upon.
      */
     private final List<Task> dependencies = new ArrayList<>();
+
+    private final List<Integer> dependencyIds = new ArrayList<>();
 
     /**
      * The date that the task starts.
@@ -73,13 +77,15 @@ public class Task {
         DatabaseManager.addTask(this);
     }
 
-    public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority) {
+    public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority, List<Integer> dependencyIds, List<Integer> employeeIds) {
         this.name = name;
         this.id = id;
         this.estimatedTime = estimatedTime;
         this.startTime = startTime;
         this.endTime = endTime;
         this.priority = priority;
+        this.dependencyIds.addAll(dependencyIds);
+        this.employeeIds.addAll(employeeIds);
     }
 
     /**
