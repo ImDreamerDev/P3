@@ -235,9 +235,9 @@ public class DatabaseManager {
 
                 //TODO: 
                 //int projectId = rs.getInt(6);
-                //task.dependenceIds = Arrays.asList((Integer[]) rs.getArray(5).getArray());
-
-                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority);
+                List<Integer> dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
+                List<Integer> employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
+                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds);
                 databaseTasks.add(task);
             }
         } catch (SQLException e) {
