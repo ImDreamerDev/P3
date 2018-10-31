@@ -143,7 +143,8 @@ public class DatabaseManager {
         try {
             ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
             while (rs.next()) {
-                Employee emp = new Employee(rs.getInt(1), rs.getString(2));
+                Employee emp = new Employee(rs.getInt(1), rs.getString(2),
+                        Arrays.asList((Integer[]) rs.getArray(3).getArray()));
 
                 assert LocalObjStorage.getProjectById(rs.getInt(5)) != null;
 
