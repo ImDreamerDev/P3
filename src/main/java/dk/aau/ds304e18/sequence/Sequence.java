@@ -21,20 +21,17 @@ public class Sequence {
         List<Task> tasksToRemove = new ArrayList<>();
 
         //As long as there are still tasks to be sorted
-        while(tasks.size() != 0){
+        while (tasks.size() != 0) {
 
             //For each task in the tasks to be sorted
-            for(Task task : tasks){
+            for (Task task : tasks) {
 
                 //If there are no dependencies left unsorted for the task
-                if(task.getAmountDependenciesLeft() == 0){
-
+                if (task.getAmountDependenciesLeft() == 0) {
                     //Add the task to the two temporary lists
                     tasksToSort.add(task);
                     tasksToRemove.add(task);
-
                 }
-
             }
 
             //Remove the tasks from the tasks yet to be sorted
@@ -46,31 +43,25 @@ public class Sequence {
             tasksToSort = new ArrayList<>();
 
             //For each task in the yet to be sorted list
-            for(Task task : tasks){
+            for (Task task : tasks) {
 
                 //For each dependency of the tasks
-                for(Task dependency : task.getDependencies()){
+                for (Task dependency : task.getDependencies()) {
 
                     //If the dependency is already sequenced
-                    if(sequencedTasks.contains(dependency)){
-
+                    if (sequencedTasks.contains(dependency)) {
                         //Count down the amount of dependencies left so we know that if they're at 0, it's ready to be sequenced
                         task.setAmountDependenciesLeft(task.getAmountDependenciesLeft() - 1);
-
                     }
-
                 }
-
             }
-
         }
 
         //Return the list of sequenced tasks
         return sequencedTasks;
-
     }
 
-    private static List<Task> sortTasks(List<Task> tasks){
+    private static List<Task> sortTasks(List<Task> tasks) {
 
         //Sort tasks after their priority in descending order
         tasks.sort(Comparator.comparingInt(Task::getPriority).reversed());
