@@ -248,7 +248,7 @@ public class DatabaseManager {
     }
 
     public static void distributeModels() {
-        List<DatabaseEmployee> dbEmpList = getAllEmployees();
+     /*   List<DatabaseEmployee> dbEmpList = getAllEmployees();
         List<DatabaseTask> dbTaskList = getAllTasks();
         List<DatabaseProject> dbProjectList = getAllOngoingProjects();
 
@@ -298,7 +298,7 @@ public class DatabaseManager {
             if (dbProject == null) continue;
             dbProject.employeeIds.forEach(empId -> proj.addNewEmployee(LocalObjStorage.getEmployeeById(empId)));
             dbProject.tasks.forEach(taskId -> proj.addNewTask(LocalObjStorage.getTaskById(taskId)));
-        }
+        }*/
     }
 
 
