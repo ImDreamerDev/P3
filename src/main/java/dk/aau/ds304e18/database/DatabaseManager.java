@@ -233,6 +233,7 @@ public class DatabaseManager {
                 double startTime = rs.getDouble(7);
                 double endTime = rs.getDouble(8);
 
+                //TODO: 
                 //int projectId = rs.getInt(6);
                 //task.dependenceIds = Arrays.asList((Integer[]) rs.getArray(5).getArray());
 
