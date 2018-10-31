@@ -35,7 +35,7 @@ class DatabaseManagerTest {
             assertEquals(testEmp.getId(), rs.getInt(1));
             assertEquals(testEmp.getName(), rs.getString(2));
 
-            DatabaseManager.query("DELETE FROM employees WHERE id = " + testEmp.getId());
+            DatabaseManager.removeEmployee(testEmp.getId());
         } catch (SQLException ignored) {
 
         }
@@ -63,7 +63,7 @@ class DatabaseManagerTest {
         assertEquals(testTask.getName(), rs.getString(2));
         assertEquals(testTask.getEstimatedTime(), rs.getDouble(3), 0.001);
         assertEquals(testTask.getProject().getId(), testProj.getId());
-        DatabaseManager.query("DELETE FROM tasks WHERE id = " + testTask.getId());
+        DatabaseManager.removeTask(testTask.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
     }
 }
