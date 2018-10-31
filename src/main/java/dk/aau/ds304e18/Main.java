@@ -23,7 +23,7 @@ class Main {
         Employee rasmus = new Employee("Rasmus Smit Lindholt");
         Project testProj = new Project("Dank communication things to communicate with things");
 
-
+dasd
         Task task = new Task("Test task", 100, 1, testProj);
         task.addEmployee(rasmus);
         /* Test performance
