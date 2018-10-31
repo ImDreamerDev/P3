@@ -222,6 +222,22 @@ public class DatabaseManager {
         return empList;
     }
 
+    private static List<Project> parseProjectsFromResultSet(ResultSet rs) {
+        List<Project> projects = new ArrayList<>();
+        try {
+            if (rs == null) return null;
+            while (rs.next()) {
+                Project project = new Project(rs.getInt(1), rs.getString(2),
+                        ProjectState.values()[rs.getInt(3)], rs.getString(4));
+                projects.add(project);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return projects;
+    }
+
     public static Task getTask(int taskId) {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM tasks WHERE id = ?");
@@ -254,18 +270,14 @@ public class DatabaseManager {
      */
     private static List<Project> getAllOngoingProjects() {
         if (dbConnection == null) connect();
-        List<Project> databaseProjects = new ArrayList<>();
         try {
             ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM projects WHERE state = 0");
-            while (rs.next()) {
-                Project project = new Project(rs.getInt(1), rs.getString(2),
-                        ProjectState.values()[rs.getInt(3)], rs.getString(4));
-                databaseProjects.add(project);
-            }
+            if (rs == null) return null;
+            return parseProjectsFromResultSet(rs);
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return databaseProjects;
     }
 
     /**
