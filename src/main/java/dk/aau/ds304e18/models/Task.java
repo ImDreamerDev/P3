@@ -42,6 +42,8 @@ public class Task {
 
     private final List<Integer> dependencyIds = new ArrayList<>();
 
+    private int amountDependenciesLeft = -1;
+
     /**
      * The date that the task starts.
      */
@@ -274,5 +276,16 @@ public class Task {
 
     public void setStartTime(double startTime) {
         this.startTime = startTime;
+    }
+
+    public int getAmountDependenciesLeft() {
+        if(amountDependenciesLeft == -1){
+            amountDependenciesLeft = dependencies.size();
+        }
+        return amountDependenciesLeft;
+    }
+
+    public void setAmountDependenciesLeft(int amountDependenciesLeft) {
+        this.amountDependenciesLeft = amountDependenciesLeft;
     }
 }
