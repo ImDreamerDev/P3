@@ -9,12 +9,12 @@ public class ProjectStateTest {
 
     @Test
     void TestProjectStateGetValue01() {
-        assertEquals(0,ProjectState.ONGOING.getValue());
+        assertEquals(0, ProjectState.ONGOING.getValue());
     }
 
     @Test
     void TestProjectStateGetValue02() {
-        assertEquals(1,ProjectState.ARCHIVED.getValue());
+        assertEquals(1, ProjectState.ARCHIVED.getValue());
     }
 
 }
