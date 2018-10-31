@@ -106,12 +106,12 @@ public class DatabaseManager {
         }
         return true;
     }
-    
-    public static void removeEmployee(int id){
+
+    public static void removeEmployee(int id) {
         DatabaseManager.query("DELETE FROM employees WHERE id = " + id);
     }
-    
-    public static void removeTask(int id){
+
+    public static void removeTask(int id) {
         DatabaseManager.query("DELETE FROM tasks WHERE id = " + id);
     }
 
@@ -202,6 +202,35 @@ public class DatabaseManager {
             return false;
         }
         return true;
+    }
+
+    public static Task getTask(int taskId) {
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM tasks WHERE id = ?");
+            statement.setInt(1, taskId);
+
+            ResultSet rs = statement.executeQuery();
+            if (!rs.next()) {
+                return null;
+            } else {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                double estimatedTime = rs.getDouble(3);
+                int priority = rs.getInt(5);
+                int projectId = rs.getInt(6);
+                double startTime = rs.getDouble(7);
+                double endTime = rs.getDouble(8);
+                
+                List<Integer> dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
+                List<Integer> employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
+                return new Task(id, name, estimatedTime, startTime, endTime,
+                        priority, dependenceIds, employeeIds, projectId);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
