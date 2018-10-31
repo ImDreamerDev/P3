@@ -274,9 +274,6 @@ public class DatabaseManager {
                 int projectId = rs.getInt(6);
                 double startTime = rs.getDouble(7);
                 double endTime = rs.getDouble(8);
-
-                //TODO: 
-                //int projectId = rs.getInt(6);
                 List<Integer> dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
                 List<Integer> employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
                 Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds, projectId);
@@ -388,7 +385,6 @@ public class DatabaseManager {
     }
 
     public static void updateProject(Project project) {
-
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?, sequence = ?" +
                     "WHERE id = ?");
