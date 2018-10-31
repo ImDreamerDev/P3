@@ -106,6 +106,14 @@ public class DatabaseManager {
         }
         return true;
     }
+    
+    public static void removeEmployee(int id){
+        DatabaseManager.query("DELETE FROM employees WHERE id = " + id);
+    }
+    
+    public static void removeTask(int id){
+        DatabaseManager.query("DELETE FROM tasks WHERE id = " + id);
+    }
 
     /**
      * Adds a project to the database and fetches the unique project ID and adds to project.
