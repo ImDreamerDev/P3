@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SequenceTest {
 
@@ -36,22 +36,17 @@ class SequenceTest {
         tasks.add(task3);
         tasks.add(task4);
 
-        List<Task> sequencedTasks = Sequence.sequenceTasks(tasks);
-        List<Task> assertedSequencedTasks = new ArrayList<>();
-        assertedSequencedTasks.add(task1);
-        assertedSequencedTasks.add(task3);
-        assertedSequencedTasks.add(task2);
-        assertedSequencedTasks.add(task4);
+        String sequencedTasks = Sequence.sequenceTasks(tasks);
+        StringBuilder assertedSequencedTasks = new StringBuilder();
+        assertedSequencedTasks.append(task1.getId()).append(",");
+        assertedSequencedTasks.append(task3.getId()).append("|");
+        assertedSequencedTasks.append(task2.getId()).append("(").append(task1.getId()).append(",").append(task3.getId()).append(")").append("|");
+        assertedSequencedTasks.append(task4.getId()).append("(").append(task2.getId()).append(")");
 
-        if(assertedSequencedTasks.size() != sequencedTasks.size()) fail("The length of the sequencedTasks is not the length of the assertedSequencedTasks");
-
-        for(int i = 0; i < assertedSequencedTasks.size(); i++){
-
-            if(!sequencedTasks.get(i).equals(assertedSequencedTasks.get(i))){
-                fail(sequencedTasks.get(i).getName() + " is not equal to " + assertedSequencedTasks.get(i).getName());
-            }
-
-        }
+        /*System.out.println("First test:");
+        System.out.println("SequencedTasks: " + sequencedTasks);
+        System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
+        assertEquals(sequencedTasks, assertedSequencedTasks.toString());
 
     }
 
@@ -69,22 +64,16 @@ class SequenceTest {
         tasks.add(task3);
         tasks.add(task4);
 
-        List<Task> sequencedTasks = Sequence.sequenceTasks(tasks);
-        List<Task> assertedSequencedTasks = new ArrayList<>();
-        assertedSequencedTasks.add(task4);
-        assertedSequencedTasks.add(task3);
-        assertedSequencedTasks.add(task2);
-        assertedSequencedTasks.add(task1);
+        String sequencedTasks = Sequence.sequenceTasks(tasks);
+        String assertedSequencedTasks = String.valueOf(task4.getId()) + "," +
+                task3.getId() + "," +
+                task2.getId() + "," +
+                task1.getId();
 
-        if(assertedSequencedTasks.size() != sequencedTasks.size()) fail("The length of the sequencedTasks is not the length of the assertedSequencedTasks");
-
-        for(int i = 0; i < assertedSequencedTasks.size(); i++){
-
-            if(!sequencedTasks.get(i).equals(assertedSequencedTasks.get(i))){
-                fail(sequencedTasks.get(i).getName() + " is not equal to " + assertedSequencedTasks.get(i).getName());
-            }
-
-        }
+        /*System.out.println("Second test:");
+        System.out.println("SequencedTasks: " + sequencedTasks);
+        System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
+        assertEquals(sequencedTasks, assertedSequencedTasks);
 
     }
 
@@ -104,22 +93,16 @@ class SequenceTest {
         tasks.add(task3);
         tasks.add(task4);
 
-        List<Task> sequencedTasks = Sequence.sequenceTasks(tasks);
-        List<Task> assertedSequencedTasks = new ArrayList<>();
-        assertedSequencedTasks.add(task4);
-        assertedSequencedTasks.add(task2);
-        assertedSequencedTasks.add(task1);
-        assertedSequencedTasks.add(task3);
+        String sequencedTasks = Sequence.sequenceTasks(tasks);
+        String assertedSequencedTasks = String.valueOf(task4.getId()) + "," +
+                task2.getId() + "," +
+                task1.getId() + "|" +
+                task3.getId() + "(" + task1.getId() + ")";
 
-        if(assertedSequencedTasks.size() != sequencedTasks.size()) fail("The length of the sequencedTasks is not the length of the assertedSequencedTasks");
-
-        for(int i = 0; i < assertedSequencedTasks.size(); i++){
-
-            if(!sequencedTasks.get(i).equals(assertedSequencedTasks.get(i))){
-                fail(sequencedTasks.get(i).getName() + " is not equal to " + assertedSequencedTasks.get(i).getName());
-            }
-
-        }
+        /*System.out.println("Third test:");
+        System.out.println("SequencedTasks: " + sequencedTasks);
+        System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
+        assertEquals(sequencedTasks, assertedSequencedTasks);
 
     }
 
