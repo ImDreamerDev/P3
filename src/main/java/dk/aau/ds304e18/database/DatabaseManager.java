@@ -11,10 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class DatabaseManager {
 
@@ -142,32 +139,6 @@ public class DatabaseManager {
         return true;
     }
 
-    /**
-     * Gets all DatabaseEmployees from database. Assumes projects are loaded.
-     *
-     * @return list of all DatabaseEmployees.
-     */
-    private static List<Employee> getAllEmployees() {
-        if (dbConnection == null) connect();
-        List<Employee> empList = new ArrayList<>();
-        try {
-            ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
-            while (rs.next()) {
-                Employee emp = new Employee(rs.getInt(1), rs.getString(2),
-                        Arrays.asList((Integer[]) rs.getArray(3).getArray()));
-
-                assert LocalObjStorage.getProjectById(rs.getInt(5)) != null;
-
-                LocalObjStorage.getProjectById(rs.getInt(5));
-                empList.add(emp);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return empList;
-    }
-
-
     public static boolean addTask(Task task) {
         if (dbConnection == null) connect();
         try {
@@ -220,8 +191,6 @@ public class DatabaseManager {
                 double startTime = rs.getDouble(7);
                 double endTime = rs.getDouble(8);
 
-                //TODO:
-                //int projectId = rs.getInt(6);
                 List<Integer> dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
                 List<Integer> employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
                 Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds, projectId);
@@ -234,6 +203,25 @@ public class DatabaseManager {
 
     }
 
+    private static List<Employee> parseEmployeesFromResultSet(ResultSet rs) {
+        List<Employee> empList = new ArrayList<>();
+        try {
+            if (rs == null) return null;
+            while (rs.next()) {
+                Employee emp = new Employee(rs.getInt(1), rs.getString(2),
+                        Arrays.asList((Integer[]) rs.getArray(3).getArray()));
+
+                assert LocalObjStorage.getProjectById(rs.getInt(5)) != null;
+
+                LocalObjStorage.getProjectById(rs.getInt(5));
+                empList.add(emp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return empList;
+    }
+
     public static Task getTask(int taskId) {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM tasks WHERE id = ?");
@@ -241,11 +229,22 @@ public class DatabaseManager {
 
             ResultSet rs = statement.executeQuery();
             if (rs == null) return null;
-            return DatabaseManager.parseTasksFromResultSet(rs).get(0);
+            return Objects.requireNonNull(DatabaseManager.parseTasksFromResultSet(rs)).get(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static Employee getEmployee(int empId) {
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM employees WHERE id = ?");
+            ResultSet rs = statement.executeQuery();
+            return Objects.requireNonNull(parseEmployeesFromResultSet(rs)).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -267,6 +266,22 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return databaseProjects;
+    }
+
+    /**
+     * Gets all DatabaseEmployees from database. Assumes projects are loaded.
+     *
+     * @return list of all DatabaseEmployees.
+     */
+    private static List<Employee> getAllEmployees() {
+        if (dbConnection == null) connect();
+        try {
+            ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
+            return parseEmployeesFromResultSet(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
