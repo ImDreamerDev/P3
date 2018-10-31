@@ -215,16 +215,14 @@ public class Task {
      * @param employee - The employees to add to the Task.
      */
     public void addEmployee(Employee... employee) {
-        employees.addAll(Arrays.asList(employee));
-        DatabaseManager.updateTask(this);
-
         for (Employee emp : employee) {
+            if (!employees.contains(emp))
+                employees.add(emp);
             if (emp.getProject() == null || !emp.getProject().equals(project)) emp.setProject(project);
             if (!emp.getCurrentTask().contains(this)) emp.addNewTask(this);
         }
-
+        DatabaseManager.updateTask(this);
         if (!project.getTasks().contains(this)) project.addNewTask(this);
-
     }
 
     /**
@@ -233,7 +231,10 @@ public class Task {
      * @param task - The tasks to add to dependencies
      */
     public void addDependency(Task... task) {
-        dependencies.addAll(Arrays.asList(task));
+        for (Task tsk : task) {
+            if (tsk != this)
+                dependencies.add(tsk);
+        }
     }
 
     @Override
