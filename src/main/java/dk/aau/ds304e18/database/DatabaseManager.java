@@ -11,10 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class DatabaseManager {
 
@@ -142,32 +139,6 @@ public class DatabaseManager {
         return true;
     }
 
-    /**
-     * Gets all DatabaseEmployees from database. Assumes projects are loaded.
-     *
-     * @return list of all DatabaseEmployees.
-     */
-    private static List<Employee> getAllEmployees() {
-        if (dbConnection == null) connect();
-        List<Employee> empList = new ArrayList<>();
-        try {
-            ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
-            while (rs.next()) {
-                Employee emp = new Employee(rs.getInt(1), rs.getString(2),
-                        Arrays.asList((Integer[]) rs.getArray(3).getArray()));
-
-                assert LocalObjStorage.getProjectById(rs.getInt(5)) != null;
-
-                LocalObjStorage.getProjectById(rs.getInt(5));
-                empList.add(emp);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return empList;
-    }
-
-
     public static boolean addTask(Task task) {
         if (dbConnection == null) connect();
         try {
@@ -204,15 +175,14 @@ public class DatabaseManager {
         return true;
     }
 
-    public static Task getTask(int taskId) {
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM tasks WHERE id = ?");
-            statement.setInt(1, taskId);
+    private static List<Task> parseTasksFromResultSet(ResultSet rs) {
 
-            ResultSet rs = statement.executeQuery();
-            if (!rs.next()) {
-                return null;
-            } else {
+        List<Task> tasks = new ArrayList<>();
+
+        try {
+            if (rs == null) return null;
+
+            while (rs.next()) {
                 int id = rs.getInt(1);
                 String name = rs.getString(2);
                 double estimatedTime = rs.getDouble(3);
@@ -220,17 +190,77 @@ public class DatabaseManager {
                 int projectId = rs.getInt(6);
                 double startTime = rs.getDouble(7);
                 double endTime = rs.getDouble(8);
-                
+
                 List<Integer> dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
                 List<Integer> employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
-                return new Task(id, name, estimatedTime, startTime, endTime,
-                        priority, dependenceIds, employeeIds, projectId);
-
+                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds, projectId);
+                tasks.add(task);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return tasks;
+
+    }
+
+    private static List<Employee> parseEmployeesFromResultSet(ResultSet rs) {
+        List<Employee> empList = new ArrayList<>();
+        try {
+            if (rs == null) return null;
+            while (rs.next()) {
+                Employee emp = new Employee(rs.getInt(1), rs.getString(2),
+                        Arrays.asList((Integer[]) rs.getArray(3).getArray()));
+
+                assert LocalObjStorage.getProjectById(rs.getInt(5)) != null;
+
+                LocalObjStorage.getProjectById(rs.getInt(5));
+                empList.add(emp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return empList;
+    }
+
+    private static List<Project> parseProjectsFromResultSet(ResultSet rs) {
+        List<Project> projects = new ArrayList<>();
+        try {
+            if (rs == null) return null;
+            while (rs.next()) {
+                Project project = new Project(rs.getInt(1), rs.getString(2),
+                        ProjectState.values()[rs.getInt(3)], rs.getString(4));
+                projects.add(project);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return projects;
+    }
+
+    public static Task getTask(int taskId) {
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM tasks WHERE id = ?");
+            statement.setInt(1, taskId);
+
+            ResultSet rs = statement.executeQuery();
+            if (rs == null) return null;
+            return Objects.requireNonNull(DatabaseManager.parseTasksFromResultSet(rs)).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
+    }
+
+    public static Employee getEmployee(int empId) {
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM employees WHERE id = ?");
+            ResultSet rs = statement.executeQuery();
+            return Objects.requireNonNull(parseEmployeesFromResultSet(rs)).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -240,18 +270,30 @@ public class DatabaseManager {
      */
     private static List<Project> getAllOngoingProjects() {
         if (dbConnection == null) connect();
-        List<Project> databaseProjects = new ArrayList<>();
         try {
             ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM projects WHERE state = 0");
-            while (rs.next()) {
-                Project project = new Project(rs.getInt(1), rs.getString(2),
-                        ProjectState.values()[rs.getInt(3)], rs.getString(4));
-                databaseProjects.add(project);
-            }
+            if (rs == null) return null;
+            return parseProjectsFromResultSet(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Gets all DatabaseEmployees from database. Assumes projects are loaded.
+     *
+     * @return list of all DatabaseEmployees.
+     */
+    private static List<Employee> getAllEmployees() {
+        if (dbConnection == null) connect();
+        try {
+            ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
+            return parseEmployeesFromResultSet(rs);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return databaseProjects;
+        return null;
     }
 
     /**
@@ -262,27 +304,13 @@ public class DatabaseManager {
     private static List<Task> getAllTasks() {
         if (dbConnection == null) connect();
 
-        List<Task> databaseTasks = new ArrayList<>();
-
         try {
             ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM tasks");
-            while (rs.next()) {
-                int id = rs.getInt(1);
-                String name = rs.getString(2);
-                double estimatedTime = rs.getDouble(3);
-                int priority = rs.getInt(5);
-                int projectId = rs.getInt(6);
-                double startTime = rs.getDouble(7);
-                double endTime = rs.getDouble(8);
-                List<Integer> dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
-                List<Integer> employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
-                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds, projectId);
-                databaseTasks.add(task);
-            }
+            return DatabaseManager.parseTasksFromResultSet(rs);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return databaseTasks;
+        return null;
     }
 
     public static void distributeModels() {
