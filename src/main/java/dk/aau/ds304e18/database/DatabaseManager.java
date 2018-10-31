@@ -115,9 +115,10 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projects " +
-                    "(name, state) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    "(name, state, sequence) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, project.getName());
             statement.setInt(2, project.getState().getValue());
+            statement.setString(3, "");
 
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
@@ -204,7 +205,7 @@ public class DatabaseManager {
             ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM projects WHERE state = 0");
             while (rs.next()) {
                 Project project = new Project(rs.getInt(1), rs.getString(2),
-                        ProjectState.values()[rs.getInt(3)]);
+                        ProjectState.values()[rs.getInt(3)], rs.getString(4));
                 databaseProjects.add(project);
             }
         } catch (SQLException e) {
@@ -348,11 +349,11 @@ public class DatabaseManager {
     public static void updateProject(Project project) {
 
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?" +
+            PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?, sequence = ?" +
                     "WHERE id = ?");
             statement.setInt(1, project.getState().getValue());
-
-            statement.setInt(2, project.getId());
+            statement.setString(2, project.getSequence());
+            statement.setInt(3, project.getId());
             statement.execute();
 
         } catch (SQLException e) {

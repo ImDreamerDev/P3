@@ -178,4 +178,12 @@ public class Project {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public String getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(String sequence) {
+        this.sequence = sequence;
+    }
 }
