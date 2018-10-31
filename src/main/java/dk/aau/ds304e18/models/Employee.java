@@ -145,7 +145,6 @@ public class Employee {
         return previousTaskIds;
     }
     
-    
     /**
      * The setter for the project
      *
