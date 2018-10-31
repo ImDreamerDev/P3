@@ -248,4 +248,20 @@ public class Task {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public void setEstimatedTime(double estimatedTime) {
+        this.estimatedTime = estimatedTime;
+    }
+
+    public List<Integer> getEmployeeIds() {
+        return employeeIds;
+    }
+
+    public List<Integer> getDependencyIds() {
+        return dependencyIds;
+    }
+
+    public void setStartTime(double startTime) {
+        this.startTime = startTime;
+    }
 }
