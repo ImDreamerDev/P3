@@ -55,7 +55,7 @@ public class CalculateLambda {
                 for (Probabilities probability : probabilities) {
 
                     //Get the values of the probability
-                    var realProb = invG.getProbability(probability.getValue());
+                    var realProb = invG.getProbability(probability.getDuration());
                     var expectedProb = probability.getProbability();
 
                     //Check which probability is largest to get the difference

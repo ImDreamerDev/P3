@@ -3,7 +3,6 @@ package dk.aau.ds304e18.math;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 class Main {
@@ -35,7 +34,7 @@ class Main {
         System.out.println("Lambda value: " + lambda);
         System.out.println("Best value: " + muLambda.get(2));
         for (Probabilities probability : probabilities) {
-            System.out.println(probability.getValue() + " : " + invG.getProbability(probability.getValue()));
+            System.out.println(probability.getDuration() + " : " + invG.getProbability(probability.getDuration()));
         }
 
         Duration between = java.time.Duration.between(start, end);
