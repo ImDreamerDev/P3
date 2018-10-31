@@ -1,5 +1,6 @@
 package ds304e18.models;
 
+import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
@@ -21,6 +22,8 @@ class ProjectTest {
     void TestProjectConstructor01() {
         Project newProject = new Project("Test Project");
         assertEquals("Test Project", newProject.getName());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
     }
 
    /* TODO: Fix tests
@@ -58,8 +61,12 @@ class ProjectTest {
     void TestProjectAddNewTask01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 2, 1, newProject);
+
         newProject.addNewTask(newTask);
         assertEquals(newTask, newProject.getTasks().get(0));
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+        DatabaseManager.removeTask(newTask.getId());
     }
 
     /**
@@ -69,9 +76,14 @@ class ProjectTest {
     void TestProjectRemoveTask01() {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 2, 1, newProject);
+
         newProject.addNewTask(newTask);
         newProject.removeTask(newTask);
+
         assertTrue(newProject.getTasks().isEmpty());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+        DatabaseManager.removeTask(newTask.getId());
     }
 
     /**
@@ -81,8 +93,13 @@ class ProjectTest {
     void TestProjectAddNewEmployee01() {
         Project newProject = new Project("Test Project");
         Employee newEmployee = new Employee("Test Person");
+
         newProject.addNewEmployee(newEmployee);
+
         assertEquals(newEmployee, newProject.getEmployees().get(0));
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+        DatabaseManager.removeEmployee(newEmployee.getId());
     }
 
     /**
@@ -92,9 +109,14 @@ class ProjectTest {
     void TestProjectRemoveEmployee01() {
         Project newProject = new Project("Test Project");
         Employee newEmployee = new Employee("Test Person");
+
         newProject.addNewEmployee(newEmployee);
         newProject.removeEmployee(newEmployee);
+
         assertTrue(newProject.getEmployees().isEmpty());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+        DatabaseManager.removeEmployee(newEmployee.getId());
     }
 
     /**
@@ -103,8 +125,12 @@ class ProjectTest {
     @Test
     void TestProjectGetId01() {
         Project newProject = new Project("Test Project");
+
         newProject.setId(5);
+
         assertEquals(5, newProject.getId());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
     }
 
     /**
@@ -113,7 +139,10 @@ class ProjectTest {
     @Test
     void TestProjectGetName01() {
         Project newProject = new Project("Test Project");
+
         assertEquals("Test Project", newProject.getName());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
     }
 
     /**
@@ -122,7 +151,10 @@ class ProjectTest {
     @Test
     void TestProjectGetState01() {
         Project newProject = new Project("Test Project");
+
         assertEquals(ProjectState.ONGOING, newProject.getState());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
     }
 
     /**
@@ -133,6 +165,7 @@ class ProjectTest {
         Project newProject = new Project("Test Project");
         Task newTask01 = new Task("Test Task01", 2, 5, newProject);
         Task newTask02 = new Task("Test Task02", 1, 2, newProject);
+
         newProject.addNewTask(newTask01, newTask02);
 
         List<Task> testList = new ArrayList<>();
@@ -140,6 +173,10 @@ class ProjectTest {
         testList.add(newTask02);
 
         assertEquals(testList, newProject.getTasks());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+        DatabaseManager.removeTask(newTask01.getId());
+        DatabaseManager.removeTask(newTask02.getId());
     }
 
     /**
@@ -150,6 +187,7 @@ class ProjectTest {
         Project newProject = new Project("Test Project");
         Employee newEmployee01 = new Employee("Person01");
         Employee newEmployee02 = new Employee("Person02");
+
         newProject.addNewEmployee(newEmployee01, newEmployee02);
 
         List<Employee> testList = new ArrayList<>();
@@ -157,6 +195,10 @@ class ProjectTest {
         testList.add(newEmployee02);
 
         assertEquals(testList, newProject.getEmployees());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+        DatabaseManager.removeEmployee(newEmployee01.getId());
+        DatabaseManager.removeEmployee(newEmployee02.getId());
     }
 
     /**
@@ -165,7 +207,11 @@ class ProjectTest {
     @Test
     void TestProjectSetId01() {
         Project newProject = new Project("Test Project");
+
         newProject.setId(3);
+
         assertEquals(3, newProject.getId());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
     }
 }
