@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -177,13 +177,18 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>private java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sequence">sequence</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>private <a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#state">state</a></span></code></th>
 <td class="colLast">
 <div class="block">The current state of the project.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tasks">tasks</a></span></code></th>
 <td class="colLast">
@@ -208,10 +213,11 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(dk.aau.ds304e18.database.DatabaseProject)">Project</a></span>&#8203;(<a href="../database/DatabaseProject.html" title="class in dk.aau.ds304e18.database">DatabaseProject</a>&nbsp;databaseProject)</code></th>
-<td class="colLast">
-<div class="block">Constructor for a project using data from database.</div>
-</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String,dk.aau.ds304e18.models.ProjectState,java.lang.String)">Project</a></span>&#8203;(int&nbsp;id,
+       java.lang.String&nbsp;name,
+       <a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a>&nbsp;projectState,
+       java.lang.String&nbsp;sequence)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">Project</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
@@ -246,9 +252,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addNewTask(dk.aau.ds304e18.models.Task...)">addNewTask</a></span>&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>...&nbsp;task)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addNewTask(dk.aau.ds304e18.models.Task...)">addNewTask</a></span>&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>...&nbsp;tasks)</code></th>
 <td class="colLast">
-<div class="block">Adds a new task to the project.</div>
+<div class="block">Adds new tasks to the project.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -278,46 +284,56 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSequence()">getSequence</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getState()">getState</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the current state og the project.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTasks()">getTasks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the list of all tasks in the project.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeEmployee(dk.aau.ds304e18.models.Employee)">removeEmployee</a></span>&#8203;(<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&nbsp;employee)</code></th>
 <td class="colLast">
 <div class="block">Removes employee from project.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTask(dk.aau.ds304e18.models.Task)">removeTask</a></span>&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</code></th>
 <td class="colLast">
 <div class="block">Removes task from tasks.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(int)">setId</a></span>&#8203;(int&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Sets the unique ID.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSequence(java.lang.String)">setSequence</a></span>&#8203;(java.lang.String&nbsp;sequence)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setState(dk.aau.ds304e18.models.ProjectState)">setState</a></span>&#8203;(<a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a>&nbsp;state)</code></th>
 <td class="colLast">
@@ -366,6 +382,15 @@ extends java.lang.Object</pre>
 <h4>name</h4>
 <pre>private&nbsp;java.lang.String name</pre>
 <div class="block">The name of the project.</div>
+</li>
+</ul>
+<a id="sequence">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>sequence</h4>
+<pre>private&nbsp;java.lang.String sequence</pre>
 </li>
 </ul>
 <a id="state">
@@ -422,18 +447,16 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(dk.aau.ds304e18.database.DatabaseProject)">
+<a id="&lt;init&gt;(int,java.lang.String,dk.aau.ds304e18.models.ProjectState,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Project</h4>
-<pre>public&nbsp;Project&#8203;(<a href="../database/DatabaseProject.html" title="class in dk.aau.ds304e18.database">DatabaseProject</a>&nbsp;databaseProject)</pre>
-<div class="block">Constructor for a project using data from database.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>databaseProject</code> - - Project object from database.</dd>
-</dl>
+<pre>public&nbsp;Project&#8203;(int&nbsp;id,
+               java.lang.String&nbsp;name,
+               <a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a>&nbsp;projectState,
+               java.lang.String&nbsp;sequence)</pre>
 </li>
 </ul>
 </li>
@@ -452,11 +475,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>addNewTask</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addNewTask&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>...&nbsp;task)</pre>
-<div class="block">Adds a new task to the project.</div>
+<pre class="methodSignature">public&nbsp;void&nbsp;addNewTask&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>...&nbsp;tasks)</pre>
+<div class="block">Adds new tasks to the project.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>task</code> - - The task to add.</dd>
+<dd><code>tasks</code> - - The tasks to add.</dd>
 </dl>
 </li>
 </ul>
@@ -616,7 +639,7 @@ extends java.lang.Object</pre>
 <a id="hashCode()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>hashCode</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;hashCode()</pre>
@@ -624,6 +647,24 @@ extends java.lang.Object</pre>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>hashCode</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
+</li>
+</ul>
+<a id="getSequence()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSequence</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSequence()</pre>
+</li>
+</ul>
+<a id="setSequence(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setSequence</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setSequence&#8203;(java.lang.String&nbsp;sequence)</pre>
 </li>
 </ul>
 </li>

@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -157,12 +157,16 @@ extends java.lang.Object</pre>
 <tr class="altColor">
 <td class="colFirst"><code>private static java.sql.Connection</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbConnection">dbConnection</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The connection to the database.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isTests">isTests</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">A variable that defines if we are running tests.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -220,7 +224,9 @@ extends java.lang.Object</pre>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addTask(dk.aau.ds304e18.models.Task)">addTask</a></span>&#8203;(<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Adds a single task to the db.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>private static void</code></td>
@@ -235,51 +241,107 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>private static java.util.List&lt;<a href="DatabaseEmployee.html" title="class in dk.aau.ds304e18.database">DatabaseEmployee</a>&gt;</code></td>
+<td class="colFirst"><code>private static java.util.List&lt;<a href="../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllEmployees()">getAllEmployees</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets all DatabaseEmployees from database.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>private static java.util.List&lt;<a href="DatabaseProject.html" title="class in dk.aau.ds304e18.database">DatabaseProject</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllProjects()">getAllProjects</a></span>()</code></th>
+<td class="colFirst"><code>private static java.util.List&lt;<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllOngoingProjects()">getAllOngoingProjects</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Return the databaseProjects from the database.</div>
+<div class="block">Return the projects from db which are ongoing.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>private static java.util.List&lt;<a href="DatabaseTask.html" title="class in dk.aau.ds304e18.database">DatabaseTask</a>&gt;</code></td>
+<td class="colFirst"><code>private static java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllTasks()">getAllTasks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Get all databaseTasks.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>static <a href="../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEmployee(int)">getEmployee</a></span>&#8203;(int&nbsp;empId)</code></th>
+<td class="colLast">
+<div class="block">Gets a single employee with empId from the db.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>static <a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProject(int)">getProject</a></span>&#8203;(int&nbsp;projId)</code></th>
+<td class="colLast">
+<div class="block">Returns a project with projId from db.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>static <a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTask(int)">getTask</a></span>&#8203;(int&nbsp;taskId)</code></th>
+<td class="colLast">
+<div class="block">Gets a task with taskId from the database or null.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>private static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadPassword()">loadPassword</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Loads the password from a file on disk.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>private static java.util.List&lt;<a href="../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parseEmployeesFromResultSet(java.sql.ResultSet)">parseEmployeesFromResultSet</a></span>&#8203;(java.sql.ResultSet&nbsp;rs)</code></th>
+<td class="colLast">
+<div class="block">Parses a ResultSet to a list of Employees.</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>private static java.util.List&lt;<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parseProjectsFromResultSet(java.sql.ResultSet)">parseProjectsFromResultSet</a></span>&#8203;(java.sql.ResultSet&nbsp;rs)</code></th>
+<td class="colLast">
+<div class="block">Parses a ResultSet to Projects.</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>private static java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parseTasksFromResultSet(java.sql.ResultSet)">parseTasksFromResultSet</a></span>&#8203;(java.sql.ResultSet&nbsp;rs)</code></th>
+<td class="colLast">
+<div class="block">Parses a ResultSet to Task(s).</div>
+</td>
+</tr>
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>static java.sql.ResultSet</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#query(java.lang.String)">query</a></span>&#8203;(java.lang.String&nbsp;query)</code></th>
 <td class="colLast">
 <div class="block">Sends a query to the DB and returns the result.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeEmployee(int)">removeEmployee</a></span>&#8203;(int&nbsp;id)</code></th>
+<td class="colLast">
+<div class="block">Removes an employee with id from the database.</div>
+</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTask(int)">removeTask</a></span>&#8203;(int&nbsp;id)</code></th>
+<td class="colLast">
+<div class="block">Removes a task with id from the database.</div>
+</td>
+</tr>
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateEmployee(dk.aau.ds304e18.models.Employee)">updateEmployee</a></span>&#8203;(<a href="../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&nbsp;employee)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateProject(dk.aau.ds304e18.models.Project)">updateProject</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateTask(dk.aau.ds304e18.models.Task)">updateTask</a></span>&#8203;(<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -315,6 +377,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>dbConnection</h4>
 <pre>private static&nbsp;java.sql.Connection dbConnection</pre>
+<div class="block">The connection to the database.</div>
 </li>
 </ul>
 <a id="isTests">
@@ -324,6 +387,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>isTests</h4>
 <pre>public static&nbsp;boolean isTests</pre>
+<div class="block">A variable that defines if we are running tests.</div>
 </li>
 </ul>
 </li>
@@ -411,6 +475,34 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="removeEmployee(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeEmployee</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;removeEmployee&#8203;(int&nbsp;id)</pre>
+<div class="block">Removes an employee with id from the database.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - id of the Employee to remove.</dd>
+</dl>
+</li>
+</ul>
+<a id="removeTask(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeTask</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;removeTask&#8203;(int&nbsp;id)</pre>
+<div class="block">Removes a task with id from the database.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - id of the task to remove.</dd>
+</dl>
+</li>
+</ul>
 <a id="addProject(dk.aau.ds304e18.models.Project)">
 <!--   -->
 </a>
@@ -427,20 +519,6 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getAllEmployees()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAllEmployees</h4>
-<pre class="methodSignature">private static&nbsp;java.util.List&lt;<a href="DatabaseEmployee.html" title="class in dk.aau.ds304e18.database">DatabaseEmployee</a>&gt;&nbsp;getAllEmployees()</pre>
-<div class="block">Gets all DatabaseEmployees from database.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>list of all DatabaseEmployees.</dd>
-</dl>
-</li>
-</ul>
 <a id="addTask(dk.aau.ds304e18.models.Task)">
 <!--   -->
 </a>
@@ -448,19 +526,136 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>addTask</h4>
 <pre class="methodSignature">public static&nbsp;boolean&nbsp;addTask&#8203;(<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</pre>
+<div class="block">Adds a single task to the db.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>task</code> - the task to add.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Whether the operation was successful or not</dd>
+</dl>
 </li>
 </ul>
-<a id="getAllProjects()">
+<a id="parseTasksFromResultSet(java.sql.ResultSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getAllProjects</h4>
-<pre class="methodSignature">private static&nbsp;java.util.List&lt;<a href="DatabaseProject.html" title="class in dk.aau.ds304e18.database">DatabaseProject</a>&gt;&nbsp;getAllProjects()</pre>
-<div class="block">Return the databaseProjects from the database.</div>
+<h4>parseTasksFromResultSet</h4>
+<pre class="methodSignature">private static&nbsp;java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;parseTasksFromResultSet&#8203;(java.sql.ResultSet&nbsp;rs)</pre>
+<div class="block">Parses a ResultSet to Task(s).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>rs</code> - the ResultSet to parse.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a list of Task that got parsed.</dd>
+</dl>
+</li>
+</ul>
+<a id="parseEmployeesFromResultSet(java.sql.ResultSet)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>parseEmployeesFromResultSet</h4>
+<pre class="methodSignature">private static&nbsp;java.util.List&lt;<a href="../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;&nbsp;parseEmployeesFromResultSet&#8203;(java.sql.ResultSet&nbsp;rs)</pre>
+<div class="block">Parses a ResultSet to a list of Employees.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>rs</code> - the ResultSet to parse.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>list of Employees that got parsed or null.</dd>
+</dl>
+</li>
+</ul>
+<a id="parseProjectsFromResultSet(java.sql.ResultSet)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>parseProjectsFromResultSet</h4>
+<pre class="methodSignature">private static&nbsp;java.util.List&lt;<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;&nbsp;parseProjectsFromResultSet&#8203;(java.sql.ResultSet&nbsp;rs)</pre>
+<div class="block">Parses a ResultSet to Projects.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>rs</code> - the ResultSet to parse.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a list of Projects that got passed or null.</dd>
+</dl>
+</li>
+</ul>
+<a id="getTask(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTask</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;getTask&#8203;(int&nbsp;taskId)</pre>
+<div class="block">Gets a task with taskId from the database or null.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>taskId</code> - the id of the task to get from db.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the Task with taskId or null.</dd>
+</dl>
+</li>
+</ul>
+<a id="getEmployee(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getEmployee</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&nbsp;getEmployee&#8203;(int&nbsp;empId)</pre>
+<div class="block">Gets a single employee with empId from the db.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>empId</code> - the id of the employee to get.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the employee or null.</dd>
+</dl>
+</li>
+</ul>
+<a id="getProject(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getProject</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;getProject&#8203;(int&nbsp;projId)</pre>
+<div class="block">Returns a project with projId from db.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>projId</code> - the id of the project to get.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the project or null.</dd>
+</dl>
+</li>
+</ul>
+<a id="getAllOngoingProjects()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAllOngoingProjects</h4>
+<pre class="methodSignature">private static&nbsp;java.util.List&lt;<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;&nbsp;getAllOngoingProjects()</pre>
+<div class="block">Return the projects from db which are ongoing.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>list of all databaseProjects.</dd>
+<dd>list of all ongoing projects.</dd>
+</dl>
+</li>
+</ul>
+<a id="getAllEmployees()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAllEmployees</h4>
+<pre class="methodSignature">private static&nbsp;java.util.List&lt;<a href="../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;&nbsp;getAllEmployees()</pre>
+<div class="block">Gets all DatabaseEmployees from database. Assumes projects are loaded.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>list of all DatabaseEmployees.</dd>
 </dl>
 </li>
 </ul>
@@ -470,7 +665,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAllTasks</h4>
-<pre class="methodSignature">private static&nbsp;java.util.List&lt;<a href="DatabaseTask.html" title="class in dk.aau.ds304e18.database">DatabaseTask</a>&gt;&nbsp;getAllTasks()</pre>
+<pre class="methodSignature">private static&nbsp;java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;getAllTasks()</pre>
 <div class="block">Get all databaseTasks.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
