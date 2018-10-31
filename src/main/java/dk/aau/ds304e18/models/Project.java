@@ -22,6 +22,8 @@ public class Project {
      */
     private String name;
 
+    private String sequence;
+
     /**
      * The current state of the project.
      */
@@ -48,10 +50,11 @@ public class Project {
         DatabaseManager.addProject(this);
     }
     
-    public Project(int id, String name, ProjectState projectState) {
+    public Project(int id, String name, ProjectState projectState, String sequence) {
        this.id = id;
         this.state = projectState;
         this.name = name;
+        this.sequence = sequence;
     }
 
     /**
@@ -174,5 +177,13 @@ public class Project {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public String getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(String sequence) {
+        this.sequence = sequence;
     }
 }

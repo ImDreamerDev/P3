@@ -26,15 +26,20 @@ public class Employee {
      */
     private Project project;
 
+    private int projectId;
+
     /**
      * The task he is currently assigned.
      */
     private final List<Task> currentTask = new ArrayList<>();
 
+
     /**
      * The tasks that the employee has previously worked on.
      */
     private final List<Task> previousTask = new ArrayList<>();
+
+    private final List<Integer> previousTaskIds = new ArrayList<>();
 
     /**
      * The constructor for the employee class
@@ -47,9 +52,10 @@ public class Employee {
     }
 
 
-    public Employee(int id, String name) {
+    public Employee(int id, String name, List<Integer> prevoiusTaskIds) {
         this.name = name;
         this.id = id;
+        this.previousTaskIds.addAll(prevoiusTaskIds);
     }
 
     /**

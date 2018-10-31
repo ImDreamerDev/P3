@@ -67,8 +67,7 @@ public class DatabaseManager {
         try {
             return Files.readString(Paths.get("pass.txt"));
         } catch (IOException e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
+            System.err.println("Pass file not found");
             return "";
         }
     }
@@ -82,18 +81,16 @@ public class DatabaseManager {
     public static boolean addEmployees(Employee emp) {
         if (dbConnection == null) connect();
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employees (name, currenttasks," +
-                    " previoustasks, projectid) values (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employees (name," +
+                    " previoustasks, projectid) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, emp.getName());
+
             statement.setArray(2, dbConnection.createArrayOf("INTEGER",
-                    emp.getCurrentTask().stream().map(Task::getId).toArray()
-            ));
-            statement.setArray(3, dbConnection.createArrayOf("INTEGER",
                     emp.getPreviousTask().stream().map(Task::getId).toArray()
             ));
 
-            if (emp.getProject() != null) statement.setInt(4, emp.getProject().getId());
-            else statement.setInt(4, 0);
+            if (emp.getProject() != null) statement.setInt(3, emp.getProject().getId());
+            else statement.setInt(3, 0);
 
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
@@ -117,9 +114,10 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projects " +
-                    "(name, state) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    "(name, state, sequence) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, project.getName());
             statement.setInt(2, project.getState().getValue());
+            statement.setString(3, "");
 
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
@@ -144,7 +142,8 @@ public class DatabaseManager {
         try {
             ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
             while (rs.next()) {
-                Employee emp = new Employee(rs.getInt(1), rs.getString(2));
+                Employee emp = new Employee(rs.getInt(1), rs.getString(2),
+                        Arrays.asList((Integer[]) rs.getArray(3).getArray()));
 
                 assert LocalObjStorage.getProjectById(rs.getInt(5)) != null;
 
@@ -206,7 +205,7 @@ public class DatabaseManager {
             ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM projects WHERE state = 0");
             while (rs.next()) {
                 Project project = new Project(rs.getInt(1), rs.getString(2),
-                        ProjectState.values()[rs.getInt(3)]);
+                        ProjectState.values()[rs.getInt(3)], rs.getString(4));
                 databaseProjects.add(project);
             }
         } catch (SQLException e) {
@@ -235,10 +234,11 @@ public class DatabaseManager {
                 double startTime = rs.getDouble(7);
                 double endTime = rs.getDouble(8);
 
+                //TODO: 
                 //int projectId = rs.getInt(6);
-                //task.dependenceIds = Arrays.asList((Integer[]) rs.getArray(5).getArray());
-
-                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority);
+                List<Integer> dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
+                List<Integer> employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
+                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds);
                 databaseTasks.add(task);
             }
         } catch (SQLException e) {
@@ -304,20 +304,18 @@ public class DatabaseManager {
 
     public static void updateEmployee(Employee employee) {
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET currenttasks = ?" +
-                    ", previoustasks = ?, projectid = ? WHERE id = ?");
+            PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET " +
+                    " previoustasks = ?, projectid = ? WHERE id = ?");
+
             statement.setArray(1, dbConnection.createArrayOf("INTEGER",
-                    employee.getCurrentTask().stream().map(Task::getId).toArray()
-            ));
-            statement.setArray(2, dbConnection.createArrayOf("INTEGER",
                     employee.getPreviousTask().stream().map(Task::getId).toArray()
             ));
             //TODO: Check if this is correct
             if (employee.getProject() != null)
-                statement.setInt(3, employee.getProject().getId());
+                statement.setInt(2, employee.getProject().getId());
             else
-                statement.setInt(3, 0);
-            statement.setInt(4, employee.getId());
+                statement.setInt(2, 0);
+            statement.setInt(3, employee.getId());
             statement.execute();
 
         } catch (SQLException e) {
@@ -351,11 +349,11 @@ public class DatabaseManager {
     public static void updateProject(Project project) {
 
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?" +
+            PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?, sequence = ?" +
                     "WHERE id = ?");
             statement.setInt(1, project.getState().getValue());
-
-            statement.setInt(2, project.getId());
+            statement.setString(2, project.getSequence());
+            statement.setInt(3, project.getId());
             statement.execute();
 
         } catch (SQLException e) {
