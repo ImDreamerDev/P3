@@ -243,6 +243,8 @@ public class Task {
             if (tsk != this)
                 dependencies.add(tsk);
         }
+        if (!project.getTasks().contains(this)) project.addNewTask(this);
+        DatabaseManager.updateTask(this);
     }
 
     @Override
