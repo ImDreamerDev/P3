@@ -501,4 +501,18 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
+    
+    /* Parse probs
+     //UPDATE tasks SET prob[1] = (534.1,3123.2) WHERE id = 47;
+        ResultSet rs = DatabaseManager.query("SELECT probabilities FROM tasks WHERE id =" + 47);
+        rs.next();
+
+        ResultSet rsw = rs.getArray(1).getResultSet();
+        while (rsw.next()) {
+            String string = rsw.getString(2).replaceAll("[/(/)]", "");
+            Probabilities probabilities = new Probabilities(Double.parseDouble(string.split(",")[0]),
+                    Double.parseDouble(string.split(",")[1]));
+            System.out.println(probabilities.getDuration() + " " + probabilities.getProbability());
+        }
+     */
 }
