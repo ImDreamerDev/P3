@@ -1,6 +1,7 @@
 package dk.aau.ds304e18.database;
 
 import dk.aau.ds304e18.LocalObjStorage;
+import dk.aau.ds304e18.math.Probabilities;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
@@ -221,6 +222,7 @@ public class DatabaseManager {
 
                 List<Integer> dependenceIds = new ArrayList<>();
                 List<Integer> employeeIds = new ArrayList<>();
+                List<Probabilities> probabilities = new ArrayList<>();
                 if (rs.getArray(4) != null) {
                     dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
                 }
@@ -229,7 +231,18 @@ public class DatabaseManager {
                     employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
                 }
 
-                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds, projectId);
+                if (rs.getArray(10) != null) {
+                    ResultSet rsw = rs.getArray(10).getResultSet();
+
+                    while (rsw.next()) {
+                        String[] probValues = rsw.getString(2).replaceAll("[/(/)]", "").split(",");
+                        probabilities.add(new Probabilities(Double.parseDouble(probValues[0]),
+                                Double.parseDouble(probValues[1])));
+                    }
+                }
+
+                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds,
+                        projectId, probabilities);
                 tasks.add(task);
             }
         } catch (SQLException e) {
@@ -468,7 +481,8 @@ public class DatabaseManager {
     public static void updateTask(Task task) {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE tasks SET employees = ?" +
-                    ", dependencies = ?, projectid = ?, estimatedtime = ?, priority = ?, startdate = ?, enddate = ? WHERE id = ?");
+                    ", dependencies = ?, projectid = ?, estimatedtime = ?, priority = ?, startdate = ?, enddate = ?," +
+                    " probabilities =" + task.parseProbabilitiesForDatabase() + "   WHERE id = ?");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER",
                     task.getEmployees().stream().map(Employee::getId).toArray()
             ));
@@ -501,4 +515,18 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
+    
+    /* Parse probs
+     //UPDATE tasks SET prob[1] = (534.1,3123.2) WHERE id = 47;
+        ResultSet rs = DatabaseManager.query("SELECT probabilities FROM tasks WHERE id =" + 47);
+        rs.next();
+
+        ResultSet rsw = rs.getArray(1).getResultSet();
+        while (rsw.next()) {
+            String string = rsw.getString(2).replaceAll("[/(/)]", "");
+            Probabilities probabilities = new Probabilities(Double.parseDouble(string.split(",")[0]),
+                    Double.parseDouble(string.split(",")[1]));
+            System.out.println(probabilities.getDuration() + " " + probabilities.getProbability());
+        }
+     */
 }
