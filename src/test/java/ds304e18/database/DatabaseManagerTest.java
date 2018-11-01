@@ -28,27 +28,21 @@ class DatabaseManagerTest {
     void testAddEmployee() {
         Employee testEmp = new Employee("Søren");
 
-        ResultSet rs = DatabaseManager.query("SELECT * FROM employees WHERE id = " + testEmp.getId());
-        assertNotNull(rs);
-        try {
-            rs.next();
-            assertEquals(testEmp.getId(), rs.getInt(1));
-            assertEquals(testEmp.getName(), rs.getString(2));
+        Employee testGetEmp = DatabaseManager.getEmployee(testEmp.getId());
+        assertNotNull(testGetEmp);
+        assertEquals(testEmp.getId(), testGetEmp.getId());
+        assertEquals(testEmp.getName(), testGetEmp.getName());
 
-            DatabaseManager.removeEmployee(testEmp.getId());
-        } catch (SQLException ignored) {
-
-        }
+        DatabaseManager.removeEmployee(testEmp.getId());
     }
 
     @Test
     void testAddProject() throws SQLException {
         Project testProj = new Project("TestProj");
-        ResultSet rs = DatabaseManager.query("SELECT * FROM projects WHERE id = " + testProj.getId());
-        assertNotNull(rs);
-        rs.next();
-        assertEquals(testProj.getId(), rs.getInt(1));
-        assertEquals(testProj.getName(), rs.getString(2));
+        Project testGetProj = DatabaseManager.getProject(testProj.getId());
+        assertNotNull(testGetProj);
+        assertEquals(testProj.getId(), testGetProj.getId());
+        assertEquals(testProj.getName(), testGetProj.getName());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
     }
 
@@ -56,14 +50,15 @@ class DatabaseManagerTest {
     void testAddTask() throws SQLException {
         Project testProj = new Project("TestProj");
         Task testTask = new Task("TestTask", 10, 1, testProj);
-        ResultSet rs = DatabaseManager.query("SELECT * FROM tasks WHERE id = " + testTask.getId());
-        assertNotNull(rs);
-        rs.next();
-        assertEquals(testTask.getId(), rs.getInt(1));
-        assertEquals(testTask.getName(), rs.getString(2));
-        assertEquals(testTask.getEstimatedTime(), rs.getDouble(3), 0.001);
+        Task testGetTask = DatabaseManager.getTask(testTask.getId());
+        assertNotNull(testGetTask);
+        assertEquals(testTask.getId(), testGetTask.getId());
+        assertEquals(testTask.getName(), testGetTask.getName());
+        assertEquals(testTask.getEstimatedTime(), testGetTask.getEstimatedTime(), 0.001);
         assertEquals(testTask.getProject().getId(), testProj.getId());
         DatabaseManager.removeTask(testTask.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
     }
+
+
 }

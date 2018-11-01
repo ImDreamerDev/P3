@@ -219,8 +219,16 @@ public class DatabaseManager {
                 double startTime = rs.getDouble(7);
                 double endTime = rs.getDouble(8);
 
-                List<Integer> dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
-                List<Integer> employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
+                List<Integer> dependenceIds = new ArrayList<>();
+                List<Integer> employeeIds = new ArrayList<>();
+                if (rs.getArray(4) != null) {
+                    dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
+                }
+
+                if (rs.getArray(9) != null) {
+                    employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
+                }
+
                 Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds, projectId);
                 tasks.add(task);
             }
@@ -244,10 +252,7 @@ public class DatabaseManager {
             while (rs.next()) {
                 Employee emp = new Employee(rs.getInt(1), rs.getString(2),
                         Arrays.asList((Integer[]) rs.getArray(3).getArray()));
-
-                assert LocalObjStorage.getProjectById(rs.getInt(5)) != null;
-
-                LocalObjStorage.getProjectById(rs.getInt(5));
+                LocalObjStorage.getProjectById(rs.getInt(4));
                 empList.add(emp);
             }
         } catch (SQLException e) {
