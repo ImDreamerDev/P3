@@ -6,9 +6,16 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static dk.aau.ds304e18.sequence.MonteCarlo.findFastestSequence;
+import static dk.aau.ds304e18.sequence.ParseSequence.unparseList;
+
 public class Sequence {
 
     public static String sequenceTasks(List<Task> taskList) {
+        return sequenceTasks(taskList, false);
+    }
+
+    public static String sequenceTasks(List<Task> taskList, boolean fastSequence) {
 
         /*
         | indicates where it's supposed to be drawn
@@ -26,6 +33,9 @@ public class Sequence {
         6 has a dependency on 4
         7 has a dependency on 5
          */
+
+        if (!fastSequence)
+            return findFastestSequence(taskList);
 
         //So we don't change the task list in the project
         List<Task> tasks = new ArrayList<>(taskList);
@@ -57,18 +67,7 @@ public class Sequence {
 
             //Add the sorted tasks to the sequencedTasks list
             List<Task> tasksToInsert = sortTasks(tasksToSort);
-            for(int i = 0; i < tasksToInsert.size(); i++){
-                if(i != tasksToInsert.size()-1){
-                    sequencedTasks.append(tasksToInsert.get(i).getId());
-                    sequencedTasks.append(appendDependencies(tasksToInsert.get(i)));
-                    sequencedTasks.append(",");
-                } else {
-                    sequencedTasks.append(tasksToInsert.get(i).getId());
-                    sequencedTasks.append(appendDependencies(tasksToInsert.get(i)));
-                    if(tasks.size() != 0)
-                        sequencedTasks.append("|");
-                }
-            }
+            sequencedTasks.append(unparseList(sequencedTasks, tasksToInsert, tasks.size()));
             tasksToSort = new ArrayList<>();
 
             //For each task in the yet to be sorted list
@@ -97,28 +96,6 @@ public class Sequence {
 
         //Return the sorted tasks
         return tasks;
-
-    }
-
-    private static String appendDependencies(Task task) {
-
-        if(task.getDependencies().size() == 0) return "";
-
-        StringBuilder returnString = new StringBuilder();
-
-        returnString.append("(");
-
-        for(int i = 0; i < task.getDependencies().size(); i++){
-            if(i != task.getDependencies().size()-1){
-                returnString.append(task.getDependencies().get(i).getId()).append(",");
-            }else{
-                returnString.append(task.getDependencies().get(i).getId());
-            }
-        }
-
-        returnString.append(")");
-
-        return returnString.toString();
 
     }
 
