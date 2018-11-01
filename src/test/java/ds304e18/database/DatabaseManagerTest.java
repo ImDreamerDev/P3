@@ -1,6 +1,7 @@
 package ds304e18.database;
 
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.math.Probabilities;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
@@ -58,6 +59,36 @@ class DatabaseManagerTest {
         assertEquals(testTask.getProject().getId(), testProj.getId());
         DatabaseManager.removeTask(testTask.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
+    }
+
+    @Test
+    void testUpdateTask() throws SQLException {
+        Project testProj = new Project("TestProj");
+        Task testTask = new Task("TestTask", 10, 1, testProj);
+        testTask.getProbabilities().add(new Probabilities(32133, 4));
+        testTask.getProbabilities().add(new Probabilities(432, 32));
+        DatabaseManager.updateTask(testTask);
+
+        ResultSet rs = DatabaseManager.query("SELECT probabilities FROM tasks WHERE id =" + testTask.getId());
+        rs.next();
+
+        ResultSet rsw = rs.getArray(1).getResultSet();
+        int i = 0;
+        while (rsw.next()) {
+            String[] probValues = rsw.getString(2).replaceAll("[/(/)]", "").split(",");
+
+            Probabilities probabilities = new Probabilities(Double.parseDouble(probValues[0]),
+                    Double.parseDouble(probValues[1]));
+
+            assertEquals(probabilities.getDuration(), testTask.getProbabilities().get(i).getDuration());
+            assertEquals(probabilities.getProbability(), testTask.getProbabilities().get(i).getProbability());
+
+
+            i++;
+        }
+        DatabaseManager.removeTask(testTask.getId());
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
+
     }
 
 

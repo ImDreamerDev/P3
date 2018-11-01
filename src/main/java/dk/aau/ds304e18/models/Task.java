@@ -1,6 +1,7 @@
 package dk.aau.ds304e18.models;
 
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.math.Probabilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,8 @@ public class Task {
 
     private final List<Integer> dependencyIds = new ArrayList<>();
 
+    private final List<Probabilities> probabilities = new ArrayList<>();
+
     private int amountDependenciesLeft = -1;
 
     /**
@@ -81,8 +84,8 @@ public class Task {
     }
 
 
-
-    public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority, List<Integer> dependencyIds, List<Integer> employeeIds, int projectId) {
+    public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority,
+                List<Integer> dependencyIds, List<Integer> employeeIds, int projectId, List<Probabilities> probabilities) {
         this.name = name;
         this.id = id;
         this.estimatedTime = estimatedTime;
@@ -92,6 +95,7 @@ public class Task {
         this.dependencyIds.addAll(dependencyIds);
         this.employeeIds.addAll(employeeIds);
         this.projectId = projectId;
+        this.probabilities.addAll(probabilities);
     }
 
     /**
@@ -279,7 +283,7 @@ public class Task {
     }
 
     public int getAmountDependenciesLeft() {
-        if(amountDependenciesLeft == -1){
+        if (amountDependenciesLeft == -1) {
             amountDependenciesLeft = dependencies.size();
         }
         return amountDependenciesLeft;
@@ -287,5 +291,26 @@ public class Task {
 
     public void setAmountDependenciesLeft(int amountDependenciesLeft) {
         this.amountDependenciesLeft = amountDependenciesLeft;
+    }
+
+    public List<Probabilities> getProbabilities() {
+        return probabilities;
+    }
+
+
+    public String parseProbabilitiesForDatabase() {
+        //Turns the Probabilities into a string in the following format
+        //     * '{"(1.1,2.2)","(534.1,3123.2)"}'
+        //     * '{"(duration,probability)"}'
+        StringBuilder probsSQL = new StringBuilder("'{");
+        getProbabilities().forEach(probabilities -> {
+            probsSQL.append("\"(").append(probabilities.getDuration()).append(",").
+                    append(probabilities.getProbability()).append(")\"");
+            if (getProbabilities().indexOf(probabilities) != getProbabilities().size() - 1) {
+                probsSQL.append(",");
+            }
+        });
+        probsSQL.append("}'");
+        return probsSQL.toString();
     }
 }
