@@ -95,5 +95,11 @@ public class ProjectManager {
         this.currentProject = currentProject;
     }
 
-
+    /**
+     * The setter for the unique id.
+     * @param id - the unique id of the project manager.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
 }
