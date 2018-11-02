@@ -25,7 +25,13 @@ public class InverseGaussian {
         }
     }
 
-    //Calculate the y-value given an x value, i.e. the probability of a task completing at a certain time (y : probability, x : time) using the CDF
+    /**
+     * Calculate the y-value given an x value, i.e. the probability of a task completing at a certain time (y : probability, x : time) using the CDF
+     * @param mu
+     * @param lambda
+     * @param x
+     * @return
+     */
     private static double cdf(double mu, double lambda, double x) {
         if (mu <= 0.0D) {
             throw new IllegalArgumentException("mu <= 0");
@@ -41,7 +47,11 @@ public class InverseGaussian {
         }
     }
 
-    //The CDF for the Gaussian Distribution aka normal distribution (Used to calculate the CDF of the Inverse Gaussian Distribution)
+    /**
+     * The CDF for the Gaussian Distribution aka normal distribution (Used to calculate the CDF of the Inverse Gaussian Distribution)
+     * @param x
+     * @return r - The result of the function
+     */
     private static double cdf01(double x) {
         if (x <= -100.0D) {
             return 0.0D;
@@ -64,7 +74,13 @@ public class InverseGaussian {
         }
     }
 
-    //Used to calculate the CDF of the normal distribution
+    /**
+     * Used to calculate the CDF of the normal distribution
+     * @param a -
+     * @param n -
+     * @param x -
+     * @return
+     */
     private static double evalCheby(double[] a, int n, double x) {
         if (Math.abs(x) > 1.0D) {
             System.err.println("Chebychev polynomial evaluated at x outside [-1, 1]");
@@ -84,7 +100,11 @@ public class InverseGaussian {
         return (b0 - b2) / 2.0D;
     }
 
-    //Sets the parameters for the Inverse Gaussian Distribution, if mu or lambda is less than or equal to 0, throw exception
+    /**
+     * Sets the parameters for the Inverse Gaussian Distribution, if mu or lambda is less than or equal to 0, throw exception
+     * @param mu
+     * @param lambda
+     */
     private void setParams(double mu, double lambda) {
         if (mu <= 0.0D) {
             throw new IllegalArgumentException("mu <= 0");
@@ -96,22 +116,45 @@ public class InverseGaussian {
         }
     }
 
+    /**
+     * The getter for lambda.
+     * @return lambda.
+     */
     double getLambda() {
         return this.lambda;
     }
 
+    /**
+     * The getter for mu.
+     * @return mu.
+     */
     double getMu() {
         return this.mu;
     }
 
+    /**
+     * The getter for Density
+     * @param x
+     * @return density
+     */
     public double getDensity(double x) {
         return density(this.mu, this.lambda, x);
     }
 
+    /**
+     * The getter for the probability
+     * @param x
+     * @return cdf(probability).
+     */
     public double getProbability(double x) {
         return cdf(this.mu, this.lambda, x)*100;
     }
 
+    /**
+     * The getter for the duration
+     * @param y
+     * @return x - Duration of task.
+     */
     public double getDuration(double y) {
         double x = 0;
         while(getProbability(x) < y)
