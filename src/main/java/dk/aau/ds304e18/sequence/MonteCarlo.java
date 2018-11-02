@@ -4,7 +4,6 @@ import dk.aau.ds304e18.math.CalculateLambda;
 import dk.aau.ds304e18.math.InverseGaussian;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
-import jdk.jshell.spi.ExecutionControl;
 
 import java.util.List;
 import java.util.Random;
