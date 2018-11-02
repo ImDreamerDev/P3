@@ -163,7 +163,11 @@ public class Project {
      * @param state - the new state to set.
      */
     public void setState(ProjectState state) {
-        this.state = state;
+        if (this.state != state) {
+            this.state = state;
+            DatabaseManager.updateProject(this);
+
+        }
     }
 
     @Override
@@ -185,5 +189,6 @@ public class Project {
 
     public void setSequence(String sequence) {
         this.sequence = sequence;
+        DatabaseManager.updateProject(this);
     }
 }

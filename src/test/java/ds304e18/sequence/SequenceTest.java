@@ -45,8 +45,7 @@ class SequenceTest {
         /*System.out.println("First test:");
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
-        // assertEquals(sequencedTasks, assertedSequencedTasks);
-//TODO: fix test
+        assertEquals(sequencedTasks, assertedSequencedTasks);
     }
 
     @Test
@@ -72,8 +71,7 @@ class SequenceTest {
         /*System.out.println("Second test:");
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
-        // assertEquals(sequencedTasks, assertedSequencedTasks);
-        //TODO: fix test
+        assertEquals(sequencedTasks, assertedSequencedTasks);
 
     }
 
@@ -102,8 +100,7 @@ class SequenceTest {
         /*System.out.println("Third test:");
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
-        //assertEquals(sequencedTasks, assertedSequencedTasks);
-    //TODO: fix test
+        assertEquals(sequencedTasks, assertedSequencedTasks);
     }
 
 }

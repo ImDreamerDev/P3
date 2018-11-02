@@ -12,7 +12,7 @@ import static dk.aau.ds304e18.sequence.ParseSequence.unparseList;
 public class Sequence {
 
     public static String sequenceTasks(List<Task> taskList) {
-        return sequenceTasks(taskList, false);
+        return sequenceTasks(taskList, true);
     }
 
     public static String sequenceTasks(List<Task> taskList, boolean fastSequence) {

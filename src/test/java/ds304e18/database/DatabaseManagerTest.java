@@ -13,6 +13,7 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DatabaseManagerTest {
 
@@ -28,22 +29,35 @@ class DatabaseManagerTest {
     @Test
     void testAddEmployee() {
         Employee testEmp = new Employee("Søren");
+        Project testProj = new Project("TestProj");
+        Task testTask = new Task("TestTask", 10, 1, testProj);
+
+        testEmp.addPreviousTask(testTask);
+        assertTrue(testEmp.getPreviousTask().contains(testTask));
 
         Employee testGetEmp = DatabaseManager.getEmployee(testEmp.getId());
         assertNotNull(testGetEmp);
         assertEquals(testEmp.getId(), testGetEmp.getId());
         assertEquals(testEmp.getName(), testGetEmp.getName());
+        assertTrue(testGetEmp.getPreviousTaskIds().contains(testTask.getId()));
+        assertEquals(testGetEmp.getProjectId(), testProj.getId());
 
+        DatabaseManager.removeTask(testTask.getId());
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
         DatabaseManager.removeEmployee(testEmp.getId());
     }
 
     @Test
     void testAddProject() throws SQLException {
         Project testProj = new Project("TestProj");
+        String testSequence = "{123,35,234,324,5,6,57,65,7,567,243,235,45,634,346,456,45,67}";
+        testProj.setSequence(testSequence);
         Project testGetProj = DatabaseManager.getProject(testProj.getId());
         assertNotNull(testGetProj);
         assertEquals(testProj.getId(), testGetProj.getId());
         assertEquals(testProj.getName(), testGetProj.getName());
+        assertEquals(testProj.getState(), testGetProj.getState());
+        assertEquals(testProj.getSequence(), testGetProj.getSequence());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
     }
 
