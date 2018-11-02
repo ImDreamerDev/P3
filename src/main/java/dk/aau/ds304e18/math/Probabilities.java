@@ -12,15 +12,28 @@ public class Probabilities {
      */
     private double probability;
 
+    /**
+     *
+     * @param duration - duration in days.
+     * @param probability - probability in percent.
+     */
     public Probabilities(double duration, double probability){
         this.duration = duration;
         this.probability = probability;
     }
 
+    /**
+     * The getter for the Duration.
+     * @return duration.
+     */
     public double getDuration(){
         return this.duration;
     }
 
+    /**
+     * The getter for the probability
+     * @return probability.
+     */
     public double getProbability(){
         return this.probability;
     }
