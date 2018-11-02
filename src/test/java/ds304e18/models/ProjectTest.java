@@ -293,4 +293,26 @@ class ProjectTest {
 
         assertNotEquals(project1.hashCode(), project2.hashCode());
     }
+
+    @Test
+    void TestProjectGetDuration01() {
+        Project newProject = new Project("Test Project");
+
+        newProject.setDuration(10.5);
+
+        assertEquals(10.5, newProject.getDuration());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+    }
+
+    @Test
+    void TestProjectSetDuration01() {
+        Project newProject = new Project("Test Project");
+
+        newProject.setDuration(1.5);
+
+        assertEquals(1.5, newProject.getDuration());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+    }
 }
