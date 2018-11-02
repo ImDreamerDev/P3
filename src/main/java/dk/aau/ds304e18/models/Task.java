@@ -25,9 +25,14 @@ public class Task {
     private final String name;
 
     /**
-     * The estimated completion time of the task
+     * The estimated completion time of the task - This is used as mu in the inverse gaussian
      */
     private double estimatedTime;
+
+    /**
+     * The estimated lambda value for the inverse gaussian
+     */
+    private double lambda = -1;
 
     /**
      * The list of the employees assigned to the task
@@ -317,5 +322,13 @@ public class Task {
         });
         probsSQL.append("}'");
         return probsSQL.toString();
+    }
+
+    public double getLambda() {
+        return lambda;
+    }
+
+    public void setLambda(double lambda) {
+        this.lambda = lambda;
     }
 }
