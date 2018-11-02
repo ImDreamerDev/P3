@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -185,16 +185,11 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>private java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#password">password</a></span></code></th>
-<td class="colLast">
-<div class="block">The password the project manager to use while logging in.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>private int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#projectId">projectId</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The id of the project that the manager is assigned to</div>
+</td>
 </tr>
 </table>
 </li>
@@ -214,9 +209,15 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String)">ProjectManager</a></span>&#8203;(java.lang.String&nbsp;name,
-              java.lang.String&nbsp;password)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String)">ProjectManager</a></span>&#8203;(int&nbsp;id,
+              java.lang.String&nbsp;name)</code></th>
 <td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">ProjectManager</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
+<div class="block">The constructor of the ProjectManager class.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -278,6 +279,13 @@ extends java.lang.Object</pre>
 <div class="block">The setter for the current project.</div>
 </td>
 </tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(int)">setId</a></span>&#8203;(int&nbsp;id)</code></th>
+<td class="colLast">
+<div class="block">The setter for the unique id.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -322,16 +330,6 @@ extends java.lang.Object</pre>
 <div class="block">The name of the project manager</div>
 </li>
 </ul>
-<a id="password">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>password</h4>
-<pre>private&nbsp;java.lang.String password</pre>
-<div class="block">The password the project manager to use while logging in.</div>
-</li>
-</ul>
 <a id="currentProject">
 <!--   -->
 </a>
@@ -349,6 +347,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>projectId</h4>
 <pre>private&nbsp;int projectId</pre>
+<div class="block">The id of the project that the manager is assigned to</div>
 </li>
 </ul>
 <a id="oldProjects">
@@ -371,14 +370,28 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.lang.String,java.lang.String)">
+<a id="&lt;init&gt;(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ProjectManager</h4>
+<pre>public&nbsp;ProjectManager&#8203;(java.lang.String&nbsp;name)</pre>
+<div class="block">The constructor of the ProjectManager class.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - - The name of the manager.</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(int,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ProjectManager</h4>
-<pre>public&nbsp;ProjectManager&#8203;(java.lang.String&nbsp;name,
-                      java.lang.String&nbsp;password)</pre>
+<pre>public&nbsp;ProjectManager&#8203;(int&nbsp;id,
+                      java.lang.String&nbsp;name)</pre>
 </li>
 </ul>
 </li>
@@ -463,7 +476,7 @@ extends java.lang.Object</pre>
 <a id="setCurrentProject(dk.aau.ds304e18.models.Project)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setCurrentProject</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setCurrentProject&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;currentProject)</pre>
@@ -471,6 +484,20 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>currentProject</code> - - the project which the program manager is working on.</dd>
+</dl>
+</li>
+</ul>
+<a id="setId(int)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setId</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setId&#8203;(int&nbsp;id)</pre>
+<div class="block">The setter for the unique id.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - - the unique id of the project manager.</dd>
 </dl>
 </li>
 </ul>
