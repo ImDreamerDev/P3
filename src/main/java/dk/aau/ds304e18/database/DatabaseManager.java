@@ -357,7 +357,7 @@ public class DatabaseManager {
      *
      * @return list of all ongoing projects.
      */
-    private static List<Project> getAllOngoingProjects() {
+    public static List<Project> getAllOngoingProjects() {
         if (dbConnection == null) connect();
         try {
             ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM projects WHERE state = 0");
@@ -374,7 +374,7 @@ public class DatabaseManager {
      *
      * @return list of all DatabaseEmployees.
      */
-    private static List<Employee> getAllEmployees() {
+    public static List<Employee> getAllEmployees() {
         if (dbConnection == null) connect();
         try {
             ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
@@ -390,7 +390,7 @@ public class DatabaseManager {
      *
      * @return list of all database tasks.
      */
-    private static List<Task> getAllTasks() {
+    public static List<Task> getAllTasks() {
         if (dbConnection == null) connect();
 
         try {
