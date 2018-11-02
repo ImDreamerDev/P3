@@ -42,16 +42,22 @@ class DatabaseManagerTest {
         assertTrue(testGetEmp.getPreviousTaskIds().contains(testTask.getId()));
         assertEquals(testGetEmp.getProjectId(), testProj.getId());
 
-        //DatabaseManager.removeEmployee(testEmp.getId());
+        DatabaseManager.removeTask(testTask.getId());
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
+        DatabaseManager.removeEmployee(testEmp.getId());
     }
 
     @Test
     void testAddProject() throws SQLException {
         Project testProj = new Project("TestProj");
+        String testSequence = "{123,35,234,324,5,6,57,65,7,567,243,235,45,634,346,456,45,67}";
+        testProj.setSequence(testSequence);
         Project testGetProj = DatabaseManager.getProject(testProj.getId());
         assertNotNull(testGetProj);
         assertEquals(testProj.getId(), testGetProj.getId());
         assertEquals(testProj.getName(), testGetProj.getName());
+        assertEquals(testProj.getState(), testGetProj.getState());
+        assertEquals(testProj.getSequence(), testGetProj.getSequence());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
     }
 
