@@ -70,7 +70,7 @@ class DatabaseManagerTest {
         assertEquals(testTask.getId(), testGetTask.getId());
         assertEquals(testTask.getName(), testGetTask.getName());
         assertEquals(testTask.getEstimatedTime(), testGetTask.getEstimatedTime(), 0.001);
-        assertEquals(testTask.getProject().getId(), testProj.getId());
+        assertEquals(testGetTask.getProjectId(), testProj.getId());
         DatabaseManager.removeTask(testTask.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
     }
@@ -79,11 +79,14 @@ class DatabaseManagerTest {
     void testUpdateTask() throws SQLException {
         Project testProj = new Project("TestProj");
         Task testTask = new Task("TestTask", 10, 1, testProj);
+
         testTask.getProbabilities().add(new Probabilities(32133, 4));
         testTask.getProbabilities().add(new Probabilities(432, 32));
         DatabaseManager.updateTask(testTask);
 
         ResultSet rs = DatabaseManager.query("SELECT probabilities FROM tasks WHERE id =" + testTask.getId());
+
+        assertNotNull(rs);
         rs.next();
 
         ResultSet rsw = rs.getArray(1).getResultSet();

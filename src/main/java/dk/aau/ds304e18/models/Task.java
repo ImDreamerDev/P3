@@ -253,6 +253,10 @@ public class Task {
         DatabaseManager.updateTask(this);
     }
 
+    public void distributeAddDependency(Task task) {
+        this.dependencies.add(task);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

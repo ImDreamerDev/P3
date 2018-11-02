@@ -68,6 +68,10 @@ public class Employee {
         DatabaseManager.updateEmployee(this);
     }
 
+    public void distributeAddTask(Task task) {
+        if (!this.currentTask.contains(task)) currentTask.add(task);
+    }
+
     /**
      * The getter for the id
      *
@@ -151,6 +155,13 @@ public class Employee {
      * @param project - The project object that the employee will work on.
      */
     public void setProject(Project project) {
+
+        //For distributing models
+        if (this.project == null && this.projectId != 0) {
+            this.project = project;
+            return;
+        }
+
         if (project != null) {
             this.project = project;
             DatabaseManager.updateEmployee(this);
