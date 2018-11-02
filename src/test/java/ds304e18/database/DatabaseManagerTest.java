@@ -58,6 +58,7 @@ class DatabaseManagerTest {
         assertEquals(testProj.getName(), testGetProj.getName());
         assertEquals(testProj.getState(), testGetProj.getState());
         assertEquals(testProj.getSequence(), testGetProj.getSequence());
+        assertEquals(testProj.getDuration(), testGetProj.getDuration());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
     }
 

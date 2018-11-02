@@ -55,11 +55,12 @@ public class Project {
         DatabaseManager.addProject(this);
     }
 
-    public Project(int id, String name, ProjectState projectState, String sequence) {
+    public Project(int id, String name, ProjectState projectState, String sequence, double duration) {
         this.id = id;
         this.state = projectState;
         this.name = name;
         this.sequence = sequence;
+        this.duration = duration;
     }
 
     /**
@@ -171,7 +172,6 @@ public class Project {
         if (this.state != state) {
             this.state = state;
             DatabaseManager.updateProject(this);
-
         }
     }
 
@@ -203,5 +203,6 @@ public class Project {
 
     public void setDuration(double duration) {
         this.duration = duration;
+        DatabaseManager.updateProject(this);
     }
 }
