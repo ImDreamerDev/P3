@@ -26,7 +26,7 @@ public class Main {
 
         project.setSequence(Sequence.sequenceTasks(project.getTasks()));
 
-        MonteCarlo.estimateTime(project);
+        MonteCarlo.estimateTime(project, 10000);
         System.out.println("Duration of the project: " + project.getDuration());
 
     }
