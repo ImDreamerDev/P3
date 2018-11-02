@@ -30,6 +30,11 @@ public class Project {
     private ProjectState state;
 
     /**
+     * The duration of the project
+     */
+    private double duration;
+
+    /**
      * The list of tasks.
      */
     private final List<Task> tasks = new ArrayList<>();
@@ -190,5 +195,13 @@ public class Project {
     public void setSequence(String sequence) {
         this.sequence = sequence;
         DatabaseManager.updateProject(this);
+    }
+
+    public double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
     }
 }
