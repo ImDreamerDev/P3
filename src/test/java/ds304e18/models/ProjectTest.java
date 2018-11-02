@@ -124,13 +124,13 @@ class ProjectTest {
      */
     @Test
     void TestProjectGetId01() {
-        Project newProject = new Project("Test Project");
+        Project newProject = new Project("Test Slim Shady Project");
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
 
         newProject.setId(5);
 
         assertEquals(5, newProject.getId());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
     }
 
     /**
@@ -206,12 +206,12 @@ class ProjectTest {
      */
     @Test
     void TestProjectSetId01() {
-        Project newProject = new Project("Test Project");
+        Project newProject = new Project("Test Slim Project");
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
 
         newProject.setId(3);
 
         assertEquals(3, newProject.getId());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
     }
 }

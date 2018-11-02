@@ -55,6 +55,7 @@ class EmployeeTest {
         Employee newEmployee = new Employee("Slim Shady");
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 5, 1, newProject);
+
         newEmployee.addNewTask(newTask);
 
         assertEquals(newTask, newEmployee.getCurrentTask().get(0));
@@ -70,11 +71,13 @@ class EmployeeTest {
     @Test
     void TestEmployeeGetId01() {
         Employee newEmployee = new Employee("The Real Slim Shady");
-        newEmployee.setId(1);
-
-        assertEquals(1, newEmployee.getId());
-
         DatabaseManager.removeEmployee(newEmployee.getId());
+
+        newEmployee.setId(1000);
+
+        assertEquals(1000, newEmployee.getId());
+
+
     }
 
     /**

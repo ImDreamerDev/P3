@@ -118,12 +118,12 @@ class TaskTest {
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 1, 1, newProject);
 
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+        DatabaseManager.removeTask(newTask.getId());
+
         newTask.setId(5);
 
         assertEquals(5, newTask.getId());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
     }
 
     @Test
