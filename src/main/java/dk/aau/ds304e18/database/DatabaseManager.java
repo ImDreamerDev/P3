@@ -2,10 +2,7 @@ package dk.aau.ds304e18.database;
 
 import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.math.Probabilities;
-import dk.aau.ds304e18.models.Employee;
-import dk.aau.ds304e18.models.Project;
-import dk.aau.ds304e18.models.ProjectState;
-import dk.aau.ds304e18.models.Task;
+import dk.aau.ds304e18.models.*;
 import org.postgresql.util.PSQLException;
 
 import java.io.IOException;
@@ -286,7 +283,7 @@ public class DatabaseManager {
             if (rs == null) return null;
             while (rs.next()) {
                 Project project = new Project(rs.getInt(1), rs.getString(2),
-                        ProjectState.values()[rs.getInt(3)], rs.getString(4));
+                        ProjectState.values()[rs.getInt(3)], rs.getString(4), rs.getDouble(5));
                 projects.add(project);
             }
         } catch (SQLException e) {
@@ -346,6 +343,20 @@ public class DatabaseManager {
             statement.setInt(1, projId);
             ResultSet rs = statement.executeQuery();
             return Objects.requireNonNull(parseProjectsFromResultSet(rs)).get(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ProjectManager getPM(int id) {
+        if (dbConnection == null) connect();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE id = ?");
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            rs.next();
+            return new ProjectManager(rs.getInt(1), rs.getString(2));
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -423,12 +434,12 @@ public class DatabaseManager {
         if (ongoingProjects != null) {
             ongoingProjects.forEach(LocalObjStorage::addProject);
 
-            for (Project proj : ongoingProjects) {
+            /*for (Project proj : ongoingProjects) {
                 Objects.requireNonNull(getAllTasksForProject(proj)).forEach(task -> {
                     LocalObjStorage.addTask(task);
                     proj.addNewTask(task);
                 });
-            }
+            }*/
         }
 
         for (Employee emp : LocalObjStorage.getEmployeeList()) {
@@ -436,7 +447,7 @@ public class DatabaseManager {
             if (emp.getProjectId() != 0)
                 LocalObjStorage.getProjectById(emp.getProjectId()).addNewEmployee(emp);
         }
-
+        LocalObjStorage.getTaskList().addAll(getAllTasks());
         List<Integer> employeesToRemove = new ArrayList<>();
         for (Task task : LocalObjStorage.getTaskList()) {
             Project project = LocalObjStorage.getProjectById(task.getProjectId());
@@ -454,7 +465,7 @@ public class DatabaseManager {
             }
             task.getEmployeeIds().removeAll(employeesToRemove);
 
-            DatabaseManager.updateTask(task);
+            // DatabaseManager.updateTask(task);
 
             for (Integer dependencyId : task.getDependencyIds()) {
                 task.distributeAddDependency(LocalObjStorage.getTaskById(dependencyId));
@@ -513,10 +524,11 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?, sequence = ?" +
-                    "WHERE id = ?");
+                    ", duration = ? WHERE id = ?");
             statement.setInt(1, project.getState().getValue());
             statement.setString(2, project.getSequence());
-            statement.setInt(3, project.getId());
+            statement.setDouble(3,project.getDuration());
+            statement.setInt(4, project.getId());
             statement.execute();
 
         } catch (SQLException e) {

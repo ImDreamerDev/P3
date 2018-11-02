@@ -252,7 +252,7 @@ public class Task {
      */
     public void addDependency(Task... task) {
         for (Task tsk : task) {
-            if (tsk != this)
+            if (tsk != this && !dependencies.contains(tsk))
                 dependencies.add(tsk);
         }
         if (!project.getTasks().contains(this)) project.addNewTask(this);
