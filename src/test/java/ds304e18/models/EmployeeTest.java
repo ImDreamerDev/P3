@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import javax.xml.crypto.Data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -28,24 +30,31 @@ class EmployeeTest {
         DatabaseManager.removeEmployee(newEmployee.getId());
     }
 
-   /* TODO: Fix
+
     @Test
     void TestEmployeeConstructor02() {
-        DatabaseEmployee newDatabaseEmployee = new DatabaseEmployee();
-        newDatabaseEmployee.id = 1;
-        Employee newEmployee = new Employee(newDatabaseEmployee);
+        List<Integer> previousTasks = new ArrayList<>();
+        Employee newEmployee = new Employee(1,"Test Person",previousTasks);
 
-        assertEquals(1,newEmployee.getId());
+        assertEquals(1, newEmployee.getId());
     }
+
 
     @Test
     void TestEmployeeConstructor03() {
-        DatabaseEmployee newDatabaseEmployee = new DatabaseEmployee();
-        newDatabaseEmployee.name = "Person";
-        Employee newEmployee = new Employee(newDatabaseEmployee);
+        List<Integer> previousTasks = new ArrayList<>();
+        Employee newEmployee = new Employee(1,"Kasper",previousTasks);
 
-        assertEquals("Person",newEmployee.getName());
-    }*/
+        assertEquals("Kasper", newEmployee.getName());
+    }
+
+    @Test
+    void TestEmployeeConstructor04() {
+        List<Integer> previousTasks = new ArrayList<>();
+        Employee newEmployee = new Employee(1,"Kasper BTW", previousTasks);
+
+        assertEquals(previousTasks, newEmployee.getPreviousTaskIds());
+    }
 
     /**
      * Tests that adding a task to the employee works.
@@ -55,6 +64,7 @@ class EmployeeTest {
         Employee newEmployee = new Employee("Slim Shady");
         Project newProject = new Project("Test Project");
         Task newTask = new Task("Test Task", 5, 1, newProject);
+
         newEmployee.addNewTask(newTask);
 
         assertEquals(newTask, newEmployee.getCurrentTask().get(0));
@@ -70,11 +80,11 @@ class EmployeeTest {
     @Test
     void TestEmployeeGetId01() {
         Employee newEmployee = new Employee("The Real Slim Shady");
-        newEmployee.setId(1);
-
-        assertEquals(1, newEmployee.getId());
-
         DatabaseManager.removeEmployee(newEmployee.getId());
+
+        newEmployee.setId(1000);
+
+        assertEquals(1000, newEmployee.getId());
     }
 
     /**
@@ -202,12 +212,12 @@ class EmployeeTest {
         Employee employee1 = new Employee("Test Person1");
         Employee employee2 = new Employee("Test Person2");
 
+        DatabaseManager.removeEmployee(employee1.getId());
+
         employee1.setId(1);
         employee2.setId(1);
 
         assertEquals(employee1.hashCode(), employee2.hashCode());
-
-        DatabaseManager.removeEmployee(employee1.getId());
     }
 
     @Test
@@ -215,12 +225,12 @@ class EmployeeTest {
         Employee employee1 = new Employee("Test Person1");
         Employee employee2 = new Employee("Test Person2");
 
+        DatabaseManager.removeEmployee(employee1.getId());
+        DatabaseManager.removeEmployee(employee2.getId());
+
         employee1.setId(1);
         employee2.setId(2);
 
         assertNotEquals(employee1.hashCode(), employee2.hashCode());
-
-        DatabaseManager.removeEmployee(employee1.getId());
-        DatabaseManager.removeEmployee(employee2.getId());
     }
 }

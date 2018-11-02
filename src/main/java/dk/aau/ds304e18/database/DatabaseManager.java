@@ -357,7 +357,7 @@ public class DatabaseManager {
      *
      * @return list of all ongoing projects.
      */
-    private static List<Project> getAllOngoingProjects() {
+    public static List<Project> getAllOngoingProjects() {
         if (dbConnection == null) connect();
         try {
             ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM projects WHERE state = 0");
@@ -374,7 +374,7 @@ public class DatabaseManager {
      *
      * @return list of all DatabaseEmployees.
      */
-    private static List<Employee> getAllEmployees() {
+    public static List<Employee> getAllEmployees() {
         if (dbConnection == null) connect();
         try {
             ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
@@ -390,7 +390,7 @@ public class DatabaseManager {
      *
      * @return list of all database tasks.
      */
-    private static List<Task> getAllTasks() {
+    public static List<Task> getAllTasks() {
         if (dbConnection == null) connect();
 
         try {
@@ -402,58 +402,65 @@ public class DatabaseManager {
         return null;
     }
 
+    private static List<Task> getAllTasksForProject(Project project) {
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM tasks WHERE projectid = ?");
+            statement.setInt(1, project.getId());
+            ResultSet rs = statement.executeQuery();
+            return parseTasksFromResultSet(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     public static void distributeModels() {
-     /*   List<DatabaseEmployee> dbEmpList = getAllEmployees();
-        List<DatabaseTask> dbTaskList = getAllTasks();
-        List<DatabaseProject> dbProjectList = getAllOngoingProjects();
+        List<Employee> employees = getAllEmployees();
+        if (employees == null) return;
+        employees.forEach(LocalObjStorage::addEmployee);
+        List<Project> ongoingProjects = getAllOngoingProjects();
+        if (ongoingProjects != null) {
+            ongoingProjects.forEach(LocalObjStorage::addProject);
 
-        LocalObjStorage.getEmployeeList().clear();
-        LocalObjStorage.getTaskList().clear();
-        LocalObjStorage.getProjectList().clear();
+            for (Project proj : ongoingProjects) {
+                Objects.requireNonNull(getAllTasksForProject(proj)).forEach(task -> {
+                    LocalObjStorage.addTask(task);
+                    proj.addNewTask(task);
+                });
+            }
+        }
 
-        dbEmpList.forEach(dbEmp -> {
-            if (LocalObjStorage.getEmployeeList().stream().anyMatch(emp -> emp.getId() == dbEmp.id))
-                return;
-            LocalObjStorage.addEmployee((Converter.convertEmployee(dbEmp)));
-        });
-        dbTaskList.forEach(dbTask -> {
-            if (LocalObjStorage.getTaskList().stream().anyMatch(task -> task.getId() == dbTask.id))
-                return;
-            LocalObjStorage.addTask(Converter.convertTask(dbTask));
-        });
-        dbProjectList.forEach(dbProj -> {
-            if (LocalObjStorage.getProjectList().stream().anyMatch(project -> project.getId() == dbProj.id))
-                return;
-            LocalObjStorage.addProject((Converter.convertProject(dbProj)));
-        });
-
-        //Distribute employees
         for (Employee emp : LocalObjStorage.getEmployeeList()) {
-            DatabaseEmployee dbEmp = dbEmpList.stream().filter(databaseEmployee -> databaseEmployee.id == emp.getId()).findFirst().orElse(null);
-            if (dbEmp == null) continue;
-            emp.setProject(LocalObjStorage.getProjectById(dbEmp.projectId));
-            dbEmp.currentTaskId.forEach(taskId -> emp.addNewTask(LocalObjStorage.getTaskById(taskId)));
-            dbEmp.preTaskId.forEach(taskId -> emp.addPreviousTask(LocalObjStorage.getTaskById(taskId)));
+            emp.setProject(LocalObjStorage.getProjectById(emp.getProjectId()));
+            if (emp.getProjectId() != 0)
+                LocalObjStorage.getProjectById(emp.getProjectId()).addNewEmployee(emp);
         }
 
-        //Distribute tasks
+        List<Integer> employeesToRemove = new ArrayList<>();
         for (Task task : LocalObjStorage.getTaskList()) {
-            DatabaseTask dbTask = dbTaskList.stream().filter(databaseTask -> databaseTask.id == task.getId()).findFirst().orElse(null);
-            if (dbTask == null) continue;
-            task.setProject(LocalObjStorage.getProjectById(dbTask.projectId));
-            dbTask.employeeIds.forEach(empId -> task.addEmployee(LocalObjStorage.getEmployeeById(empId)));
-            dbTask.dependenceIds.forEach(taskId -> task.addDependency(LocalObjStorage.getTaskById(taskId)));
+            Project project = LocalObjStorage.getProjectById(task.getProjectId());
+            if (project != null)
+                project.addNewTask(task);
+            for (Integer employeeId : task.getEmployeeIds()) {
+                Employee emp = LocalObjStorage.getEmployeeById(employeeId);
+                if (emp != null) {
+                    task.addEmployee(emp);
+                    emp.distributeAddTask(task);
+                } else {
+                    employeesToRemove.add(employeeId);
+                }
+
+            }
+            task.getEmployeeIds().removeAll(employeesToRemove);
+
+            DatabaseManager.updateTask(task);
+
+            for (Integer dependencyId : task.getDependencyIds()) {
+                task.distributeAddDependency(LocalObjStorage.getTaskById(dependencyId));
+            }
         }
 
-        //Distribute projects
-        for (Project proj : LocalObjStorage.getProjectList()) {
-            if (LocalObjStorage.getProjectList().stream().anyMatch(project -> project.getId() == proj.getId()))
-                continue;
-            DatabaseProject dbProject = dbProjectList.stream().filter(databaseProject -> databaseProject.id == proj.getId()).findFirst().orElse(null);
-            if (dbProject == null) continue;
-            dbProject.employeeIds.forEach(empId -> proj.addNewEmployee(LocalObjStorage.getEmployeeById(empId)));
-            dbProject.tasks.forEach(taskId -> proj.addNewTask(LocalObjStorage.getTaskById(taskId)));
-        }*/
     }
 
 
@@ -503,6 +510,7 @@ public class DatabaseManager {
     }
 
     public static void updateProject(Project project) {
+        if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?, sequence = ?" +
                     "WHERE id = ?");

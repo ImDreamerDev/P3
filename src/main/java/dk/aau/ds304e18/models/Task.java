@@ -86,6 +86,7 @@ public class Task {
         this.priority = priority;
         this.project = project;
         DatabaseManager.addTask(this);
+        this.project.addNewTask(this);
     }
 
 
@@ -256,6 +257,10 @@ public class Task {
         }
         if (!project.getTasks().contains(this)) project.addNewTask(this);
         DatabaseManager.updateTask(this);
+    }
+
+    public void distributeAddDependency(Task task) {
+        this.dependencies.add(task);
     }
 
     @Override

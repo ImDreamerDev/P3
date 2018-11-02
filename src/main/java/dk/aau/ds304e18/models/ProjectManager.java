@@ -19,15 +19,13 @@ public class ProjectManager {
     private String name;
 
     /**
-     * The password the project manager to use while logging in.
-     */
-    private String password;
-
-    /**
      * The current project that the project manager is working on
      */
     private Project currentProject;
 
+    /**
+     * The id of the project that the manager is assigned to
+     */
     private int projectId;
 
     /**
@@ -35,9 +33,12 @@ public class ProjectManager {
      */
     private List<Project> oldProjects = new ArrayList<>();
 
-    public ProjectManager(String name, String password) {
+    /**
+     * The constructor of the ProjectManager class.
+     * @param name - The name of the manager.
+     */
+    public ProjectManager(String name) {
         this.name = name;
-        this.password = password;
     }
 
     /**
@@ -77,8 +78,12 @@ public class ProjectManager {
      * @param project - the project to be added to the list.
      */
     public void addOldProject(Project project){
-        if(project != null)oldProjects.add(project);
-
+        if(project != null) {
+            oldProjects.add(project);
+            project.setState(ProjectState.ARCHIVED);
+            if (currentProject == project)
+                currentProject = null;
+        }
     }
 
     /**
