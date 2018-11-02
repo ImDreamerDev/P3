@@ -1,5 +1,6 @@
 package dk.aau.ds304e18.sequence;
 
+import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 
 import java.util.ArrayList;
@@ -11,11 +12,11 @@ import static dk.aau.ds304e18.sequence.ParseSequence.unparseList;
 
 public class Sequence {
 
-    public static String sequenceTasks(List<Task> taskList) {
-        return sequenceTasks(taskList, true);
+    public static void sequenceTasks(Project project) {
+        sequenceTasks(project, true);
     }
 
-    public static String sequenceTasks(List<Task> taskList, boolean fastSequence) {
+    public static void sequenceTasks(Project project, boolean fastSequence) {
 
         /*
         | indicates where it's supposed to be drawn
@@ -34,8 +35,10 @@ public class Sequence {
         7 has a dependency on 5
          */
 
+        List<Task> taskList = project.getTasks();
+
         if (!fastSequence)
-            return findFastestSequence(taskList);
+            findFastestSequence(project);
 
         //So we don't change the task list in the project
         List<Task> tasks = new ArrayList<>(taskList);
@@ -86,7 +89,7 @@ public class Sequence {
         }
 
         //Return the list of sequenced tasks
-        return sequencedTasks.toString();
+        project.setSequence(sequencedTasks.toString());
     }
 
     private static List<Task> sortTasks(List<Task> tasks) {

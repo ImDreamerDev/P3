@@ -233,4 +233,19 @@ class EmployeeTest {
 
         assertNotEquals(employee1.hashCode(), employee2.hashCode());
     }
+
+    @Test
+    void TestEmployeeDistributeAddTask01 () {
+        Employee newEmployee = new Employee("Lars");
+        Project newProject = new Project("Test Project");
+        Task newTask = new Task("Task", 1 , 1, newProject);
+
+        newEmployee.distributeAddTask(newTask);
+
+        assertEquals(newTask, newEmployee.getCurrentTask().get(0));
+
+        DatabaseManager.removeEmployee(newEmployee.getId());
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+        DatabaseManager.removeTask(newTask.getId());
+    }
 }

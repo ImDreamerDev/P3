@@ -36,7 +36,7 @@ class SequenceTest {
         tasks.add(task3);
         tasks.add(task4);
 
-        String sequencedTasks = Sequence.sequenceTasks(tasks);
+        Sequence.sequenceTasks(project);
         String assertedSequencedTasks = String.valueOf(task1.getId()) + "," +
                 task3.getId() + "|" +
                 task2.getId() + "(" + task1.getId() + "," + task3.getId() + ")" + "|" +
@@ -45,7 +45,7 @@ class SequenceTest {
         /*System.out.println("First test:");
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
-        assertEquals(sequencedTasks, assertedSequencedTasks);
+        assertEquals(project.getSequence(), assertedSequencedTasks);
     }
 
     @Test
@@ -62,7 +62,7 @@ class SequenceTest {
         tasks.add(task3);
         tasks.add(task4);
 
-        String sequencedTasks = Sequence.sequenceTasks(tasks);
+        Sequence.sequenceTasks(project);
         String assertedSequencedTasks = String.valueOf(task4.getId()) + "," +
                 task3.getId() + "," +
                 task2.getId() + "," +
@@ -71,7 +71,7 @@ class SequenceTest {
         /*System.out.println("Second test:");
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
-        assertEquals(sequencedTasks, assertedSequencedTasks);
+        assertEquals(project.getSequence(), assertedSequencedTasks);
 
     }
 
@@ -91,7 +91,7 @@ class SequenceTest {
         tasks.add(task3);
         tasks.add(task4);
 
-        String sequencedTasks = Sequence.sequenceTasks(tasks);
+        Sequence.sequenceTasks(project);
         String assertedSequencedTasks = String.valueOf(task4.getId()) + "," +
                 task2.getId() + "," +
                 task1.getId() + "|" +
@@ -100,7 +100,7 @@ class SequenceTest {
         /*System.out.println("Third test:");
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
-        assertEquals(sequencedTasks, assertedSequencedTasks);
+        assertEquals(project.getSequence(), assertedSequencedTasks);
     }
 
 }

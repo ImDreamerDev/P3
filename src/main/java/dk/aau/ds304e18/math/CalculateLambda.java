@@ -5,38 +5,63 @@ import java.util.List;
 
 public class CalculateLambda {
 
-    //Optimizes mu and calculates lambda from the given probabilities
+    /**
+     * Optimizes mu and calculates lambda from the given probabilities.
+     * @param mu - The value of mu before the calculation.
+     * @param probabilities - The completion probabilites of the tasks.
+     * @return Mu value, Lambda value.
+     */
     public static List<Double> calculateLambda(double mu, List<Probabilities> probabilities){
         List<Double> returnVariables = new ArrayList<>();
 
-        //Lowest mu value to check
+        /**
+         * Lowest mu value to check
+         */
         double minMu = mu/2;
 
-        //Largest mu value to check
+        /**
+         * Largest mu value to check
+         */
         double maxMu = mu+mu/2;
 
-        //Current best mu value (Closest to wanted values)
+        /**
+         * Current best mu value (Closest to wanted values)
+         */
         double bestMu = mu;
 
-        //Current mu being checked
+        /**
+         * Current mu being checked
+         */
         double currentMu = minMu;
 
-        //Lowest lambda to check
+        /**
+         * Lowest lambda to check
+         */
         double startLambda = 0.1;
 
-        //Largest lambda to check
+        /**
+         * Largest lambda to check
+         */
         double endLambda = 354.8; //Anything above this gives infinity because calculations are hard
 
-        //Current best mu value (Closest to wanted values)
+        /**
+         * Current best mu value (Closest to wanted values)
+         */
         double bestLambda = -1;
 
-        //Current lambda being checked
+        /**
+         * Current lambda being checked
+         */
         double currentLambda;
 
-        //bestValue should be as low as possible, as that means that all the probabilities are combined closest to the wanted values
+        /**
+         * bestValue should be as low as possible, as that means that all the probabilities are combined closest to the wanted values
+         */
         double bestValue = -1;
 
-        //Check through all mu values
+        /**
+         * Check through all mu values
+         */
         while(currentMu <= maxMu){
 
             //(Re-)set currentLambda

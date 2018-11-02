@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class MonteCarlo {
 
-    public static String findFastestSequence(List<Task> taskList){
+    public static String findFastestSequence(Project project){
 
         return null;
 
