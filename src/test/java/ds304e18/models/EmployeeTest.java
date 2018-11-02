@@ -212,12 +212,12 @@ class EmployeeTest {
         Employee employee1 = new Employee("Test Person1");
         Employee employee2 = new Employee("Test Person2");
 
+        DatabaseManager.removeEmployee(employee1.getId());
+
         employee1.setId(1);
         employee2.setId(1);
 
         assertEquals(employee1.hashCode(), employee2.hashCode());
-
-        DatabaseManager.removeEmployee(employee1.getId());
     }
 
     @Test
@@ -225,12 +225,12 @@ class EmployeeTest {
         Employee employee1 = new Employee("Test Person1");
         Employee employee2 = new Employee("Test Person2");
 
+        DatabaseManager.removeEmployee(employee1.getId());
+        DatabaseManager.removeEmployee(employee2.getId());
+
         employee1.setId(1);
         employee2.setId(2);
 
         assertNotEquals(employee1.hashCode(), employee2.hashCode());
-
-        DatabaseManager.removeEmployee(employee1.getId());
-        DatabaseManager.removeEmployee(employee2.getId());
     }
 }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ProjectTest {
@@ -213,5 +214,83 @@ class ProjectTest {
         newProject.setId(3);
 
         assertEquals(3, newProject.getId());
+    }
+
+    @Test
+    void TestProjectSetState01 () {
+        Project newProject = new Project("Test Project");
+
+        newProject.setState(ProjectState.ONGOING);
+
+        assertEquals(ProjectState.ONGOING, newProject.getState());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+    }
+
+    @Test
+    void TestProjectSetState02() {
+        Project newProject = new Project("Test Project");
+
+        newProject.setState(ProjectState.ARCHIVED);
+
+        assertEquals(ProjectState.ARCHIVED,newProject.getState());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+    }
+
+    @Test
+    void TestProjectEquals01(){
+        Project project1 = new Project("Project1");
+        Project project2 = new Project("Project2");
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + project1.getId());
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + project2.getId());
+
+        project1.setId(1);
+        project2.setId(1);
+
+        assertEquals(project1,project2);
+    }
+
+    @Test
+    void TestProjectEquals02(){
+        Project project1 = new Project("Project1");
+        Project project2 = new Project("Project2");
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + project1.getId());
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + project2.getId());
+
+        project1.setId(1);
+        project2.setId(2);
+
+        assertNotEquals(project1,project2);
+    }
+
+    @Test
+    void TestProjectHashcode01() {
+        Project project1 = new Project("Project1");
+        Project project2 = new Project("Project2");
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + project1.getId());
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + project2.getId());
+
+        project1.setId(1);
+        project2.setId(1);
+
+        assertEquals(project1.hashCode(), project2.hashCode());
+    }
+
+    @Test
+    void TestProjectHashcode02() {
+        Project project1 = new Project("Project1");
+        Project project2 = new Project("Project2");
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + project1.getId());
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + project2.getId());
+
+        project1.setId(1);
+        project2.setId(2);
+
+        assertNotEquals(project1.hashCode(), project2.hashCode());
     }
 }
