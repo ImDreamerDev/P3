@@ -49,9 +49,9 @@ public class Project {
         this.state = ProjectState.ONGOING;
         DatabaseManager.addProject(this);
     }
-    
+
     public Project(int id, String name, ProjectState projectState, String sequence) {
-       this.id = id;
+        this.id = id;
         this.state = projectState;
         this.name = name;
         this.sequence = sequence;
@@ -67,7 +67,7 @@ public class Project {
         for (Task firstTask : tasks) {
             if (!this.tasks.contains(firstTask)) this.tasks.add(firstTask);
 
-            if (!firstTask.getProject().equals(this)) firstTask.setProject(this);
+            if (firstTask.getProject() == null || !firstTask.getProject().equals(this)) firstTask.setProject(this);
         }
     }
 

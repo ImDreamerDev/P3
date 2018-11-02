@@ -433,14 +433,28 @@ public class DatabaseManager {
 
         for (Employee emp : LocalObjStorage.getEmployeeList()) {
             emp.setProject(LocalObjStorage.getProjectById(emp.getProjectId()));
-            LocalObjStorage.getProjectById(emp.getProjectId()).addNewEmployee(emp);
+            if (emp.getProjectId() != 0)
+                LocalObjStorage.getProjectById(emp.getProjectId()).addNewEmployee(emp);
         }
 
+        List<Integer> employeesToRemove = new ArrayList<>();
         for (Task task : LocalObjStorage.getTaskList()) {
-            LocalObjStorage.getProjectById(task.getProjectId()).addNewTask(task);
+            Project project = LocalObjStorage.getProjectById(task.getProjectId());
+            if (project != null)
+                project.addNewTask(task);
             for (Integer employeeId : task.getEmployeeIds()) {
-                LocalObjStorage.getEmployeeById(employeeId).distributeAddTask(task);
+                Employee emp = LocalObjStorage.getEmployeeById(employeeId);
+                if (emp != null) {
+                    task.addEmployee(emp);
+                    emp.distributeAddTask(task);
+                } else {
+                    employeesToRemove.add(employeeId);
+                }
+
             }
+            task.getEmployeeIds().removeAll(employeesToRemove);
+
+            DatabaseManager.updateTask(task);
 
             for (Integer dependencyId : task.getDependencyIds()) {
                 task.distributeAddDependency(LocalObjStorage.getTaskById(dependencyId));

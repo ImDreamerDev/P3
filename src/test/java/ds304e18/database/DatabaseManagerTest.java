@@ -105,5 +105,13 @@ class DatabaseManagerTest {
         }
         DatabaseManager.removeTask(testTask.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
+
     }
+
+    /*@Test
+    void testGetAllTasks() {
+        DatabaseManager.distributeModels();
+    }*/
+
+
 }

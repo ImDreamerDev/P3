@@ -81,6 +81,7 @@ public class Task {
         this.priority = priority;
         this.project = project;
         DatabaseManager.addTask(this);
+        this.project.addNewTask(this);
     }
 
 
