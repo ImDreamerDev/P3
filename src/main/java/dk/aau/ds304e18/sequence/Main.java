@@ -24,7 +24,7 @@ public class Main {
         task3.getProbabilities().add(new Probabilities(25, 20));
         task3.getProbabilities().add(new Probabilities(45,50));
 
-        project.setSequence(Sequence.sequenceTasks(project.getTasks()));
+        Sequence.sequenceTasks(project);
 
         MonteCarlo.estimateTime(project);
         System.out.println("Duration of the project: " + project.getDuration());
