@@ -52,6 +52,41 @@ public class ParseSequence {
 
     }
 
+    public static List<List<Task>> parseToMultipleLists(Project project) {
+
+        String taskList = project.getSequence();
+        String[] taskListSplit = taskList.split("\\|");
+        List<List<Task>> returnList = new ArrayList<>();
+
+        for(String task : taskListSplit) {
+            task = task.replaceAll("\\(([^\\)]+)\\)", "");
+            String[] temp = task.split(",");
+            List<Task> listToInsert = new ArrayList<>();
+
+            for(String tempTask : temp){
+
+                int taskId;
+
+                try{
+                    taskId = Integer.parseInt(tempTask);
+                }catch(NumberFormatException e){
+                    continue;
+                }
+
+                Task taskToInsert = project.getTasks().stream().filter(task1 -> task1.getId() == taskId).findFirst().orElse(null);
+
+                listToInsert.add(taskToInsert);
+
+            }
+
+            returnList.add(listToInsert);
+
+        }
+
+        return returnList;
+
+    }
+
     public static StringBuilder unparseList(StringBuilder putInto, List<Task> takeFrom, int tasksSize){
 
         StringBuilder putIntoStringBuilder = new StringBuilder(putInto);
