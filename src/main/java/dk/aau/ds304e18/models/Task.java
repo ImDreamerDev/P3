@@ -207,7 +207,7 @@ public class Task {
      *
      * @param estimatedTime - The amount of time that it takes for the task to be completed.
      */
-    public void setEstimatedTime(int estimatedTime) {
+    public void setEstimatedTime(double estimatedTime) {
         this.estimatedTime = estimatedTime;
     }
 
@@ -274,10 +274,6 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    public void setEstimatedTime(double estimatedTime) {
-        this.estimatedTime = estimatedTime;
     }
 
     public List<Integer> getEmployeeIds() {
