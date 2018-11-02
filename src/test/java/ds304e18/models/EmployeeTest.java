@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import javax.xml.crypto.Data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -28,24 +30,31 @@ class EmployeeTest {
         DatabaseManager.removeEmployee(newEmployee.getId());
     }
 
-   /* TODO: Fix
+
     @Test
     void TestEmployeeConstructor02() {
-        DatabaseEmployee newDatabaseEmployee = new DatabaseEmployee();
-        newDatabaseEmployee.id = 1;
-        Employee newEmployee = new Employee(newDatabaseEmployee);
+        List<Integer> previousTasks = new ArrayList<>();
+        Employee newEmployee = new Employee(1,"Test Person",previousTasks);
 
-        assertEquals(1,newEmployee.getId());
+        assertEquals(1, newEmployee.getId());
     }
+
 
     @Test
     void TestEmployeeConstructor03() {
-        DatabaseEmployee newDatabaseEmployee = new DatabaseEmployee();
-        newDatabaseEmployee.name = "Person";
-        Employee newEmployee = new Employee(newDatabaseEmployee);
+        List<Integer> previousTasks = new ArrayList<>();
+        Employee newEmployee = new Employee(1,"Kasper",previousTasks);
 
-        assertEquals("Person",newEmployee.getName());
-    }*/
+        assertEquals("Kasper", newEmployee.getName());
+    }
+
+    @Test
+    void TestEmployeeConstructor04() {
+        List<Integer> previousTasks = new ArrayList<>();
+        Employee newEmployee = new Employee(1,"Kasper BTW", previousTasks);
+
+        assertEquals(previousTasks, newEmployee.getPreviousTaskIds());
+    }
 
     /**
      * Tests that adding a task to the employee works.
@@ -76,8 +85,6 @@ class EmployeeTest {
         newEmployee.setId(1000);
 
         assertEquals(1000, newEmployee.getId());
-
-
     }
 
     /**
