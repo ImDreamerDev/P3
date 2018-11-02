@@ -67,7 +67,7 @@ public class Sequence {
 
             //Add the sorted tasks to the sequencedTasks list
             List<Task> tasksToInsert = sortTasks(tasksToSort);
-            sequencedTasks.append(unparseList(sequencedTasks, tasksToInsert, tasks.size()));
+            sequencedTasks = unparseList(sequencedTasks, tasksToInsert, tasks.size());
             tasksToSort = new ArrayList<>();
 
             //For each task in the yet to be sorted list

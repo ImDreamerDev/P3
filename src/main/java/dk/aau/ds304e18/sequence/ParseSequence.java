@@ -15,7 +15,7 @@ public class ParseSequence {
 
     }
 
-    public static String unparseList(StringBuilder putInto, List<Task> takeFrom, int tasksSize){
+    public static StringBuilder unparseList(StringBuilder putInto, List<Task> takeFrom, int tasksSize){
 
         StringBuilder putIntoStringBuilder = new StringBuilder(putInto);
         List<Task> takeFromList = new ArrayList<>(takeFrom);
@@ -33,7 +33,7 @@ public class ParseSequence {
             }
         }
 
-        return putIntoStringBuilder.toString();
+        return putIntoStringBuilder;
 
     }
 
