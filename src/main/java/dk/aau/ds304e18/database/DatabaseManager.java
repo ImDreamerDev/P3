@@ -510,6 +510,7 @@ public class DatabaseManager {
     }
 
     public static void updateProject(Project project) {
+        if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?, sequence = ?" +
                     "WHERE id = ?");
