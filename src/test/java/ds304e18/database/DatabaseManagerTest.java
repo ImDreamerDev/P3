@@ -13,6 +13,7 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DatabaseManagerTest {
 
@@ -28,13 +29,20 @@ class DatabaseManagerTest {
     @Test
     void testAddEmployee() {
         Employee testEmp = new Employee("Søren");
+        Project testProj = new Project("TestProj");
+        Task testTask = new Task("TestTask", 10, 1, testProj);
+
+        testEmp.addPreviousTask(testTask);
+        assertTrue(testEmp.getPreviousTask().contains(testTask));
 
         Employee testGetEmp = DatabaseManager.getEmployee(testEmp.getId());
         assertNotNull(testGetEmp);
         assertEquals(testEmp.getId(), testGetEmp.getId());
         assertEquals(testEmp.getName(), testGetEmp.getName());
+        assertTrue(testGetEmp.getPreviousTaskIds().contains(testTask.getId()));
+        assertEquals(testGetEmp.getProjectId(), testProj.getId());
 
-        DatabaseManager.removeEmployee(testEmp.getId());
+        //DatabaseManager.removeEmployee(testEmp.getId());
     }
 
     @Test

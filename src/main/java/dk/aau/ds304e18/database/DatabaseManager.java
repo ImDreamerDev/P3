@@ -265,7 +265,7 @@ public class DatabaseManager {
             while (rs.next()) {
                 Employee emp = new Employee(rs.getInt(1), rs.getString(2),
                         Arrays.asList((Integer[]) rs.getArray(3).getArray()));
-                LocalObjStorage.getProjectById(rs.getInt(4));
+                emp.setProjectId(rs.getInt(4));
                 empList.add(emp);
             }
         } catch (SQLException e) {
