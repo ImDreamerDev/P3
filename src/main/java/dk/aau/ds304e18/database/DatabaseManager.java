@@ -226,8 +226,14 @@ public class DatabaseManager {
         try {
             if (rs == null) return null;
             while (rs.next()) {
-                ProjectManager projectManager = new ProjectManager(rs.getInt(1), rs.getString(2),
-                        rs.getInt(3), Arrays.asList((Integer[]) rs.getArray(4).getArray()));
+                ProjectManager projectManager;
+                if (rs.getArray(5) != null)
+                    projectManager = new ProjectManager(rs.getInt(1), rs.getString(2),
+                            rs.getInt(4), Arrays.asList((Integer[]) rs.getArray(5).getArray()));
+                else {
+                    projectManager = new ProjectManager(rs.getInt(1), rs.getString(2),
+                            rs.getInt(4), null);
+                }
                 projectManagers.add(projectManager);
             }
         } catch (SQLException e) {
@@ -398,7 +404,10 @@ public class DatabaseManager {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             rs.next();
-            return new ProjectManager(rs.getInt(1), rs.getString(2), rs.getInt(3), Arrays.asList((Integer[]) rs.getArray(4).getArray()));
+            List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
+            if (projectManagers.size() != 0)
+                return projectManagers.get(0);
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -472,7 +481,10 @@ public class DatabaseManager {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers");
             ResultSet rs = statement.executeQuery();
-            return parseProjectManagerFromResultSet(rs);
+            List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
+            if (projectManagers != null && projectManagers.size() != 0)
+                return projectManagers;
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

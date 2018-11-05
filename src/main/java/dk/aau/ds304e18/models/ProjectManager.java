@@ -54,7 +54,8 @@ public class ProjectManager {
         this.id = id;
         this.name = name;
         currentProjectId = currentProject;
-        oldProjectsId.addAll(oldProjects);
+        if (oldProjects != null)
+            oldProjectsId.addAll(oldProjects);
     }
 
     /**
