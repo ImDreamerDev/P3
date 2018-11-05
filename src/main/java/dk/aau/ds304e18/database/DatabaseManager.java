@@ -402,7 +402,7 @@ public class DatabaseManager {
         }
     }
 
-    public static ProjectManager getPM(int id) {
+    public static ProjectManager getProjectManager(int id) {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE id = ?");
@@ -412,23 +412,6 @@ public class DatabaseManager {
             if (projectManagers.size() != 0)
                 return projectManagers.get(0);
             return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Return the projects from db which are ongoing.
-     *
-     * @return list of all ongoing projects.
-     */
-    public static List<Project> getAllOngoingProjects() {
-        if (dbConnection == null) connect();
-        try {
-            ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM projects WHERE state = 0");
-            if (rs == null) return null;
-            return parseProjectsFromResultSet(rs);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -485,19 +468,6 @@ public class DatabaseManager {
         return null;
     }
 
-    private static List<Task> getAllTasksForProject(Project project) {
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM tasks WHERE projectid = ?");
-            statement.setInt(1, project.getId());
-            ResultSet rs = statement.executeQuery();
-            return parseTasksFromResultSet(rs);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-
     private static List<ProjectManager> getAllProjectManagers() {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers");
@@ -521,12 +491,6 @@ public class DatabaseManager {
         List<Project> ongoingProjects = getAllProjects();
         if (ongoingProjects != null) {
             ongoingProjects.forEach(LocalObjStorage::addProject);
-            /*for (Project proj : ongoingProjects) {
-                Objects.requireNonNull(getAllTasksForProject(proj)).forEach(task -> {
-                    LocalObjStorage.addTask(task);
-                    proj.addNewTask(task);
-                });
-            }*/
         }
 
         List<ProjectManager> projectManagers = getAllProjectManagers();
@@ -685,18 +649,4 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
-    
-    /* Parse probs
-     //UPDATE tasks SET prob[1] = (534.1,3123.2) WHERE id = 47;
-        ResultSet rs = DatabaseManager.query("SELECT probabilities FROM tasks WHERE id =" + 47);
-        rs.next();
-
-        ResultSet rsw = rs.getArray(1).getResultSet();
-        while (rsw.next()) {
-            String string = rsw.getString(2).replaceAll("[/(/)]", "");
-            Probabilities probabilities = new Probabilities(Double.parseDouble(string.split(",")[0]),
-                    Double.parseDouble(string.split(",")[1]));
-            System.out.println(probabilities.getDuration() + " " + probabilities.getProbability());
-        }
-     */
 }
