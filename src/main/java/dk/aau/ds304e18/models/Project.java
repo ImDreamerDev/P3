@@ -45,6 +45,8 @@ public class Project {
      * The list of employees.
      */
     private final List<Employee> employees = new ArrayList<>();
+    
+    private String recommendedPath;
 
     /**
      * Constructor for project.
@@ -59,12 +61,13 @@ public class Project {
         DatabaseManager.addProject(this);
     }
 
-    public Project(int id, String name, ProjectState projectState, String sequence, double duration) {
+    public Project(int id, String name, ProjectState projectState, String sequence, double duration,String recommendedPath) {
         this.id = id;
         this.state = projectState;
         this.name = name;
         this.sequence = sequence;
         this.duration = duration;
+        this.recommendedPath = recommendedPath;
     }
 
     /**
@@ -216,5 +219,13 @@ public class Project {
 
     public void setCreator(ProjectManager creator) {
         Creator = creator;
+    }
+
+    public String getRecommendedPath() {
+        return recommendedPath;
+    }
+
+    public void setRecommendedPath(String recommendedPath) {
+        this.recommendedPath = recommendedPath;
     }
 }
