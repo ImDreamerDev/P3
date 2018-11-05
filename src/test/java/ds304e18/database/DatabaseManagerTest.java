@@ -4,6 +4,7 @@ import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.Probabilities;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
+import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.Task;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,8 @@ class DatabaseManagerTest {
     @Test
     void testAddEmployee() {
         Employee testEmp = new Employee("Søren");
-        Project testProj = new Project("TestProj");
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project testProj = new Project("TestProj", projectManager);
         Task testTask = new Task("TestTask", 10, 1, testProj);
 
         testEmp.addPreviousTask(testTask);
@@ -45,11 +47,13 @@ class DatabaseManagerTest {
         DatabaseManager.removeTask(testTask.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
         DatabaseManager.removeEmployee(testEmp.getId());
+        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     @Test
     void testAddProject() throws SQLException {
-        Project testProj = new Project("TestProj");
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project testProj = new Project("TestProj", projectManager);
         String testSequence = "{123,35,234,324,5,6,57,65,7,567,243,235,45,634,346,456,45,67}";
         testProj.setSequence(testSequence);
         Project testGetProj = DatabaseManager.getProject(testProj.getId());
@@ -60,11 +64,13 @@ class DatabaseManagerTest {
         assertEquals(testProj.getSequence(), testGetProj.getSequence());
         assertEquals(testProj.getDuration(), testGetProj.getDuration());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
+        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     @Test
     void testAddTask() throws SQLException {
-        Project testProj = new Project("TestProj");
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project testProj = new Project("TestProj", projectManager);
         Task testTask = new Task("TestTask", 10, 1, testProj);
         Task testGetTask = DatabaseManager.getTask(testTask.getId());
         assertNotNull(testGetTask);
@@ -74,11 +80,13 @@ class DatabaseManagerTest {
         assertEquals(testGetTask.getProjectId(), testProj.getId());
         DatabaseManager.removeTask(testTask.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
+        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     @Test
     void testUpdateTask() throws SQLException {
-        Project testProj = new Project("TestProj");
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project testProj = new Project("TestProj", projectManager);
         Task testTask = new Task("TestTask", 10, 1, testProj);
 
         testTask.getProbabilities().add(new Probabilities(32133, 4));
@@ -106,7 +114,7 @@ class DatabaseManagerTest {
         }
         DatabaseManager.removeTask(testTask.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
-
+        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /*@Test

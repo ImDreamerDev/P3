@@ -3,6 +3,7 @@ package dk.aau.ds304e18;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
+import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.MonteCarlo;
 import dk.aau.ds304e18.sequence.ParseSequence;
@@ -12,12 +13,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -26,19 +28,76 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class JavaFXMain extends Application {
     private Parent content = null;
     private int selectedProjectId;
     private ProjectManager projectManager;
+    private TextField textField;
+    private PasswordField passwordField;
+    private VBox vBoxLogin;
+
 
     @SuppressWarnings("unchecked")
+    public void onLogIn() {
+        DatabaseManager.distributeModels();
+        var tableView = ((TableView) ((AnchorPane) ((TabPane) content.getChildrenUnmodifiable().get(1)).getTabs().get(0).getContent()).getChildren().get(2));
+        ((TableColumn) tableView.getColumns().get(0)).setCellValueFactory(new PropertyValueFactory<Project, String>("id"));
+        ((TableColumn) tableView.getColumns().get(1)).setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
+        ((TableColumn) tableView.getColumns().get(2)).setCellValueFactory(new PropertyValueFactory<Project, String>("creator"));
+        ((TableColumn) tableView.getColumns().get(3)).setCellValueFactory(new PropertyValueFactory<Project, String>("sequence"));
+        ((TableColumn) tableView.getColumns().get(4)).setCellValueFactory(new PropertyValueFactory<Project, String>("duration"));
+        ((TableColumn) tableView.getColumns().get(5)).setCellValueFactory(new PropertyValueFactory<Project, String>("state"));
+        FilteredList<Project> flProjects = ((FilteredList<Project>) new FilteredList(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
+        SortedList<Project> sortedList = new SortedList<>(flProjects);
+        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+        CheckBox showArchived = ((CheckBox) ((HBox) tableView.getParent().getChildrenUnmodifiable().get(3)).getChildren().get(2));
+        tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
+                ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
+
+        showArchived.selectedProperty().addListener((ov, old_val, new_val) -> {
+            if (!new_val)
+                tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState()
+                        == ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
+            else
+                tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getCreator() != null && project.getCreator().getId()
+                        == projectManager.getId()).collect(Collectors.toList())));
+        });
+
+        tableView.setOnMouseClicked(event -> {
+            if (tableView.getSelectionModel().getSelectedIndex() != -1 && selectedProjectId !=
+                    ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue())) {
+                selectedProjectId = ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue());
+                setUpView();
+            }
+        });
+
+        TextField textField = ((TextField) ((HBox) tableView.getParent().getChildrenUnmodifiable().get(3)).getChildren().get(1));
+        Button archiveButton = ((Button) tableView.getParent().getChildrenUnmodifiable().get(1));
+        archiveButton.setOnMouseClicked(event -> {
+            if (selectedProjectId != 0) {
+                projectManager.addOldProject(LocalObjStorage.getProjectById(selectedProjectId));
+                tableView.getItems().remove(tableView.getSelectionModel().getSelectedIndex());
+            }
+        });
+
+        textField.setPromptText("Search here!");
+        textField.setOnKeyReleased(keyEvent -> {
+            if (isFirstLetter(textField.getText())) {
+                flProjects.setPredicate(p -> Integer.toString(p.getId()).contains(textField.getText().toLowerCase().trim()));
+            } else
+                flProjects.setPredicate(p -> p.getName().toLowerCase().contains(textField.getText().toLowerCase().trim()));
+
+            showArchived.setSelected(!showArchived.isSelected());
+            showArchived.setSelected(!showArchived.isSelected());
+        });
+    }
+
+
     @Override
     public void start(Stage stage) {
-
-        projectManager = DatabaseManager.getPM(1);
-        DatabaseManager.distributeModels();
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("main.fxml"));
 
         try {
@@ -46,45 +105,22 @@ public class JavaFXMain extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        var d = ((TableView) ((AnchorPane) ((TabPane) content.getChildrenUnmodifiable().get(1)).getTabs().get(0).getContent()).getChildren().get(2));
-        ((TableColumn) d.getColumns().get(0)).setCellValueFactory(new PropertyValueFactory<Project, String>("id"));
-        ((TableColumn) d.getColumns().get(1)).setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
-        ((TableColumn) d.getColumns().get(1)).setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
-        ((TableColumn) d.getColumns().get(2)).setCellValueFactory(new PropertyValueFactory<Project, String>("sequence"));
-        ((TableColumn) d.getColumns().get(3)).setCellValueFactory(new PropertyValueFactory<Project, String>("duration"));
-        FilteredList<Project> flProjects = ((FilteredList<Project>) new FilteredList(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
-        SortedList<Project> sortedList = new SortedList<>(flProjects);
-        sortedList.comparatorProperty().bind(d.comparatorProperty());
-
-        d.setItems(FXCollections.observableArrayList(sortedList));
-
-        d.setOnMouseClicked(event -> {
-            if (d.getSelectionModel().getSelectedIndex() != -1 && selectedProjectId !=
-                    ((int) ((TableColumn) d.getColumns().get(0)).getCellObservableValue(d.getSelectionModel().getSelectedIndex()).getValue())) {
-                selectedProjectId = ((int) ((TableColumn) d.getColumns().get(0)).getCellObservableValue(d.getSelectionModel().getSelectedIndex()).getValue());
-                setUpView();
+        vBoxLogin = ((VBox) ((Pane) content.getChildrenUnmodifiable().get(2)).getChildrenUnmodifiable().get(0));
+        Button loginButton = ((Button) vBoxLogin.getChildrenUnmodifiable().get(3));
+        textField = (TextField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(0)).getChildren().get(1);
+        textField.setOnKeyPressed(ke -> {
+            if (ke.getCode().equals(KeyCode.ENTER)) {
+                logIn();
             }
         });
 
-        TextField textField = ((TextField) ((HBox) d.getParent().getChildrenUnmodifiable().get(3)).getChildren().get(1));
-        Button archiveButton = ((Button) d.getParent().getChildrenUnmodifiable().get(1));
-        archiveButton.setOnMouseClicked(event -> {
-            if (selectedProjectId != 0) {
-                projectManager.addOldProject(LocalObjStorage.getProjectById(selectedProjectId));
-                d.getItems().remove(d.getSelectionModel().getSelectedIndex());
+        passwordField = (PasswordField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(1)).getChildren().get(1);
+        passwordField.setOnKeyPressed(ke -> {
+            if (ke.getCode().equals(KeyCode.ENTER)) {
+                logIn();
             }
         });
-
-        textField.setPromptText("Search here!");
-        textField.setOnKeyReleased(keyEvent -> {
-            if (isFirstLetter(textField.getText()))
-                flProjects.setPredicate(p -> Integer.toString(p.getId()).contains(textField.getText().toLowerCase().trim()));
-            else
-                flProjects.setPredicate(p -> p.getName().toLowerCase().contains(textField.getText().toLowerCase().trim()));
-        });
-
-
+        loginButton.setOnMouseClicked(event -> logIn());
         Scene scene = new Scene(content, 1280, 720);
 
         stage.setScene(scene);
@@ -152,6 +188,22 @@ public class JavaFXMain extends Application {
             return false;
         }
         return true;
+    }
+
+    private void logIn() {
+        String username = textField.getText();
+        String password = passwordField.getText();
+        System.out.println(password + " " + username);
+        ProjectManager pm = DatabaseManager.logIn(username, password);
+        if (pm == null) {
+            Label error = ((Label) vBoxLogin.getChildren().get(2));
+            error.setText("Error: No such user");
+            error.setVisible(true);
+        } else {
+            content.getChildrenUnmodifiable().get(2).setVisible(false);
+            projectManager = pm;
+            onLogIn();
+        }
     }
 
 }

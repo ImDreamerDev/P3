@@ -2,6 +2,7 @@ package ds304e18.sequence;
 
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Project;
+import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.Sequence;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,7 +22,8 @@ class SequenceTest {
 
     @Test
     void testSequenceTasks01() {
-        Project project = new Project("Project");
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project project = new Project("Project", projectManager);
         List<Task> tasks = new ArrayList<>();
         Task task1 = new Task("Test1", 1.0, 5, project);
         Task task2 = new Task("Test2", 2.0, 5, project);
@@ -46,11 +48,14 @@ class SequenceTest {
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
         assertEquals(project.getSequence(), assertedSequencedTasks);
+
+        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     @Test
     void testSequenceTasks02() {
-        Project project = new Project("Project");
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project project = new Project("Project", projectManager);
         List<Task> tasks = new ArrayList<>();
         Task task1 = new Task("Test1", 1.0, 1, project);
         Task task2 = new Task("Test2", 2.0, 2, project);
@@ -73,11 +78,13 @@ class SequenceTest {
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
         assertEquals(project.getSequence(), assertedSequencedTasks);
 
+        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     @Test
     void testSequenceTasks03() {
-        Project project = new Project("Project");
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project project = new Project("Project", projectManager);
         List<Task> tasks = new ArrayList<>();
         Task task1 = new Task("Test1", 1.0, 1, project);
         Task task2 = new Task("Test2", 2.0, 2, project);
@@ -101,6 +108,8 @@ class SequenceTest {
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
         assertEquals(project.getSequence(), assertedSequencedTasks);
+
+        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
 }

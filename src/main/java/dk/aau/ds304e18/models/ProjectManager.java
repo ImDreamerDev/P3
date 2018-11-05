@@ -2,6 +2,7 @@ package dk.aau.ds304e18.models;
 
 import dk.aau.ds304e18.database.DatabaseManager;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,9 @@ public class ProjectManager {
      */
     private List<Project> oldProjects = new ArrayList<>();
 
-
+    /**
+     * A list of the oldProjectId's.
+     */
     private List<Integer> oldProjectsId = new ArrayList<>();
 
     /**
@@ -50,10 +53,10 @@ public class ProjectManager {
     }
 
 
-    public ProjectManager(int id, String name, int currentProject, List<Integer> oldProjects) {
+    public ProjectManager(int id, String name, int currentProjectId, List<Integer> oldProjects) {
         this.id = id;
         this.name = name;
-        currentProjectId = currentProject;
+        this.currentProjectId = currentProjectId;
         if (oldProjects != null)
             oldProjectsId.addAll(oldProjects);
     }
@@ -79,7 +82,7 @@ public class ProjectManager {
     /**
      * The getter for the current project
      *
-     * @return
+     * @return currentProject - the project that the program manager is currently working on.
      */
     public Project getCurrentProject() {
         return currentProject;
@@ -101,10 +104,14 @@ public class ProjectManager {
      */
     public void addOldProject(Project project) {
         if (project != null) {
+            if (oldProjectsId.contains(project.getId()))
+                return;
             oldProjects.add(project);
+            oldProjectsId.add(project.getId());
             project.setState(ProjectState.ARCHIVED);
             if (currentProject == project)
                 currentProject = null;
+            DatabaseManager.updateProjectManager(this);
         }
     }
 
@@ -116,6 +123,7 @@ public class ProjectManager {
     public void setCurrentProject(Project currentProject) {
         if (currentProject != null)
             this.currentProject = currentProject;
+        DatabaseManager.updateProjectManager(this);
     }
 
     /**
@@ -133,5 +141,10 @@ public class ProjectManager {
 
     public int getCurrentProjectId() {
         return currentProjectId;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
