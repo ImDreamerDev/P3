@@ -1,6 +1,7 @@
 package dk.aau.ds304e18;
 
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.database.Password;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.ProjectState;
@@ -13,13 +14,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -41,7 +44,7 @@ public class JavaFXMain extends Application {
 
 
     @SuppressWarnings("unchecked")
-    public void onLogIn() {
+    private void onLogIn() {
         DatabaseManager.distributeModels();
         var tableView = ((TableView) ((AnchorPane) ((TabPane) content.getChildrenUnmodifiable().get(1)).getTabs().get(0).getContent()).getChildren().get(2));
         ((TableColumn) tableView.getColumns().get(0)).setCellValueFactory(new PropertyValueFactory<Project, String>("id"));
@@ -99,7 +102,6 @@ public class JavaFXMain extends Application {
     @Override
     public void start(Stage stage) {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("main.fxml"));
-
         try {
             content = loader.load();
         } catch (IOException e) {

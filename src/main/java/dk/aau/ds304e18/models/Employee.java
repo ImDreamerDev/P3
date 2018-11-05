@@ -148,7 +148,7 @@ public class Employee {
     public List<Integer> getPreviousTaskIds() {
         return previousTaskIds;
     }
-    
+
     /**
      * The setter for the project
      *
@@ -157,7 +157,7 @@ public class Employee {
     public void setProject(Project project) {
 
         //For distributing models
-        if (this.project == null && this.projectId != 0) {
+        if (this.project == null) {
             this.project = project;
             return;
         }

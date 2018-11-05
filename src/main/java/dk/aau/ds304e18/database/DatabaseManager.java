@@ -108,13 +108,27 @@ public class DatabaseManager {
         return true;
     }
 
+    /**
+     * Adds a new project manager to the DB, if the username does not already exist in the DB.
+     *
+     * @param pm       the project manager to be added.
+     * @param password clear text of password to add.
+     * @return true if user does not already exist in DB and is added.
+     */
     public static boolean addProjectManager(ProjectManager pm, String password) {
         if (dbConnection == null) connect();
         try {
+            PreparedStatement checkName = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE username = ?");
+            checkName.setString(1, pm.getName());
+            ResultSet checkNameRs = checkName.executeQuery();
+            if (checkNameRs.next()) return false;
+
+
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projectmanagers (" +
-                    "username,password,currentproject,oldprojects ) values (?, ?, ?,?)", Statement.RETURN_GENERATED_KEYS);
+                    "username, password, currentproject, oldprojects, salt ) values (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, pm.getName());
-            statement.setString(2, password);
+            byte[] salt = Password.getNextSalt();
+            statement.setBytes(2, Password.hash(password.toCharArray(), salt));
             if (pm.getCurrentProject() != null)
                 statement.setInt(3, pm.getCurrentProject().getId());
             else
@@ -123,6 +137,7 @@ public class DatabaseManager {
                 statement.setArray(4, dbConnection.createArrayOf("INTEGER",
                         pm.getOldProjects().stream().map(Project::getId).toArray()));
             else statement.setInt(4, 0);
+            statement.setBytes(5, salt);
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) pm.setId(rs.getInt(1));
@@ -646,36 +661,6 @@ public class DatabaseManager {
         }
      */
 
-    /**
-     * Adds a new project manager to the DB, if the username does not already exist in the DB.
-     *
-     * @param username          the username of the user to add.
-     * @param clearTextPassword clear text of password to add.
-     * @return true if user does not already exist in DB and is added.
-     */
-    public static boolean addNewProjectManager(String username, String clearTextPassword) {
-        if (dbConnection == null) connect();
-        try {
-
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE username = ?");
-            statement.setString(1, username);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) return false;
-
-            statement.clearParameters();
-            statement = dbConnection.prepareStatement("INSERT INTO projectmanagers (username, password, salt) VALUES (?, ?, ?)");
-            statement.setString(1, username);
-            byte[] salt = Password.getNextSalt();
-            statement.setBytes(2, Password.hash(clearTextPassword.toCharArray(), salt));
-            statement.setBytes(3, salt);
-            statement.execute();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
 
     /**
      * Returns a ProjectManger object if a user with username and password clearTextPassword is found in db, else null.
