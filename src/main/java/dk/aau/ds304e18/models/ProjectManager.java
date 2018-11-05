@@ -37,7 +37,9 @@ public class ProjectManager {
      */
     private List<Project> oldProjects = new ArrayList<>();
 
-
+    /**
+     * A list of the oldProjectId's.
+     */
     private List<Integer> oldProjectsId = new ArrayList<>();
 
     /**
@@ -51,10 +53,10 @@ public class ProjectManager {
     }
 
 
-    public ProjectManager(int id, String name, int currentProject, List<Integer> oldProjects) {
+    public ProjectManager(int id, String name, int currentProjectId, List<Integer> oldProjects) {
         this.id = id;
         this.name = name;
-        currentProjectId = currentProject;
+        this.currentProjectId = currentProjectId;
         if (oldProjects != null)
             oldProjectsId.addAll(oldProjects);
     }
@@ -80,7 +82,7 @@ public class ProjectManager {
     /**
      * The getter for the current project
      *
-     * @return
+     * @return currentProject - the project that the program manager is currently working on.
      */
     public Project getCurrentProject() {
         return currentProject;
