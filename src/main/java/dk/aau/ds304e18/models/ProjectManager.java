@@ -2,6 +2,7 @@ package dk.aau.ds304e18.models;
 
 import dk.aau.ds304e18.database.DatabaseManager;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,10 +102,14 @@ public class ProjectManager {
      */
     public void addOldProject(Project project) {
         if (project != null) {
+            if (oldProjectsId.contains(project.getId()))
+                return;
             oldProjects.add(project);
+            oldProjectsId.add(project.getId());
             project.setState(ProjectState.ARCHIVED);
             if (currentProject == project)
                 currentProject = null;
+            DatabaseManager.updateProjectManager(this);
         }
     }
 
@@ -116,6 +121,7 @@ public class ProjectManager {
     public void setCurrentProject(Project currentProject) {
         if (currentProject != null)
             this.currentProject = currentProject;
+        DatabaseManager.updateProjectManager(this);
     }
 
     /**
@@ -133,5 +139,10 @@ public class ProjectManager {
 
     public int getCurrentProjectId() {
         return currentProjectId;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

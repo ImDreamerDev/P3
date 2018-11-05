@@ -3,21 +3,27 @@ package dk.aau.ds304e18;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
+import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.MonteCarlo;
 import dk.aau.ds304e18.sequence.ParseSequence;
 import dk.aau.ds304e18.sequence.Sequence;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -26,6 +32,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class JavaFXMain extends Application {
@@ -33,31 +40,32 @@ public class JavaFXMain extends Application {
     private int selectedProjectId;
     private ProjectManager projectManager;
 
+
     @SuppressWarnings("unchecked")
-    @Override
-    public void start(Stage stage) {
-
-        projectManager = DatabaseManager.getPM(1);
+    public void onLogIn() {
         DatabaseManager.distributeModels();
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("main.fxml"));
-
-        try {
-            content = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         var d = ((TableView) ((AnchorPane) ((TabPane) content.getChildrenUnmodifiable().get(1)).getTabs().get(0).getContent()).getChildren().get(2));
         ((TableColumn) d.getColumns().get(0)).setCellValueFactory(new PropertyValueFactory<Project, String>("id"));
         ((TableColumn) d.getColumns().get(1)).setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
-        ((TableColumn) d.getColumns().get(1)).setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
-        ((TableColumn) d.getColumns().get(2)).setCellValueFactory(new PropertyValueFactory<Project, String>("sequence"));
-        ((TableColumn) d.getColumns().get(3)).setCellValueFactory(new PropertyValueFactory<Project, String>("duration"));
+        ((TableColumn) d.getColumns().get(2)).setCellValueFactory(new PropertyValueFactory<Project, String>("creator"));
+        ((TableColumn) d.getColumns().get(3)).setCellValueFactory(new PropertyValueFactory<Project, String>("sequence"));
+        ((TableColumn) d.getColumns().get(4)).setCellValueFactory(new PropertyValueFactory<Project, String>("duration"));
+        ((TableColumn) d.getColumns().get(5)).setCellValueFactory(new PropertyValueFactory<Project, String>("state"));
         FilteredList<Project> flProjects = ((FilteredList<Project>) new FilteredList(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
         SortedList<Project> sortedList = new SortedList<>(flProjects);
         sortedList.comparatorProperty().bind(d.comparatorProperty());
+        CheckBox showArchived = ((CheckBox) ((HBox) d.getParent().getChildrenUnmodifiable().get(3)).getChildren().get(2));
+        d.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
+                ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
 
-        d.setItems(FXCollections.observableArrayList(sortedList));
+        showArchived.selectedProperty().addListener((ov, old_val, new_val) -> {
+            if (!new_val)
+                d.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState()
+                        == ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
+            else
+                d.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getCreator() != null && project.getCreator().getId()
+                        == projectManager.getId()).collect(Collectors.toList())));
+        });
 
         d.setOnMouseClicked(event -> {
             if (d.getSelectionModel().getSelectedIndex() != -1 && selectedProjectId !=
@@ -83,8 +91,35 @@ public class JavaFXMain extends Application {
             else
                 flProjects.setPredicate(p -> p.getName().toLowerCase().contains(textField.getText().toLowerCase().trim()));
         });
+    }
 
 
+    @Override
+    public void start(Stage stage) {
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("main.fxml"));
+
+        try {
+            content = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        VBox vBoxLogin = ((VBox) ((Pane) content.getChildrenUnmodifiable().get(2)).getChildren().get(0));
+        Button loginButton = ((Button) vBoxLogin.getChildrenUnmodifiable().get(3));
+        loginButton.setOnMouseClicked(event -> {
+            String username = ((TextField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(0)).getChildren().get(1)).getText();
+            String password = ((PasswordField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(1)).getChildren().get(1)).getText();
+            System.out.println(password + " " + username);
+            ProjectManager pm = DatabaseManager.logIn(username, password);
+            if (pm == null) {
+                Label error = ((Label) vBoxLogin.getChildren().get(2));
+                error.setText("Error: No such user");
+                error.setVisible(true);
+            } else {
+                content.getChildrenUnmodifiable().get(2).setVisible(false);
+                projectManager = pm;
+                onLogIn();
+            }
+        });
         Scene scene = new Scene(content, 1280, 720);
 
         stage.setScene(scene);
