@@ -182,10 +182,11 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projects " +
-                    "(name, state, sequence) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    "(name, state, sequence, recommendedpath) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, project.getName());
             statement.setInt(2, project.getState().getValue());
             statement.setString(3, "");
+            statement.setString(4, "");
 
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
@@ -351,7 +352,7 @@ public class DatabaseManager {
             if (rs == null) return null;
             while (rs.next()) {
                 Project project = new Project(rs.getInt(1), rs.getString(2),
-                        ProjectState.values()[rs.getInt(3)], rs.getString(4), rs.getDouble(5));
+                        ProjectState.values()[rs.getInt(3)], rs.getString(4), rs.getDouble(5), rs.getString(6));
                 projects.add(project);
             }
         } catch (SQLException e) {
@@ -615,11 +616,12 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?, sequence = ?" +
-                    ", duration = ? WHERE id = ?");
+                    ", duration = ?, recommendedpath = ? WHERE id = ?");
             statement.setInt(1, project.getState().getValue());
             statement.setString(2, project.getSequence());
             statement.setDouble(3, project.getDuration());
-            statement.setInt(4, project.getId());
+            statement.setString(4, project.getRecommendedPath());
+            statement.setInt(5, project.getId());
             statement.execute();
 
         } catch (SQLException e) {
@@ -646,21 +648,6 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
-    
-    /* Parse probs
-     //UPDATE tasks SET prob[1] = (534.1,3123.2) WHERE id = 47;
-        ResultSet rs = DatabaseManager.query("SELECT probabilities FROM tasks WHERE id =" + 47);
-        rs.next();
-
-        ResultSet rsw = rs.getArray(1).getResultSet();
-        while (rsw.next()) {
-            String string = rsw.getString(2).replaceAll("[/(/)]", "");
-            Probabilities probabilities = new Probabilities(Double.parseDouble(string.split(",")[0]),
-                    Double.parseDouble(string.split(",")[1]));
-            System.out.println(probabilities.getDuration() + " " + probabilities.getProbability());
-        }
-     */
-
 
     /**
      * Returns a ProjectManger object if a user with username and password clearTextPassword is found in db, else null.
