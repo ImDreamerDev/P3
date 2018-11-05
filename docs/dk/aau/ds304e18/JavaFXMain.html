@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":9,"i3":10,"i4":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":9,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -182,13 +182,28 @@ extends javafx.application.Application</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>private javafx.scene.control.PasswordField</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#passwordField">passwordField</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>private <a href="models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#projectManager">projectManager</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#selectedProjectId">selectedProjectId</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private javafx.scene.control.TextField</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#textField">textField</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private javafx.scene.layout.VBox</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#vBoxLogin">vBoxLogin</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -249,16 +264,26 @@ extends javafx.application.Application</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#logIn()">logIn</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#main(java.lang.String%5B%5D)">main</a></span>&#8203;(java.lang.String[]&nbsp;args)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onLogIn()">onLogIn</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUpView()">setUpView</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#start(javafx.stage.Stage)">start</a></span>&#8203;(javafx.stage.Stage&nbsp;stage)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -315,10 +340,37 @@ extends javafx.application.Application</pre>
 <a id="projectManager">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>projectManager</h4>
 <pre>private&nbsp;<a href="models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a> projectManager</pre>
+</li>
+</ul>
+<a id="textField">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>textField</h4>
+<pre>private&nbsp;javafx.scene.control.TextField textField</pre>
+</li>
+</ul>
+<a id="passwordField">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>passwordField</h4>
+<pre>private&nbsp;javafx.scene.control.PasswordField passwordField</pre>
+</li>
+</ul>
+<a id="vBoxLogin">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>vBoxLogin</h4>
+<pre>private&nbsp;javafx.scene.layout.VBox vBoxLogin</pre>
 </li>
 </ul>
 </li>
@@ -350,6 +402,15 @@ extends javafx.application.Application</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="onLogIn()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>onLogIn</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;onLogIn()</pre>
+</li>
+</ul>
 <a id="start(javafx.stage.Stage)">
 <!--   -->
 </a>
@@ -394,10 +455,19 @@ extends javafx.application.Application</pre>
 <a id="isFirstLetter(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>isFirstLetter</h4>
 <pre class="methodSignature">private&nbsp;boolean&nbsp;isFirstLetter&#8203;(java.lang.String&nbsp;str)</pre>
+</li>
+</ul>
+<a id="logIn()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>logIn</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;logIn()</pre>
 </li>
 </ul>
 </li>

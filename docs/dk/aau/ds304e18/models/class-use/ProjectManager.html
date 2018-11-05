@@ -114,6 +114,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <th class="colFirst" scope="row"><a href="#dk.aau.ds304e18.database">dk.aau.ds304e18.database</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="#dk.aau.ds304e18.models">dk.aau.ds304e18.models</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -139,6 +143,66 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 </tbody>
 </table>
+<table class="useSummary">
+<caption><span>Fields in <a href="../../package-summary.html">dk.aau.ds304e18</a> with type parameters of type <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>private static java.util.ArrayList&lt;<a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">LocalObjStorage.</span><code><span class="memberNameLink"><a href="../../LocalObjStorage.html#projectManagers">projectManagers</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../package-summary.html">dk.aau.ds304e18</a> that return <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">LocalObjStorage.</span><code><span class="memberNameLink"><a href="../../LocalObjStorage.html#getProjectManagerById(int)">getProjectManagerById</a></span>&#8203;(int&nbsp;id)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../package-summary.html">dk.aau.ds304e18</a> that return types with arguments of type <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static java.util.ArrayList&lt;<a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">LocalObjStorage.</span><code><span class="memberNameLink"><a href="../../LocalObjStorage.html#getProjectManager()">getProjectManager</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../package-summary.html">dk.aau.ds304e18</a> with parameters of type <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">LocalObjStorage.</span><code><span class="memberNameLink"><a href="../../LocalObjStorage.html#addProjectManager(dk.aau.ds304e18.models.ProjectManager)">addProjectManager</a></span>&#8203;(<a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;projectManager)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
 </section>
 </li>
 <li class="blockList">
@@ -156,8 +220,127 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></code></td>
-<th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#getPM(int)">getPM</a></span>&#8203;(int&nbsp;id)</code></th>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#getProjectManager(int)">getProjectManager</a></span>&#8203;(int&nbsp;id)</code></th>
 <td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#logIn(java.lang.String,java.lang.String)">logIn</a></span>&#8203;(java.lang.String&nbsp;username,
+     java.lang.String&nbsp;clearTextPassword)</code></th>
+<td class="colLast">
+<div class="block">Returns a ProjectManger object if a user with username and password clearTextPassword is found in db, else null.</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../database/package-summary.html">dk.aau.ds304e18.database</a> that return types with arguments of type <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>private static java.util.List&lt;<a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#getAllProjectManagers()">getAllProjectManagers</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private static java.util.List&lt;<a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#parseProjectManagersFromResultSet(java.sql.ResultSet)">parseProjectManagersFromResultSet</a></span>&#8203;(java.sql.ResultSet&nbsp;rs)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../database/package-summary.html">dk.aau.ds304e18.database</a> with parameters of type <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static boolean</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#addProjectManager(dk.aau.ds304e18.models.ProjectManager,java.lang.String)">addProjectManager</a></span>&#8203;(<a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;pm,
+                 java.lang.String&nbsp;password)</code></th>
+<td class="colLast">
+<div class="block">Adds a new project manager to the DB, if the username does not already exist in the DB.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#updateProjectManager(dk.aau.ds304e18.models.ProjectManager)">updateProjectManager</a></span>&#8203;(<a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;manager)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</section>
+</li>
+<li class="blockList">
+<section role="region"><a id="dk.aau.ds304e18.models">
+<!--   -->
+</a>
+<h3>Uses of <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a> in <a href="../package-summary.html">dk.aau.ds304e18.models</a></h3>
+<table class="useSummary">
+<caption><span>Fields in <a href="../package-summary.html">dk.aau.ds304e18.models</a> declared as <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>private <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">Project.</span><code><span class="memberNameLink"><a href="../Project.html#Creator">Creator</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">dk.aau.ds304e18.models</a> that return <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">Project.</span><code><span class="memberNameLink"><a href="../Project.html#getCreator()">getCreator</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../package-summary.html">dk.aau.ds304e18.models</a> with parameters of type <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">Project.</span><code><span class="memberNameLink"><a href="../Project.html#setCreator(dk.aau.ds304e18.models.ProjectManager)">setCreator</a></span>&#8203;(<a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;creator)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Constructors in <a href="../package-summary.html">dk.aau.ds304e18.models</a> with parameters of type <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../Project.html#%3Cinit%3E(java.lang.String,dk.aau.ds304e18.models.ProjectManager)">Project</a></span>&#8203;(java.lang.String&nbsp;name,
+       <a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;creator)</code></th>
+<td class="colLast">
+<div class="block">Constructor for project.</div>
+</td>
 </tr>
 </tbody>
 </table>
