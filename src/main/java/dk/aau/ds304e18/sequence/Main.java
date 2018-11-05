@@ -80,10 +80,9 @@ public class Main {
         task8.getProbabilities().add(new Probabilities(200, 99));
         DatabaseManager.updateTask(task8);
 
-        Sequence.sequenceTasks(project, true);
+        Sequence.sequenceTasks(project);
         Instant end = java.time.Instant.now();
 
-        //MonteCarlo.estimateTime(project);
         System.out.println("Duration of the project: " + project.getDuration());
         System.out.println("With sequence: " + project.getSequence());
         System.out.println("Rec path: " + project.getRecommendedPath());
