@@ -143,6 +143,10 @@ public class DatabaseManager {
         DatabaseManager.query("DELETE FROM employees WHERE id = " + id);
     }
 
+    public static void removeProjectManager(int id){
+        DatabaseManager.query("DELETE FROM projectmanagers WHERE id = " + id);
+    }
+
     /**
      * Removes a task with id from the database.
      *
