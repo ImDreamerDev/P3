@@ -237,7 +237,16 @@ public class DatabaseManager {
         return true;
     }
 
+<<<<<<< Updated upstream
     private static List<ProjectManager> parseProjectManagersFromResultSet(ResultSet rs) {
+=======
+    /**
+     * Parses Project manager from the resultset set.
+     * @param rs - the resultset to parse
+     * @return ProjectManagers - a list of project managers.
+     */
+    private static List<ProjectManager> parseProjectManagerFromResultSet(ResultSet rs) {
+>>>>>>> Stashed changes
         List<ProjectManager> projectManagers = new ArrayList<>();
         try {
             if (rs == null) return null;
@@ -413,6 +422,11 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * The getter for a project manager using the id.
+     * @param id - the id of the project manager.
+     * @return a project manager if the projectmanagers list isnt empty. else returns null.
+     */
     public static ProjectManager getProjectManager(int id) {
         if (dbConnection == null) connect();
         try {
@@ -479,6 +493,10 @@ public class DatabaseManager {
         return null;
     }
 
+    /**
+     * The getter for the list of project managers
+     * @return ProjectManagers - an arraylist of the project managers.
+     */
     private static List<ProjectManager> getAllProjectManagers() {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers");
@@ -494,6 +512,9 @@ public class DatabaseManager {
 
     }
 
+    /**
+     * Retrieves everything from the database and converts it to objects.
+     */
     public static void distributeModels() {
         List<Employee> employees = getAllEmployees();
         if (employees == null) return;
