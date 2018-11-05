@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -170,6 +170,11 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>private static java.util.ArrayList&lt;<a href="models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#projectManagers">projectManagers</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>private static java.util.ArrayList&lt;<a href="models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#taskList">taskList</a></span></code></th>
 <td class="colLast">
@@ -231,47 +236,62 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addProjectManager(dk.aau.ds304e18.models.ProjectManager)">addProjectManager</a></span>&#8203;(<a href="models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;projectManager)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addTask(dk.aau.ds304e18.models.Task)">addTask</a></span>&#8203;(<a href="models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</code></th>
 <td class="colLast">
 <div class="block">Adds a task to the taskList.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static <a href="models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEmployeeById(int)">getEmployeeById</a></span>&#8203;(int&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Find an employee with ID in employeeList.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static java.util.ArrayList&lt;<a href="models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEmployeeList()">getEmployeeList</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets list of employees.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProjectById(int)">getProjectById</a></span>&#8203;(int&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Gets a project by id.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static java.util.ArrayList&lt;<a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProjectList()">getProjectList</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets list of projects.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>static java.util.ArrayList&lt;<a href="models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProjectManager()">getProjectManager</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>static <a href="models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProjectManagerById(int)">getProjectManagerById</a></span>&#8203;(int&nbsp;id)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static <a href="models/Task.html" title="class in dk.aau.ds304e18.models">Task</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTaskById(int)">getTaskById</a></span>&#8203;(int&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Returns the project with id, or null if not found.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static java.util.ArrayList&lt;<a href="models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTaskList()">getTaskList</a></span>()</code></th>
 <td class="colLast">
@@ -325,11 +345,20 @@ extends java.lang.Object</pre>
 <a id="taskList">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>taskList</h4>
 <pre>private static final&nbsp;java.util.ArrayList&lt;<a href="models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt; taskList</pre>
 <div class="block">The list of tasks.</div>
+</li>
+</ul>
+<a id="projectManagers">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>projectManagers</h4>
+<pre>private static final&nbsp;java.util.ArrayList&lt;<a href="models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&gt; projectManagers</pre>
 </li>
 </ul>
 </li>
@@ -373,6 +402,33 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the list of employees.</dd>
 </dl>
+</li>
+</ul>
+<a id="getProjectManager()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getProjectManager</h4>
+<pre class="methodSignature">public static&nbsp;java.util.ArrayList&lt;<a href="models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&gt;&nbsp;getProjectManager()</pre>
+</li>
+</ul>
+<a id="addProjectManager(dk.aau.ds304e18.models.ProjectManager)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addProjectManager</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;addProjectManager&#8203;(<a href="models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;projectManager)</pre>
+</li>
+</ul>
+<a id="getProjectManagerById(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getProjectManagerById</h4>
+<pre class="methodSignature">public static&nbsp;<a href="models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;getProjectManagerById&#8203;(int&nbsp;id)</pre>
 </li>
 </ul>
 <a id="addEmployee(dk.aau.ds304e18.models.Employee)">

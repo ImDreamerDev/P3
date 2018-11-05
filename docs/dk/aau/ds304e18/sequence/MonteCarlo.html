@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -182,15 +182,33 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateTime(dk.aau.ds304e18.models.Project,int)">estimateTime</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateTime(dk.aau.ds304e18.models.Project,boolean)">estimateTime</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+            boolean&nbsp;rec)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateTime(dk.aau.ds304e18.models.Project,boolean,int)">estimateTime</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+            boolean&nbsp;rec,
             int&nbsp;monteCarloRepeats)</code></th>
 <td class="colLast">
 <div class="block">Estimates the time assuming only one task can be done at a time from a project and an amount of time to repeat the tasks</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findFastestSequence(dk.aau.ds304e18.models.Project)">findFastestSequence</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findFastestSequence(dk.aau.ds304e18.models.Project,int)">findFastestSequence</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                   int&nbsp;monteCarloRepeats)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>private static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findRandomSequence(dk.aau.ds304e18.models.Project)">findRandomSequence</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -242,7 +260,26 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>findFastestSequence</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;findFastestSequence&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</pre>
+<pre class="methodSignature">public static&nbsp;void&nbsp;findFastestSequence&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</pre>
+</li>
+</ul>
+<a id="findFastestSequence(dk.aau.ds304e18.models.Project,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>findFastestSequence</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;findFastestSequence&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                       int&nbsp;monteCarloRepeats)</pre>
+</li>
+</ul>
+<a id="findRandomSequence(dk.aau.ds304e18.models.Project)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>findRandomSequence</h4>
+<pre class="methodSignature">private static&nbsp;java.lang.String&nbsp;findRandomSequence&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</pre>
 </li>
 </ul>
 <a id="estimateTime(dk.aau.ds304e18.models.Project)">
@@ -254,13 +291,24 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public static&nbsp;void&nbsp;estimateTime&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</pre>
 </li>
 </ul>
-<a id="estimateTime(dk.aau.ds304e18.models.Project,int)">
+<a id="estimateTime(dk.aau.ds304e18.models.Project,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>estimateTime</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;estimateTime&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                boolean&nbsp;rec)</pre>
+</li>
+</ul>
+<a id="estimateTime(dk.aau.ds304e18.models.Project,boolean,int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>estimateTime</h4>
 <pre class="methodSignature">public static&nbsp;void&nbsp;estimateTime&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                boolean&nbsp;rec,
                                 int&nbsp;monteCarloRepeats)</pre>
 <div class="block">Estimates the time assuming only one task can be done at a time from a project and an amount of time to repeat the tasks</div>
 <dl>

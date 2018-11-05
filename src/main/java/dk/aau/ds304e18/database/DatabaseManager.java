@@ -118,28 +118,23 @@ public class DatabaseManager {
     public static boolean addProjectManager(ProjectManager pm, String password) {
         if (dbConnection == null) connect();
         try {
-            PreparedStatement checkName = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE username = ?");
+            PreparedStatement checkName = dbConnection.prepareStatement("SELECT id FROM projectmanagers WHERE username = ?");
             checkName.setString(1, pm.getName());
             ResultSet checkNameRs = checkName.executeQuery();
             if (checkNameRs.next()) return false;
 
 
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projectmanagers (" +
-                    "username, password, currentproject, oldprojects, salt ) values (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    "username, password, salt ) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, pm.getName());
             byte[] salt = Password.getNextSalt();
             statement.setBytes(2, Password.hash(password.toCharArray(), salt));
-            if (pm.getCurrentProject() != null)
-                statement.setInt(3, pm.getCurrentProject().getId());
-            else
-                statement.setInt(3, 0);
-            if (pm.getOldProjects() != null)
-                statement.setArray(4, dbConnection.createArrayOf("INTEGER",
-                        pm.getOldProjects().stream().map(Project::getId).toArray()));
-            else statement.setInt(4, 0);
-            statement.setBytes(5, salt);
+            statement.setBytes(3, salt);
+
             if (statement.execute()) return false;
+
             ResultSet rs = statement.getGeneratedKeys();
+
             if (rs.next()) pm.setId(rs.getInt(1));
             LocalObjStorage.addProjectManager(pm);
 
@@ -182,11 +177,9 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projects " +
-                    "(name, state, sequence, recommendedpath) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    "(name, state) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, project.getName());
             statement.setInt(2, project.getState().getValue());
-            statement.setString(3, "");
-            statement.setString(4, "");
 
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
@@ -210,7 +203,7 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO tasks (name, estimatedtime," +
-                    " employees, dependencies, startdate, enddate, priority, projectid) values (?, ?, ?, ?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                    " employees, dependencies, startdate, enddate, priority, projectid) values (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, task.getName());
             statement.setDouble(2, task.getEstimatedTime());
             if (task.getEmployees().size() == 0)
@@ -219,6 +212,7 @@ public class DatabaseManager {
                 statement.setArray(3, dbConnection.createArrayOf("INTEGER",
                         task.getEmployees().stream().map(Employee::getId).toArray()
                 ));
+
             statement.setArray(4, dbConnection.createArrayOf("INTEGER",
                     task.getDependencies().stream().map(Task::getId).toArray()
             ));
@@ -226,6 +220,7 @@ public class DatabaseManager {
             statement.setDouble(6, (task.getEndTime()));
             statement.setInt(7, task.getPriority());
 
+            //TODO what is this for
             if (task.getProject() != null) statement.setInt(8, task.getProject().getId());
             else statement.setInt(8, 0);
 
@@ -242,7 +237,7 @@ public class DatabaseManager {
         return true;
     }
 
-    private static List<ProjectManager> parseProjectManagerFromResultSet(ResultSet rs) {
+    private static List<ProjectManager> parseProjectManagersFromResultSet(ResultSet rs) {
         List<ProjectManager> projectManagers = new ArrayList<>();
         try {
             if (rs == null) return null;
@@ -424,7 +419,7 @@ public class DatabaseManager {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE id = ?");
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
+            List<ProjectManager> projectManagers = parseProjectManagersFromResultSet(rs);
             if (projectManagers.size() != 0)
                 return projectManagers.get(0);
             return null;
@@ -488,7 +483,7 @@ public class DatabaseManager {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers");
             ResultSet rs = statement.executeQuery();
-            List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
+            List<ProjectManager> projectManagers = parseProjectManagersFromResultSet(rs);
             if (projectManagers != null && projectManagers.size() != 0)
                 return projectManagers;
             return null;
@@ -672,7 +667,7 @@ public class DatabaseManager {
 
             if (Password.isExpectedPassword(clearTextPassword.toCharArray(), salt, passwd)) {
                 rs.previous();
-                return Objects.requireNonNull(parseProjectManagerFromResultSet(rs)).get(0);
+                return Objects.requireNonNull(parseProjectManagersFromResultSet(rs)).get(0);
             }
         } catch (SQLException e) {
             e.printStackTrace();
