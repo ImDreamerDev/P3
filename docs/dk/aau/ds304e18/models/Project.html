@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -156,32 +156,42 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>private <a href="ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#Creator">Creator</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>private double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#duration">duration</a></span></code></th>
 <td class="colLast">
 <div class="block">The duration of the project</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private java.util.List&lt;<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#employees">employees</a></span></code></th>
 <td class="colLast">
 <div class="block">The list of employees.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#id">id</a></span></code></th>
 <td class="colLast">
 <div class="block">The unique project ID.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name">name</a></span></code></th>
 <td class="colLast">
 <div class="block">The name of the project.</div>
 </td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recommendedPath">recommendedPath</a></span></code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private java.lang.String</code></td>
@@ -220,15 +230,17 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String,dk.aau.ds304e18.models.ProjectState,java.lang.String,double)">Project</a></span>&#8203;(int&nbsp;id,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String,dk.aau.ds304e18.models.ProjectState,java.lang.String,double,java.lang.String)">Project</a></span>&#8203;(int&nbsp;id,
        java.lang.String&nbsp;name,
        <a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a>&nbsp;projectState,
        java.lang.String&nbsp;sequence,
-       double&nbsp;duration)</code></th>
+       double&nbsp;duration,
+       java.lang.String&nbsp;recommendedPath)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">Project</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,dk.aau.ds304e18.models.ProjectManager)">Project</a></span>&#8203;(java.lang.String&nbsp;name,
+       <a href="ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;creator)</code></th>
 <td class="colLast">
 <div class="block">Constructor for project.</div>
 </td>
@@ -271,87 +283,107 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreator()">getCreator</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDuration()">getDuration</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEmployees()">getEmployees</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns all the employees assigned to the project.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getId()">getId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns project unique ID.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the project name.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecommendedPath()">getRecommendedPath</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSequence()">getSequence</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getState()">getState</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the current state og the project.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTasks()">getTasks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the list of all tasks in the project.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeEmployee(dk.aau.ds304e18.models.Employee)">removeEmployee</a></span>&#8203;(<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&nbsp;employee)</code></th>
 <td class="colLast">
 <div class="block">Removes employee from project.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTask(dk.aau.ds304e18.models.Task)">removeTask</a></span>&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</code></th>
 <td class="colLast">
 <div class="block">Removes task from tasks.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCreator(dk.aau.ds304e18.models.ProjectManager)">setCreator</a></span>&#8203;(<a href="ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;creator)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDuration(double)">setDuration</a></span>&#8203;(double&nbsp;duration)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(int)">setId</a></span>&#8203;(int&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Sets the unique ID.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i18" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRecommendedPath(java.lang.String)">setRecommendedPath</a></span>&#8203;(java.lang.String&nbsp;recommendedPath)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSequence(java.lang.String)">setSequence</a></span>&#8203;(java.lang.String&nbsp;sequence)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setState(dk.aau.ds304e18.models.ProjectState)">setState</a></span>&#8203;(<a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a>&nbsp;state)</code></th>
 <td class="colLast">
@@ -421,6 +453,15 @@ extends java.lang.Object</pre>
 <div class="block">The current state of the project.</div>
 </li>
 </ul>
+<a id="Creator">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Creator</h4>
+<pre>private&nbsp;<a href="ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a> Creator</pre>
+</li>
+</ul>
 <a id="duration">
 <!--   -->
 </a>
@@ -444,11 +485,20 @@ extends java.lang.Object</pre>
 <a id="employees">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>employees</h4>
 <pre>private final&nbsp;java.util.List&lt;<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt; employees</pre>
 <div class="block">The list of employees.</div>
+</li>
+</ul>
+<a id="recommendedPath">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>recommendedPath</h4>
+<pre>private&nbsp;java.lang.String recommendedPath</pre>
 </li>
 </ul>
 </li>
@@ -461,13 +511,14 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.lang.String)">
+<a id="&lt;init&gt;(java.lang.String,dk.aau.ds304e18.models.ProjectManager)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>Project</h4>
-<pre>public&nbsp;Project&#8203;(java.lang.String&nbsp;name)</pre>
+<pre>public&nbsp;Project&#8203;(java.lang.String&nbsp;name,
+               <a href="ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;creator)</pre>
 <div class="block">Constructor for project.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -475,7 +526,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(int,java.lang.String,dk.aau.ds304e18.models.ProjectState,java.lang.String,double)">
+<a id="&lt;init&gt;(int,java.lang.String,dk.aau.ds304e18.models.ProjectState,java.lang.String,double,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -485,7 +536,8 @@ extends java.lang.Object</pre>
                java.lang.String&nbsp;name,
                <a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a>&nbsp;projectState,
                java.lang.String&nbsp;sequence,
-               double&nbsp;duration)</pre>
+               double&nbsp;duration,
+               java.lang.String&nbsp;recommendedPath)</pre>
 </li>
 </ul>
 </li>
@@ -708,10 +760,46 @@ extends java.lang.Object</pre>
 <a id="setDuration(double)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setDuration</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setDuration&#8203;(double&nbsp;duration)</pre>
+</li>
+</ul>
+<a id="getCreator()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCreator</h4>
+<pre class="methodSignature">public&nbsp;<a href="ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;getCreator()</pre>
+</li>
+</ul>
+<a id="setCreator(dk.aau.ds304e18.models.ProjectManager)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setCreator</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setCreator&#8203;(<a href="ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;creator)</pre>
+</li>
+</ul>
+<a id="getRecommendedPath()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRecommendedPath</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getRecommendedPath()</pre>
+</li>
+</ul>
+<a id="setRecommendedPath(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setRecommendedPath</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setRecommendedPath&#8203;(java.lang.String&nbsp;recommendedPath)</pre>
 </li>
 </ul>
 </li>

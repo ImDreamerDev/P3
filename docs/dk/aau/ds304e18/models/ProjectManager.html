@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -165,30 +165,37 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#currentProjectId">currentProjectId</a></span></code></th>
+<td class="colLast">
+<div class="block">The id of the project that the manager is assigned to</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#id">id</a></span></code></th>
 <td class="colLast">
 <div class="block">The specific id that is assigned to one specific project manager only</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name">name</a></span></code></th>
 <td class="colLast">
 <div class="block">The name of the project manager</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private java.util.List&lt;<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#oldProjects">oldProjects</a></span></code></th>
 <td class="colLast">
 <div class="block">A list of projects that the project manager has previously worked on.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code>private int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#projectId">projectId</a></span></code></th>
+<tr class="rowColor">
+<td class="colFirst"><code>private java.util.List&lt;java.lang.Integer&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#oldProjectsId">oldProjectsId</a></span></code></th>
 <td class="colLast">
-<div class="block">The id of the project that the manager is assigned to</div>
+<div class="block">A list of the oldProjectId's.</div>
 </td>
 </tr>
 </table>
@@ -209,12 +216,15 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String)">ProjectManager</a></span>&#8203;(int&nbsp;id,
-              java.lang.String&nbsp;name)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String,int,java.util.List)">ProjectManager</a></span>&#8203;(int&nbsp;id,
+              java.lang.String&nbsp;name,
+              int&nbsp;currentProjectId,
+              java.util.List&lt;java.lang.Integer&gt;&nbsp;oldProjects)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">ProjectManager</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String)">ProjectManager</a></span>&#8203;(java.lang.String&nbsp;name,
+              java.lang.String&nbsp;password)</code></th>
 <td class="colLast">
 <div class="block">The constructor of the ProjectManager class.</div>
 </td>
@@ -253,38 +263,53 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentProjectId()">getCurrentProjectId</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getId()">getId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the id.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the name of the project manager.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOldProjects()">getOldProjects</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the old projects list.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>java.util.List&lt;java.lang.Integer&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOldProjectsId()">getOldProjectsId</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCurrentProject(dk.aau.ds304e18.models.Project)">setCurrentProject</a></span>&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;currentProject)</code></th>
 <td class="colLast">
 <div class="block">The setter for the current project.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(int)">setId</a></span>&#8203;(int&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">The setter for the unique id.</div>
 </td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -292,7 +317,7 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -340,24 +365,34 @@ extends java.lang.Object</pre>
 <div class="block">The current project that the project manager is working on</div>
 </li>
 </ul>
-<a id="projectId">
+<a id="currentProjectId">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>projectId</h4>
-<pre>private&nbsp;int projectId</pre>
+<h4>currentProjectId</h4>
+<pre>private&nbsp;int currentProjectId</pre>
 <div class="block">The id of the project that the manager is assigned to</div>
 </li>
 </ul>
 <a id="oldProjects">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>oldProjects</h4>
 <pre>private&nbsp;java.util.List&lt;<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt; oldProjects</pre>
 <div class="block">A list of projects that the project manager has previously worked on.</div>
+</li>
+</ul>
+<a id="oldProjectsId">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>oldProjectsId</h4>
+<pre>private&nbsp;java.util.List&lt;java.lang.Integer&gt; oldProjectsId</pre>
+<div class="block">A list of the oldProjectId's.</div>
 </li>
 </ul>
 </li>
@@ -370,13 +405,14 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.lang.String)">
+<a id="&lt;init&gt;(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>ProjectManager</h4>
-<pre>public&nbsp;ProjectManager&#8203;(java.lang.String&nbsp;name)</pre>
+<pre>public&nbsp;ProjectManager&#8203;(java.lang.String&nbsp;name,
+                      java.lang.String&nbsp;password)</pre>
 <div class="block">The constructor of the ProjectManager class.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -384,14 +420,16 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(int,java.lang.String)">
+<a id="&lt;init&gt;(int,java.lang.String,int,java.util.List)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ProjectManager</h4>
 <pre>public&nbsp;ProjectManager&#8203;(int&nbsp;id,
-                      java.lang.String&nbsp;name)</pre>
+                      java.lang.String&nbsp;name,
+                      int&nbsp;currentProjectId,
+                      java.util.List&lt;java.lang.Integer&gt;&nbsp;oldProjects)</pre>
 </li>
 </ul>
 </li>
@@ -442,6 +480,7 @@ extends java.lang.Object</pre>
 <div class="block">The getter for the current project</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
+<dd>currentProject - the project that the program manager is currently working on.</dd>
 </dl>
 </li>
 </ul>
@@ -490,7 +529,7 @@ extends java.lang.Object</pre>
 <a id="setId(int)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setId</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setId&#8203;(int&nbsp;id)</pre>
@@ -498,6 +537,37 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - - the unique id of the project manager.</dd>
+</dl>
+</li>
+</ul>
+<a id="getOldProjectsId()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getOldProjectsId</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Integer&gt;&nbsp;getOldProjectsId()</pre>
+</li>
+</ul>
+<a id="getCurrentProjectId()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCurrentProjectId</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;getCurrentProjectId()</pre>
+</li>
+</ul>
+<a id="toString()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>toString</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
 </li>
 </ul>
