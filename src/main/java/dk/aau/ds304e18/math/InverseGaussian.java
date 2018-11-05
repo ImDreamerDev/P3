@@ -152,14 +152,43 @@ public class InverseGaussian {
 
     /**
      * The getter for the duration
-     * @param y
+     * TODO: Look into optimizing this
+     * @param y - The probability of the task succeeding at that duration.
      * @return x - Duration of task.
      */
     public double getDuration(double y) {
-        double x = 0;
-        while(getProbability(x) < y)
-            x += 0.1;
+        double x = 10;
+        double startX = -1;
+        double endX = -1;
 
+        //While we're not within a margin from the probability
+        while(getProbability(x) < (y-0.1) || getProbability(x) > (y+0.1)) {
+
+            //Check if we're lower
+            if(getProbability(x) < y) {
+                //Set startX so we know where to look
+                startX = x;
+
+                //If we have not found a higher value before
+                if(endX == -1)
+                    x *= 2;
+                //If we have
+                else
+                    x += (endX - startX)/2;
+            }else{
+                //Set endX so we know where to look
+                endX = x;
+
+                //If we have not found a lower value before
+                if(startX == -1)
+                    x /= 2;
+                //If we have
+                else
+                    x -= (endX - startX)/2;
+            }
+        }
+
+        //Return the x value
         return x;
     }
 

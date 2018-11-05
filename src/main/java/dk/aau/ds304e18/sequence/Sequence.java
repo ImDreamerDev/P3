@@ -13,10 +13,10 @@ import static dk.aau.ds304e18.sequence.ParseSequence.unparseList;
 public class Sequence {
 
     public static void sequenceTasks(Project project) {
-        sequenceTasks(project, true);
+        sequenceTasks(project, false);
     }
 
-    public static void sequenceTasks(Project project, boolean fastSequence) {
+    public static void sequenceTasks(Project project, boolean findSequenceMontecarlo) {
 
         /*
         | indicates where it's supposed to be drawn
@@ -37,8 +37,10 @@ public class Sequence {
 
         List<Task> taskList = project.getTasks();
 
-        if (!fastSequence)
+        if (findSequenceMontecarlo){
             findFastestSequence(project);
+            return;
+        }
 
         //So we don't change the task list in the project
         List<Task> tasks = new ArrayList<>(taskList);

@@ -6,8 +6,13 @@ import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.Task;
 
+import java.time.Duration;
+import java.time.Instant;
+
 public class Main {
     public static void main(String[] args) {
+        Instant start = java.time.Instant.now();
+
         ProjectManager projectManager = new ProjectManager("Rasmus Smit Lindholt", "hardcore");
         Project project = new Project("Druktur", projectManager);
         Task task1 = new Task("Drik øl", 20, 1, project);
@@ -75,10 +80,16 @@ public class Main {
         task8.getProbabilities().add(new Probabilities(200, 99));
         DatabaseManager.updateTask(task8);
 
-        Sequence.sequenceTasks(project);
+        Sequence.sequenceTasks(project, true);
+        Instant end = java.time.Instant.now();
 
-        MonteCarlo.estimateTime(project);
+        //MonteCarlo.estimateTime(project);
         System.out.println("Duration of the project: " + project.getDuration());
+        System.out.println("With sequence: " + project.getSequence());
+
+        Duration between = java.time.Duration.between(start, end);
+        System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
+                between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
 
     }
 }
