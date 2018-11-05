@@ -117,7 +117,8 @@ public class DatabaseManager {
             statement.setString(2, password);
             if (pm.getCurrentProject() != null)
                 statement.setInt(3, pm.getCurrentProject().getId());
-
+            else
+                statement.setInt(3, 0);
             if (pm.getOldProjects() != null)
                 statement.setArray(4, dbConnection.createArrayOf("INTEGER",
                         pm.getOldProjects().stream().map(Project::getId).toArray()));
