@@ -1,5 +1,7 @@
 package dk.aau.ds304e18.models;
 
+import dk.aau.ds304e18.database.DatabaseManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,25 +29,32 @@ public class ProjectManager {
     /**
      * The id of the project that the manager is assigned to
      */
-    private int projectId;
+    private int currentProjectId;
 
     /**
      * A list of projects that the project manager has previously worked on.
      */
     private List<Project> oldProjects = new ArrayList<>();
 
+
+    private List<Integer> oldProjectsId = new ArrayList<>();
+
     /**
      * The constructor of the ProjectManager class.
      *
      * @param name - The name of the manager.
      */
-    public ProjectManager(String name) {
+    public ProjectManager(String name, String password) {
         this.name = name;
+        DatabaseManager.addProjectManager(this, password);
     }
 
-    public ProjectManager(int id, String name) {
+
+    public ProjectManager(int id, String name, int currentProject, List<Integer> oldProjects) {
         this.id = id;
         this.name = name;
+        currentProjectId = currentProject;
+        oldProjectsId.addAll(oldProjects);
     }
 
     /**
@@ -115,5 +124,13 @@ public class ProjectManager {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Integer> getOldProjectsId() {
+        return oldProjectsId;
+    }
+
+    public int getCurrentProjectId() {
+        return currentProjectId;
     }
 }

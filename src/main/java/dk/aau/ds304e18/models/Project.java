@@ -29,6 +29,8 @@ public class Project {
      */
     private ProjectState state;
 
+    private ProjectManager Creator;
+
     /**
      * The duration of the project
      */
@@ -49,9 +51,11 @@ public class Project {
      *
      * @param name - The name of the project.
      */
-    public Project(String name) {
+    public Project(String name, ProjectManager creator) {
         this.name = name;
         this.state = ProjectState.ONGOING;
+        this.Creator = creator;
+        creator.setCurrentProject(this);
         DatabaseManager.addProject(this);
     }
 
@@ -204,5 +208,13 @@ public class Project {
     public void setDuration(double duration) {
         this.duration = duration;
         DatabaseManager.updateProject(this);
+    }
+
+    public ProjectManager getCreator() {
+        return Creator;
+    }
+
+    public void setCreator(ProjectManager creator) {
+        Creator = creator;
     }
 }
