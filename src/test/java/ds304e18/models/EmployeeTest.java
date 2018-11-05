@@ -3,6 +3,7 @@ package ds304e18.models;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
+import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.Task;
 import org.junit.jupiter.api.Test;
 
@@ -62,7 +63,8 @@ class EmployeeTest {
     @Test
     void TestEmployeeAddNewTask01() {
         Employee newEmployee = new Employee("Slim Shady");
-        Project newProject = new Project("Test Project");
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
         Task newTask = new Task("Test Task", 5, 1, newProject);
 
         newEmployee.addNewTask(newTask);
@@ -72,6 +74,7 @@ class EmployeeTest {
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeEmployee(newEmployee.getId());
         DatabaseManager.removeTask(newTask.getId());
+        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -104,7 +107,8 @@ class EmployeeTest {
     @Test
     void TestEmployeeGetProject01() {
         Employee newEmployee = new Employee("Employee");
-        Project newProject = new Project("Test Project");
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
 
         newEmployee.setProject(newProject);
 
@@ -112,7 +116,7 @@ class EmployeeTest {
 
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeEmployee(newEmployee.getId());
-
+        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -121,7 +125,8 @@ class EmployeeTest {
     @Test
     void TestEmployeeGetCurrentTask01() {
         Employee newEmployee = new Employee("Test Employee");
-        Project newProject = new Project("Test Project");
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
         Task newTask = new Task("Test Task", 5, 1, newProject);
 
         newEmployee.addNewTask(newTask);
@@ -131,6 +136,7 @@ class EmployeeTest {
         DatabaseManager.removeEmployee(newEmployee.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeTask(newTask.getId());
+        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -139,7 +145,8 @@ class EmployeeTest {
     @Test
     void TestEmployeeGetPreviousTask01() {
         Employee newEmployee = new Employee("Test Employee");
-        Project newProject = new Project("Test Project");
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
         Task newTask = new Task("Test Task", 5, 1, newProject);
         newEmployee.addPreviousTask(newTask);
 
@@ -148,6 +155,7 @@ class EmployeeTest {
         DatabaseManager.removeEmployee(newEmployee.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeTask(newTask.getId());
+        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
 
@@ -170,7 +178,8 @@ class EmployeeTest {
     @Test
     void TestEmployeeSetProject01() {
         Employee newEmployee = new Employee("Employee");
-        Project newProject = new Project("Test Project");
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
 
         newEmployee.setProject(newProject);
 
@@ -178,6 +187,7 @@ class EmployeeTest {
 
         DatabaseManager.removeEmployee(newEmployee.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     @Test
@@ -237,7 +247,8 @@ class EmployeeTest {
     @Test
     void TestEmployeeDistributeAddTask01 () {
         Employee newEmployee = new Employee("Lars");
-        Project newProject = new Project("Test Project");
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
         Task newTask = new Task("Task", 1 , 1, newProject);
 
         newEmployee.distributeAddTask(newTask);
@@ -247,5 +258,6 @@ class EmployeeTest {
         DatabaseManager.removeEmployee(newEmployee.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeTask(newTask.getId());
+        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 }
