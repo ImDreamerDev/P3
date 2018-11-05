@@ -2,6 +2,7 @@ package dk.aau.ds304e18;
 
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
+import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.Task;
 
 import java.util.ArrayList;
@@ -28,16 +29,35 @@ public class LocalObjStorage {
      */
     private static final ArrayList<Task> taskList = new ArrayList<>();
 
+
+    private static final ArrayList<ProjectManager> projectManagers = new ArrayList<>();
+
     /**
      * Gets list of employees.
+     *
      * @return the list of employees.
      */
     public static ArrayList<Employee> getEmployeeList() {
         return employeeList;
     }
 
+
+    public static ArrayList<ProjectManager> getProjectManager() {
+        return projectManagers;
+    }
+
+    public static void addProjectManager(ProjectManager projectManager) {
+        LocalObjStorage.projectManagers.add(projectManager);
+    }
+
+    public static ProjectManager getProjectManagerById(int id) {
+        return LocalObjStorage.projectManagers.stream().filter(pm -> pm.getId() == id)
+                .findFirst().orElse(null);
+    }
+
     /**
      * Adds specific employee to employee list.
+     *
      * @param emp employee to add.
      */
     public static void addEmployee(Employee emp) {
@@ -46,6 +66,7 @@ public class LocalObjStorage {
 
     /**
      * Find an employee with ID in employeeList.
+     *
      * @param id the employee ID to find
      * @return the employee with ID or else null.
      */
@@ -56,6 +77,7 @@ public class LocalObjStorage {
 
     /**
      * Gets list of projects.
+     *
      * @return the list of projects.
      */
     public static ArrayList<Project> getProjectList() {
@@ -64,6 +86,7 @@ public class LocalObjStorage {
 
     /**
      * Adds a project to projectList.
+     *
      * @param project the project to add.
      */
     public static void addProject(Project project) {
@@ -72,6 +95,7 @@ public class LocalObjStorage {
 
     /**
      * Gets a project by id.
+     *
      * @param id the project id to find.
      * @return the project with id or null if not found.
      */
@@ -82,6 +106,7 @@ public class LocalObjStorage {
 
     /**
      * Gets the list of tasks.
+     *
      * @return the list of tasks.
      */
     public static ArrayList<Task> getTaskList() {
@@ -90,6 +115,7 @@ public class LocalObjStorage {
 
     /**
      * Adds a task to the taskList.
+     *
      * @param task the task to add.
      */
     public static void addTask(Task task) {
@@ -98,6 +124,7 @@ public class LocalObjStorage {
 
     /**
      * Returns the project with id, or null if not found.
+     *
      * @param id the task id to find.
      * @return a task with id or null if not found.
      */

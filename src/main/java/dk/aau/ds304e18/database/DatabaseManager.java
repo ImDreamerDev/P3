@@ -108,6 +108,32 @@ public class DatabaseManager {
         return true;
     }
 
+    public static boolean addProjectManager(ProjectManager pm, String password) {
+        if (dbConnection == null) connect();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projectmanagers (" +
+                    "username,password,currentproejct,oldprojects ) values (?, ?, ?,?)", Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, pm.getName());
+            statement.setString(2, password);
+            if (pm.getCurrentProject() != null)
+                statement.setInt(3, pm.getCurrentProject().getId());
+
+            if (pm.getOldProjects() != null)
+                statement.setArray(4, dbConnection.createArrayOf("INTEGER",
+                        pm.getOldProjects().stream().map(Project::getId).toArray()));
+            else statement.setInt(4, 0);
+            if (statement.execute()) return false;
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) pm.setId(rs.getInt(1));
+            LocalObjStorage.addProjectManager(pm);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Removes an employee with id from the database.
      *
@@ -194,6 +220,28 @@ public class DatabaseManager {
         }
         return true;
     }
+
+    private static List<ProjectManager> parseProjectManagerFromResultSet(ResultSet rs) {
+        List<ProjectManager> projectManagers = new ArrayList<>();
+        try {
+            if (rs == null) return null;
+            while (rs.next()) {
+                ProjectManager projectManager;
+                if (rs.getArray(5) != null)
+                    projectManager = new ProjectManager(rs.getInt(1), rs.getString(2),
+                            rs.getInt(4), Arrays.asList((Integer[]) rs.getArray(5).getArray()));
+                else {
+                    projectManager = new ProjectManager(rs.getInt(1), rs.getString(2),
+                            rs.getInt(4), null);
+                }
+                projectManagers.add(projectManager);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return projectManagers;
+    }
+
 
     /**
      * Parses a ResultSet to Task(s).
@@ -356,7 +404,10 @@ public class DatabaseManager {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             rs.next();
-            return new ProjectManager(rs.getInt(1), rs.getString(2));
+            List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
+            if (projectManagers.size() != 0)
+                return projectManagers.get(0);
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -426,14 +477,31 @@ public class DatabaseManager {
 
     }
 
+    private static List<ProjectManager> getAllProjectManagers() {
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers");
+            ResultSet rs = statement.executeQuery();
+            List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
+            if (projectManagers != null && projectManagers.size() != 0)
+                return projectManagers;
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
     public static void distributeModels() {
+
+
         List<Employee> employees = getAllEmployees();
         if (employees == null) return;
         employees.forEach(LocalObjStorage::addEmployee);
+
         List<Project> ongoingProjects = getAllOngoingProjects();
         if (ongoingProjects != null) {
             ongoingProjects.forEach(LocalObjStorage::addProject);
-
             /*for (Project proj : ongoingProjects) {
                 Objects.requireNonNull(getAllTasksForProject(proj)).forEach(task -> {
                     LocalObjStorage.addTask(task);
@@ -441,6 +509,19 @@ public class DatabaseManager {
                 });
             }*/
         }
+
+        List<ProjectManager> projectManagers = getAllProjectManagers();
+        if (projectManagers != null) {
+            projectManagers.forEach(projectManager -> {
+                projectManager.setCurrentProject(LocalObjStorage.getProjectById(projectManager.getCurrentProjectId()));
+                for (Integer projectId : projectManager.getOldProjectsId()) {
+                    projectManager.addOldProject(LocalObjStorage.getProjectById(projectId));
+                }
+                LocalObjStorage.addProjectManager(projectManager);
+            });
+
+        }
+
 
         for (Employee emp : LocalObjStorage.getEmployeeList()) {
             emp.setProject(LocalObjStorage.getProjectById(emp.getProjectId()));
@@ -527,7 +608,7 @@ public class DatabaseManager {
                     ", duration = ? WHERE id = ?");
             statement.setInt(1, project.getState().getValue());
             statement.setString(2, project.getSequence());
-            statement.setDouble(3,project.getDuration());
+            statement.setDouble(3, project.getDuration());
             statement.setInt(4, project.getId());
             statement.execute();
 

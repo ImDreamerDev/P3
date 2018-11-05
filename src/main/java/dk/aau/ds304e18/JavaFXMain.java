@@ -50,12 +50,14 @@ public class JavaFXMain extends Application {
         var d = ((TableView) ((AnchorPane) ((TabPane) content.getChildrenUnmodifiable().get(1)).getTabs().get(0).getContent()).getChildren().get(2));
         ((TableColumn) d.getColumns().get(0)).setCellValueFactory(new PropertyValueFactory<Project, String>("id"));
         ((TableColumn) d.getColumns().get(1)).setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
+        ((TableColumn) d.getColumns().get(1)).setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
         ((TableColumn) d.getColumns().get(2)).setCellValueFactory(new PropertyValueFactory<Project, String>("sequence"));
         ((TableColumn) d.getColumns().get(3)).setCellValueFactory(new PropertyValueFactory<Project, String>("duration"));
-        FilteredList<Project> flPerson = ((FilteredList<Project>) new FilteredList(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
-        SortedList<Project> sortedList = new SortedList<>(flPerson);
+        FilteredList<Project> flProjects = ((FilteredList<Project>) new FilteredList(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
+        SortedList<Project> sortedList = new SortedList<>(flProjects);
         sortedList.comparatorProperty().bind(d.comparatorProperty());
-        d.setItems(sortedList);
+
+        d.setItems(FXCollections.observableArrayList(sortedList));
 
         d.setOnMouseClicked(event -> {
             if (d.getSelectionModel().getSelectedIndex() != -1 && selectedProjectId !=
@@ -77,9 +79,9 @@ public class JavaFXMain extends Application {
         textField.setPromptText("Search here!");
         textField.setOnKeyReleased(keyEvent -> {
             if (isFirstLetter(textField.getText()))
-                flPerson.setPredicate(p -> Integer.toString(p.getId()).contains(textField.getText().toLowerCase().trim()));
+                flProjects.setPredicate(p -> Integer.toString(p.getId()).contains(textField.getText().toLowerCase().trim()));
             else
-                flPerson.setPredicate(p -> p.getName().toLowerCase().contains(textField.getText().toLowerCase().trim()));
+                flProjects.setPredicate(p -> p.getName().toLowerCase().contains(textField.getText().toLowerCase().trim()));
         });
 
 
