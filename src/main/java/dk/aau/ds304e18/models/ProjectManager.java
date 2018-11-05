@@ -43,6 +43,11 @@ public class ProjectManager {
         this.name = name;
     }
 
+    /**
+     * The constructor for the ProjectManager class
+     * @param id - the unique id of the manager.
+     * @param name - the name of the manager.
+     */
     public ProjectManager(int id, String name) {
         this.id = id;
         this.name = name;
