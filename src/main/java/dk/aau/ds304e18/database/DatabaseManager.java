@@ -612,24 +612,6 @@ public class DatabaseManager {
         }
     }
 
-    public static ProjectManager logIn(String username, String password) {
-        if (dbConnection == null) connect();
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE username=?");
-            statement.setString(1, username);
-            //  statement.setString(2, password);
-            ResultSet rs = statement.executeQuery();
-            List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
-            if (projectManagers != null && projectManagers.size() != 0)
-                return projectManagers.get(0);
-            else {
-                return null;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     public static void updateProjectManager(ProjectManager manager) {
         if (dbConnection == null) connect();
@@ -648,5 +630,82 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    /* Parse probs
+     //UPDATE tasks SET prob[1] = (534.1,3123.2) WHERE id = 47;
+        ResultSet rs = DatabaseManager.query("SELECT probabilities FROM tasks WHERE id =" + 47);
+        rs.next();
+
+        ResultSet rsw = rs.getArray(1).getResultSet();
+        while (rsw.next()) {
+            String string = rsw.getString(2).replaceAll("[/(/)]", "");
+            Probabilities probabilities = new Probabilities(Double.parseDouble(string.split(",")[0]),
+                    Double.parseDouble(string.split(",")[1]));
+            System.out.println(probabilities.getDuration() + " " + probabilities.getProbability());
+        }
+     */
+
+    /**
+     * Adds a new project manager to the DB, if the username does not already exist in the DB.
+     *
+     * @param username          the username of the user to add.
+     * @param clearTextPassword clear text of password to add.
+     * @return true if user does not already exist in DB and is added.
+     */
+    public static boolean addNewProjectManager(String username, String clearTextPassword) {
+        if (dbConnection == null) connect();
+        try {
+
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE username = ?");
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) return false;
+
+            statement.clearParameters();
+            statement = dbConnection.prepareStatement("INSERT INTO projectmanagers (username, password, salt) VALUES (?, ?, ?)");
+            statement.setString(1, username);
+            byte[] salt = Password.getNextSalt();
+            statement.setBytes(2, Password.hash(clearTextPassword.toCharArray(), salt));
+            statement.setBytes(3, salt);
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns a ProjectManger object if a user with username and password clearTextPassword is found in db, else null.
+     *
+     * @param username          username of user to find in DB.
+     * @param clearTextPassword clear text version of the users password to find.
+     * @return the ProjectManager found, else null.
+     */
+    public static ProjectManager logIn(String username, String clearTextPassword) {
+        if (dbConnection == null) connect();
+
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE username = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
+            if (!rs.next()) return null;
+
+            byte[] passwd = rs.getBytes(3);
+            byte[] salt = rs.getBytes(6);
+
+            if (Password.isExpectedPassword(clearTextPassword.toCharArray(), salt, passwd)) {
+                rs.previous();
+                return Objects.requireNonNull(parseProjectManagerFromResultSet(rs)).get(0);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
