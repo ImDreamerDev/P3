@@ -356,4 +356,30 @@ class ProjectTest {
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
+
+    @Test
+    void TestProjectGetCreator01() {
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
+
+        assertEquals(projectManager, newProject.getCreator());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+        DatabaseManager.removeProjectManager(projectManager.getId());
+    }
+
+    @Test
+    void TestProjectSetCreator01() {
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        ProjectManager projectManager2 = new ProjectManager("Second Manager", "Password");
+        Project newProject = new Project("Test PRoject", projectManager);
+
+        newProject.setCreator(projectManager2);
+
+        assertEquals(projectManager2, newProject.getCreator());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+        DatabaseManager.removeProjectManager(projectManager.getId());
+        DatabaseManager.removeProjectManager(projectManager2.getId());
+    }
 }
