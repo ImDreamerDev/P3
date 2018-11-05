@@ -37,10 +37,8 @@ public class Sequence {
 
         List<Task> taskList = project.getTasks();
 
-        if (findSequenceMontecarlo){
+        if (findSequenceMontecarlo)
             findFastestSequence(project);
-            return;
-        }
 
         //So we don't change the task list in the project
         List<Task> tasks = new ArrayList<>(taskList);

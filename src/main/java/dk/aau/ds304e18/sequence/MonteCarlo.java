@@ -29,22 +29,22 @@ public class MonteCarlo {
 
         while(i < monteCarloRepeats){
 
-            project.setSequence(findRandomSequence(project));
-            estimateTime(project);
+            project.setRecommendedPath(findRandomSequence(project));
+            estimateTime(project, true);
 
             //if(project.getDuration() > worstTime || worstTime == -1)
                 //worstTime = project.getDuration();
 
             if(project.getDuration() < bestTime || bestTime == -1){
                 //Set the best sequences and best times
-                bestSequence = project.getSequence();
+                bestSequence = project.getRecommendedPath();
                 bestTime = project.getDuration();
             }
 
             i++;
         }
 
-        project.setSequence(bestSequence);
+        project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
 
         //System.out.println("Worst time: " + worstTime);
@@ -79,7 +79,14 @@ public class MonteCarlo {
     public static void estimateTime(Project project){
 
         //Calls the function with the default value 10000
-        estimateTime(project, 10000);
+        estimateTime(project, false, 10000);
+
+    }
+
+    public static void estimateTime(Project project, boolean rec){
+
+        //Calls the function with the default value 10000
+        estimateTime(project, rec, 10000);
 
     }
 
@@ -88,10 +95,10 @@ public class MonteCarlo {
      * @param project the project where we want to find the estimated duration
      * @param monteCarloRepeats how many times we want to repeat the project schedule (Higher number will be more accurate but will take longer time)
      */
-    public static void estimateTime(Project project, int monteCarloRepeats){
+    public static void estimateTime(Project project, boolean rec, int monteCarloRepeats){
 
         //Gets the task list from the project
-        List<Task> taskList = ParseSequence.parseToSingleList(project);
+        List<Task> taskList = ParseSequence.parseToSingleList(project, rec);
 
         //The duration that will be counted up and then divided by the amount of repeats we have
         double duration = 0.0;
