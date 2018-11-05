@@ -382,4 +382,13 @@ class ProjectTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
         DatabaseManager.removeProjectManager(projectManager2.getId());
     }
+
+    @Test
+    void TestProjectSetRecommendedPath01() {
+        Project newProject = new Project(1,"Test Project", ProjectState.ONGOING, "", 4.4, "");
+
+        newProject.setRecommendedPath("Right then Left");
+
+        assertEquals("Right then Left", newProject.getRecommendedPath());
+    }
 }
