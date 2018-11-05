@@ -51,7 +51,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" text="Add Project" />
-                        <Button layoutX="111.0" layoutY="8.0" mnemonicParsing="false" text="Achive Project" />
+                        <Button layoutX="111.0" layoutY="8.0" mnemonicParsing="false" text="Archive Project" />
                         <TableView layoutY="39.0" prefHeight="304.0" prefWidth="600.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                           <columns>
                               <TableColumn prefWidth="39.0" text="Id" />
@@ -88,9 +88,9 @@
         </TabPane>
       <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: gray;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox layoutX="165.0" layoutY="127.0">
+            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
                <children>
-                  <HBox prefHeight="37.0" prefWidth="270.0">
+                  <HBox alignment="CENTER" prefHeight="37.0" prefWidth="270.0">
                      <children>
                         <Label text="Username:">
                            <HBox.margin>
@@ -104,7 +104,7 @@
                         </TextField>
                      </children>
                   </HBox>
-                  <HBox prefHeight="43.0" prefWidth="270.0">
+                  <HBox alignment="CENTER" prefHeight="31.0" prefWidth="600.0">
                      <children>
                         <Label text="Password:">
                            <HBox.margin>
@@ -120,7 +120,7 @@
                   </HBox>
                   <Label text="Error:" textFill="#f50000" visible="false">
                      <VBox.margin>
-                        <Insets left="5.0" />
+                        <Insets />
                      </VBox.margin>
                   </Label>
                   <Button mnemonicParsing="false" text="Login">

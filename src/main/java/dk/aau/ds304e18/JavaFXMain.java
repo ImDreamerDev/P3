@@ -13,15 +13,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -45,52 +43,55 @@ public class JavaFXMain extends Application {
     @SuppressWarnings("unchecked")
     public void onLogIn() {
         DatabaseManager.distributeModels();
-        var d = ((TableView) ((AnchorPane) ((TabPane) content.getChildrenUnmodifiable().get(1)).getTabs().get(0).getContent()).getChildren().get(2));
-        ((TableColumn) d.getColumns().get(0)).setCellValueFactory(new PropertyValueFactory<Project, String>("id"));
-        ((TableColumn) d.getColumns().get(1)).setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
-        ((TableColumn) d.getColumns().get(2)).setCellValueFactory(new PropertyValueFactory<Project, String>("creator"));
-        ((TableColumn) d.getColumns().get(3)).setCellValueFactory(new PropertyValueFactory<Project, String>("sequence"));
-        ((TableColumn) d.getColumns().get(4)).setCellValueFactory(new PropertyValueFactory<Project, String>("duration"));
-        ((TableColumn) d.getColumns().get(5)).setCellValueFactory(new PropertyValueFactory<Project, String>("state"));
+        var tableView = ((TableView) ((AnchorPane) ((TabPane) content.getChildrenUnmodifiable().get(1)).getTabs().get(0).getContent()).getChildren().get(2));
+        ((TableColumn) tableView.getColumns().get(0)).setCellValueFactory(new PropertyValueFactory<Project, String>("id"));
+        ((TableColumn) tableView.getColumns().get(1)).setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
+        ((TableColumn) tableView.getColumns().get(2)).setCellValueFactory(new PropertyValueFactory<Project, String>("creator"));
+        ((TableColumn) tableView.getColumns().get(3)).setCellValueFactory(new PropertyValueFactory<Project, String>("sequence"));
+        ((TableColumn) tableView.getColumns().get(4)).setCellValueFactory(new PropertyValueFactory<Project, String>("duration"));
+        ((TableColumn) tableView.getColumns().get(5)).setCellValueFactory(new PropertyValueFactory<Project, String>("state"));
         FilteredList<Project> flProjects = ((FilteredList<Project>) new FilteredList(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
         SortedList<Project> sortedList = new SortedList<>(flProjects);
-        sortedList.comparatorProperty().bind(d.comparatorProperty());
-        CheckBox showArchived = ((CheckBox) ((HBox) d.getParent().getChildrenUnmodifiable().get(3)).getChildren().get(2));
-        d.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
+        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+        CheckBox showArchived = ((CheckBox) ((HBox) tableView.getParent().getChildrenUnmodifiable().get(3)).getChildren().get(2));
+        tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
                 ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
 
         showArchived.selectedProperty().addListener((ov, old_val, new_val) -> {
             if (!new_val)
-                d.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState()
+                tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState()
                         == ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
             else
-                d.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getCreator() != null && project.getCreator().getId()
+                tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getCreator() != null && project.getCreator().getId()
                         == projectManager.getId()).collect(Collectors.toList())));
         });
 
-        d.setOnMouseClicked(event -> {
-            if (d.getSelectionModel().getSelectedIndex() != -1 && selectedProjectId !=
-                    ((int) ((TableColumn) d.getColumns().get(0)).getCellObservableValue(d.getSelectionModel().getSelectedIndex()).getValue())) {
-                selectedProjectId = ((int) ((TableColumn) d.getColumns().get(0)).getCellObservableValue(d.getSelectionModel().getSelectedIndex()).getValue());
+        tableView.setOnMouseClicked(event -> {
+            if (tableView.getSelectionModel().getSelectedIndex() != -1 && selectedProjectId !=
+                    ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue())) {
+                selectedProjectId = ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue());
                 setUpView();
             }
         });
 
-        TextField textField = ((TextField) ((HBox) d.getParent().getChildrenUnmodifiable().get(3)).getChildren().get(1));
-        Button archiveButton = ((Button) d.getParent().getChildrenUnmodifiable().get(1));
+        TextField textField = ((TextField) ((HBox) tableView.getParent().getChildrenUnmodifiable().get(3)).getChildren().get(1));
+        Button archiveButton = ((Button) tableView.getParent().getChildrenUnmodifiable().get(1));
         archiveButton.setOnMouseClicked(event -> {
             if (selectedProjectId != 0) {
                 projectManager.addOldProject(LocalObjStorage.getProjectById(selectedProjectId));
-                d.getItems().remove(d.getSelectionModel().getSelectedIndex());
+                tableView.getItems().remove(tableView.getSelectionModel().getSelectedIndex());
             }
         });
 
         textField.setPromptText("Search here!");
         textField.setOnKeyReleased(keyEvent -> {
-            if (isFirstLetter(textField.getText()))
+            if (isFirstLetter(textField.getText())) {
                 flProjects.setPredicate(p -> Integer.toString(p.getId()).contains(textField.getText().toLowerCase().trim()));
-            else
+            } else
                 flProjects.setPredicate(p -> p.getName().toLowerCase().contains(textField.getText().toLowerCase().trim()));
+
+            showArchived.setSelected(!showArchived.isSelected());
+            showArchived.setSelected(!showArchived.isSelected());
         });
     }
 
@@ -104,7 +105,7 @@ public class JavaFXMain extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        vBoxLogin = ((VBox) ((Pane) content.getChildrenUnmodifiable().get(2)).getChildren().get(0));
+        vBoxLogin = ((VBox) ((Pane) content.getChildrenUnmodifiable().get(2)).getChildrenUnmodifiable().get(0));
         Button loginButton = ((Button) vBoxLogin.getChildrenUnmodifiable().get(3));
         textField = (TextField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(0)).getChildren().get(1);
         textField.setOnKeyPressed(ke -> {

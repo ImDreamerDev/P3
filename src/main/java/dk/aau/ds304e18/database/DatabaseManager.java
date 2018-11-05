@@ -533,13 +533,20 @@ public class DatabaseManager {
         if (projectManagers != null) {
             projectManagers.forEach(projectManager -> {
                 if (projectManager.getCurrentProjectId() != 0) {
-                    projectManager.setCurrentProject(LocalObjStorage.getProjectById(projectManager.getCurrentProjectId()));
-                    LocalObjStorage.getProjectById(projectManager.getCurrentProjectId()).setCreator(projectManager);
+                    Project project = LocalObjStorage.getProjectById(projectManager.getCurrentProjectId());
+                    projectManager.setCurrentProject(project);
+                    project.setCreator(projectManager);
+                    if (project.getState() != ProjectState.ONGOING)
+                        project.setState(ProjectState.ONGOING);
                 }
                 List<Integer> projectIds = new ArrayList<>(projectManager.getOldProjectsId());
                 for (Integer projectId : projectIds) {
-                    LocalObjStorage.getProjectById(projectId).setCreator(projectManager);
-                    projectManager.addOldProject(LocalObjStorage.getProjectById(projectId));
+                    Project oldProject = LocalObjStorage.getProjectById(projectId);
+                    oldProject.setCreator(projectManager);
+                    if (oldProject.getState() != ProjectState.ARCHIVED)
+                        oldProject.setState(ProjectState.ARCHIVED);
+                    projectManager.addOldProject(oldProject);
+
                 }
                 LocalObjStorage.addProjectManager(projectManager);
             });
@@ -644,9 +651,9 @@ public class DatabaseManager {
     public static ProjectManager logIn(String username, String password) {
         if (dbConnection == null) connect();
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE username=? AND password=?");
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE username=?");
             statement.setString(1, username);
-            statement.setString(2, password);
+            //  statement.setString(2, password);
             ResultSet rs = statement.executeQuery();
             List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
             if (projectManagers != null && projectManagers.size() != 0)
