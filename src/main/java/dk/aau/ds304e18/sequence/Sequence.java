@@ -88,8 +88,12 @@ public class Sequence {
             }
         }
 
-        //Return the list of sequenced tasks
+        //Set the list of sequenced tasks
         project.setSequence(sequencedTasks.toString());
+
+        //Find the estimated time
+        if(!findSequenceMontecarlo)
+            MonteCarlo.estimateTime(project);
     }
 
     private static List<Task> sortTasks(List<Task> tasks) {
