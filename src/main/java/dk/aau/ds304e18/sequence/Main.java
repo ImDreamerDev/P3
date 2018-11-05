@@ -86,6 +86,7 @@ public class Main {
         //MonteCarlo.estimateTime(project);
         System.out.println("Duration of the project: " + project.getDuration());
         System.out.println("With sequence: " + project.getSequence());
+        System.out.println("Rec path: " + project.getRecommendedPath());
 
         Duration between = java.time.Duration.between(start, end);
         System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",

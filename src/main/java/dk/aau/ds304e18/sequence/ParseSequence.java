@@ -13,13 +13,17 @@ public class ParseSequence {
      * @param project Takes project as parameter so we can get all the tasks in it and the sequence
      * @return returns an ordered list from the sequence
      */
-    public static List<Task> parseToSingleList(Project project){
+    public static List<Task> parseToSingleList(Project project, boolean rec){
 
         //List to return
         List<Task> parsedList = new ArrayList<>();
 
         //Splits the sequence so we just need to find the corresponding taskIds in order
-        String taskList = project.getSequence();
+        String taskList;
+        if(rec)
+            taskList = project.getRecommendedPath();
+        else
+            taskList = project.getSequence();
         taskList = taskList.replaceAll("[/(/)|]", ",");
         String[] taskListSplit = taskList.split(",");
 
