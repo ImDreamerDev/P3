@@ -143,5 +143,17 @@ public class ProjectManagerTest {
         DatabaseManager.removeProjectManager(newProjectManager.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
     }
+    @Test
+    void TestProjectManagerAddOldProject() {
+        ProjectManager newProjectManager = new ProjectManager("Adam", "test");
+        Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0);
+        newProjectManager.setCurrentProject(newProject);
+        newProjectManager.addOldProject(newProject);
+        newProjectManager.addOldProject(newProject);
+        assertEquals(1,newProjectManager.getOldProjects().size());
+
+        DatabaseManager.removeProjectManager(newProjectManager.getId());
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+    }
 
 }
