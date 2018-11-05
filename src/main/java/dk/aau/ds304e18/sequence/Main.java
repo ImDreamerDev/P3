@@ -6,11 +6,9 @@ import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.Task;
 
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
-        ProjectManager projectManager = new ProjectManager("Milton", "hardcore");
+        ProjectManager projectManager = new ProjectManager("Rasmus Smit Lindholt", "hardcore");
         Project project = new Project("Druktur", projectManager);
         Task task1 = new Task("Drik øl", 20, 1, project);
         Task task2 = new Task("Fyr shots", 5, 1, project);

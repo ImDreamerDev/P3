@@ -14,7 +14,7 @@ public class Probabilities {
 
     /**
      *
-     * @param duration - duration in days.
+     * @param duration - duration in the time the user wants.
      * @param probability - probability in percent.
      */
     public Probabilities(double duration, double probability){
