@@ -9,17 +9,15 @@ import dk.aau.ds304e18.sequence.MonteCarlo;
 import dk.aau.ds304e18.sequence.ParseSequence;
 import dk.aau.ds304e18.sequence.Sequence;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -39,6 +37,9 @@ public class JavaFXMain extends Application {
     private Parent content = null;
     private int selectedProjectId;
     private ProjectManager projectManager;
+    private TextField textField;
+    private PasswordField passwordField;
+    private VBox vBoxLogin;
 
 
     @SuppressWarnings("unchecked")
@@ -103,23 +104,22 @@ public class JavaFXMain extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        VBox vBoxLogin = ((VBox) ((Pane) content.getChildrenUnmodifiable().get(2)).getChildren().get(0));
+        vBoxLogin = ((VBox) ((Pane) content.getChildrenUnmodifiable().get(2)).getChildren().get(0));
         Button loginButton = ((Button) vBoxLogin.getChildrenUnmodifiable().get(3));
-        loginButton.setOnMouseClicked(event -> {
-            String username = ((TextField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(0)).getChildren().get(1)).getText();
-            String password = ((PasswordField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(1)).getChildren().get(1)).getText();
-            System.out.println(password + " " + username);
-            ProjectManager pm = DatabaseManager.logIn(username, password);
-            if (pm == null) {
-                Label error = ((Label) vBoxLogin.getChildren().get(2));
-                error.setText("Error: No such user");
-                error.setVisible(true);
-            } else {
-                content.getChildrenUnmodifiable().get(2).setVisible(false);
-                projectManager = pm;
-                onLogIn();
+        textField = (TextField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(0)).getChildren().get(1);
+        textField.setOnKeyPressed(ke -> {
+            if (ke.getCode().equals(KeyCode.ENTER)) {
+                logIn();
             }
         });
+
+        passwordField = (PasswordField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(1)).getChildren().get(1);
+        passwordField.setOnKeyPressed(ke -> {
+            if (ke.getCode().equals(KeyCode.ENTER)) {
+                logIn();
+            }
+        });
+        loginButton.setOnMouseClicked(event -> logIn());
         Scene scene = new Scene(content, 1280, 720);
 
         stage.setScene(scene);
@@ -187,6 +187,22 @@ public class JavaFXMain extends Application {
             return false;
         }
         return true;
+    }
+
+    private void logIn() {
+        String username = textField.getText();
+        String password = passwordField.getText();
+        System.out.println(password + " " + username);
+        ProjectManager pm = DatabaseManager.logIn(username, password);
+        if (pm == null) {
+            Label error = ((Label) vBoxLogin.getChildren().get(2));
+            error.setText("Error: No such user");
+            error.setVisible(true);
+        } else {
+            content.getChildrenUnmodifiable().get(2).setVisible(false);
+            projectManager = pm;
+            onLogIn();
+        }
     }
 
 }
