@@ -38,7 +38,7 @@ public class JavaFXMain extends Application {
     private TextField textField;
     private PasswordField passwordField;
     private VBox vBoxLogin;
-    SortedList<Project> sortedList;
+    private SortedList<Project> sortedList;
 
     @SuppressWarnings("unchecked")
     private void setupProjectTab() {
