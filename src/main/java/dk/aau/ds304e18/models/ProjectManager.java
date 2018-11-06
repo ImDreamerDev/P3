@@ -2,7 +2,6 @@ package dk.aau.ds304e18.models;
 
 import dk.aau.ds304e18.database.DatabaseManager;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,10 +53,11 @@ public class ProjectManager {
 
     /**
      * 2nd Constructor for the ProjectManager class.
-     * @param id - the unique id of the project manager.
-     * @param name - the name of the project manager.
+     *
+     * @param id               - the unique id of the project manager.
+     * @param name             - the name of the project manager.
      * @param currentProjectId - the id of the project the project manager is currently working on.
-     * @param oldProjects - A list of projects that the project manager has previously worked on.
+     * @param oldProjects      - A list of projects that the project manager has previously worked on.
      */
     public ProjectManager(int id, String name, int currentProjectId, List<Integer> oldProjects) {
         this.id = id;
@@ -127,9 +127,10 @@ public class ProjectManager {
      * @param currentProject - the project which the program manager is working on.
      */
     public void setCurrentProject(Project currentProject) {
-        if (currentProject != null)
+        if (currentProject != null) {
             this.currentProject = currentProject;
-        DatabaseManager.updateProjectManager(this);
+            DatabaseManager.updateProjectManager(this);
+        }
     }
 
     /**
@@ -143,6 +144,7 @@ public class ProjectManager {
 
     /**
      * The getter for the oldProjects id.
+     *
      * @return oldProjectsId - This returns a List of the project id's.
      */
     public List<Integer> getOldProjectsId() {
@@ -151,6 +153,7 @@ public class ProjectManager {
 
     /**
      * The getter for the currentProjectId.
+     *
      * @return currentProjectId - the id of the project that is currently being worked on by the manager.
      */
     public int getCurrentProjectId() {
@@ -159,6 +162,7 @@ public class ProjectManager {
 
     /**
      * To string method.
+     *
      * @return name - the name of the project manager.
      */
     @Override
