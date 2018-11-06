@@ -6,6 +6,7 @@ import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.Task;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -15,6 +16,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class TaskTest {
+
+    @BeforeAll
+    void init() {
+        DatabaseManager.isTests = true;
+    }
 
     @Test
     void TestTaskConstructor01() {

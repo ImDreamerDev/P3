@@ -2,6 +2,7 @@ package ds304e18.models;
 
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,6 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ProjectTest {
+    @BeforeAll
+    static void init() {
+        DatabaseManager.isTests = true;
+    }
 
     /**
      * Tests that the Project constructor initialises the project correctly.

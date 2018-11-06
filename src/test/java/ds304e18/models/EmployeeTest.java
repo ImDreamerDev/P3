@@ -5,6 +5,7 @@ import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.Task;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import javax.xml.crypto.Data;
@@ -18,6 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class EmployeeTest {
+    @BeforeAll
+    static void init() {
+        DatabaseManager.isTests = true;
+    }
 
     /**
      * Tests that the Employee constructor initialises the employee correctly.
