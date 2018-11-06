@@ -22,6 +22,9 @@ class TaskTest {
         DatabaseManager.isTests = true;
     }
 
+    /**
+     * Tests that the task constructor initialises the task correctly
+     */
     @Test
     void TestTaskConstructor01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -35,6 +38,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests that the task constructor initialises the task correctly
+     */
     @Test
     void TestTaskConstructor02() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -48,6 +54,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests that the task constructor initialises the task correctly
+     */
     @Test
     void TestTaskConstructor03() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -61,6 +70,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests that the task constructor initialises the task correctly
+     */
     @Test
     void TestTaskConstructor04() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -130,6 +142,9 @@ class TaskTest {
         assertEquals(6,newTask.getEndTime());
     }*/
 
+    /**
+     * Tests the task getter for id
+     */
     @Test
     void TestTaskGetId01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -145,6 +160,9 @@ class TaskTest {
         assertEquals(5, newTask.getId());
     }
 
+    /**
+     * Tests the task getter for name
+     */
     @Test
     void TestTaskGetName01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -158,6 +176,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Test the task getter for estimate time
+     */
     @Test
     void TestTaskGetEstimatedTime01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -171,6 +192,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the task getter for priority
+     */
     @Test
     void TestTaskGetPriority01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -184,6 +208,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the task getter for employee
+     */
     @Test
     void TestTaskGetEmployee01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -207,6 +234,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the task getter for dependencies
+     */
     @Test
     void TestTaskGetDependencies01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -230,6 +260,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the task getter for start time
+     */
     @Test
     void TestTaskGetStartTime01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -243,6 +276,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the task getter for end time
+     */
     @Test
     void TestTaskGetEndTime01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -258,6 +294,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the task getter for project
+     */
     @Test
     void TestTaskGetProject01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -271,8 +310,11 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the task setter for end time
+     */
     @Test
-    void TestTaskSetEndDate01() {
+    void TestTaskSetEndTime01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
         Task newTask = new Task("Test Task", 1, 1, newProject);
@@ -286,6 +328,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the task setter for priority
+     */
     @Test
     void TestTaskSetPriority01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -301,6 +346,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests adding employees to the task
+     */
     @Test
     void TestTaskAddEmployees01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -328,6 +376,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests adding dependencies to the task
+     */
     @Test
     void TestTaskAddDependencies01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -354,6 +405,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the task setter for project
+     */
     @Test
     void TestTaskSetProject() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -371,6 +425,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the task setter for estimated time
+     */
     @Test
     void TestTaskSetEstimatedTime() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -386,6 +443,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests adding dependencies to the task
+     */
     @Test
     void TestTaskDistributeAddDependency01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -403,6 +463,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests equals for the task
+     */
     @Test
     void TestTaskEquals01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -421,6 +484,9 @@ class TaskTest {
         assertEquals(task1,task2);
     }
 
+    /**
+     * Tests equals for the task
+     */
     @Test
     void TestTaskEquals02() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -439,6 +505,9 @@ class TaskTest {
         assertNotEquals(task1,task2);
     }
 
+    /**
+     * Tests hashcode for task
+     */
     @Test
     void TestTaskHashcode01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -457,6 +526,9 @@ class TaskTest {
         assertEquals(task1.hashCode(),task2.hashCode());
     }
 
+    /**
+     * Tests hashcode for task
+     */
     @Test
     void TestTaskHashcode02() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -475,6 +547,9 @@ class TaskTest {
         assertNotEquals(task1.hashCode(),task2.hashCode());
     }
 
+    /**
+     * Tests the task getter for employee
+     */
     @Test
     void TestTaskGetEmployeeIds01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -498,6 +573,9 @@ class TaskTest {
         assertEquals(10,newTask.getEmployeeIds().get(0).intValue());
     }
 
+    /**
+     * Tests the task getter for dependencies
+     */
     @Test
     void TestTaskGetDependencyIds01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -521,6 +599,9 @@ class TaskTest {
         assertEquals(1, newTask.getDependencyIds().get(0).intValue());
     }
 
+    /**
+     * Tests the task setter for start time
+     */
     @Test
     void TestTaskSetStartTime01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -536,6 +617,9 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the task getter for lambda
+     */
     @Test
     void TestTaskGetLambda01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -551,8 +635,11 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the task setter for lambda
+     */
     @Test
-    void TestTaskGetLambda02() {
+    void TestTaskSetLambda01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
         Task newTask = new Task("New Task", 1,1,newProject);
