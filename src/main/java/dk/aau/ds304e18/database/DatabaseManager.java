@@ -237,7 +237,13 @@ public class DatabaseManager {
         return true;
     }
 
-    private static List<ProjectManager> parseProjectManagersFromResultSet(ResultSet rs) {
+    /**
+     * Parses Project manager from the resultset set.
+     * @param rs - the resultset to parse
+     * @return ProjectManagers - a list of project managers.
+     */
+    private static List<ProjectManager> parseProjectManagerFromResultSet(ResultSet rs) {
+
         List<ProjectManager> projectManagers = new ArrayList<>();
         try {
             if (rs == null) return null;
@@ -413,13 +419,19 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * The getter for a project manager using the id.
+     *
+     * @param id - the id of the project manager.
+     * @return a project manager if the projectmanagers list isnt empty. else returns null.
+     */
     public static ProjectManager getProjectManager(int id) {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE id = ?");
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
-            List<ProjectManager> projectManagers = parseProjectManagersFromResultSet(rs);
+            List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
             if (projectManagers.size() != 0)
                 return projectManagers.get(0);
             return null;
@@ -479,11 +491,16 @@ public class DatabaseManager {
         return null;
     }
 
+    /**
+     * The getter for the list of project managers
+     *
+     * @return ProjectManagers - an arraylist of the project managers.
+     */
     private static List<ProjectManager> getAllProjectManagers() {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers");
             ResultSet rs = statement.executeQuery();
-            List<ProjectManager> projectManagers = parseProjectManagersFromResultSet(rs);
+            List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
             if (projectManagers != null && projectManagers.size() != 0)
                 return projectManagers;
             return null;
@@ -494,6 +511,9 @@ public class DatabaseManager {
 
     }
 
+    /**
+     * Retrieves everything from the database and converts it to objects.
+     */
     public static void distributeModels() {
         List<Employee> employees = getAllEmployees();
         if (employees == null) return;
@@ -667,7 +687,7 @@ public class DatabaseManager {
 
             if (Password.isExpectedPassword(clearTextPassword.toCharArray(), salt, passwd)) {
                 rs.previous();
-                return Objects.requireNonNull(parseProjectManagersFromResultSet(rs)).get(0);
+                return Objects.requireNonNull(parseProjectManagerFromResultSet(rs)).get(0);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -156,12 +156,6 @@ public class Employee {
      */
     public void setProject(Project project) {
 
-        //For distributing models
-        if (this.project == null) {
-            this.project = project;
-            return;
-        }
-
         if (project != null) {
             this.project = project;
             DatabaseManager.updateEmployee(this);

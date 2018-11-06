@@ -25,7 +25,7 @@ public class MonteCarlo {
         int i = 0;
         String bestSequence = "";
         double bestTime = -1;
-        //double worstTime = -1; //Might be used later
+        //double worstTime = -1; //May be used in the future
 
         while(i < monteCarloRepeats){
 
@@ -46,8 +46,6 @@ public class MonteCarlo {
 
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
-
-        //System.out.println("Worst time: " + worstTime);
 
     }
 

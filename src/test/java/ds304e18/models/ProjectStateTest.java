@@ -1,11 +1,17 @@
 package ds304e18.models;
 
+import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.ProjectState;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ProjectStateTest {
+    @BeforeAll
+    static void init() {
+        DatabaseManager.isTests = true;
+    }
 
     @Test
     void TestProjectStateGetValue01() {

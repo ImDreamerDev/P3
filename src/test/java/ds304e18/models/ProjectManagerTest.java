@@ -4,6 +4,7 @@ import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.ProjectState;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -14,6 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * The tests for the ProjectManager class.
  */
 public class ProjectManagerTest {
+    @BeforeAll
+    static void init() {
+        DatabaseManager.isTests = true;
+    }
 
     /**
      * Test for the Constructor.

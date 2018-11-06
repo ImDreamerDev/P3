@@ -57,8 +57,8 @@ public class Project {
         this.name = name;
         this.state = ProjectState.ONGOING;
         this.Creator = creator;
-        creator.setCurrentProject(this);
         DatabaseManager.addProject(this);
+        creator.setCurrentProject(this);
     }
 
     public Project(int id, String name, ProjectState projectState, String sequence, double duration,String recommendedPath) {

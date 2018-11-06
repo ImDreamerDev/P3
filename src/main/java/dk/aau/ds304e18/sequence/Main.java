@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         Instant start = java.time.Instant.now();
 
-        ProjectManager projectManager = new ProjectManager("Rasmus Smit Lindholt", "hardcore");
+        ProjectManager projectManager = new ProjectManager("rsl", "1");
         Project project = new Project("Druktur", projectManager);
         Task task1 = new Task("Drik øl", 20, 1, project);
         Task task2 = new Task("Fyr shots", 5, 1, project);
@@ -80,16 +80,26 @@ public class Main {
         task8.getProbabilities().add(new Probabilities(200, 99));
         DatabaseManager.updateTask(task8);
 
-        Sequence.sequenceTasks(project);
+        Sequence.sequenceTasks(project, true);
         Instant end = java.time.Instant.now();
 
         System.out.println("Duration of the project: " + project.getDuration());
         System.out.println("With sequence: " + project.getSequence());
         System.out.println("Rec path: " + project.getRecommendedPath());
 
+        //Instant start2 = java.time.Instant.now();
+        //MonteCarlo.estimateTime(project, true, 1000000);
+        //Instant end2 = java.time.Instant.now();
+
+        System.out.println("Duration of the project: " + project.getDuration());
+
         Duration between = java.time.Duration.between(start, end);
         System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
                 between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
+
+        //Duration between2 = java.time.Duration.between(start2, end2);
+        //System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
+                //between2.toHours(), between2.toMinutes(), between2.getSeconds(), between2.toMillis()); // 0D, 00:00:01.1001
 
     }
 }
