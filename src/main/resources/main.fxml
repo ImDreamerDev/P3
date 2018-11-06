@@ -180,9 +180,9 @@
                   <AnchorPane id="outputPane" prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <ListView layoutY="25.0" prefHeight="642.0" prefWidth="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1160.0" AnchorPane.topAnchor="25.0" />
-                        <ScrollPane layoutX="119.0" prefHeight="667.0" prefWidth="1161.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="119.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ScrollPane layoutX="121.0" prefHeight="667.0" prefWidth="1159.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <content>
-                            <AnchorPane id="outputScrollView" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="568.0" />
+                            <AnchorPane id="outputScrollView" />
                           </content>
                         </ScrollPane>
                         <Label layoutX="10.0" layoutY="4.0" text="Recommend path">
