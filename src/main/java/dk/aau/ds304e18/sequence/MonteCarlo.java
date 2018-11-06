@@ -118,7 +118,7 @@ public class MonteCarlo {
 
         }
 
-        int numOfThreads = 10;
+        int numOfThreads = Runtime.getRuntime().availableProcessors();
 
         ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
         //create a list to hold the Future object associated with Callable
