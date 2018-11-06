@@ -46,6 +46,9 @@ public class Sequence {
         //The sequence to return
         StringBuilder sequencedTasks = new StringBuilder();
 
+        //Temporary list of tasks sequenced
+        List<Task> tasksAlreadySequenced = new ArrayList<>();
+
         //Temporary lists, first to sort them and add them to sequencedTasks, second to remove the already sequenced tasks from the dependency list of each task
         List<Task> tasksToSort = new ArrayList<>();
         List<Task> tasksToRemove = new ArrayList<>();
@@ -55,14 +58,13 @@ public class Sequence {
 
             //For each task in the tasks to be sorted
             for (Task task : tasks) {
-
-                //If there are no dependencies left unsorted for the task
-                if (task.getAmountDependenciesLeft() == 0) {
-                    //Add the task to the two temporary lists
-                    tasksToSort.add(task);
-                    tasksToRemove.add(task);
-                }
+                if (!tasksAlreadySequenced.containsAll(task.getDependencies())) continue;
+                //Add the task to the two temporary lists
+                tasksToSort.add(task);
+                tasksToRemove.add(task);
             }
+
+            tasksAlreadySequenced.addAll(tasksToSort);
 
             //Remove the tasks from the tasks yet to be sorted
             tasks.removeAll(tasksToRemove);
@@ -72,20 +74,6 @@ public class Sequence {
             List<Task> tasksToInsert = sortTasks(tasksToSort);
             sequencedTasks = unparseList(sequencedTasks, tasksToInsert, tasks.size());
             tasksToSort = new ArrayList<>();
-
-            //For each task in the yet to be sorted list
-            for (Task task : tasks) {
-
-                //For each dependency of the tasks
-                for (Task dependency : task.getDependencies()) {
-
-                    //If the dependency is already sequenced
-                    if (!tasks.contains(dependency)) {
-                        //Count down the amount of dependencies left so we know that if they're at 0, it's ready to be sequenced
-                        task.setAmountDependenciesLeft(task.getAmountDependenciesLeft() - 1);
-                    }
-                }
-            }
         }
 
         //Set the list of sequenced tasks

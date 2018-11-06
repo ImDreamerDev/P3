@@ -50,8 +50,6 @@ public class Task {
 
     private final List<Probabilities> probabilities = new ArrayList<>();
 
-    private int amountDependenciesLeft = -1;
-
     /**
      * The date that the task starts.
      */
@@ -311,25 +309,6 @@ public class Task {
      */
     public void setStartTime(double startTime) {
         this.startTime = startTime;
-    }
-
-    /**
-     * The getter for amountDependenciesLeft.
-     * @return amountDependenciesLeft - how many dependencies the task has left.
-     */
-    public int getAmountDependenciesLeft() {
-        if (amountDependenciesLeft == -1) {
-            amountDependenciesLeft = dependencies.size();
-        }
-        return amountDependenciesLeft;
-    }
-
-    /**
-     * The setter for the Amountdepenciesleft.
-     * @param amountDependenciesLeft - how many dependencies the task has left.
-     */
-    public void setAmountDependenciesLeft(int amountDependenciesLeft) {
-        this.amountDependenciesLeft = amountDependenciesLeft;
     }
 
     /**
