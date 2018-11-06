@@ -271,23 +271,43 @@ public class Task {
         return id == task.id;
     }
 
+    /**
+     * The hashcode for the task
+     * @return Hashcode of the object
+     */
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
 
+    /**
+     * The getter for the list of employee ids
+     * @return employeeIds - A list of employee ids
+     */
     public List<Integer> getEmployeeIds() {
         return employeeIds;
     }
 
+    /**
+     * The getter for the ids of the dependencies.
+     * @return dependencyIds - a list of ids of the tasks dependencies.
+     */
     public List<Integer> getDependencyIds() {
         return dependencyIds;
     }
 
+    /**
+     * The setter for the startTime.
+     * @param startTime - the time at which the task is started.
+     */
     public void setStartTime(double startTime) {
         this.startTime = startTime;
     }
 
+    /**
+     * The getter for amountDependenciesLeft.
+     * @return amountDependenciesLeft - how many dependencies the task has left.
+     */
     public int getAmountDependenciesLeft() {
         if (amountDependenciesLeft == -1) {
             amountDependenciesLeft = dependencies.size();
@@ -295,15 +315,27 @@ public class Task {
         return amountDependenciesLeft;
     }
 
+    /**
+     * The setter for the Amountdepenciesleft.
+     * @param amountDependenciesLeft - how many dependencies the task has left.
+     */
     public void setAmountDependenciesLeft(int amountDependenciesLeft) {
         this.amountDependenciesLeft = amountDependenciesLeft;
     }
 
+    /**
+     * the getter for the list of probabilities.
+     * @return probabilities - a list of the probabilities.
+     */
     public List<Probabilities> getProbabilities() {
         return probabilities;
     }
 
 
+    /**
+     * This method parses the information from the database which turns the probabilities into a string format.
+     * @return Probability string - the probabilites turned into string format.
+     */
     public String parseProbabilitiesForDatabase() {
         //Turns the Probabilities into a string in the following format
         //     * '{"(1.1,2.2)","(534.1,3123.2)"}'
@@ -320,10 +352,18 @@ public class Task {
         return probsSQL.toString();
     }
 
+    /**
+     * The getter for the lambda value.
+     * @return lambda.
+     */
     public double getLambda() {
         return lambda;
     }
 
+    /**
+     * The setter for lambda.
+     * @param lambda
+     */
     public void setLambda(double lambda) {
         this.lambda = lambda;
     }
