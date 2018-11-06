@@ -42,6 +42,7 @@ public class JavaFXMain extends Application {
     @SuppressWarnings("unchecked")
     private void setupProjectTab() {
         DatabaseManager.distributeModels();
+        projectManager = LocalObjStorage.getProjectManagerById(projectManager.getId());
         var tableView = ((TableView) content.lookup("#projectView"));
         ((TableColumn) tableView.getColumns().get(0)).setCellValueFactory(new PropertyValueFactory<Project, String>("id"));
         ((TableColumn) tableView.getColumns().get(1)).setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
@@ -73,13 +74,18 @@ public class JavaFXMain extends Application {
             }
         });
 
-        TextField textField = ((TextField) ((HBox) tableView.getParent().getChildrenUnmodifiable().get(3)).getChildren().get(1));
-        Button archiveButton = ((Button) tableView.getParent().getChildrenUnmodifiable().get(1));
+        TextField textField = ((TextField) ((HBox) tableView.getParent().getChildrenUnmodifiable().get(5)).getChildren().get(1));
+        Button archiveButton = ((Button) tableView.getParent().getChildrenUnmodifiable().get(3));
         archiveButton.setOnMouseClicked(event -> {
             if (selectedProjectId != 0) {
                 projectManager.addOldProject(LocalObjStorage.getProjectById(selectedProjectId));
                 tableView.getItems().remove(tableView.getSelectionModel().getSelectedIndex());
             }
+        });
+
+        Button createButton = ((Button) tableView.getParent().getChildrenUnmodifiable().get(0));
+        createButton.setOnMouseClicked(event -> {
+            new Project(((TextField) tableView.getParent().getChildrenUnmodifiable().get(2)).getText(), projectManager);
         });
 
         textField.setPromptText("Search here!");
@@ -114,8 +120,8 @@ public class JavaFXMain extends Application {
         ((TableColumn) tableView.getColumns().get(5)).setCellValueFactory(new PropertyValueFactory<Task, String>("dependencies"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         TextField nameTextField = ((TextField) inputVBox.getChildren().get(1));
-        TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(3));
-        TextField priority = ((TextField) inputVBox.getChildren().get(5));
+        TextField priority = ((TextField) inputVBox.getChildren().get(3));
+        TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(5));
         ListView<Task> listViewDeps = ((ListView<Task>) inputVBox.getChildren().get(11));
 
         HBox prorbsHBox = ((HBox) inputVBox.getChildren().get(7));
@@ -225,8 +231,10 @@ public class JavaFXMain extends Application {
                 .getContent());
         pane.getChildren().clear();
         setupInputTab();
-        drawTasks(pro, pane);
-        pane.getChildren().add(new Text(10, 10, "Time: " + pro.getDuration()));
+        if (pro.getSequence() != null) {
+            drawTasks(pro, pane);
+            pane.getChildren().add(new Text(10, 10, "Time: " + pro.getDuration()));
+        }
     }
 
     private void drawTasks(Project pro, AnchorPane pane) {

@@ -239,6 +239,7 @@ public class DatabaseManager {
 
     /**
      * Parses Project manager from the resultset set.
+     *
      * @param rs - the resultset to parse
      * @return ProjectManagers - a list of project managers.
      */

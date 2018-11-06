@@ -52,8 +52,10 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" text="Add Project" />
-                        <Button layoutX="111.0" layoutY="8.0" mnemonicParsing="false" text="Archive Project" />
+                        <Button layoutX="256.0" layoutY="8.0" mnemonicParsing="false" text="Add Project" />
+                        <Label layoutX="14.0" layoutY="12.0" text="Project Name: " />
+                        <TextField layoutX="92.0" layoutY="8.0" />
+                        <Button layoutX="350.0" layoutY="8.0" mnemonicParsing="false" text="Archive Project" />
                         <TableView fx:id="projectView" layoutY="39.0" prefHeight="304.0" prefWidth="600.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                           <columns>
                               <TableColumn id="idCol" prefWidth="39.0" text="Id" />

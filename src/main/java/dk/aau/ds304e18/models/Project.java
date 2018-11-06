@@ -45,7 +45,7 @@ public class Project {
      * The list of employees.
      */
     private final List<Employee> employees = new ArrayList<>();
-    
+
     private String recommendedPath;
 
     /**
@@ -57,11 +57,14 @@ public class Project {
         this.name = name;
         this.state = ProjectState.ONGOING;
         this.Creator = creator;
+        if (creator.getCurrentProject() != null) {
+            creator.addOldProject(creator.getCurrentProject());
+        }
         DatabaseManager.addProject(this);
         creator.setCurrentProject(this);
     }
 
-    public Project(int id, String name, ProjectState projectState, String sequence, double duration,String recommendedPath) {
+    public Project(int id, String name, ProjectState projectState, String sequence, double duration, String recommendedPath) {
         this.id = id;
         this.state = projectState;
         this.name = name;
