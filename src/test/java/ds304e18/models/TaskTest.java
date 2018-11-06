@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 class TaskTest {
 
     @BeforeAll
-    void init() {
+    static void init() {
         DatabaseManager.isTests = true;
     }
 
