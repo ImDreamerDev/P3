@@ -230,7 +230,7 @@ public class JavaFXMain extends Application {
 
     private void calc(Project pro, boolean useMonty) {
         Instant start = java.time.Instant.now();
-        
+
         Sequence.sequenceTasks(pro, useMonty);
         drawProjectsTab(useMonty);
         drawInputTab();
@@ -254,10 +254,10 @@ public class JavaFXMain extends Application {
             if (useMonty) {
                 ((ListView) ((AnchorPane) content.lookup("#outputPane")).getChildren().get(0))
                         .setItems(FXCollections.observableArrayList(ParseSequence.parseToSingleList(pro, true)));
-            } else if (!pro.getRecommendedPath().equals("")) {
+            } else if (pro.getRecommendedPath() != null && !pro.getRecommendedPath().equals("")) {
                 ((ListView) ((AnchorPane) content.lookup("#outputPane")).getChildren().get(0))
                         .setItems(FXCollections.observableArrayList(ParseSequence.parseToSingleList(pro, true)));
-            } else if (pro.getRecommendedPath().equals(""))
+            } else
                 ((ListView) ((AnchorPane) content.lookup("#outputPane")).getChildren().get(0))
                         .getItems().clear();
 
