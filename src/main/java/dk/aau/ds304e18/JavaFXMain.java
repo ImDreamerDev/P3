@@ -13,7 +13,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -41,7 +40,7 @@ public class JavaFXMain extends Application {
 
 
     @SuppressWarnings("unchecked")
-    private void onLogIn() {
+    private void setupProjectTab() {
         DatabaseManager.distributeModels();
         var tableView = ((TableView) content.lookup("#projectView"));
         ((TableColumn) tableView.getColumns().get(0)).setCellValueFactory(new PropertyValueFactory<Project, String>("id"));
@@ -70,7 +69,7 @@ public class JavaFXMain extends Application {
             if (tableView.getSelectionModel().getSelectedIndex() != -1 && selectedProjectId !=
                     ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue())) {
                 selectedProjectId = ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue());
-                setUpView();
+                drawProjectsTab();
             }
         });
 
@@ -97,11 +96,10 @@ public class JavaFXMain extends Application {
 
     List<Task> deps = new ArrayList<>();
 
-    private void inputTab() {
+    private void drawInputTab() {
         var flowPane = ((FlowPane) content.lookup("#inputFlowPane"));
         var tableView = ((TableView) flowPane.getChildren().get(2));
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task -> task.getProject().getId() == selectedProjectId).collect(Collectors.toList())));
-
     }
 
     private void setupInputTab() {
@@ -178,7 +176,7 @@ public class JavaFXMain extends Application {
             tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().
                     stream().filter(task -> task.getProject().getId() == selectedProjectId).collect(Collectors.toList())));
         });
-        inputTab();
+        drawInputTab();
     }
 
     @Override
@@ -214,21 +212,11 @@ public class JavaFXMain extends Application {
 
     private void calc(Project pro) {
         Sequence.sequenceTasks(pro);
-        projectsTab();
-        inputTab();
+        drawProjectsTab();
+        drawInputTab();
     }
 
-    private void projectsTab() {
-        Project pro = LocalObjStorage.getProjectList().stream().filter(project -> project.getId() == selectedProjectId).findFirst().orElse(null);
-        assert pro != null;
-        var pane = ((AnchorPane) ((ScrollPane) ((TabPane) content.getChildrenUnmodifiable().get(1)).getTabs().get(2).getContent())
-                .getContent());
-        pane.getChildren().clear();
-        drawTasks(pro, pane);
-        pane.getChildren().add(new Text(10, 10, "Time: " + pro.getDuration()));
-    }
-
-    private void setUpView() {
+    private void drawProjectsTab() {
         Project pro = LocalObjStorage.getProjectList().stream().filter(project -> project.getId() == selectedProjectId).findFirst().orElse(null);
         assert pro != null;
         ((TabPane) content.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output: " +
@@ -237,8 +225,8 @@ public class JavaFXMain extends Application {
                 .getContent());
         pane.getChildren().clear();
         setupInputTab();
-        projectsTab();
-
+        drawTasks(pro, pane);
+        pane.getChildren().add(new Text(10, 10, "Time: " + pro.getDuration()));
     }
 
     private void drawTasks(Project pro, AnchorPane pane) {
@@ -297,8 +285,7 @@ public class JavaFXMain extends Application {
         } else {
             content.getChildrenUnmodifiable().get(2).setVisible(false);
             projectManager = pm;
-            onLogIn();
+            setupProjectTab();
         }
     }
-
 }
