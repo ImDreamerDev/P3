@@ -38,7 +38,7 @@ public class JavaFXMain extends Application {
     private TextField textField;
     private PasswordField passwordField;
     private VBox vBoxLogin;
-
+    SortedList<Project> sortedList;
 
     @SuppressWarnings("unchecked")
     private void setupProjectTab() {
@@ -52,7 +52,7 @@ public class JavaFXMain extends Application {
         ((TableColumn) tableView.getColumns().get(4)).setCellValueFactory(new PropertyValueFactory<Project, String>("duration"));
         ((TableColumn) tableView.getColumns().get(5)).setCellValueFactory(new PropertyValueFactory<Project, String>("state"));
         FilteredList<Project> flProjects = ((FilteredList<Project>) new FilteredList(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
-        SortedList<Project> sortedList = new SortedList<>(flProjects);
+        sortedList = new SortedList<>(flProjects);
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         CheckBox showArchived = ((CheckBox) content.lookup("#showArchivedCheckbox"));
         tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
@@ -87,6 +87,10 @@ public class JavaFXMain extends Application {
         Button createButton = ((Button) tableView.getParent().getChildrenUnmodifiable().get(0));
         createButton.setOnMouseClicked(event -> {
             new Project(((TextField) tableView.getParent().getChildrenUnmodifiable().get(2)).getText(), projectManager);
+            sortedList = updateProjects();
+            sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+            tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
+                    ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
         });
 
         textField.setPromptText("Search here!");
@@ -107,6 +111,11 @@ public class JavaFXMain extends Application {
         var flowPane = ((FlowPane) content.lookup("#inputFlowPane"));
         var tableView = ((TableView) flowPane.getChildren().get(2));
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task -> task.getProject().getId() == selectedProjectId).collect(Collectors.toList())));
+    }
+
+    private SortedList<Project> updateProjects() {
+        FilteredList<Project> flProjects = ((FilteredList<Project>) new FilteredList(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
+        return new SortedList<>(flProjects);
     }
 
     private void setupInputTab() {
