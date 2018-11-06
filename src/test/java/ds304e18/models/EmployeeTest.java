@@ -195,6 +195,9 @@ class EmployeeTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the employee equals
+     */
     @Test
     void TestEmployeeEquals01() {
         Employee employee1 = new Employee("Test Person1");
@@ -208,6 +211,9 @@ class EmployeeTest {
         DatabaseManager.removeEmployee(employee1.getId());
     }
 
+    /**
+     * Tests the employee equals
+     */
     @Test
     void TestEmployeeEquals02() {
         Employee employee1 = new Employee("Test Person1");
@@ -222,6 +228,9 @@ class EmployeeTest {
         DatabaseManager.removeEmployee(employee2.getId());
     }
 
+    /**
+     * Tests the employee hashcode
+     */
     @Test
     void TestEmployeeHashcode01() {
         Employee employee1 = new Employee("Test Person1");
@@ -235,6 +244,9 @@ class EmployeeTest {
         assertEquals(employee1.hashCode(), employee2.hashCode());
     }
 
+    /**
+     * Tests the employee hashcode
+     */
     @Test
     void TestEmployeeHashcode02() {
         Employee employee1 = new Employee("Test Person1");
@@ -249,6 +261,9 @@ class EmployeeTest {
         assertNotEquals(employee1.hashCode(), employee2.hashCode());
     }
 
+    /**
+     * Tests adding a a task to employee
+     */
     @Test
     void TestEmployeeDistributeAddTask01 () {
         Employee newEmployee = new Employee("Lars");
