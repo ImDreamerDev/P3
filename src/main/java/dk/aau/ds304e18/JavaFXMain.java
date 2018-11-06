@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -70,7 +71,7 @@ public class JavaFXMain extends Application {
             if (tableView.getSelectionModel().getSelectedIndex() != -1 && selectedProjectId !=
                     ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue())) {
                 selectedProjectId = ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue());
-                drawProjectsTab();
+                drawProjectsTab(false);
             }
         });
 
@@ -169,7 +170,7 @@ public class JavaFXMain extends Application {
                     stream().filter(task -> task.getProject().getId() == selectedProjectId).collect(Collectors.toList())));
         });
         VBox vboxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
-        vboxSplitter.getChildren().get(1).setOnMouseClicked(event -> calc(LocalObjStorage.getProjectById(selectedProjectId)));
+        vboxSplitter.getChildren().get(1).setOnMouseClicked(event -> calc(LocalObjStorage.getProjectById(selectedProjectId), ((CheckBox) vboxSplitter.getChildren().get(2)).isSelected()));
         vboxSplitter.getChildren().get(0).setOnMouseClicked(event -> {
             int taskId = (int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
 
@@ -216,23 +217,28 @@ public class JavaFXMain extends Application {
         stage.show();
     }
 
-    private void calc(Project pro) {
-        Sequence.sequenceTasks(pro);
-        drawProjectsTab();
+    private void calc(Project pro, boolean useMonty) {
+        Sequence.sequenceTasks(pro, useMonty);
+        drawProjectsTab(useMonty);
         drawInputTab();
     }
 
-    private void drawProjectsTab() {
+    private void drawProjectsTab(boolean useMonty) {
         Project pro = LocalObjStorage.getProjectList().stream().filter(project -> project.getId() == selectedProjectId).findFirst().orElse(null);
         assert pro != null;
         ((TabPane) content.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output: " +
                 pro.getName() + ":" + selectedProjectId);
-        var pane = ((AnchorPane) ((ScrollPane) ((TabPane) content.getChildrenUnmodifiable().get(1)).getTabs().get(2).getContent())
-                .getContent());
+        var pane = ((AnchorPane) content.lookup("#outputScrollView"));
         pane.getChildren().clear();
         setupInputTab();
         if (pro.getSequence() != null) {
             drawTasks(pro, pane);
+            if (useMonty)
+                ((ListView) ((AnchorPane) content.lookup("#outputPane")).getChildren().get(0))
+                        .setItems(FXCollections.observableArrayList(ParseSequence.parseToSingleList(pro, true)));
+            if (!useMonty)
+                ((ListView) ((AnchorPane) content.lookup("#outputPane")).getChildren().get(0))
+                        .getItems().clear();
             pane.getChildren().add(new Text(10, 10, "Time: " + pro.getDuration()));
         }
     }
