@@ -240,6 +240,9 @@ class ProjectTest {
         assertEquals(3, newProject.getId());
     }
 
+    /**
+     * Tests setting the project state of the project to ongoing
+     */
     @Test
     void TestProjectSetState01 () {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -253,6 +256,9 @@ class ProjectTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests setting the project state of the project to archived
+     */
     @Test
     void TestProjectSetState02() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -266,6 +272,9 @@ class ProjectTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests equals for the project
+     */
     @Test
     void TestProjectEquals01(){
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -284,6 +293,9 @@ class ProjectTest {
         assertEquals(project1,project2);
     }
 
+    /**
+     * Tests equals for the project
+     */
     @Test
     void TestProjectEquals02(){
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -302,6 +314,9 @@ class ProjectTest {
         assertNotEquals(project1,project2);
     }
 
+    /**
+     * Tests hashcode for the project
+     */
     @Test
     void TestProjectHashcode01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -320,6 +335,9 @@ class ProjectTest {
         assertEquals(project1.hashCode(), project2.hashCode());
     }
 
+    /**
+     * Tests hashcode for the project
+     */
     @Test
     void TestProjectHashcode02() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -336,6 +354,9 @@ class ProjectTest {
         assertNotEquals(project1.hashCode(), project2.hashCode());
     }
 
+    /**
+     * Tests the project getter for duration
+     */
     @Test
     void TestProjectGetDuration01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -349,6 +370,9 @@ class ProjectTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the project setter for duration
+     */
     @Test
     void TestProjectSetDuration01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -362,6 +386,9 @@ class ProjectTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the project getter for creator
+     */
     @Test
     void TestProjectGetCreator01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -373,6 +400,9 @@ class ProjectTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the project setter for creator
+     */
     @Test
     void TestProjectSetCreator01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
@@ -388,6 +418,9 @@ class ProjectTest {
         DatabaseManager.removeProjectManager(projectManager2.getId());
     }
 
+    /**
+     * Tests the project setter for recommended path
+     */
     @Test
     void TestProjectSetRecommendedPath01() {
         Project newProject = new Project(1,"Test Project", ProjectState.ONGOING, "", 4.4, "");

@@ -112,4 +112,35 @@ class SequenceTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    @Test
+    void testSequenceTasks04() {
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project project = new Project("Project", projectManager);
+        List<Task> tasks = new ArrayList<>();
+        Task task1 = new Task("Test1", 1.0, 1, project);
+        Task task2 = new Task("Test2", 2.0, 2, project);
+        Task task3 = new Task("Test3", 5.0, 3, project);
+        Task task4 = new Task("Test4", 2.0, 4, project);
+
+        task3.addDependency(task1);
+
+        tasks.add(task1);
+        tasks.add(task2);
+        tasks.add(task3);
+        tasks.add(task4);
+
+        Sequence.sequenceTasks(project, true);
+        String assertedSequencedTasks = String.valueOf(task4.getId()) + "," +
+                task2.getId() + "," +
+                task1.getId() + "|" +
+                task3.getId() + "(" + task1.getId() + ")";
+
+        /*System.out.println("Third test:");
+        System.out.println("SequencedTasks: " + sequencedTasks);
+        System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
+        assertEquals(project.getSequence(), assertedSequencedTasks);
+
+        DatabaseManager.removeProjectManager(projectManager.getId());
+    }
+
 }

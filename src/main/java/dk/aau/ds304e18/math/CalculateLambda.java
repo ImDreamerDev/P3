@@ -14,6 +14,9 @@ public class CalculateLambda {
     public static List<Double> calculateLambda(double mu, List<Probabilities> probabilities){
         List<Double> returnVariables = new ArrayList<>();
 
+        if(probabilities.size() == 0)
+            probabilities.add(new Probabilities(mu,50));
+
         /**
          * Lowest mu value to check
          */

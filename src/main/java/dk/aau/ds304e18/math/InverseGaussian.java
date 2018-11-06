@@ -120,7 +120,7 @@ public class InverseGaussian {
      * The getter for lambda.
      * @return lambda.
      */
-    double getLambda() {
+    public double getLambda() {
         return this.lambda;
     }
 
@@ -128,7 +128,7 @@ public class InverseGaussian {
      * The getter for mu.
      * @return mu.
      */
-    double getMu() {
+    public double getMu() {
         return this.mu;
     }
 
