@@ -26,6 +26,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -227,9 +229,16 @@ public class JavaFXMain extends Application {
     }
 
     private void calc(Project pro, boolean useMonty) {
+        Instant start = java.time.Instant.now();
+        
         Sequence.sequenceTasks(pro, useMonty);
         drawProjectsTab(useMonty);
         drawInputTab();
+
+        Instant end = java.time.Instant.now();
+        Duration between = java.time.Duration.between(start, end);
+        System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
+                between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
     }
 
     private void drawProjectsTab(boolean useMonty) {

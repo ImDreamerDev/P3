@@ -127,7 +127,6 @@ public class MonteCarlo {
         List<Future<Double>> list = new ArrayList<Future<Double>>();
         //Create MyCallable instance
         Callable<Double> callable = new EstimateTimeCallable(taskList, numOfThreads, monteCarloRepeats);
-        Instant start = java.time.Instant.now();
         for (int i = 0; i < numOfThreads; i++) {
             //submit Callable tasks to be executed by thread pool
             Future<Double> future = executor.submit(callable);
@@ -146,10 +145,6 @@ public class MonteCarlo {
         }
         //shut down the executor service now
         executor.shutdown();
-        Instant end = java.time.Instant.now();
-        Duration between = java.time.Duration.between(start, end);
-        System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
-                between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
         //Set the duration of the project to the duration divided by amount of times it has been repeated (The average of all the tries)
         project.setDuration(duration / monteCarloRepeats);
     }
