@@ -13,7 +13,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -223,7 +222,8 @@ public class JavaFXMain extends Application {
         });
         loginButton.setOnMouseClicked(event -> logIn());
         Scene scene = new Scene(content, 1280, 720);
-
+        stage.setTitle("Project planner 2k18 Git rect edition");
+        //stage.getIcons().add();
         stage.setScene(scene);
         stage.show();
     }

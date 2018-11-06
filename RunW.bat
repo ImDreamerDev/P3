@@ -1,0 +1,1 @@
+javaw -jar --module-path %PATH_TO_FX% --add-modules=javafx.controls --add-modules=javafx.fxml target/P3-1.0-SNAPSHOT-jar-with-dependencies.jar
