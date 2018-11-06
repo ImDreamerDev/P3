@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -15,15 +16,16 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <HBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <MenuBar prefHeight="25.0" prefWidth="607.0">
+                <MenuBar prefHeight="25.0" prefWidth="1283.0">
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
@@ -44,29 +46,29 @@
                 </MenuBar>
             </children>
         </HBox>
-        <TabPane layoutX="7.0" layoutY="24.0" prefHeight="376.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
+        <TabPane id="tapPane" layoutX="7.0" layoutY="24.0" prefHeight="376.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
             <tabs>
-                <Tab text="Projects">
+                <Tab id="tabProjects" text="Projects">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" text="Add Project" />
                         <Button layoutX="111.0" layoutY="8.0" mnemonicParsing="false" text="Archive Project" />
-                        <TableView layoutY="39.0" prefHeight="304.0" prefWidth="600.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                        <TableView fx:id="projectView" layoutY="39.0" prefHeight="304.0" prefWidth="600.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                           <columns>
-                              <TableColumn prefWidth="39.0" text="Id" />
-                            <TableColumn prefWidth="116.0" text="Name" />
-                            <TableColumn minWidth="0.0" prefWidth="101.0" text="Creator" />
-                              <TableColumn prefWidth="83.0" text="Sequence" />
-                              <TableColumn minWidth="7.0" prefWidth="128.0" text="Duration" />
-                              <TableColumn minWidth="7.0" prefWidth="132.0" text="State" />
+                              <TableColumn id="idCol" prefWidth="39.0" text="Id" />
+                            <TableColumn id="nameCol" prefWidth="116.0" text="Name" />
+                            <TableColumn id="creatorCol" minWidth="0.0" prefWidth="101.0" text="Creator" />
+                              <TableColumn id="sequenceCol" prefWidth="83.0" text="Sequence" />
+                              <TableColumn id="durationCol" minWidth="7.0" prefWidth="128.0" text="Duration" />
+                              <TableColumn id="stateCol" minWidth="7.0" prefWidth="132.0" text="State" />
                           </columns>
                         </TableView>
                         <HBox layoutX="403.0" layoutY="4.0" prefHeight="25.0" prefWidth="328.0" AnchorPane.rightAnchor="0.0">
                            <children>
                               <Label prefHeight="24.0" prefWidth="43.0" text="Search:" />
                               <TextField prefHeight="10.0" prefWidth="141.0" />
-                              <CheckBox mnemonicParsing="false" text="Show Archived">
+                              <CheckBox id="showArchivedCheckbox" mnemonicParsing="false" text="Show Archived">
                                  <HBox.margin>
                                     <Insets left="10.0" top="4.0" />
                                  </HBox.margin>
@@ -76,7 +78,100 @@
                      </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Untitled Tab 2">
+            <Tab id="tabInput" text="Input">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <FlowPane id="inputFlowPane" prefHeight="347.0" prefWidth="599.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox prefHeight="646.0" prefWidth="222.0" spacing="5.0">
+                                 <children>
+                                    <Label text="Name:" />
+                                    <TextField />
+                                    <Label text="Priority" />
+                                    <TextField />
+                                    <Label text="Estimated time" />
+                                    <TextField />
+                                    <HBox prefHeight="29.0" prefWidth="222.0">
+                                       <children>
+                                          <Label text="Certainty" />
+                                          <Label text="Duration">
+                                             <HBox.margin>
+                                                <Insets left="-45.0" top="20.0" />
+                                             </HBox.margin></Label>
+                                          <Label text="Probability">
+                                             <HBox.margin>
+                                                <Insets left="60.0" top="20.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="31.0" prefWidth="121.0">
+                                       <children>
+                                          <TextField />
+                                          <TextField />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="32.0" prefWidth="121.0">
+                                       <children>
+                                          <TextField />
+                                          <TextField />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="196.0" prefHeight="32.0" prefWidth="121.0">
+                                       <children>
+                                          <TextField />
+                                          <TextField />
+                                       </children>
+                                    </HBox>
+                                    <Label text="Deps" />
+                                    <ListView prefHeight="196.0" prefWidth="202.0" />
+                                    <HBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="222.0" spacing="30.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" text="Add" />
+                                          <Button mnemonicParsing="false" text="Remove" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="TOP_CENTER" prefHeight="31.0" prefWidth="222.0" spacing="50.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" text="Add task" />
+                                          <Button mnemonicParsing="false" text="Clear" />
+                                       </children>
+                                               </HBox>
+                                 </children>
+                                 <FlowPane.margin>
+                                    <Insets left="5.0" />
+                                 </FlowPane.margin>
+                              </VBox>
+                              <Pane prefHeight="646.0" prefWidth="89.0">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" text="Cancel Task" />
+                                          <Button mnemonicParsing="false" text="Calculate" />
+                                       </children>
+                                       <padding>
+                                          <Insets right="10.0" top="5.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </Pane>
+                              <TableView prefHeight="646.0" prefWidth="887.0">
+                                <columns>
+                                    <TableColumn prefWidth="75.0" text="Id" />
+                                  <TableColumn prefWidth="130.0" text="Name" />
+                                    <TableColumn prefWidth="107.0" text="Estimated Time" />
+                                    <TableColumn prefWidth="93.0" text="Priority" />
+                                    <TableColumn prefWidth="104.0" text="Probabilities" />
+                                  <TableColumn prefWidth="123.0" text="Dependencies" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </FlowPane>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+                <Tab id="tabOutput" text="Output">
                <content>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">
                      <content>
@@ -86,9 +181,9 @@
                 </Tab>
             </tabs>
         </TabPane>
-      <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: gray;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane id="loginPane" prefHeight="400.0" prefWidth="599.0" style="-fx-background-color: gray;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0">
+            <VBox id="loginVbox" alignment="CENTER" layoutX="340.0" layoutY="160.0" prefHeight="400.0" prefWidth="600.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="37.0" prefWidth="270.0">
                      <children>
@@ -97,7 +192,7 @@
                               <Insets left="50.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField>
+                        <TextField text="Rasmus Smit Lindholt">
                            <HBox.margin>
                               <Insets left="7.0" />
                            </HBox.margin>
@@ -111,7 +206,7 @@
                               <Insets left="50.0" />
                            </HBox.margin>
                         </Label>
-                        <PasswordField>
+                        <PasswordField text="hardcore">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>

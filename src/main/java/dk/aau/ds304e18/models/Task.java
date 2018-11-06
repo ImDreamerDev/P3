@@ -22,7 +22,7 @@ public class Task {
     /**
      * The name of the task.
      */
-    private final String name;
+    private String name;
 
     /**
      * The estimated completion time of the task - This is used as mu in the inverse gaussian
@@ -259,6 +259,15 @@ public class Task {
         DatabaseManager.updateTask(this);
     }
 
+    public void addDependency(List<Task> tasks) {
+        for (Task tsk : tasks) {
+            if (tsk != this && !dependencies.contains(tsk))
+                dependencies.add(tsk);
+        }
+        if (!project.getTasks().contains(this)) project.addNewTask(this);
+        DatabaseManager.updateTask(this);
+    }
+
     public void distributeAddDependency(Task task) {
         this.dependencies.add(task);
     }
@@ -366,5 +375,10 @@ public class Task {
      */
     public void setLambda(double lambda) {
         this.lambda = lambda;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
