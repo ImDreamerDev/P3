@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":9,"i4":10,"i5":10,"i6":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":9,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -182,18 +182,28 @@ extends javafx.application.Application</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>(package private) java.util.List&lt;<a href="models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deps">deps</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>private javafx.scene.control.PasswordField</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#passwordField">passwordField</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private <a href="models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#projectManager">projectManager</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#selectedProjectId">selectedProjectId</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private javafx.collections.transformation.SortedList&lt;<a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sortedList">sortedList</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -254,38 +264,59 @@ extends javafx.application.Application</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>private void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawTasks(dk.aau.ds304e18.models.Project,javafx.scene.layout.AnchorPane)">drawTasks</a></span>&#8203;(<a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;pro,
-         javafx.scene.layout.AnchorPane&nbsp;pane)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calc(dk.aau.ds304e18.models.Project,boolean)">calc</a></span>&#8203;(<a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;pro,
+    boolean&nbsp;useMonty)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>private boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isFirstLetter(java.lang.String)">isFirstLetter</a></span>&#8203;(java.lang.String&nbsp;str)</code></th>
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawInputTab()">drawInputTab</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>private void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#logIn()">logIn</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawProjectsTab(boolean)">drawProjectsTab</a></span>&#8203;(boolean&nbsp;useMonty)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#main(java.lang.String%5B%5D)">main</a></span>&#8203;(java.lang.String[]&nbsp;args)</code></th>
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawTasks(dk.aau.ds304e18.models.Project,javafx.scene.layout.AnchorPane)">drawTasks</a></span>&#8203;(<a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;pro,
+         javafx.scene.layout.AnchorPane&nbsp;pane)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>private void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onLogIn()">onLogIn</a></span>()</code></th>
+<td class="colFirst"><code>private boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isFirstLetter(java.lang.String)">isFirstLetter</a></span>&#8203;(java.lang.String&nbsp;str)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>private void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUpView()">setUpView</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#logIn()">logIn</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#main(java.lang.String%5B%5D)">main</a></span>&#8203;(java.lang.String[]&nbsp;args)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupInputTab()">setupInputTab</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupProjectTab()">setupProjectTab</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#start(javafx.stage.Stage)">start</a></span>&#8203;(javafx.stage.Stage&nbsp;stage)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>private javafx.collections.transformation.SortedList&lt;<a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateProjects()">updateProjects</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -367,10 +398,28 @@ extends javafx.application.Application</pre>
 <a id="vBoxLogin">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>vBoxLogin</h4>
 <pre>private&nbsp;javafx.scene.layout.VBox vBoxLogin</pre>
+</li>
+</ul>
+<a id="sortedList">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>sortedList</h4>
+<pre>private&nbsp;javafx.collections.transformation.SortedList&lt;<a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt; sortedList</pre>
+</li>
+</ul>
+<a id="deps">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>deps</h4>
+<pre>java.util.List&lt;<a href="models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt; deps</pre>
 </li>
 </ul>
 </li>
@@ -402,13 +451,40 @@ extends javafx.application.Application</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="onLogIn()">
+<a id="setupProjectTab()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>onLogIn</h4>
-<pre class="methodSignature">private&nbsp;void&nbsp;onLogIn()</pre>
+<h4>setupProjectTab</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;setupProjectTab()</pre>
+</li>
+</ul>
+<a id="drawInputTab()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>drawInputTab</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;drawInputTab()</pre>
+</li>
+</ul>
+<a id="updateProjects()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updateProjects</h4>
+<pre class="methodSignature">private&nbsp;javafx.collections.transformation.SortedList&lt;<a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;&nbsp;updateProjects()</pre>
+</li>
+</ul>
+<a id="setupInputTab()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setupInputTab</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;setupInputTab()</pre>
 </li>
 </ul>
 <a id="start(javafx.stage.Stage)">
@@ -424,13 +500,23 @@ extends javafx.application.Application</pre>
 </dl>
 </li>
 </ul>
-<a id="setUpView()">
+<a id="calc(dk.aau.ds304e18.models.Project,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>setUpView</h4>
-<pre class="methodSignature">private&nbsp;void&nbsp;setUpView()</pre>
+<h4>calc</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;calc&#8203;(<a href="models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;pro,
+                  boolean&nbsp;useMonty)</pre>
+</li>
+</ul>
+<a id="drawProjectsTab(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>drawProjectsTab</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;drawProjectsTab&#8203;(boolean&nbsp;useMonty)</pre>
 </li>
 </ul>
 <a id="drawTasks(dk.aau.ds304e18.models.Project,javafx.scene.layout.AnchorPane)">
