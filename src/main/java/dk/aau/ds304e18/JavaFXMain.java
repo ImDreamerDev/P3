@@ -251,12 +251,16 @@ public class JavaFXMain extends Application {
         setupInputTab();
         if (pro.getSequence() != null) {
             drawTasks(pro, pane);
-            if (useMonty)
+            if (useMonty) {
                 ((ListView) ((AnchorPane) content.lookup("#outputPane")).getChildren().get(0))
                         .setItems(FXCollections.observableArrayList(ParseSequence.parseToSingleList(pro, true)));
-            if (!useMonty)
+            } else if (!pro.getRecommendedPath().equals("")) {
+                ((ListView) ((AnchorPane) content.lookup("#outputPane")).getChildren().get(0))
+                        .setItems(FXCollections.observableArrayList(ParseSequence.parseToSingleList(pro, true)));
+            } else if (pro.getRecommendedPath().equals(""))
                 ((ListView) ((AnchorPane) content.lookup("#outputPane")).getChildren().get(0))
                         .getItems().clear();
+
             pane.getChildren().add(new Text(10, 10, "Time: " + pro.getDuration()));
         }
     }
