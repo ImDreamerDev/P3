@@ -36,6 +36,7 @@ public class JavaFXMain extends Application {
         try {
             rootPane = loader.load();
             image = new Image(getClass().getResource("/bg.png").toExternalForm());
+            stage.getIcons().add(new Image(getClass().getResource("/icon.png").toExternalForm()));
         } catch (IOException e) {
             e.printStackTrace();
         }
