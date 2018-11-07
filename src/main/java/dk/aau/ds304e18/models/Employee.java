@@ -158,7 +158,8 @@ public class Employee {
 
         if (project != null) {
             this.project = project;
-            DatabaseManager.updateEmployee(this);
+            if (project.getId() != getProjectId())
+                DatabaseManager.updateEmployee(this);
             if (!project.getEmployees().contains(this)) project.addNewEmployee(this);
         }
     }

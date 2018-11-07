@@ -107,7 +107,7 @@ public class Project {
     public void addNewEmployee(Employee... employee) {
         employees.addAll(Arrays.asList(employee));
         for (Employee emp : employee) {
-            if (emp.getProject() == null || !emp.getProject().equals(this))
+            if (emp.getProjectId() != this.id)
                 emp.setProject(this);
         }
     }
