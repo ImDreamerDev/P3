@@ -1,31 +1,25 @@
 package dk.aau.ds304e18;
 
 import dk.aau.ds304e18.database.DatabaseManager;
-import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
-import dk.aau.ds304e18.models.Task;
-import dk.aau.ds304e18.sequence.ParseSequence;
-import dk.aau.ds304e18.sequence.Sequence;
 import dk.aau.ds304e18.ui.InputTab;
 import dk.aau.ds304e18.ui.OutputTab;
 import dk.aau.ds304e18.ui.ProjectTab;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class JavaFXMain extends Application {
@@ -34,19 +28,29 @@ public class JavaFXMain extends Application {
     private PasswordField passwordField;
     private VBox vBoxLogin;
     public static int selectedProjectId;
+    private Image image;
 
     @Override
     public void start(Stage stage) {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("main.fxml"));
         try {
             rootPane = loader.load();
+            image = new Image(getClass().getResource("/bg.png").toExternalForm());
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                new BackgroundPosition(Side.LEFT, 0.5, true, Side.TOP, 0.1, true), new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, false));
+        // Background color
+        //  rootPane.lookup("#loginPane").getParent().setStyle("-fx-background-color: black");
+        ((Pane) rootPane.lookup("#loginPane")).setBackground(new Background(backgroundImage));
         rootPane.lookup("#loginPane").setVisible(true);
-        vBoxLogin = ((VBox) ((Pane) rootPane.getChildrenUnmodifiable().get(2)).getChildrenUnmodifiable().get(0));
+        vBoxLogin = ((VBox) rootPane.lookup("#loginPane"));
         Button loginButton = ((Button) vBoxLogin.getChildrenUnmodifiable().get(3));
         usernameField = (TextField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(0)).getChildren().get(1);
+        //Username label color
+        //  ((Label) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(0)).getChildren().get(0)).setTextFill(Color.WHITE);
         usernameField.setOnKeyPressed(ke -> {
             if (ke.getCode().equals(KeyCode.ENTER)) {
                 logIn();
@@ -54,6 +58,8 @@ public class JavaFXMain extends Application {
         });
 
         passwordField = (PasswordField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(1)).getChildren().get(1);
+        // Password label color
+        //  ((Label) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(1)).getChildren().get(0)).setTextFill(Color.WHITE);
         passwordField.setOnKeyPressed(ke -> {
             if (ke.getCode().equals(KeyCode.ENTER)) {
                 logIn();
