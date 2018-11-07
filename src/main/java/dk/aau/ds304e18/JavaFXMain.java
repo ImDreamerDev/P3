@@ -8,7 +8,6 @@ import dk.aau.ds304e18.ui.ProjectTab;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,12 +17,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import javax.imageio.ImageIO;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 
 public class JavaFXMain extends Application {
