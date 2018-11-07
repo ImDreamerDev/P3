@@ -24,16 +24,19 @@ public class MonteCarlo {
 
         int i = 0;
         String bestSequence = "";
+        String worstSequence = "";
         double bestTime = -1;
-        //double worstTime = -1; //May be used in the future
+        double worstTime = -1; //May be used in the future
 
         while (i < monteCarloRepeats) {
 
             project.setRecommendedPath(findRandomSequence(project));
             estimateTime(project, true);
 
-            //if(project.getDuration() > worstTime || worstTime == -1)
-            //worstTime = project.getDuration();
+            if(project.getDuration() > worstTime || worstTime == -1) {
+                worstSequence = project.getRecommendedPath();
+                worstTime = project.getDuration();
+            }
 
             if (project.getDuration() < bestTime || bestTime == -1) {
                 //Set the best sequences and best times
@@ -44,6 +47,8 @@ public class MonteCarlo {
             i++;
         }
 
+        System.out.println("Worst time: " + worstTime);
+        System.out.println("With path: " + worstSequence);
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
 
@@ -57,6 +62,7 @@ public class MonteCarlo {
         List<Task> tasksToBeRemoved = new ArrayList<>();
         Collections.shuffle(tasksNotSequenced);
 
+        //TODO: Optimize this to actually give relevant paths for multiple employees (etc. if there are 2 employees, the first 2 tasks shouldn't have dependencies if possible
         while (tasksLeft > 0) {
             for (Task task : tasksNotSequenced) {
                 if (!tasksSequenced.containsAll(task.getDependencies())) continue;
@@ -179,6 +185,7 @@ class EstimateTimeCallable implements Callable<Double> {
                     durations.add(0d);
                 }
 
+                //TODO: Consider instead of checking if they're the same size, deleting tasks from a local copy of taskList
                 while(taskList.size() != tasksDone.size()){
 
                     for(int j = 0; j < amountEmployees; j++) {

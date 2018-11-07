@@ -27,7 +27,7 @@ public class Main {
 
         project.addNewEmployee(new Employee("Milton"));
         project.addNewEmployee(new Employee("Rasmus"));
-        /*project.addNewEmployee(new Employee("Kasper"));
+        project.addNewEmployee(new Employee("Kasper"));
         project.addNewEmployee(new Employee("Emil"));
         /*project.addNewEmployee(new Employee("Test2"));
         project.addNewEmployee(new Employee("Test2"));
@@ -100,8 +100,6 @@ public class Main {
         //Instant start2 = java.time.Instant.now();
         //MonteCarlo.estimateTime(project, true, 1000000);
         //Instant end2 = java.time.Instant.now();
-
-        System.out.println("Duration of the project: " + project.getDuration());
 
         Duration between = java.time.Duration.between(start, end);
         System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
