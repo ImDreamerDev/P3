@@ -61,7 +61,7 @@ public class JavaFXMain extends Application {
         });
         loginButton.setOnMouseClicked(event -> logIn());
         Scene scene = new Scene(rootPane, 1280, 720);
-        stage.setTitle("Project planner 2k18 Git rect edition");
+        stage.setTitle("Project planner 2k18");
         //stage.getIcons().add();
         stage.setScene(scene);
         stage.show();
