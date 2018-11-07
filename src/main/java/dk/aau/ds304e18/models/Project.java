@@ -46,6 +46,9 @@ public class Project {
      */
     private final List<Employee> employees = new ArrayList<>();
 
+    /**
+     * The calculated recommended path for the tasks in the project
+     */
     private String recommendedPath;
 
     /**

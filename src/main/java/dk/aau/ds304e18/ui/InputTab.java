@@ -39,6 +39,9 @@ public class InputTab {
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
     }
 
+    /**
+     * The method that sets up the contents of the whole input tab.
+     */
     private void setupInputTab() {
         var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
 
@@ -101,6 +104,11 @@ public class InputTab {
         drawInputTab();
     }
 
+    /**
+     * This method calculates and produces the output.
+     * @param pro
+     * @param useMonty - the monte carlo method is used.
+     */
     private void calculate(Project pro, boolean useMonty) {
         Instant start = java.time.Instant.now();
 
@@ -114,12 +122,23 @@ public class InputTab {
                 between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
     }
 
+    /**
+     * This method is used to make sure that the estimated time and all the textboxes that only are supposed to take numeric values,
+     * actually contain numeric values.
+     * @param textField - the textbox
+     * @param newValue - the contents of the textbox
+     */
     private void validateNumericInput(TextField textField, String newValue) {
         if (!newValue.matches("\\d*")) {
             textField.setText(newValue.replaceAll("[\\D]", ""));
         }
     }
 
+    /**
+     * This method clears the whole inputfield for creating a new task. This means all the textboxes and the dependencies table.
+     * @param listViewDependency - the list of dependencies
+     * @param textFields - the specific textbox
+     */
     private void clearInputFields(ListView<Task> listViewDependency, TextField... textFields) {
         for (TextField textField : textFields)
             textField.clear();
@@ -127,6 +146,14 @@ public class InputTab {
         listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
     }
 
+    /**
+     * The method for adding a task.
+     * @param name - The name of the task - filled into the textbox.
+     * @param estimatedTime - filled into the textbox.
+     * @param priority - filled into textbox.
+     * @param probabilities - filled into textbox.
+     * @param tableView - the dependencies table - these are added through the addDependency method.
+     */
     private void addTask(String name, double estimatedTime, int priority, List<Probabilities> probabilities, TableView<Task> tableView) {
         Task ttt = new Task(name, estimatedTime, priority,
                 LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
@@ -137,6 +164,10 @@ public class InputTab {
                 stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
     }
 
+    /**
+     * Method for revoming a dependency from the new task. This happens by selecting the task and pressing the remove button.
+     * @param listViewDependency
+     */
     private void removeDependency(ListView<Task> listViewDependency) {
         Task task = listViewDependency.getSelectionModel().getSelectedItem();
         if (taskDependencies.contains(task)) {
@@ -145,6 +176,10 @@ public class InputTab {
         }
     }
 
+    /**
+     * Method for adding a dependency to a new task.
+     * @param listViewDependency
+     */
     private void addDependency(ListView<Task> listViewDependency) {
         int taskId = (int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
         Task task = LocalObjStorage.getTaskById(taskId);
@@ -154,6 +189,9 @@ public class InputTab {
         }
     }
 
+    /**
+     * Method for removing a task. A task is selected in the table, and then if the button(cancel task) is pressed the task is removed.
+     */
     private void removeTask() {
         int taskId = (int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
         Project project = LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId);
@@ -165,6 +203,9 @@ public class InputTab {
                 stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
     }
 
+    /**
+     * The method that sets up the task table.
+     */
     private void setUpTaskTable() {
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
         tableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));

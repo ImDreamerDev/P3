@@ -7,10 +7,7 @@ import dk.aau.ds304e18.models.Task;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.*;
 
 public class MonteCarlo {
@@ -105,8 +102,6 @@ public class MonteCarlo {
         //The duration that will be counted up and then divided by the amount of repeats we have
         double duration = 0.0;
 
-        Random r = new Random();
-
         //For each task in taskList
         for (Task task : taskList) {
 
@@ -120,13 +115,14 @@ public class MonteCarlo {
 
         }
 
+        //Get number of threads
         int numOfThreads = Runtime.getRuntime().availableProcessors();
 
         ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
         //create a list to hold the Future object associated with Callable
         List<Future<Double>> list = new ArrayList<Future<Double>>();
         //Create MyCallable instance
-        Callable<Double> callable = new EstimateTimeCallable(taskList, numOfThreads, monteCarloRepeats);
+        Callable<Double> callable = new EstimateTimeCallable(taskList, project.getEmployees().size(), numOfThreads, monteCarloRepeats);
         for (int i = 0; i < numOfThreads; i++) {
             //submit Callable tasks to be executed by thread pool
             Future<Double> future = executor.submit(callable);
@@ -154,11 +150,13 @@ public class MonteCarlo {
 
 class EstimateTimeCallable implements Callable<Double> {
     private List<Task> taskList;
+    private int amountEmployees;
     private int numOfThreads;
     private int numOfMonte;
 
-    public EstimateTimeCallable(List<Task> taskList, int numOfThreads, int numOfMonte) {
+    public EstimateTimeCallable(List<Task> taskList, int amountEmployees, int numOfThreads, int numOfMonte) {
         this.taskList = taskList;
+        this.amountEmployees = amountEmployees;
         this.numOfThreads = numOfThreads;
         this.numOfMonte = numOfMonte;
     }
@@ -166,22 +164,96 @@ class EstimateTimeCallable implements Callable<Double> {
     @Override
     public Double call() throws Exception {
         Random r = new Random();
-        //Repeat monteCarloRepeats time
         double duration = 0.0;
         int repeats = numOfMonte / numOfThreads;
+        //Repeat repeats time
         for (int i = 0; i < repeats; i++) {
 
-            //For each task in the taskList
-            for (Task task : taskList) {
+            if(amountEmployees > 1) {
 
-                //Create a random double between 0 and 100
-                double rand = r.nextDouble() * 100;
+                List<Task> tasksDone = new ArrayList<>();
+                List<Double> durations = new ArrayList<>();
+                HashMap<Task, Double> taskDoneAt = new HashMap<>();
 
-                //Create an inverse gaussian distribution for the task
-                InverseGaussian invG = new InverseGaussian(task.getEstimatedTime(), task.getLambda());
+                for(int j = 0; j < amountEmployees; j++){
+                    durations.add(0d);
+                }
 
-                //Calculate the duration at the given random value and add that to duration
-                duration += invG.getDuration(rand);
+                while(taskList.size() != tasksDone.size()){
+
+                    for(int j = 0; j < amountEmployees; j++) {
+
+                        if(!(0 + durations.get(j) == 0 + Collections.min(durations))) continue;
+
+                        boolean temp = false;
+                        for (Task task : taskList) {
+                            if (tasksDone.contains(task)) continue;
+
+                            if (tasksDone.containsAll(task.getDependencies())) {
+
+                                boolean skip = false;
+
+                                for(Task dependency : task.getDependencies()){
+                                    if(taskDoneAt.get(dependency) > durations.get(j))
+                                        skip = true;
+                                }
+
+                                if(skip)
+                                    continue;
+
+                                temp = true;
+
+                                //Create a random double between 0 and 100
+                                double rand = r.nextDouble() * 100;
+
+                                //Create an inverse gaussian distribution for the task
+                                InverseGaussian invG = new InverseGaussian(task.getEstimatedTime(), task.getLambda());
+
+                                //Calculate the duration at the given random value and add that to duration
+                                durations.set(j, durations.get(j) + invG.getDuration(rand));
+
+                                taskDoneAt.put(task, durations.get(j));
+                                tasksDone.add(task);
+
+                                if (!(durations.indexOf(Collections.min(durations)) == j))
+                                    break;
+
+                            }
+
+                        }
+
+                        if(!temp) {
+                            int temp2 = durations.indexOf(Collections.min(durations));
+                            List<Double> tempDurations = new ArrayList<>();
+                            for (Double d : durations){
+                                if (d > durations.get(temp2))
+                                    tempDurations.add(d);
+                            }
+                            if(tempDurations.size() != 0)
+                                durations.set(temp2, 0 + Collections.min(tempDurations));
+                        }
+
+                    }
+
+                }
+
+                duration += durations.get(durations.indexOf(Collections.max(durations)));
+
+            }else {
+
+                //For each task in the taskList
+                for (Task task : taskList) {
+
+                    //Create a random double between 0 and 100
+                    double rand = r.nextDouble() * 100;
+
+                    //Create an inverse gaussian distribution for the task
+                    InverseGaussian invG = new InverseGaussian(task.getEstimatedTime(), task.getLambda());
+
+                    //Calculate the duration at the given random value and add that to duration
+                    duration += invG.getDuration(rand);
+
+                }
 
             }
 
