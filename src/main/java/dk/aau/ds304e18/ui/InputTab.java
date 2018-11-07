@@ -8,6 +8,7 @@ import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.Sequence;
 import javafx.collections.FXCollections;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -28,6 +29,7 @@ public class InputTab {
     private Parent rootPane;
     private OutputTab outputTab;
     private TableView<Task> tableView;
+    public static HBox progressBarContainer;
 
     public InputTab(Parent rootPane, OutputTab outputTab) {
         this.rootPane = rootPane;
@@ -60,6 +62,7 @@ public class InputTab {
         ListView<Task> listViewDependency = ((ListView<Task>) inputVBox.getChildren().get(11));
         HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
         HBox bottomButtonsHBox = (HBox) inputVBox.getChildren().get(13);
+        progressBarContainer = ((HBox) flowPane.getChildren().get(3));
 
         priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue));
         estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(estimatedTimeTextField, newValue));
@@ -106,6 +109,7 @@ public class InputTab {
 
     /**
      * This method calculates and produces the output.
+     *
      * @param pro
      * @param useMonty - the monte carlo method is used.
      */
@@ -125,8 +129,9 @@ public class InputTab {
     /**
      * This method is used to make sure that the estimated time and all the textboxes that only are supposed to take numeric values,
      * actually contain numeric values.
+     *
      * @param textField - the textbox
-     * @param newValue - the contents of the textbox
+     * @param newValue  - the contents of the textbox
      */
     private void validateNumericInput(TextField textField, String newValue) {
         if (!newValue.matches("\\d*")) {
@@ -136,8 +141,9 @@ public class InputTab {
 
     /**
      * This method clears the whole inputfield for creating a new task. This means all the textboxes and the dependencies table.
+     *
      * @param listViewDependency - the list of dependencies
-     * @param textFields - the specific textbox
+     * @param textFields         - the specific textbox
      */
     private void clearInputFields(ListView<Task> listViewDependency, TextField... textFields) {
         for (TextField textField : textFields)
@@ -148,11 +154,12 @@ public class InputTab {
 
     /**
      * The method for adding a task.
-     * @param name - The name of the task - filled into the textbox.
+     *
+     * @param name          - The name of the task - filled into the textbox.
      * @param estimatedTime - filled into the textbox.
-     * @param priority - filled into textbox.
+     * @param priority      - filled into textbox.
      * @param probabilities - filled into textbox.
-     * @param tableView - the dependencies table - these are added through the addDependency method.
+     * @param tableView     - the dependencies table - these are added through the addDependency method.
      */
     private void addTask(String name, double estimatedTime, int priority, List<Probabilities> probabilities, TableView<Task> tableView) {
         Task ttt = new Task(name, estimatedTime, priority,
@@ -166,6 +173,7 @@ public class InputTab {
 
     /**
      * Method for revoming a dependency from the new task. This happens by selecting the task and pressing the remove button.
+     *
      * @param listViewDependency
      */
     private void removeDependency(ListView<Task> listViewDependency) {
@@ -178,6 +186,7 @@ public class InputTab {
 
     /**
      * Method for adding a dependency to a new task.
+     *
      * @param listViewDependency
      */
     private void addDependency(ListView<Task> listViewDependency) {

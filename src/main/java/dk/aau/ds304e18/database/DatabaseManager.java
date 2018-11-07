@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public class DatabaseManager {
 
@@ -515,7 +516,92 @@ public class DatabaseManager {
     /**
      * Retrieves everything from the database and converts it to objects.
      */
+    public static javafx.concurrent.Task<Void> distributeModelsTask() {
+        return new javafx.concurrent.Task<>() {
+            @Override
+            public Void call() {
+
+                if (isCancelled()) {
+                    return null;
+                }
+                updateProgress(0, 6);
+                List<Employee> employees = getAllEmployees();
+                if (employees == null) return null;
+                employees.forEach(LocalObjStorage::addEmployee);
+                // DatabaseManager.distributeModels();
+                updateProgress(1, 5);
+                List<Project> ongoingProjects = getAllProjects();
+                if (ongoingProjects != null) {
+                    ongoingProjects.forEach(LocalObjStorage::addProject);
+                }
+                updateProgress(2, 5);
+                List<ProjectManager> projectManagers = getAllProjectManagers();
+                if (projectManagers != null) {
+                    for (ProjectManager projectManager : projectManagers) {
+                        if (projectManager.getCurrentProjectId() != 0) {
+                            Project project = LocalObjStorage.getProjectById(projectManager.getCurrentProjectId());
+                            projectManager.setCurrentProject(project);
+                            project.setCreator(projectManager);
+                            if (project.getState() != ProjectState.ONGOING)
+                                project.setState(ProjectState.ONGOING);
+                        }
+                        List<Integer> projectIds = new ArrayList<>(projectManager.getOldProjectsId());
+                        for (Integer projectId : projectIds) {
+                            Project oldProject = LocalObjStorage.getProjectById(projectId);
+                            oldProject.setCreator(projectManager);
+                            if (oldProject.getState() != ProjectState.ARCHIVED)
+                                oldProject.setState(ProjectState.ARCHIVED);
+                            projectManager.addOldProject(oldProject);
+                        }
+
+                        LocalObjStorage.addProjectManager(projectManager);
+                    }
+
+                }
+                updateProgress(3, 5);
+
+                for (Employee emp : LocalObjStorage.getEmployeeList()) {
+                    emp.setProject(LocalObjStorage.getProjectById(emp.getProjectId()));
+                    if (emp.getProjectId() != 0)
+                        LocalObjStorage.getProjectById(emp.getProjectId()).addNewEmployee(emp);
+                }
+
+                updateProgress(4, 5);
+                LocalObjStorage.getTaskList().addAll(getAllTasks());
+                List<Integer> employeesToRemove = new ArrayList<>();
+                for (Task task : LocalObjStorage.getTaskList()) {
+                    Project project = LocalObjStorage.getProjectById(task.getProjectId());
+                    if (project != null)
+                        project.addNewTask(task);
+                    for (Integer employeeId : task.getEmployeeIds()) {
+                        Employee emp = LocalObjStorage.getEmployeeById(employeeId);
+                        if (emp != null) {
+                            task.addEmployee(emp);
+                            emp.distributeAddTask(task);
+                        } else {
+                            employeesToRemove.add(employeeId);
+                        }
+
+                    }
+                    task.getEmployeeIds().removeAll(employeesToRemove);
+
+                    // DatabaseManager.updateTask(task);
+
+                    for (Integer dependencyId : task.getDependencyIds()) {
+                        task.distributeAddDependency(LocalObjStorage.getTaskById(dependencyId));
+                    }
+                }
+                updateProgress(5, 5);
+                
+                return null;
+            }
+        };
+
+
+    }
+
     public static void distributeModels() {
+
         List<Employee> employees = getAllEmployees();
         if (employees == null) return;
         employees.forEach(LocalObjStorage::addEmployee);
@@ -549,7 +635,6 @@ public class DatabaseManager {
 
         }
 
-
         for (Employee emp : LocalObjStorage.getEmployeeList()) {
             emp.setProject(LocalObjStorage.getProjectById(emp.getProjectId()));
             if (emp.getProjectId() != 0)
@@ -569,12 +654,8 @@ public class DatabaseManager {
                 } else {
                     employeesToRemove.add(employeeId);
                 }
-
             }
             task.getEmployeeIds().removeAll(employeesToRemove);
-
-            // DatabaseManager.updateTask(task);
-
             for (Integer dependencyId : task.getDependencyIds()) {
                 task.distributeAddDependency(LocalObjStorage.getTaskById(dependencyId));
             }

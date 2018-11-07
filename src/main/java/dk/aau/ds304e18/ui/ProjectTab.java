@@ -13,6 +13,7 @@ import dk.aau.ds304e18.models.ProjectState;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -28,6 +29,7 @@ public class ProjectTab {
     private InputTab inputTab;
     private TableView<Project> tableView;
     private FilteredList<Project> flProjects;
+    private HBox projectToolBar;
 
 
     public ProjectTab(Parent rootPane, ProjectManager projectManager, InputTab inputTab) {
@@ -45,19 +47,21 @@ public class ProjectTab {
     @SuppressWarnings("unchecked")
     private void setupProjectTab() {
         tableView = ((TableView<Project>) rootPane.lookup("#projectView"));
+        projectToolBar = ((HBox) rootPane.lookup("#projectToolbar"));
         setUpProjectTable();
         tableView.setOnMouseClicked(event -> onTableElementSelected());
+
+
+        Button createButton = ((Button) projectToolBar.getChildren().get(2));
+        createButton.setOnMouseClicked(event -> createProject(((TextField) projectToolBar.getChildrenUnmodifiable().get(1))));
+
+        Button archiveButton = ((Button) projectToolBar.getChildren().get(5));
+        archiveButton.setOnMouseClicked(event -> archiveProject());
 
         CheckBox showArchived = ((CheckBox) rootPane.lookup("#showArchivedCheckbox"));
         showArchived.selectedProperty().addListener((ov, old_val, new_val) -> onShowArchived(new_val));
 
-        Button createButton = ((Button) tableView.getParent().getChildrenUnmodifiable().get(0));
-        createButton.setOnMouseClicked(event -> createProject(((TextField) tableView.getParent().getChildrenUnmodifiable().get(2)).getText()));
-
-        Button archiveButton = ((Button) tableView.getParent().getChildrenUnmodifiable().get(3));
-        archiveButton.setOnMouseClicked(event -> archiveProject());
-
-        TextField searchField = ((TextField) ((HBox) tableView.getParent().getChildrenUnmodifiable().get(5)).getChildren().get(1));
+        TextField searchField = ((TextField) projectToolBar.getChildren().get(7));
         searchField.setPromptText("Search here!");
         searchField.setOnKeyReleased(keyEvent -> search(searchField, showArchived));
     }
@@ -65,6 +69,7 @@ public class ProjectTab {
     /**
      * Method that is used in the Search Function. If the first letter in the search is a string then the name of the project is searched for
      * if it is a number the Id is used.
+     *
      * @param str
      * @return true - if it is a letter - false if is a number.
      */
@@ -79,10 +84,12 @@ public class ProjectTab {
 
     /**
      * Method for creating a new project.
+     *
      * @param projectName - the name of the project.
      */
-    private void createProject(String projectName) {
-        new Project(projectName, projectManager);
+    private void createProject(TextField projectName) {
+        new Project(projectName.getText(), projectManager);
+        projectName.clear();
         sortedList = updateProjects();
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
@@ -91,7 +98,8 @@ public class ProjectTab {
 
     /**
      * Method for searching for projects using the textbox
-     * @param searchField - the inputfield for the text.
+     *
+     * @param searchField  - the inputfield for the text.
      * @param showArchived - if the show archived box is toggled or not.
      */
     private void search(TextField searchField, CheckBox showArchived) {
@@ -124,6 +132,7 @@ public class ProjectTab {
 
     /**
      * Method for the display archived box.
+     *
      * @param new_val
      */
     private void onShowArchived(boolean new_val) {
@@ -143,6 +152,7 @@ public class ProjectTab {
                 ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue())) {
             JavaFXMain.selectedProjectId = ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue());
             inputTab.drawInputTab();
+            ((Label) projectToolBar.getChildren().get(4)).setText("Selected: " + LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getName());
         }
     }
 

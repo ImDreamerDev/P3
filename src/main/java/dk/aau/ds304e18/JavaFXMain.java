@@ -6,14 +6,12 @@ import dk.aau.ds304e18.ui.InputTab;
 import dk.aau.ds304e18.ui.OutputTab;
 import dk.aau.ds304e18.ui.ProjectTab;
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
@@ -29,6 +27,7 @@ public class JavaFXMain extends Application {
     private VBox vBoxLogin;
     public static int selectedProjectId;
     private Image image;
+    private static boolean useTasks;
 
     @Override
     public void start(Stage stage) {
@@ -46,7 +45,7 @@ public class JavaFXMain extends Application {
         // Background color
         //  rootPane.lookup("#loginPane").getParent().setStyle("-fx-background-color: black");
         ((Pane) rootPane.lookup("#loginPane")).setBackground(new Background(backgroundImage));
-        rootPane.lookup("#loginPane").setVisible(true);
+        rootPane.lookup("#loginPane").getParent().setVisible(true);
         vBoxLogin = ((VBox) rootPane.lookup("#loginPane"));
         Button loginButton = ((Button) vBoxLogin.getChildrenUnmodifiable().get(3));
         usernameField = (TextField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(0)).getChildren().get(1);
@@ -68,14 +67,26 @@ public class JavaFXMain extends Application {
         });
         loginButton.setOnMouseClicked(event -> logIn());
         Scene scene = new Scene(rootPane, 1280, 720);
-        stage.setTitle("Project planner 2k18");
-        //stage.getIcons().add();
+        stage.setTitle("Planexus");
+        if (useTasks) {
+            Task<Void> voidTask = DatabaseManager.distributeModelsTask();
+            ProgressBar bar = new ProgressBar();
+            bar.progressProperty().bind(voidTask.progressProperty());
+            ((StackPane) rootPane.getChildrenUnmodifiable().get(2)).getChildren().add(bar);
+            voidTask.setOnSucceeded(observable -> ((StackPane) rootPane.getChildrenUnmodifiable().get(2)).getChildren().remove(bar));
+            voidTask.setOnFailed(observable -> bar.setStyle("-fx-progress-color: red"));
+            new Thread(voidTask).start();
+        }
+
         stage.setScene(scene);
         stage.show();
+
     }
 
 
     public static void main(String[] args) {
+        if (args.length != 0 && args[0].equals("taskMode"))
+            useTasks = true;
         launch();
     }
 
@@ -90,7 +101,8 @@ public class JavaFXMain extends Application {
             error.setVisible(true);
         } else {
             rootPane.getChildrenUnmodifiable().get(2).setVisible(false);
-            DatabaseManager.distributeModels();
+            if (!useTasks)
+                DatabaseManager.distributeModels();
             pm = LocalObjStorage.getProjectManagerById(pm.getId());
             OutputTab outputTab = new OutputTab(rootPane);
             InputTab inputTab = new InputTab(rootPane, outputTab);
