@@ -9,6 +9,8 @@ import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
 import dk.aau.ds304e18.sequence.Sequence;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -132,18 +134,58 @@ public class JavaFXMain extends Application {
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         TextField nameTextField = ((TextField) inputVBox.getChildren().get(1));
         TextField priority = ((TextField) inputVBox.getChildren().get(3));
+        priority.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                priority.setText(newValue.replaceAll("[\\D]", ""));
+            }
+        });
         TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(5));
+        estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                estimatedTimeTextField.setText(newValue.replaceAll("[\\D]", ""));
+            }
+        });
         ListView<Task> listViewDeps = ((ListView<Task>) inputVBox.getChildren().get(11));
 
         HBox prorbsHBox = ((HBox) inputVBox.getChildren().get(7));
         TextField probs1 = ((TextField) prorbsHBox.getChildren().get(0));
+        probs1.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                probs1.setText(newValue.replaceAll("[\\D]", ""));
+            }
+        });
         TextField probs2 = ((TextField) prorbsHBox.getChildren().get(1));
+        probs2.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                probs2.setText(newValue.replaceAll("[\\D]", ""));
+            }
+        });
         HBox prorbsHBox2 = ((HBox) inputVBox.getChildren().get(8));
         TextField probs3 = ((TextField) prorbsHBox2.getChildren().get(0));
+        probs3.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                probs3.setText(newValue.replaceAll("[\\D]", ""));
+            }
+        });
         TextField probs4 = ((TextField) prorbsHBox2.getChildren().get(1));
+        probs4.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                probs4.setText(newValue.replaceAll("[\\D]", ""));
+            }
+        });
         HBox prorbsHBox3 = ((HBox) inputVBox.getChildren().get(9));
         TextField probs5 = ((TextField) prorbsHBox3.getChildren().get(0));
+        probs5.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                probs5.setText(newValue.replaceAll("[\\D]", ""));
+            }
+        });
         TextField probs6 = ((TextField) prorbsHBox3.getChildren().get(1));
+        probs6.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                probs6.setText(newValue.replaceAll("[\\D]", ""));
+            }
+        });
 
         HBox buttonsDeps = (HBox) inputVBox.getChildren().get(12);
         buttonsDeps.getChildren().get(0).setOnMouseClicked(event -> {
@@ -178,6 +220,20 @@ public class JavaFXMain extends Application {
             ttt.addDependency(deps);
             tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().
                     stream().filter(task -> task.getProject().getId() == selectedProjectId).collect(Collectors.toList())));
+        });
+        System.out.println(buttonHbox.getChildren().get(1).getClass().getSimpleName());
+        buttonHbox.getChildren().get(1).setOnMouseClicked(event -> {
+            probs1.clear();
+            probs2.clear();
+            probs3.clear();
+            probs4.clear();
+            probs5.clear();
+            probs6.clear();
+            priority.clear();
+            nameTextField.clear();
+            estimatedTimeTextField.clear();
+            deps.clear();
+            listViewDeps.setItems(FXCollections.observableArrayList(deps));
         });
         VBox vboxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
         vboxSplitter.getChildren().get(1).setOnMouseClicked(event -> calc(LocalObjStorage.getProjectById(selectedProjectId), ((CheckBox) vboxSplitter.getChildren().get(2)).isSelected()));
