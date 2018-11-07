@@ -5,8 +5,6 @@ import dk.aau.ds304e18.math.InverseGaussian;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.*;
 

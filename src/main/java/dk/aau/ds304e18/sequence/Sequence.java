@@ -80,7 +80,7 @@ public class Sequence {
         project.setSequence(sequencedTasks.toString());
 
         //Find the estimated time
-        if(!findSequenceMontecarlo || project.getEmployees().size() < 2)
+        if (!findSequenceMontecarlo || project.getEmployees().size() < 2)
             MonteCarlo.estimateTime(project);
     }
 
