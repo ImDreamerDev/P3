@@ -1,11 +1,7 @@
 package dk.aau.ds304e18;
 
 import dk.aau.ds304e18.database.DatabaseManager;
-import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
-import dk.aau.ds304e18.models.Task;
-import dk.aau.ds304e18.sequence.ParseSequence;
-import dk.aau.ds304e18.sequence.Sequence;
 import dk.aau.ds304e18.ui.InputTab;
 import dk.aau.ds304e18.ui.OutputTab;
 import dk.aau.ds304e18.ui.ProjectTab;
@@ -13,19 +9,17 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class JavaFXMain extends Application {
