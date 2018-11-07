@@ -137,6 +137,10 @@ public class InputTab {
                 stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
     }
 
+    /**
+     * Method for revoming a dependency from the new task. This happens by selecting the task and pressing the remove button.
+     * @param listViewDependency
+     */
     private void removeDependency(ListView<Task> listViewDependency) {
         Task task = listViewDependency.getSelectionModel().getSelectedItem();
         if (taskDependencies.contains(task)) {
@@ -145,6 +149,10 @@ public class InputTab {
         }
     }
 
+    /**
+     * Method for adding a dependency to a new task.
+     * @param listViewDependency
+     */
     private void addDependency(ListView<Task> listViewDependency) {
         int taskId = (int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
         Task task = LocalObjStorage.getTaskById(taskId);

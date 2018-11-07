@@ -128,7 +128,7 @@
                                           <TextField />
                                        </children>
                                     </HBox>
-                                    <Label text="Deps" />
+                                    <Label text="Dependencies" />
                                     <ListView prefHeight="196.0" prefWidth="202.0" />
                                     <HBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="222.0" spacing="30.0">
                                        <children>
