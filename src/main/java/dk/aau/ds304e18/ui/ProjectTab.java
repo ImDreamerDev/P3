@@ -62,6 +62,12 @@ public class ProjectTab {
         searchField.setOnKeyReleased(keyEvent -> search(searchField, showArchived));
     }
 
+    /**
+     * Method that is used in the Search Function. If the first letter in the search is a string then the name of the project is searched for
+     * if it is a number the Id is used.
+     * @param str
+     * @return true - if it is a letter - false if is a number.
+     */
     private boolean isFirstLetter(String str) {
         try {
             Integer.parseInt(str);
@@ -71,6 +77,10 @@ public class ProjectTab {
         return true;
     }
 
+    /**
+     * Method for creating a new project.
+     * @param projectName - the name of the project.
+     */
     private void createProject(String projectName) {
         new Project(projectName, projectManager);
         sortedList = updateProjects();
@@ -79,6 +89,11 @@ public class ProjectTab {
                 ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
     }
 
+    /**
+     * Method for searching for projects using the textbox
+     * @param searchField - the inputfield for the text.
+     * @param showArchived - if the show archived box is toggled or not.
+     */
     private void search(TextField searchField, CheckBox showArchived) {
         if (isFirstLetter(searchField.getText())) {
             flProjects.setPredicate(p -> Integer.toString(p.getId()).contains(searchField.getText().toLowerCase().trim()));
@@ -89,6 +104,9 @@ public class ProjectTab {
         showArchived.setSelected(!showArchived.isSelected());
     }
 
+    /**
+     * Method for setting up the table on the project tab.
+     */
     private void setUpProjectTable() {
         tableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         tableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory("name"));
@@ -104,6 +122,10 @@ public class ProjectTab {
 
     }
 
+    /**
+     * Method for the display archived box.
+     * @param new_val
+     */
     private void onShowArchived(boolean new_val) {
         if (!new_val)
             tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState()
@@ -113,6 +135,9 @@ public class ProjectTab {
                     == projectManager.getId()).collect(Collectors.toList())));
     }
 
+    /**
+     * Method for selecting a project.
+     */
     private void onTableElementSelected() {
         if (tableView.getSelectionModel().getSelectedIndex() != -1 && JavaFXMain.selectedProjectId !=
                 ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue())) {
@@ -121,6 +146,9 @@ public class ProjectTab {
         }
     }
 
+    /**
+     * Method for archiving an on going project.
+     */
     private void archiveProject() {
         if (JavaFXMain.selectedProjectId != 0) {
             projectManager.addOldProject(LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
