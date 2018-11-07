@@ -26,83 +26,40 @@ public class ProjectTab {
     private SortedList<Project> sortedList;
     private ProjectManager projectManager;
     private InputTab inputTab;
-  
+    private TableView<Project> tableView;
+    private FilteredList<Project> flProjects;
+
 
     public ProjectTab(Parent rootPane, ProjectManager projectManager, InputTab inputTab) {
         this.projectManager = projectManager;
-        this.rootPane = null;
         this.rootPane = rootPane;
         setupProjectTab();
         this.inputTab = inputTab;
     }
 
     private SortedList<Project> updateProjects() {
-        FilteredList<Project> flProjects = ((FilteredList<Project>) new FilteredList(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
+        FilteredList<Project> flProjects = new FilteredList<>(FXCollections.observableArrayList(LocalObjStorage.getProjectList()));
         return new SortedList<>(flProjects);
     }
 
     @SuppressWarnings("unchecked")
     private void setupProjectTab() {
+        tableView = ((TableView<Project>) rootPane.lookup("#projectView"));
+        setUpProjectTable();
+        tableView.setOnMouseClicked(event -> onTableElementSelected());
 
-        var tableView = ((TableView) rootPane.lookup("#projectView"));
-        ((TableColumn) tableView.getColumns().get(0)).setCellValueFactory(new PropertyValueFactory<Project, String>("id"));
-        ((TableColumn) tableView.getColumns().get(1)).setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
-        ((TableColumn) tableView.getColumns().get(2)).setCellValueFactory(new PropertyValueFactory<Project, String>("creator"));
-        ((TableColumn) tableView.getColumns().get(3)).setCellValueFactory(new PropertyValueFactory<Project, String>("sequence"));
-        ((TableColumn) tableView.getColumns().get(4)).setCellValueFactory(new PropertyValueFactory<Project, String>("duration"));
-        ((TableColumn) tableView.getColumns().get(5)).setCellValueFactory(new PropertyValueFactory<Project, String>("state"));
-        FilteredList<Project> flProjects = ((FilteredList<Project>) new FilteredList(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
-        sortedList = new SortedList<>(flProjects);
-        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         CheckBox showArchived = ((CheckBox) rootPane.lookup("#showArchivedCheckbox"));
-        tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
-                ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
-
-        showArchived.selectedProperty().addListener((ov, old_val, new_val) -> {
-            if (!new_val)
-                tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState()
-                        == ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
-            else
-                tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getCreator() != null && project.getCreator().getId()
-                        == projectManager.getId()).collect(Collectors.toList())));
-        });
-
-        tableView.setOnMouseClicked(event -> {
-            if (tableView.getSelectionModel().getSelectedIndex() != -1 && JavaFXMain.selectedProjectId !=
-                    ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue())) {
-                JavaFXMain.selectedProjectId = ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue());
-                inputTab.drawInputTab();
-            }
-        });
-
-        TextField textField = ((TextField) ((HBox) tableView.getParent().getChildrenUnmodifiable().get(5)).getChildren().get(1));
-        Button archiveButton = ((Button) tableView.getParent().getChildrenUnmodifiable().get(3));
-        archiveButton.setOnMouseClicked(event -> {
-            if (JavaFXMain.selectedProjectId != 0) {
-                projectManager.addOldProject(LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
-                tableView.getItems().remove(tableView.getSelectionModel().getSelectedIndex());
-            }
-        });
+        showArchived.selectedProperty().addListener((ov, old_val, new_val) -> onShowArchived(new_val));
 
         Button createButton = ((Button) tableView.getParent().getChildrenUnmodifiable().get(0));
-        createButton.setOnMouseClicked(event -> {
-            new Project(((TextField) tableView.getParent().getChildrenUnmodifiable().get(2)).getText(), projectManager);
-            sortedList = updateProjects();
-            sortedList.comparatorProperty().bind(tableView.comparatorProperty());
-            tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
-                    ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
-        });
+        createButton.setOnMouseClicked(event -> createProject(((TextField) tableView.getParent().getChildrenUnmodifiable().get(2)).getText()));
 
-        textField.setPromptText("Search here!");
-        textField.setOnKeyReleased(keyEvent -> {
-            if (isFirstLetter(textField.getText())) {
-                flProjects.setPredicate(p -> Integer.toString(p.getId()).contains(textField.getText().toLowerCase().trim()));
-            } else
-                flProjects.setPredicate(p -> p.getName().toLowerCase().contains(textField.getText().toLowerCase().trim()));
+        Button archiveButton = ((Button) tableView.getParent().getChildrenUnmodifiable().get(3));
+        archiveButton.setOnMouseClicked(event -> archiveProject());
 
-            showArchived.setSelected(!showArchived.isSelected());
-            showArchived.setSelected(!showArchived.isSelected());
-        });
+        TextField searchField = ((TextField) ((HBox) tableView.getParent().getChildrenUnmodifiable().get(5)).getChildren().get(1));
+        searchField.setPromptText("Search here!");
+        searchField.setOnKeyReleased(keyEvent -> search(searchField, showArchived));
     }
 
     private boolean isFirstLetter(String str) {
@@ -112,5 +69,62 @@ public class ProjectTab {
             return false;
         }
         return true;
+    }
+
+    private void createProject(String projectName) {
+        new Project(projectName, projectManager);
+        sortedList = updateProjects();
+        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
+                ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
+    }
+
+    private void search(TextField searchField, CheckBox showArchived) {
+        if (isFirstLetter(searchField.getText())) {
+            flProjects.setPredicate(p -> Integer.toString(p.getId()).contains(searchField.getText().toLowerCase().trim()));
+        } else
+            flProjects.setPredicate(p -> p.getName().toLowerCase().contains(searchField.getText().toLowerCase().trim()));
+
+        showArchived.setSelected(!showArchived.isSelected());
+        showArchived.setSelected(!showArchived.isSelected());
+    }
+
+    private void setUpProjectTable() {
+        tableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
+        tableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory("name"));
+        tableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory("creator"));
+        tableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory("sequence"));
+        tableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory("duration"));
+        tableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory("state"));
+        flProjects = (new FilteredList<Project>(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
+        sortedList = new SortedList<>(flProjects);
+        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
+                ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
+
+    }
+
+    private void onShowArchived(boolean new_val) {
+        if (!new_val)
+            tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState()
+                    == ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
+        else
+            tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getCreator() != null && project.getCreator().getId()
+                    == projectManager.getId()).collect(Collectors.toList())));
+    }
+
+    private void onTableElementSelected() {
+        if (tableView.getSelectionModel().getSelectedIndex() != -1 && JavaFXMain.selectedProjectId !=
+                ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue())) {
+            JavaFXMain.selectedProjectId = ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue());
+            inputTab.drawInputTab();
+        }
+    }
+
+    private void archiveProject() {
+        if (JavaFXMain.selectedProjectId != 0) {
+            projectManager.addOldProject(LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
+            tableView.getItems().remove(tableView.getSelectionModel().getSelectedIndex());
+        }
     }
 }
