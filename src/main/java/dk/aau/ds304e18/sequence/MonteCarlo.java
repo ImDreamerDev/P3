@@ -97,8 +97,6 @@ public class MonteCarlo {
 
     }
 
-    static int num = 0;
-
     /**
      * Estimates the time assuming only one task can be done at a time from a project and an amount of time to repeat the tasks
      *
@@ -108,12 +106,6 @@ public class MonteCarlo {
     public static void estimateTime(Project project, boolean rec, int monteCarloRepeats) {
         //Gets the task list from the project
         List<Task> taskList = ParseSequence.parseToSingleList(project, rec);
-        num++;
-        if (project.getEmployees().size() > 1) {
-            System.err.println("Abandon ship: " + num);
-            num = 0;
-            return;
-        }
         //For each task in taskList
         for (Task task : taskList) {
             //If the task does not have a lambda yet
@@ -175,5 +167,6 @@ public class MonteCarlo {
             });
             new Thread(doubleTask).start();
         }
+
     }
 }
