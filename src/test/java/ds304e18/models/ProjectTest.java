@@ -423,7 +423,7 @@ class ProjectTest {
      */
     @Test
     void TestProjectSetRecommendedPath01() {
-        Project newProject = new Project(1,"Test Project", ProjectState.ONGOING, "", 4.4, "");
+        Project newProject = new Project(1,"Test Project", ProjectState.ONGOING, "", 4.4, "",1);
 
         newProject.setRecommendedPath("Right then Left");
 
