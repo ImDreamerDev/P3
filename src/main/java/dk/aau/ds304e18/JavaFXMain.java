@@ -18,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -29,6 +30,9 @@ public class JavaFXMain extends Application {
     public static int selectedProjectId;
     private Image image;
     private static boolean useTasks;
+    private OutputTab outputTab;
+    private InputTab inputTab;
+    private ProjectTab projectTab;
 
     @Override
     public void start(Stage stage) {
@@ -66,6 +70,29 @@ public class JavaFXMain extends Application {
                 logIn();
             }
         });
+
+
+        ((Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1)).setOnMouseClicked(event -> {
+
+            //
+
+            Task<Void> voidTask = DatabaseManager.distributeModels(LocalObjStorage.getProjectManager().get(0));
+            ProgressBar bar = new ProgressBar();
+            bar.progressProperty().bind(voidTask.progressProperty());
+            ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().add(bar);
+            voidTask.setOnSucceeded(observable -> {
+                ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().remove(bar);
+                outputTab = new OutputTab(rootPane);
+                inputTab = new InputTab(rootPane, outputTab);
+                projectTab = new ProjectTab(rootPane, LocalObjStorage.getProjectManager().get(0), inputTab);
+                rootPane.getChildrenUnmodifiable().get(2).setVisible(false);
+            });
+            voidTask.setOnFailed(observable -> bar.setStyle("-fx-progress-color: red"));
+            new Thread(voidTask).start();
+
+
+        });
+
         loginButton.setOnMouseClicked(event -> logIn());
         Scene scene = new Scene(rootPane, 1280, 720);
         stage.setTitle("Planexus");
@@ -108,8 +135,6 @@ public class JavaFXMain extends Application {
             });
             voidTask.setOnFailed(observable -> bar.setStyle("-fx-progress-color: red"));
             new Thread(voidTask).start();
-
-
         }
     }
 }

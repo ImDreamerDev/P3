@@ -24,7 +24,7 @@ public class OutputTab {
         this.rootPane = rootPane;
     }
 
-    void drawOutputTab(boolean useMonty) {
+    public void drawOutputTab(boolean useMonty) {
         Project pro = LocalObjStorage.getProjectList().stream().filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
         assert pro != null;
         ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output: " +

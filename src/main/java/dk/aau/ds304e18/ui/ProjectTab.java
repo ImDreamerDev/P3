@@ -8,6 +8,7 @@ import dk.aau.ds304e18.models.ProjectState;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -39,7 +40,8 @@ public class ProjectTab {
     }
 
     @SuppressWarnings("unchecked")
-    private void setupProjectTab() {
+    public void setupProjectTab() {
+
         tableView = ((TableView<Project>) rootPane.lookup("#projectView"));
         projectToolBar = ((HBox) rootPane.lookup("#projectToolbar"));
         setUpProjectTable();
@@ -54,6 +56,7 @@ public class ProjectTab {
 
         CheckBox showArchived = ((CheckBox) rootPane.lookup("#showArchivedCheckbox"));
         showArchived.selectedProperty().addListener((ov, old_val, new_val) -> onShowArchived(new_val));
+        showArchived.setSelected(false);
 
         TextField searchField = ((TextField) projectToolBar.getChildren().get(7));
         searchField.setPromptText("Search here!");

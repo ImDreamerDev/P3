@@ -47,6 +47,7 @@
                         </Menu>
                     </menus>
                 </MenuBar>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="193.0" text="Update" />
             </children>
         </HBox>
         <TabPane id="tapPane" layoutX="7.0" layoutY="24.0" prefHeight="376.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">

@@ -76,7 +76,7 @@ public class InputTab {
     /**
      * The method that sets up the contents of the whole input tab.
      */
-    private void setupInputTab() {
+    public void setupInputTab() {
         var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
 
         //Table view
