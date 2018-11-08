@@ -2,6 +2,7 @@ package dk.aau.ds304e18.models;
 
 import dk.aau.ds304e18.database.DatabaseManager;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +37,9 @@ public class Project {
      */
     private double duration;
 
+
+    private double numberOfEmployees;
+
     /**
      * The list of tasks.
      */
@@ -67,13 +71,14 @@ public class Project {
         creator.setCurrentProject(this);
     }
 
-    public Project(int id, String name, ProjectState projectState, String sequence, double duration, String recommendedPath) {
+    public Project(int id, String name, ProjectState projectState, String sequence, double duration, String recommendedPath, double numberOfEmployees) {
         this.id = id;
         this.state = projectState;
         this.name = name;
         this.sequence = sequence;
         this.duration = duration;
         this.recommendedPath = recommendedPath;
+        this.numberOfEmployees = numberOfEmployees;
     }
 
     /**
@@ -233,5 +238,14 @@ public class Project {
 
     public void setRecommendedPath(String recommendedPath) {
         this.recommendedPath = recommendedPath;
+    }
+
+    public double getNumberOfEmployees() {
+        return numberOfEmployees;
+    }
+
+    public void setNumberOfEmployees(double numberOfEmployees) {
+        this.numberOfEmployees = numberOfEmployees;
+        DatabaseManager.updateProject(this);
     }
 }

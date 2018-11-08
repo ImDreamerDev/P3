@@ -17,8 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,6 +74,7 @@ public class InputTab {
         TextField nameTextField = ((TextField) inputVBox.getChildren().get(1));
         TextField priority = ((TextField) inputVBox.getChildren().get(3));
         TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(5));
+
         HBox probsHBox = ((HBox) inputVBox.getChildren().get(7));
         HBox probsHBox2 = ((HBox) inputVBox.getChildren().get(8));
         HBox probsHBox3 = ((HBox) inputVBox.getChildren().get(9));
@@ -86,6 +85,7 @@ public class InputTab {
 
         priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true));
         estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(estimatedTimeTextField, newValue, false));
+
 
         TextField probs1 = ((TextField) probsHBox.getChildren().get(0));
         probs1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs1, newValue, false));
@@ -124,7 +124,13 @@ public class InputTab {
 
         //Middle column
         VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
-        vBoxSplitter.getChildren().get(1).setOnMouseClicked(event -> calculate(LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId), ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected()));
+        TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(4));
+        numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true));
+
+        vBoxSplitter.getChildren().get(1).setOnMouseClicked(event -> calculate(
+                LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
+                ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
+                Double.parseDouble(numOfEmployees.getText())));
         vBoxSplitter.getChildren().get(0).setOnMouseClicked(event -> removeTask());
         drawInputTab();
     }
@@ -135,7 +141,8 @@ public class InputTab {
      * @param pro
      * @param useMonty - the monte carlo method is used.
      */
-    private void calculate(Project pro, boolean useMonty) {
+    private void calculate(Project pro, boolean useMonty, double numOfEmployees) {
+        pro.setNumberOfEmployees(numOfEmployees);
         Sequence.sequenceTasks(pro, useMonty);
         outputTab.drawOutputTab(useMonty);
         drawInputTab();

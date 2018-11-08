@@ -354,7 +354,7 @@ public class DatabaseManager {
             if (rs == null) return null;
             while (rs.next()) {
                 Project project = new Project(rs.getInt(1), rs.getString(2),
-                        ProjectState.values()[rs.getInt(3)], rs.getString(4), rs.getDouble(5), rs.getString(6));
+                        ProjectState.values()[rs.getInt(3)], rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getDouble(7));
                 projects.add(project);
             }
         } catch (SQLException e) {
@@ -591,7 +591,7 @@ public class DatabaseManager {
                     }
                 }
                 updateProgress(5, 5);
-                
+
                 return null;
             }
         };
@@ -712,12 +712,13 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?, sequence = ?" +
-                    ", duration = ?, recommendedpath = ? WHERE id = ?");
+                    ", duration = ?, recommendedpath = ?, numberofemployees = ? WHERE id = ?");
             statement.setInt(1, project.getState().getValue());
             statement.setString(2, project.getSequence());
             statement.setDouble(3, project.getDuration());
             statement.setString(4, project.getRecommendedPath());
-            statement.setInt(5, project.getId());
+            statement.setDouble(5, project.getNumberOfEmployees());
+            statement.setInt(6, project.getId());
             statement.execute();
 
         } catch (SQLException e) {
