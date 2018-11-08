@@ -41,7 +41,6 @@ public class Probabilities {
 
     @Override
     public String toString() {
-        return duration +
-                ", " + probability;
+        return duration + ", " + probability;
     }
 }

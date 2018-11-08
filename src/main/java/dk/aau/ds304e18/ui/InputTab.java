@@ -5,6 +5,7 @@ import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.Probabilities;
 import dk.aau.ds304e18.models.Project;
+import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.Sequence;
 import javafx.collections.FXCollections;
@@ -37,7 +38,23 @@ public class InputTab {
     }
 
     void drawInputTab() {
+        if (JavaFXMain.selectedProjectId != 0 && LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getState() == ProjectState.ARCHIVED)
+            disableInput();
+        else
+            enableInput();
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+    }
+
+    void disableInput() {
+        var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
+        VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
+        inputVBox.setDisable(true);
+    }
+
+    void enableInput() {
+        var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
+        VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
+        inputVBox.setDisable(false);
     }
 
     /**
