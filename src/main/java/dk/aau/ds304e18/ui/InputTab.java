@@ -84,23 +84,23 @@ public class InputTab {
         HBox bottomButtonsHBox = (HBox) inputVBox.getChildren().get(13);
         progressBarContainer = ((HBox) flowPane.getChildren().get(3));
 
-        priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue));
-        estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(estimatedTimeTextField, newValue));
+        priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true));
+        estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(estimatedTimeTextField, newValue, false));
 
         TextField probs1 = ((TextField) probsHBox.getChildren().get(0));
-        probs1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs1, newValue));
+        probs1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs1, newValue, false));
         TextField probs2 = ((TextField) probsHBox.getChildren().get(1));
-        probs2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs2, newValue));
+        probs2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs2, newValue, false));
 
         TextField probs3 = ((TextField) probsHBox2.getChildren().get(0));
-        probs3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs3, newValue));
+        probs3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs3, newValue, false));
         TextField probs4 = ((TextField) probsHBox2.getChildren().get(1));
-        probs4.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs4, newValue));
+        probs4.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs4, newValue, false));
 
         TextField probs5 = ((TextField) probsHBox3.getChildren().get(0));
-        probs5.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs5, newValue));
+        probs5.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs5, newValue, false));
         TextField probs6 = ((TextField) probsHBox3.getChildren().get(1));
-        probs6.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs6, newValue));
+        probs6.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs6, newValue, false));
 
         buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> addDependency(listViewDependency));
         buttonsForDependencies.getChildren().get(1).setOnMouseClicked(event -> removeDependency(listViewDependency));
@@ -115,6 +115,8 @@ public class InputTab {
                 probabilities.add(new Probabilities(Double.parseDouble(probs5.getText()), Double.parseDouble(probs6.getText())));
             addTask(nameTextField.getText(), Double.parseDouble(estimatedTimeTextField.getText()),
                     Integer.parseInt(priority.getText()), probabilities, tableView);
+            clearInputFields(listViewDependency, probs1, probs2, probs3,
+                    probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority);
         });
         bottomButtonsHBox.getChildren().get(1).setOnMouseClicked(event -> clearInputFields(listViewDependency, probs1, probs2, probs3,
                 probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority));
@@ -153,10 +155,13 @@ public class InputTab {
      * @param textField - the textbox
      * @param newValue  - the contents of the textbox
      */
-    private void validateNumericInput(TextField textField, String newValue) {
-        if (!newValue.matches("\\d*")) {
-            textField.setText(newValue.replaceAll("[\\D]", ""));
-        }
+    private void validateNumericInput(TextField textField, String newValue, boolean intField) {
+        if (intField)
+            if (!newValue.matches("\\d*")) {
+                textField.setText(newValue.replaceAll("[[\\D]]", ""));
+            } else if (!newValue.matches("\\d*\\.")) {
+                textField.setText(newValue.replaceAll("[[^\\d^\\.]]", ""));
+            }
     }
 
     /**
