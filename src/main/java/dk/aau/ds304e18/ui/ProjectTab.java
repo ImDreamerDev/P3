@@ -64,7 +64,7 @@ public class ProjectTab {
      * Method that is used in the Search Function. If the first letter in the search is a string then the name of the project is searched for
      * if it is a number the Id is used.
      *
-     * @param str
+     * @param str The string to check
      * @return true - if it is a letter - false if is a number.
      */
     private boolean isFirstLetter(String str) {
@@ -111,12 +111,12 @@ public class ProjectTab {
      */
     private void setUpProjectTable() {
         tableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
-        tableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory("name"));
-        tableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory("creator"));
-        tableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory("sequence"));
-        tableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory("duration"));
-        tableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory("state"));
-        flProjects = (new FilteredList<Project>(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
+        tableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("creator"));
+        tableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("sequence"));
+        tableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("duration"));
+        tableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("state"));
+        flProjects = (new FilteredList<>(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
         sortedList = new SortedList<>(flProjects);
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
@@ -127,7 +127,7 @@ public class ProjectTab {
     /**
      * Method for the display archived box.
      *
-     * @param new_val
+     * @param new_val The new value of the button
      */
     private void onShowArchived(boolean new_val) {
         if (!new_val)
