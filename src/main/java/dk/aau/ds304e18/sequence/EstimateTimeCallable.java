@@ -7,11 +7,11 @@ import java.util.*;
 
 public class EstimateTimeCallable extends javafx.concurrent.Task<Double> {
     private List<Task> taskList;
-    private int amountEmployees;
+    private double amountEmployees;
     private int numOfThreads;
     private int numOfMonte;
 
-    public EstimateTimeCallable(List<Task> taskList, int amountEmployees, int numOfThreads, int numOfMonte) {
+    public EstimateTimeCallable(List<Task> taskList, double amountEmployees, int numOfThreads, int numOfMonte) {
         this.taskList = taskList;
         this.amountEmployees = amountEmployees;
         this.numOfThreads = numOfThreads;

@@ -37,7 +37,7 @@ public class Sequence {
 
         List<Task> taskList = project.getTasks();
 
-        if (findSequenceMontecarlo && project.getEmployees().size() > 1)
+        if (findSequenceMontecarlo)
             findFastestSequence(project);
 
         //So we don't change the task list in the project
@@ -80,7 +80,7 @@ public class Sequence {
         project.setSequence(sequencedTasks.toString());
 
         //Find the estimated time
-        if (!findSequenceMontecarlo || project.getEmployees().size() < 2)
+        if (!findSequenceMontecarlo)
             MonteCarlo.estimateTime(project);
     }
 
