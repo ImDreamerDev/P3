@@ -512,10 +512,78 @@ public class DatabaseManager {
 
     }
 
+    private static List<Project> getPMProjects(ProjectManager projectManager) {
+        if (dbConnection == null) connect();
+
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projects WHERE id = ANY(?)");
+            List<Integer> queryList = new ArrayList<>();
+            if (projectManager.getCurrentProjectId() != 0) {
+                queryList.add(projectManager.getCurrentProjectId());
+            }
+
+            if (projectManager.getOldProjectsId() != null) {
+                queryList.addAll(projectManager.getOldProjectsId());
+            }
+            Array queryArray = dbConnection.createArrayOf("INTEGER", queryList.toArray());
+            statement.setArray(1, queryArray);
+            ResultSet rs = statement.executeQuery();
+            if (rs == null) return null;
+            return parseProjectsFromResultSet(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Gets the employees with no current project or those part of his current project.
+     *
+     * @param projectManager the project manager to get available employees of
+     * @return list of employees with no current project or are part of project managers current project.
+     */
+    private static List<Employee> getAvailableEmployees(ProjectManager projectManager) {
+        List<Integer> employeeIdsToQuery = new ArrayList<>();
+
+        //We want unassigned employees
+        employeeIdsToQuery.add(0);
+        //We want employees from the current project
+        employeeIdsToQuery.add(projectManager.getCurrentProjectId());
+
+        if (dbConnection == null) connect();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM employees WHERE projectid = ANY (?)");
+            statement.setArray(1, dbConnection.createArrayOf("INTEGER", employeeIdsToQuery.toArray()));
+            ResultSet rs = statement.executeQuery();
+            return parseEmployeesFromResultSet(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static List<Task> getTasksForProjectManager(ProjectManager projectManager) {
+        List<Integer> queryArray = new ArrayList<>();
+        queryArray.add(projectManager.getCurrentProjectId());
+        queryArray.addAll(projectManager.getOldProjectsId());
+
+        if (dbConnection == null) connect();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM tasks " +
+                    "WHERE projectid = ANY (?)");
+            statement.setArray(1, dbConnection.createArrayOf("INTEGER", queryArray.toArray()));
+            ResultSet rs = statement.executeQuery();
+            return parseTasksFromResultSet(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * Retrieves everything from the database and converts it to objects.
      */
-    public static javafx.concurrent.Task<Void> distributeModelsTask() {
+    public static javafx.concurrent.Task<Void> distributeModels(ProjectManager projectManager) {
         return new javafx.concurrent.Task<>() {
             @Override
             public Void call() {
@@ -523,41 +591,43 @@ public class DatabaseManager {
                 if (isCancelled()) {
                     return null;
                 }
-                updateProgress(0, 6);
-                List<Employee> employees = getAllEmployees();
+
+                int progressBarParts = 5;
+                updateProgress(0, progressBarParts);
+
+                List<Project> projectManagerProjects = getPMProjects(projectManager);
+
+                //We need the employees to add them to new projects and tasks so we get them no matter what
+                List<Employee> employees = getAvailableEmployees(projectManager);
                 if (employees == null) return null;
                 employees.forEach(LocalObjStorage::addEmployee);
-                // DatabaseManager.distributeModels();
-                updateProgress(1, 5);
-                List<Project> ongoingProjects = getAllProjects();
-                if (ongoingProjects != null) {
-                    ongoingProjects.forEach(LocalObjStorage::addProject);
-                }
-                updateProgress(2, 5);
-                List<ProjectManager> projectManagers = getAllProjectManagers();
-                if (projectManagers != null) {
-                    for (ProjectManager projectManager : projectManagers) {
-                        if (projectManager.getCurrentProjectId() != 0) {
-                            Project project = LocalObjStorage.getProjectById(projectManager.getCurrentProjectId());
-                            projectManager.setCurrentProject(project);
-                            project.setCreator(projectManager);
-                            if (project.getState() != ProjectState.ONGOING)
-                                project.setState(ProjectState.ONGOING);
-                        }
-                        List<Integer> projectIds = new ArrayList<>(projectManager.getOldProjectsId());
-                        for (Integer projectId : projectIds) {
-                            Project oldProject = LocalObjStorage.getProjectById(projectId);
-                            oldProject.setCreator(projectManager);
-                            if (oldProject.getState() != ProjectState.ARCHIVED)
-                                oldProject.setState(ProjectState.ARCHIVED);
-                            projectManager.addOldProject(oldProject);
-                        }
 
-                        LocalObjStorage.addProjectManager(projectManager);
-                    }
+                updateProgress(1, progressBarParts);
+
+                if (projectManagerProjects != null) {
+                    projectManagerProjects.forEach(LocalObjStorage::addProject);
+                } else return null;
+
+                updateProgress(2, progressBarParts);
+
+                if (projectManager.getCurrentProjectId() != 0) {
+                    Project project = LocalObjStorage.getProjectById(projectManager.getCurrentProjectId());
+                    project.setCreator(projectManager);
+                    if (project.getState() != ProjectState.ONGOING)
+                        project.setState(ProjectState.ONGOING);
+                }
+
+                List<Integer> projectIds = new ArrayList<>(projectManager.getOldProjectsId());
+
+                for (Integer projectId : projectIds) {
+                    Project oldProject = LocalObjStorage.getProjectById(projectId);
+                    oldProject.setCreator(projectManager);
+                    if (oldProject.getState() != ProjectState.ARCHIVED)
+                        oldProject.setState(ProjectState.ARCHIVED);
 
                 }
-                updateProgress(3, 5);
+                LocalObjStorage.addProjectManager(projectManager);
+                updateProgress(3, progressBarParts);
 
                 for (Employee emp : LocalObjStorage.getEmployeeList()) {
                     emp.setProject(LocalObjStorage.getProjectById(emp.getProjectId()));
@@ -565,100 +635,42 @@ public class DatabaseManager {
                         LocalObjStorage.getProjectById(emp.getProjectId()).addNewEmployee(emp);
                 }
 
-                updateProgress(4, 5);
-                LocalObjStorage.getTaskList().addAll(getAllTasks());
-                List<Integer> employeesToRemove = new ArrayList<>();
+                updateProgress(4, progressBarParts);
+
+                if (getTasksForProjectManager(projectManager) != null)
+                    LocalObjStorage.getTaskList().addAll(Objects.requireNonNull(getTasksForProjectManager(projectManager)));
+
                 for (Task task : LocalObjStorage.getTaskList()) {
                     Project project = LocalObjStorage.getProjectById(task.getProjectId());
+
                     if (project != null)
                         project.addNewTask(task);
+
                     for (Integer employeeId : task.getEmployeeIds()) {
                         Employee emp = LocalObjStorage.getEmployeeById(employeeId);
+
                         if (emp != null) {
                             task.addEmployee(emp);
                             emp.distributeAddTask(task);
                         } else {
-                            employeesToRemove.add(employeeId);
+                            //TODO We don't get employees from previous projects from DB
+                            task.addEmployee(new Employee(0, "John Doe", new ArrayList<>()));
                         }
-
                     }
-                    task.getEmployeeIds().removeAll(employeesToRemove);
-
-                    // DatabaseManager.updateTask(task);
-
                     for (Integer dependencyId : task.getDependencyIds()) {
                         task.distributeAddDependency(LocalObjStorage.getTaskById(dependencyId));
                     }
                 }
-                updateProgress(5, 5);
 
+                projectManager.setCurrentProject(LocalObjStorage.getProjectById(projectManager.getCurrentProjectId()));
+
+                for (Integer projId : projectManager.getOldProjectsId()) {
+                    projectManager.addOldProject(LocalObjStorage.getProjectById(projId));
+                }
+                updateProgress(5, progressBarParts);
                 return null;
             }
         };
-
-
-    }
-
-    public static void distributeModels() {
-
-        List<Employee> employees = getAllEmployees();
-        if (employees == null) return;
-        employees.forEach(LocalObjStorage::addEmployee);
-
-        List<Project> ongoingProjects = getAllProjects();
-        if (ongoingProjects != null) {
-            ongoingProjects.forEach(LocalObjStorage::addProject);
-        }
-
-        List<ProjectManager> projectManagers = getAllProjectManagers();
-        if (projectManagers != null) {
-            projectManagers.forEach(projectManager -> {
-                if (projectManager.getCurrentProjectId() != 0) {
-                    Project project = LocalObjStorage.getProjectById(projectManager.getCurrentProjectId());
-                    projectManager.setCurrentProject(project);
-                    project.setCreator(projectManager);
-                    if (project.getState() != ProjectState.ONGOING)
-                        project.setState(ProjectState.ONGOING);
-                }
-                List<Integer> projectIds = new ArrayList<>(projectManager.getOldProjectsId());
-                for (Integer projectId : projectIds) {
-                    Project oldProject = LocalObjStorage.getProjectById(projectId);
-                    oldProject.setCreator(projectManager);
-                    if (oldProject.getState() != ProjectState.ARCHIVED)
-                        oldProject.setState(ProjectState.ARCHIVED);
-                    projectManager.addOldProject(oldProject);
-
-                }
-                LocalObjStorage.addProjectManager(projectManager);
-            });
-
-        }
-
-        for (Employee emp : LocalObjStorage.getEmployeeList()) {
-            emp.setProject(LocalObjStorage.getProjectById(emp.getProjectId()));
-            if (emp.getProjectId() != 0)
-                LocalObjStorage.getProjectById(emp.getProjectId()).addNewEmployee(emp);
-        }
-        LocalObjStorage.getTaskList().addAll(getAllTasks());
-        List<Integer> employeesToRemove = new ArrayList<>();
-        for (Task task : LocalObjStorage.getTaskList()) {
-            Project project = LocalObjStorage.getProjectById(task.getProjectId());
-            if (project != null)
-                project.addNewTask(task);
-            for (Integer employeeId : task.getEmployeeIds()) {
-                Employee emp = LocalObjStorage.getEmployeeById(employeeId);
-                if (emp != null) {
-                    task.addEmployee(emp);
-                    emp.distributeAddTask(task);
-                } else {
-                    employeesToRemove.add(employeeId);
-                }
-            }
-            task.getEmployeeIds().removeAll(employeesToRemove);
-            for (Integer dependencyId : task.getDependencyIds()) {
-                task.distributeAddDependency(LocalObjStorage.getTaskById(dependencyId));
-            }
-        }
 
     }
 
@@ -725,7 +737,6 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
-
 
     public static void updateProjectManager(ProjectManager manager) {
         if (dbConnection == null) connect();

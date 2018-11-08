@@ -18,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class JavaFXMain extends Application {
@@ -68,15 +69,6 @@ public class JavaFXMain extends Application {
         loginButton.setOnMouseClicked(event -> logIn());
         Scene scene = new Scene(rootPane, 1280, 720);
         stage.setTitle("Planexus");
-        if (useTasks) {
-            Task<Void> voidTask = DatabaseManager.distributeModelsTask();
-            ProgressBar bar = new ProgressBar();
-            bar.progressProperty().bind(voidTask.progressProperty());
-            ((StackPane) rootPane.getChildrenUnmodifiable().get(2)).getChildren().add(bar);
-            voidTask.setOnSucceeded(observable -> ((StackPane) rootPane.getChildrenUnmodifiable().get(2)).getChildren().remove(bar));
-            voidTask.setOnFailed(observable -> bar.setStyle("-fx-progress-color: red"));
-            new Thread(voidTask).start();
-        }
 
         stage.setScene(scene);
         stage.show();
@@ -94,19 +86,30 @@ public class JavaFXMain extends Application {
         String username = usernameField.getText();
         String password = passwordField.getText();
         System.out.println(password + " " + username);
-        ProjectManager pm = DatabaseManager.logIn(username, password);
-        if (pm == null) {
+        AtomicReference<ProjectManager> pm = new AtomicReference<>(DatabaseManager.logIn(username, password));
+
+        if (pm.get() == null) {
             Label error = ((Label) vBoxLogin.getChildren().get(2));
             error.setText("Error: No such user");
             error.setVisible(true);
         } else {
-            rootPane.getChildrenUnmodifiable().get(2).setVisible(false);
-            if (!useTasks)
-                DatabaseManager.distributeModels();
-            pm = LocalObjStorage.getProjectManagerById(pm.getId());
-            OutputTab outputTab = new OutputTab(rootPane);
-            InputTab inputTab = new InputTab(rootPane, outputTab);
-            ProjectTab projectTab = new ProjectTab(rootPane, pm, inputTab);
+
+            Task<Void> voidTask = DatabaseManager.distributeModels(pm.get());
+            ProgressBar bar = new ProgressBar();
+            bar.progressProperty().bind(voidTask.progressProperty());
+            ((StackPane) rootPane.getChildrenUnmodifiable().get(2)).getChildren().add(bar);
+            voidTask.setOnSucceeded(observable -> {
+                ((StackPane) rootPane.getChildrenUnmodifiable().get(2)).getChildren().remove(bar);
+                pm.set(LocalObjStorage.getProjectManagerById(pm.get().getId()));
+                OutputTab outputTab = new OutputTab(rootPane);
+                InputTab inputTab = new InputTab(rootPane, outputTab);
+                ProjectTab projectTab = new ProjectTab(rootPane, pm.get(), inputTab);
+                rootPane.getChildrenUnmodifiable().get(2).setVisible(false);
+            });
+            voidTask.setOnFailed(observable -> bar.setStyle("-fx-progress-color: red"));
+            new Thread(voidTask).start();
+
+
         }
     }
 }

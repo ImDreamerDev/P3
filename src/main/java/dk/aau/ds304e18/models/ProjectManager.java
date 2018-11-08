@@ -109,15 +109,16 @@ public class ProjectManager {
      * @param project - the project to be added to the list.
      */
     public void addOldProject(Project project) {
+        boolean isLoadingFromDB = false;
         if (project != null) {
             if (oldProjectsId.contains(project.getId()))
-                return;
+                isLoadingFromDB = true;
             oldProjects.add(project);
-            oldProjectsId.add(project.getId());
+            if (!isLoadingFromDB) oldProjectsId.add(project.getId());
             project.setState(ProjectState.ARCHIVED);
             if (currentProject == project)
                 currentProject = null;
-            DatabaseManager.updateProjectManager(this);
+            if (!isLoadingFromDB) DatabaseManager.updateProjectManager(this);
         }
     }
 
