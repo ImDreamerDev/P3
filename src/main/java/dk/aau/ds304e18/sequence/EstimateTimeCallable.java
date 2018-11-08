@@ -17,15 +17,13 @@ public class EstimateTimeCallable extends javafx.concurrent.Task<Double> {
         this.numOfThreads = numOfThreads;
         this.numOfMonte = numOfMonte;
     }
-
+    
     public Double call() {
         Random r = new Random();
         double duration = 0.0;
         int repeats = numOfMonte / numOfThreads;
         //Repeat repeats time
         for (int i = 0; i < repeats; i++) {
-            if (isCancelled())
-                return 0.0;
             if (amountEmployees > 1) {
                 List<Task> tasksDone = new ArrayList<>();
                 List<Double> durations = new ArrayList<>();

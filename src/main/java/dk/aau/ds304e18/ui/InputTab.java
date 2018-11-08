@@ -137,9 +137,16 @@ public class InputTab {
      * @param useMonty - the monte carlo method is used.
      */
     private void calculate(Project pro, boolean useMonty) {
+        Instant start = java.time.Instant.now();
+
         Sequence.sequenceTasks(pro, useMonty);
         outputTab.drawOutputTab(useMonty);
         drawInputTab();
+
+        Instant end = java.time.Instant.now();
+        Duration between = java.time.Duration.between(start, end);
+        System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
+                between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
     }
 
     /**
