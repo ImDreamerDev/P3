@@ -17,6 +17,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -74,19 +76,16 @@ public class InputTab {
         TextField nameTextField = ((TextField) inputVBox.getChildren().get(1));
         TextField priority = ((TextField) inputVBox.getChildren().get(3));
         TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(5));
-        TextField numOfEmployees = ((TextField) inputVBox.getChildren().get(7));
-        HBox probsHBox = ((HBox) inputVBox.getChildren().get(9));
-        HBox probsHBox2 = ((HBox) inputVBox.getChildren().get(10));
-        HBox probsHBox3 = ((HBox) inputVBox.getChildren().get(11));
-        ListView<Task> listViewDependency = ((ListView<Task>) inputVBox.getChildren().get(13));
-        HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(14);
-        HBox bottomButtonsHBox = (HBox) inputVBox.getChildren().get(15);
+        HBox probsHBox = ((HBox) inputVBox.getChildren().get(7));
+        HBox probsHBox2 = ((HBox) inputVBox.getChildren().get(8));
+        HBox probsHBox3 = ((HBox) inputVBox.getChildren().get(9));
+        ListView<Task> listViewDependency = ((ListView<Task>) inputVBox.getChildren().get(11));
+        HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
+        HBox bottomButtonsHBox = (HBox) inputVBox.getChildren().get(13);
         progressBarContainer = ((HBox) flowPane.getChildren().get(3));
 
         priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true));
         estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(estimatedTimeTextField, newValue, false));
-
-        numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true));
 
         TextField probs1 = ((TextField) probsHBox.getChildren().get(0));
         probs1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs1, newValue, false));
@@ -115,7 +114,7 @@ public class InputTab {
             if (!probs5.getText().equals(""))
                 probabilities.add(new Probabilities(Double.parseDouble(probs5.getText()), Double.parseDouble(probs6.getText())));
             addTask(nameTextField.getText(), Double.parseDouble(estimatedTimeTextField.getText()),
-                    Integer.parseInt(priority.getText()), probabilities, tableView, Double.parseDouble(numOfEmployees.getText()));
+                    Integer.parseInt(priority.getText()), probabilities, tableView);
             clearInputFields(listViewDependency, probs1, probs2, probs3,
                     probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority);
         });
@@ -180,9 +179,9 @@ public class InputTab {
      * @param probabilities - filled into textbox.
      * @param tableView     - the dependencies table - these are added through the addDependency method.
      */
-    private void addTask(String name, double estimatedTime, int priority, List<Probabilities> probabilities, TableView<Task> tableView, double numberOfEmployees) {
+    private void addTask(String name, double estimatedTime, int priority, List<Probabilities> probabilities, TableView<Task> tableView) {
         Task ttt = new Task(name, estimatedTime, priority,
-                LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId), numberOfEmployees);
+                LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
         for (Probabilities pro : probabilities)
             ttt.getProbabilities().add(pro);
         ttt.addDependency(taskDependencies);

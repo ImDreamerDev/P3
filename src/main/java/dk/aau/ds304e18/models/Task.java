@@ -30,8 +30,6 @@ public class Task {
      */
     private double estimatedTime;
 
-    private double numberOfEmployees;
-
     /**
      * The estimated lambda value for the inverse gaussian
      */
@@ -81,19 +79,18 @@ public class Task {
      * @param priority      The priority value of the task.
      * @param project       The project that that the task is a part of.
      */
-    public Task(String name, double estimatedTime, int priority, Project project, double numberOfEmployees) {
+    public Task(String name, double estimatedTime, int priority, Project project) {
         this.name = name;
         this.estimatedTime = estimatedTime;
         this.priority = priority;
         this.project = project;
-        this.numberOfEmployees = numberOfEmployees;
         DatabaseManager.addTask(this);
         this.project.addNewTask(this);
     }
 
 
     public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority,
-                List<Integer> dependencyIds, List<Integer> employeeIds, int projectId, List<Probabilities> probabilities, double numberOfEmployees) {
+                List<Integer> dependencyIds, List<Integer> employeeIds, int projectId, List<Probabilities> probabilities) {
         this.name = name;
         this.id = id;
         this.estimatedTime = estimatedTime;
@@ -104,7 +101,6 @@ public class Task {
         this.employeeIds.addAll(employeeIds);
         this.projectId = projectId;
         this.probabilities.addAll(probabilities);
-        this.numberOfEmployees = numberOfEmployees;
     }
 
     /**
@@ -367,13 +363,5 @@ public class Task {
     @Override
     public String toString() {
         return name;
-    }
-
-    public double getNumberOfEmployees() {
-        return numberOfEmployees;
-    }
-
-    public void setNumberOfEmployees(double numberOfEmployees) {
-        this.numberOfEmployees = numberOfEmployees;
     }
 }
