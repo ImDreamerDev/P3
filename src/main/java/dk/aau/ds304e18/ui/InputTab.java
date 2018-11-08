@@ -48,12 +48,16 @@ public class InputTab {
     void disableInput() {
         var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
+        VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
+        vBoxSplitter.getChildren().get(0).setDisable(true);
         inputVBox.setDisable(true);
     }
 
     void enableInput() {
         var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
+        VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
+        vBoxSplitter.getChildren().get(0).setDisable(false);
         inputVBox.setDisable(false);
     }
 
