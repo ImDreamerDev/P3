@@ -45,8 +45,6 @@ public class MonteCarlo {
             i++;
         }
 
-        System.out.println("Worst time: " + worstTime);
-        System.out.println("With path: " + worstSequence);
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
 
