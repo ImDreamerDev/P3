@@ -156,7 +156,13 @@ public class ProjectTab {
     private void archiveProject() {
         if (JavaFXMain.selectedProjectId != 0) {
             projectManager.addOldProject(LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
-            tableView.getItems().remove(tableView.getSelectionModel().getSelectedIndex());
+            if (!((CheckBox) rootPane.lookup("#showArchivedCheckbox")).isSelected())
+                tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState()
+                        == ProjectState.ONGOING && project.getCreator() != null && project.getCreator().getId() == projectManager.getId()).collect(Collectors.toList())));
+            else
+                tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getCreator() != null && project.getCreator().getId()
+                        == projectManager.getId()).collect(Collectors.toList())));
+
         }
     }
 }
