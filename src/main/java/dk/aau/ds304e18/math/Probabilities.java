@@ -3,7 +3,7 @@ package dk.aau.ds304e18.math;
 public class Probabilities {
 
     /**
-     * Duration is in days
+     * Duration is in the time the user wants it in (They need to keep it consistent throughout the project)
      */
     private double duration;
 
