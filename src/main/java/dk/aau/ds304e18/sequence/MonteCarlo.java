@@ -6,8 +6,11 @@ import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.ui.InputTab;
 import javafx.concurrent.Worker;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -94,6 +97,8 @@ public class MonteCarlo {
 
     }
 
+    static int num = 0;
+
     /**
      * Estimates the time assuming only one task can be done at a time from a project and an amount of time to repeat the tasks
      *
@@ -103,7 +108,12 @@ public class MonteCarlo {
     public static void estimateTime(Project project, boolean rec, int monteCarloRepeats) {
         //Gets the task list from the project
         List<Task> taskList = ParseSequence.parseToSingleList(project, rec);
-
+        num++;
+        if (project.getEmployees().size() > 1) {
+            System.err.println("Abandon ship: " + num);
+            num = 0;
+            return;
+        }
         //For each task in taskList
         for (Task task : taskList) {
             //If the task does not have a lambda yet
@@ -124,21 +134,42 @@ public class MonteCarlo {
 
         List<Double> results = new ArrayList<>();
         List<ProgressBar> progressBars = new ArrayList<>();
+        Instant start = Instant.now();
         for (javafx.concurrent.Task<Double> doubleTask : tasks) {
             if (!DatabaseManager.isTests) {
                 ProgressBar bar = new ProgressBar();
                 progressBars.add(bar);
                 bar.progressProperty().bind(doubleTask.progressProperty());
                 InputTab.progressBarContainer.getChildren().add(bar);
+                if (tasks.indexOf(doubleTask) == tasks.size() - 1) {
+                    Button cancelButton = new Button("Cancel");
+                    cancelButton.setOnMouseClicked(event -> tasks.forEach(javafx.concurrent.Task::cancel));
+                    cancelButton.setMaxHeight(bar.getHeight());
+                    InputTab.progressBarContainer.getChildren().add(cancelButton);
+                }
             }
+            doubleTask.setOnCancelled(event -> {
+                if (!DatabaseManager.isTests) {
+                    InputTab.progressBarContainer.getChildren().clear();
+                }
+            });
             doubleTask.setOnSucceeded(event -> {
                 results.add(doubleTask.getValue());
                 if (!DatabaseManager.isTests)
                     InputTab.progressBarContainer.getChildren().remove(progressBars.get(tasks.indexOf(doubleTask)));
+
+
                 if (tasks.stream().allMatch(doubleTask1 -> doubleTask1.getState() == Worker.State.SUCCEEDED)) {
                     project.setDuration(results.stream().mapToDouble(value -> value).sum() / monteCarloRepeats);
                     System.out.println("All done");
                     System.out.println(project.getDuration());
+                    Instant end = java.time.Instant.now();
+                    Duration between = java.time.Duration.between(start, end);
+                    System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
+                            between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
+                    if (!DatabaseManager.isTests) {
+                        InputTab.progressBarContainer.getChildren().clear();
+                    }
                 }
             });
             new Thread(doubleTask).start();
