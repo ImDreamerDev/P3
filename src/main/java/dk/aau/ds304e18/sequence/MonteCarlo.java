@@ -83,7 +83,7 @@ public class MonteCarlo {
     public static void estimateTime(Project project) {
 
         //Calls the function with the default value 10000
-        estimateTime(project, false, 1000000);
+        estimateTime(project, false, 10000);
 
     }
 
@@ -118,7 +118,7 @@ public class MonteCarlo {
         int numOfThreads = Runtime.getRuntime().availableProcessors();
 
         List<javafx.concurrent.Task<Double>> tasks = new ArrayList<>();
-        for (int i = 0; i < numOfThreads - 1; i++) {
+        for (int i = 0; i < numOfThreads; i++) {
             tasks.add(new EstimateTimeCallable(taskList, project.getEmployees().size(), numOfThreads, monteCarloRepeats));
         }
 
