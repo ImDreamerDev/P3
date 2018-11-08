@@ -1,9 +1,4 @@
 package dk.aau.ds304e18.ui;
-/*
- * Author: Lasse Stig Emil Rasmussen
- * Email: lser17@student.aau.dk
- * Class: Software 2nd semester
- */
 
 import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.LocalObjStorage;

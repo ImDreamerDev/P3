@@ -36,7 +36,7 @@ class EmployeeTest {
     @Test
     void TestEmployeeConstructor02() {
         List<Integer> previousTasks = new ArrayList<>();
-        Employee newEmployee = new Employee(1,"Test Person",previousTasks);
+        Employee newEmployee = new Employee(1, "Test Person", previousTasks);
 
         assertEquals(1, newEmployee.getId());
     }
@@ -45,7 +45,7 @@ class EmployeeTest {
     @Test
     void TestEmployeeConstructor03() {
         List<Integer> previousTasks = new ArrayList<>();
-        Employee newEmployee = new Employee(1,"Kasper",previousTasks);
+        Employee newEmployee = new Employee(1, "Kasper", previousTasks);
 
         assertEquals("Kasper", newEmployee.getName());
     }
@@ -53,7 +53,7 @@ class EmployeeTest {
     @Test
     void TestEmployeeConstructor04() {
         List<Integer> previousTasks = new ArrayList<>();
-        Employee newEmployee = new Employee(1,"Kasper BTW", previousTasks);
+        Employee newEmployee = new Employee(1, "Kasper BTW", previousTasks);
 
         assertEquals(previousTasks, newEmployee.getPreviousTaskIds());
     }
@@ -261,11 +261,11 @@ class EmployeeTest {
      * Tests adding a a task to employee
      */
     @Test
-    void TestEmployeeDistributeAddTask01 () {
+    void TestEmployeeDistributeAddTask01() {
         Employee newEmployee = new Employee("Lars");
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
-        Task newTask = new Task("Task", 1 , 1, newProject);
+        Task newTask = new Task("Task", 1, 1, newProject);
 
         newEmployee.distributeAddTask(newTask);
 

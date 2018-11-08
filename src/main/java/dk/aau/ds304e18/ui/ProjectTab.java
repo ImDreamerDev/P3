@@ -1,9 +1,4 @@
 package dk.aau.ds304e18.ui;
-/*
- * Author: Lasse Stig Emil Rasmussen
- * Email: lser17@student.aau.dk
- * Class: Software 2nd semester
- */
 
 import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.LocalObjStorage;
@@ -13,7 +8,6 @@ import dk.aau.ds304e18.models.ProjectState;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;

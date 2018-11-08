@@ -1,12 +1,16 @@
 package dk.aau.ds304e18.sequence;
 
+import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.CalculateLambda;
-import dk.aau.ds304e18.math.InverseGaussian;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
+import dk.aau.ds304e18.ui.InputTab;
+import javafx.concurrent.Worker;
+import javafx.scene.control.ProgressBar;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class MonteCarlo {
 
@@ -31,7 +35,7 @@ public class MonteCarlo {
             project.setRecommendedPath(findRandomSequence(project));
             estimateTime(project, true);
 
-            if(project.getDuration() > worstTime || worstTime == -1) {
+            if (project.getDuration() > worstTime || worstTime == -1) {
                 worstSequence = project.getRecommendedPath();
                 worstTime = project.getDuration();
             }
@@ -79,7 +83,7 @@ public class MonteCarlo {
     public static void estimateTime(Project project) {
 
         //Calls the function with the default value 10000
-        estimateTime(project, false, 10000);
+        estimateTime(project, false, 1000000);
 
     }
 
@@ -97,16 +101,11 @@ public class MonteCarlo {
      * @param monteCarloRepeats how many times we want to repeat the project schedule (Higher number will be more accurate but will take longer time)
      */
     public static void estimateTime(Project project, boolean rec, int monteCarloRepeats) {
-
         //Gets the task list from the project
         List<Task> taskList = ParseSequence.parseToSingleList(project, rec);
 
-        //The duration that will be counted up and then divided by the amount of repeats we have
-        double duration = 0.0;
-
         //For each task in taskList
         for (Task task : taskList) {
-
             //If the task does not have a lambda yet
             if (task.getLambda() == -1) {
                 //Calculate the lambda and optimize the mu value
@@ -114,153 +113,35 @@ public class MonteCarlo {
                 task.setEstimatedTime(temp.get(0));
                 task.setLambda(temp.get(1));
             }
-
         }
 
-        //Get number of threads
         int numOfThreads = Runtime.getRuntime().availableProcessors();
 
-        ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
-        //create a list to hold the Future object associated with Callable
-        List<Future<Double>> list = new ArrayList<Future<Double>>();
-        //Create MyCallable instance
-        Callable<Double> callable = new EstimateTimeCallable(taskList, project.getEmployees().size(), numOfThreads, monteCarloRepeats);
-        for (int i = 0; i < numOfThreads; i++) {
-            //submit Callable tasks to be executed by thread pool
-            Future<Double> future = executor.submit(callable);
-            //add Future to the list, we can get return value using Future
-            list.add(future);
+        List<javafx.concurrent.Task<Double>> tasks = new ArrayList<>();
+        for (int i = 0; i < numOfThreads - 1; i++) {
+            tasks.add(new EstimateTimeCallable(taskList, project.getEmployees().size(), numOfThreads, monteCarloRepeats));
         }
 
-        for (Future<Double> fut : list) {
-            try {
-                //print the return value of Future, notice the output delay in console
-                // because Future.get() waits for task to get completed
-                duration = duration + fut.get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+        List<Double> results = new ArrayList<>();
+        List<ProgressBar> progressBars = new ArrayList<>();
+        for (javafx.concurrent.Task<Double> doubleTask : tasks) {
+            if (!DatabaseManager.isTests) {
+                ProgressBar bar = new ProgressBar();
+                progressBars.add(bar);
+                bar.progressProperty().bind(doubleTask.progressProperty());
+                InputTab.progressBarContainer.getChildren().add(bar);
             }
+            doubleTask.setOnSucceeded(event -> {
+                results.add(doubleTask.getValue());
+                if (!DatabaseManager.isTests)
+                    InputTab.progressBarContainer.getChildren().remove(progressBars.get(tasks.indexOf(doubleTask)));
+                if (tasks.stream().allMatch(doubleTask1 -> doubleTask1.getState() == Worker.State.SUCCEEDED)) {
+                    project.setDuration(results.stream().mapToDouble(value -> value).sum() / monteCarloRepeats);
+                    System.out.println("All done");
+                    System.out.println(project.getDuration());
+                }
+            });
+            new Thread(doubleTask).start();
         }
-        //shut down the executor service now
-        executor.shutdown();
-        //Set the duration of the project to the duration divided by amount of times it has been repeated (The average of all the tries)
-        project.setDuration(duration / monteCarloRepeats);
-    }
-
-
-}
-
-class EstimateTimeCallable implements Callable<Double> {
-    private List<Task> taskList;
-    private int amountEmployees;
-    private int numOfThreads;
-    private int numOfMonte;
-
-    public EstimateTimeCallable(List<Task> taskList, int amountEmployees, int numOfThreads, int numOfMonte) {
-        this.taskList = taskList;
-        this.amountEmployees = amountEmployees;
-        this.numOfThreads = numOfThreads;
-        this.numOfMonte = numOfMonte;
-    }
-
-    @Override
-    public Double call() throws Exception {
-        Random r = new Random();
-        double duration = 0.0;
-        int repeats = numOfMonte / numOfThreads;
-        //Repeat repeats time
-        for (int i = 0; i < repeats; i++) {
-
-            if(amountEmployees > 1) {
-
-                List<Task> tasksDone = new ArrayList<>();
-                List<Double> durations = new ArrayList<>();
-                HashMap<Task, Double> taskDoneAt = new HashMap<>();
-
-                for(int j = 0; j < amountEmployees; j++){
-                    durations.add(0d);
-                }
-
-                //TODO: Consider instead of checking if they're the same size, deleting tasks from a local copy of taskList
-                while(taskList.size() != tasksDone.size()){
-
-                    for(int j = 0; j < amountEmployees; j++) {
-
-                        if(!(0 + durations.get(j) == 0 + Collections.min(durations))) continue;
-
-                        boolean temp = false;
-                        for (Task task : taskList) {
-                            if (tasksDone.contains(task)) continue;
-
-                            if (tasksDone.containsAll(task.getDependencies())) {
-
-                                boolean skip = false;
-
-                                for(Task dependency : task.getDependencies()){
-                                    if(taskDoneAt.get(dependency) > durations.get(j))
-                                        skip = true;
-                                }
-
-                                if(skip)
-                                    continue;
-
-                                temp = true;
-
-                                //Create a random double between 0 and 100
-                                double rand = r.nextDouble() * 100;
-
-                                //Create an inverse gaussian distribution for the task
-                                InverseGaussian invG = new InverseGaussian(task.getEstimatedTime(), task.getLambda());
-
-                                //Calculate the duration at the given random value and add that to duration
-                                durations.set(j, durations.get(j) + invG.getDuration(rand));
-
-                                taskDoneAt.put(task, durations.get(j));
-                                tasksDone.add(task);
-
-                                if (!(durations.indexOf(Collections.min(durations)) == j))
-                                    break;
-
-                            }
-
-                        }
-
-                        if(!temp) {
-                            int temp2 = durations.indexOf(Collections.min(durations));
-                            List<Double> tempDurations = new ArrayList<>();
-                            for (Double d : durations){
-                                if (d > durations.get(temp2))
-                                    tempDurations.add(d);
-                            }
-                            if(tempDurations.size() != 0)
-                                durations.set(temp2, 0 + Collections.min(tempDurations));
-                        }
-
-                    }
-
-                }
-
-                duration += durations.get(durations.indexOf(Collections.max(durations)));
-
-            }else {
-
-                //For each task in the taskList
-                for (Task task : taskList) {
-
-                    //Create a random double between 0 and 100
-                    double rand = r.nextDouble() * 100;
-
-                    //Create an inverse gaussian distribution for the task
-                    InverseGaussian invG = new InverseGaussian(task.getEstimatedTime(), task.getLambda());
-
-                    //Calculate the duration at the given random value and add that to duration
-                    duration += invG.getDuration(rand);
-
-                }
-
-            }
-
-        }
-        return duration;
     }
 }
