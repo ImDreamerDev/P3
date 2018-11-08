@@ -594,7 +594,10 @@ public class DatabaseManager {
 
                 int progressBarParts = 5;
                 updateProgress(0, progressBarParts);
-
+                LocalObjStorage.getEmployeeList().clear();
+                LocalObjStorage.getProjectList().clear();
+                LocalObjStorage.getTaskList().clear();
+                
                 List<Project> projectManagerProjects = getPMProjects(projectManager);
 
                 //We need the employees to add them to new projects and tasks so we get them no matter what
