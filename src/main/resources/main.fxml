@@ -115,6 +115,8 @@
                                     <TextField />
                                     <Label text="Estimated time" />
                                     <TextField />
+                                    <Label text="Number of employees" />
+                                    <TextField />
                                     <HBox prefHeight="29.0" prefWidth="222.0">
                                        <children>
                                           <Label text="Certainty" />
@@ -122,7 +124,7 @@
                                              <HBox.margin>
                                                 <Insets left="-45.0" top="20.0" />
                                              </HBox.margin></Label>
-                                          <Label text="Probability">
+                                          <Label text="Probability %">
                                              <HBox.margin>
                                                 <Insets left="60.0" top="20.0" />
                                              </HBox.margin>
