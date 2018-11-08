@@ -189,6 +189,7 @@ public class InputTab {
         for (TextField textField : textFields)
             textField.clear();
         taskDependencies.clear();
+        listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
         drawInputTab();
     }
 
