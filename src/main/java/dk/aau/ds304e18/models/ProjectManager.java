@@ -110,14 +110,22 @@ public class ProjectManager {
      */
     public void addOldProject(Project project) {
         boolean isLoadingFromDB = false;
+        if(oldProjects.contains(project)) return;
+
         if (project != null) {
-            if (oldProjectsId.contains(project.getId()))
+            if (oldProjectsId.contains(project.getId())) {
                 isLoadingFromDB = true;
+            }
+
+
             oldProjects.add(project);
+
             if (!isLoadingFromDB) oldProjectsId.add(project.getId());
             project.setState(ProjectState.ARCHIVED);
+
             if (currentProject == project)
                 currentProject = null;
+
             if (!isLoadingFromDB) DatabaseManager.updateProjectManager(this);
         }
     }
