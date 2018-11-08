@@ -23,6 +23,12 @@ import java.util.stream.Collectors;
 
 public class InputTab {
 
+    public static InputTab getInstance() {
+        return instance;
+    }
+
+    private static InputTab instance;
+
     private List<Task> taskDependencies = new ArrayList<>();
     private Parent rootPane;
     private OutputTab outputTab;
@@ -33,14 +39,22 @@ public class InputTab {
         this.rootPane = rootPane;
         this.outputTab = outputTab;
         setupInputTab();
+        instance = this;
     }
 
-    void drawInputTab() {
+    public void updateOutput() {
+        var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
+        VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
+        outputTab.drawOutputTab(((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected());
+    }
+
+    public void drawInputTab() {
         if (JavaFXMain.selectedProjectId != 0 && LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getState() == ProjectState.ARCHIVED)
             disableInput();
         else
             enableInput();
-        tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+        tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task ->
+                task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
     }
 
     void disableInput() {
@@ -118,14 +132,15 @@ public class InputTab {
             clearInputFields(listViewDependency, probs1, probs2, probs3,
                     probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority);
         });
-        bottomButtonsHBox.getChildren().get(1).setOnMouseClicked(event -> clearInputFields(listViewDependency, probs1, probs2, probs3,
-                probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority));
-
-
         //Middle column
         VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(4));
+        bottomButtonsHBox.getChildren().get(1).setOnMouseClicked(event -> clearInputFields(listViewDependency, probs1, probs2, probs3,
+                probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority, numOfEmployees));
+
+
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true));
+        numOfEmployees.setText("0");
 
         vBoxSplitter.getChildren().get(1).setOnMouseClicked(event -> calculate(
                 LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
@@ -174,7 +189,7 @@ public class InputTab {
         for (TextField textField : textFields)
             textField.clear();
         taskDependencies.clear();
-        listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
+        drawInputTab();
     }
 
     /**

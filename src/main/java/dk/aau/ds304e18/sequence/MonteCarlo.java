@@ -163,6 +163,7 @@ public class MonteCarlo {
                     project.setDuration(results.stream().mapToDouble(value -> value).sum() / monteCarloRepeats);
                     System.out.println("All done");
                     System.out.println(project.getDuration());
+                    InputTab.getInstance().updateOutput();
                     Instant end = java.time.Instant.now();
                     Duration between = java.time.Duration.between(start, end);
                     System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
