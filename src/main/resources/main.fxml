@@ -173,7 +173,7 @@
                                                         <Button mnemonicParsing="false" text="Cancel Task" />
                                                         <Button mnemonicParsing="false" text="Calculate" />
                                                         <CheckBox mnemonicParsing="false" text="Sequence" />
-                                                      <Label text="Nr of employees" />
+                                                      <Label text="No. of employees" />
                                                       <TextField>
                                              <VBox.margin>
                                                 <Insets left="3.0" right="3.0" top="-20.0" />

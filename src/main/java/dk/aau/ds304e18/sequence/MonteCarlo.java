@@ -129,7 +129,7 @@ public class MonteCarlo {
 
         List<javafx.concurrent.Task<Double>> tasks = new ArrayList<>();
         for (int i = 0; i < numOfThreads; i++) {
-            tasks.add(new EstimateTimeCallable(taskList, project.getEmployees().size(), numOfThreads, monteCarloRepeats));
+            tasks.add(new EstimateTimeCallable(taskList, project.getNumberOfEmployees(), numOfThreads, monteCarloRepeats));
         }
 
         List<Double> results = new ArrayList<>();
