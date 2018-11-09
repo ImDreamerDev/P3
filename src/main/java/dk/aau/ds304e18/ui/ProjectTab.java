@@ -8,7 +8,6 @@ import dk.aau.ds304e18.models.ProjectState;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,10 +17,10 @@ import java.util.stream.Collectors;
 
 public class ProjectTab {
 
-    private Parent rootPane;
+    private final Parent rootPane;
     private SortedList<Project> sortedList;
-    private ProjectManager projectManager;
-    private InputTab inputTab;
+    private final ProjectManager projectManager;
+    private final InputTab inputTab;
     private TableView<Project> tableView;
     private FilteredList<Project> flProjects;
     private HBox projectToolBar;

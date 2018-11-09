@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.sql.*;
 import java.util.*;
 
+@SuppressWarnings("ALL")
 public class DatabaseManager {
 
     /**
@@ -80,9 +81,8 @@ public class DatabaseManager {
      * Adds an employee to the database and fetches the unique employee ID. and adds to employee.
      *
      * @param emp Employee to add.
-     * @return bool to indicate whether the operation was successful.
      */
-    public static boolean addEmployees(Employee emp) {
+    public static void addEmployees(Employee emp) {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employees (name," +
@@ -96,16 +96,14 @@ public class DatabaseManager {
             if (emp.getProject() != null) statement.setInt(3, emp.getProject().getId());
             else statement.setInt(3, 0);
 
-            if (statement.execute()) return false;
+            if (statement.execute()) return;
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) emp.setId(rs.getInt(1));
             LocalObjStorage.addEmployee(emp);
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     /**
@@ -113,15 +111,14 @@ public class DatabaseManager {
      *
      * @param pm       the project manager to be added.
      * @param password clear text of password to add.
-     * @return true if user does not already exist in DB and is added.
      */
-    public static boolean addProjectManager(ProjectManager pm, String password) {
+    public static void addProjectManager(ProjectManager pm, String password) {
         if (dbConnection == null) connect();
         try {
             PreparedStatement checkName = dbConnection.prepareStatement("SELECT id FROM projectmanagers WHERE username = ?");
             checkName.setString(1, pm.getName());
             ResultSet checkNameRs = checkName.executeQuery();
-            if (checkNameRs.next()) return false;
+            if (checkNameRs.next()) return;
 
 
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projectmanagers (" +
@@ -131,7 +128,7 @@ public class DatabaseManager {
             statement.setBytes(2, Password.hash(password.toCharArray(), salt));
             statement.setBytes(3, salt);
 
-            if (statement.execute()) return false;
+            if (statement.execute()) return;
 
             ResultSet rs = statement.getGeneratedKeys();
 
@@ -140,9 +137,7 @@ public class DatabaseManager {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     /**
@@ -171,9 +166,8 @@ public class DatabaseManager {
      * Adds a project to the database and fetches the unique project ID and adds to project.
      *
      * @param project the project to add.
-     * @return bool to indicate whether the operation was successful.
      */
-    public static Boolean addProject(Project project) {
+    public static void addProject(Project project) {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projects " +
@@ -181,16 +175,14 @@ public class DatabaseManager {
             statement.setString(1, project.getName());
             statement.setInt(2, project.getState().getValue());
 
-            if (statement.execute()) return false;
+            if (statement.execute()) return;
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) project.setId(rs.getInt(1));
             LocalObjStorage.addProject(project);
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     /**
@@ -405,111 +397,19 @@ public class DatabaseManager {
     /**
      * Returns a project with projId from db.
      *
-     * @param projId the id of the project to get.
+     * @param projectId the id of the project to get.
      * @return the project or null.
      */
-    public static Project getProject(int projId) {
+    public static Project getProject(int projectId) {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projects WHERE id = ?");
-            statement.setInt(1, projId);
+            statement.setInt(1, projectId);
             ResultSet rs = statement.executeQuery();
             return Objects.requireNonNull(parseProjectsFromResultSet(rs)).get(0);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
-    }
-
-    /**
-     * The getter for a project manager using the id.
-     *
-     * @param id - the id of the project manager.
-     * @return a project manager if the projectmanagers list isnt empty. else returns null.
-     */
-    public static ProjectManager getProjectManager(int id) {
-        if (dbConnection == null) connect();
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE id = ?");
-            statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
-            if (projectManagers.size() != 0)
-                return projectManagers.get(0);
-            return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Return the projects from db which are ongoing.
-     *
-     * @return list of all ongoing projects.
-     */
-    public static List<Project> getAllProjects() {
-        if (dbConnection == null) connect();
-        try {
-            ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM projects");
-            if (rs == null) return null;
-            return parseProjectsFromResultSet(rs);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Gets all DatabaseEmployees from database. Assumes projects are loaded.
-     *
-     * @return list of all DatabaseEmployees.
-     */
-    public static List<Employee> getAllEmployees() {
-        if (dbConnection == null) connect();
-        try {
-            ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM employees");
-            return parseEmployeesFromResultSet(rs);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * Get all databaseTasks.
-     *
-     * @return list of all database tasks.
-     */
-    public static List<Task> getAllTasks() {
-        if (dbConnection == null) connect();
-
-        try {
-            ResultSet rs = dbConnection.createStatement().executeQuery("SELECT * FROM tasks");
-            return DatabaseManager.parseTasksFromResultSet(rs);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * The getter for the list of project managers
-     *
-     * @return ProjectManagers - an arraylist of the project managers.
-     */
-    private static List<ProjectManager> getAllProjectManagers() {
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers");
-            ResultSet rs = statement.executeQuery();
-            List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
-            if (projectManagers != null && projectManagers.size() != 0)
-                return projectManagers;
-            return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-
     }
 
     private static List<Project> getPMProjects(ProjectManager projectManager) {

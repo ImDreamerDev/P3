@@ -10,11 +10,12 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * The tests for the ProjectManager class.
  */
-public class ProjectManagerTest {
+class ProjectManagerTest {
     @BeforeAll
     static void init() {
         DatabaseManager.isTests = true;
@@ -133,7 +134,7 @@ public class ProjectManagerTest {
         Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0,"",1);
         newProjectManager.setCurrentProject(newProject);
         newProjectManager.addOldProject(newProject);
-        assertEquals(newProjectManager.getCurrentProject(), null);
+        assertNull(newProjectManager.getCurrentProject());
         DatabaseManager.removeProjectManager(newProjectManager.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
     }

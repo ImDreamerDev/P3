@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OutputTab {
-    private Parent rootPane;
+    private final Parent rootPane;
 
     public OutputTab(Parent rootPane) {
         this.rootPane = rootPane;

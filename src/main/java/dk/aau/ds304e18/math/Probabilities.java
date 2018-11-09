@@ -5,12 +5,12 @@ public class Probabilities {
     /**
      * Duration is in the time the user wants it in (They need to keep it consistent throughout the project)
      */
-    private double duration;
+    private final double duration;
 
     /**
      * Probability is in percent, i.e. out of 100
      */
-    private double probability;
+    private final double probability;
 
     /**
      * @param duration    - duration in the time the user wants.
