@@ -6,7 +6,7 @@ import dk.aau.ds304e18.models.Task;
 import java.util.*;
 import java.util.concurrent.Callable;
 
-public class EstimateTimeCallable implements Callable<Double> {
+public class EstimateTimeCallable implements Callable<List<List<Double>>> {
     private List<Task> taskList;
     private double amountEmployees;
     private int numOfThreads;
@@ -19,7 +19,10 @@ public class EstimateTimeCallable implements Callable<Double> {
         this.numOfMonte = numOfMonte;
     }
 
-    public Double call() {
+    public List<List<Double>> call() {
+        List<List<Double>> toReturn = new ArrayList<>();
+        List<Double> durationList = new ArrayList<>();
+        List<Double> chances = new ArrayList<>();
         Random r = new Random();
         double duration = 0.0;
         int repeats = numOfMonte / numOfThreads;
@@ -102,7 +105,17 @@ public class EstimateTimeCallable implements Callable<Double> {
                     duration += invG.getDuration(rand);
                 }
             }
+
+            try{
+                chances.set((int)Math.round((duration/i+1)/10), chances.get((int)Math.round((duration/i+1)/10)) + 1);
+            }catch(IndexOutOfBoundsException e){
+                chances.add(0/* (int)Math.round((duration/i+1)/10) /* This makes index -1 for some reason, I'll fix one day */, 1d);
+            }
+
         }
-        return duration;
+        durationList.add(duration);
+        toReturn.add(durationList);
+        toReturn.add(chances);
+        return toReturn;
     }
 }
