@@ -29,7 +29,6 @@ public class JavaFXMain extends Application {
     private VBox vBoxLogin;
     public static int selectedProjectId;
     private Image image;
-    private static boolean useTasks;
     private OutputTab outputTab;
     private InputTab inputTab;
     private ProjectTab projectTab;
@@ -73,9 +72,6 @@ public class JavaFXMain extends Application {
 
 
         ((Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1)).setOnMouseClicked(event -> {
-
-            //
-
             Task<Void> voidTask = DatabaseManager.distributeModels(LocalObjStorage.getProjectManager().get(0));
             ProgressBar bar = new ProgressBar();
             bar.progressProperty().bind(voidTask.progressProperty());
@@ -89,8 +85,6 @@ public class JavaFXMain extends Application {
             });
             voidTask.setOnFailed(observable -> bar.setStyle("-fx-progress-color: red"));
             new Thread(voidTask).start();
-
-
         });
 
         loginButton.setOnMouseClicked(event -> logIn());
@@ -104,8 +98,6 @@ public class JavaFXMain extends Application {
 
 
     public static void main(String[] args) {
-        if (args.length != 0 && args[0].equals("taskMode"))
-            useTasks = true;
         launch();
     }
 
