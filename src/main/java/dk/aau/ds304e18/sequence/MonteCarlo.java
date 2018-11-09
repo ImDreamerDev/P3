@@ -135,7 +135,7 @@ public class MonteCarlo {
         //create a list to hold the Future object associated with Callable
         List<Future<Double>> list = new ArrayList<Future<Double>>();
         //Create MyCallable instance
-        Callable<Double> callable = new EstimateTimeCallable(taskList, project.getEmployees().size(), numOfThreads, monteCarloRepeats);
+        Callable<Double> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(), numOfThreads, monteCarloRepeats);
         for (int i = 0; i < numOfThreads; i++) {
             //submit Callable tasks to be executed by thread pool
             Future<Double> future = executor.submit(callable);
