@@ -597,7 +597,7 @@ public class DatabaseManager {
                 LocalObjStorage.getEmployeeList().clear();
                 LocalObjStorage.getProjectList().clear();
                 LocalObjStorage.getTaskList().clear();
-                
+
                 List<Project> projectManagerProjects = getPMProjects(projectManager);
 
                 //We need the employees to add them to new projects and tasks so we get them no matter what
@@ -799,6 +799,7 @@ public class DatabaseManager {
         if (dbConnection != null) {
             try {
                 dbConnection.close();
+                dbConnection = null;
             } catch (SQLException e) {
                 e.printStackTrace();
             }

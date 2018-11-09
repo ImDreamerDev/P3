@@ -70,8 +70,8 @@ public class JavaFXMain extends Application {
             }
         });
 
-
-        ((Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1)).setOnMouseClicked(event -> {
+        //Update button
+        ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1).setOnMouseClicked(event -> {
             Task<Void> voidTask = DatabaseManager.distributeModels(LocalObjStorage.getProjectManager().get(0));
             ProgressBar bar = new ProgressBar();
             bar.progressProperty().bind(voidTask.progressProperty());
@@ -85,6 +85,17 @@ public class JavaFXMain extends Application {
             });
             voidTask.setOnFailed(observable -> bar.setStyle("-fx-progress-color: red"));
             new Thread(voidTask).start();
+        });
+
+        ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(3).setOnMouseClicked(event -> {
+            DatabaseManager.logOut();
+            rootPane.getChildrenUnmodifiable().get(2).setVisible(true);
+            usernameField.clear();
+            passwordField.clear();
+            outputTab = null;
+            inputTab = null;
+            projectTab = null;
+            selectedProjectId = 0;
         });
 
         loginButton.setOnMouseClicked(event -> logIn());
