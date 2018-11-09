@@ -33,9 +33,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <mainClass>dk.aau.ds304e18.JavaFXMain</mainClass>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
