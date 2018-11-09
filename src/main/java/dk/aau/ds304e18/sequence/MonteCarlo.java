@@ -91,7 +91,7 @@ public class MonteCarlo {
     }
 
     public static double estimateTime(String path, double numOfEmps, List<Task> tasks) {
-        Project project = new Project(-1, "Test", ProjectState.ONGOING, path, 0d, path, numOfEmps);
+        Project project = new Project(-1, "Temp", ProjectState.ONGOING, path, 0d, path, numOfEmps);
         for(Task task : tasks)
             project.addNewTask(task);
         return estimateTime(project);
