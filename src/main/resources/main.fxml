@@ -47,16 +47,25 @@
                         </Menu>
                     </menus>
                 </MenuBar>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="278.0" text="Update">
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="22.0" prefWidth="60.0" text="Update">
                <HBox.margin>
-                  <Insets right="40.0" />
-               </HBox.margin></Button>
+                  <Insets right="40.0" top="1.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="11.0" />
+               </font></Button>
             <Separator maxHeight="30.0" orientation="VERTICAL" prefHeight="20.0" prefWidth="36.0">
                <HBox.margin>
                   <Insets right="40.0" />
                </HBox.margin>
             </Separator>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="272.0" text="Logout" />
+            <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="22.0" prefWidth="60.0" text="Logout">
+               <HBox.margin>
+                  <Insets right="5.0" top="1.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="11.0" />
+               </font></Button>
             </children>
         </HBox>
         <TabPane id="tapPane" layoutX="7.0" layoutY="24.0" prefHeight="376.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">

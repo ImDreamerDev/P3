@@ -19,7 +19,7 @@ public class ProjectManager {
     /**
      * The name of the project manager
      */
-    private String name;
+    private final String name;
 
     /**
      * The current project that the project manager is working on
@@ -34,12 +34,12 @@ public class ProjectManager {
     /**
      * A list of projects that the project manager has previously worked on.
      */
-    private List<Project> oldProjects = new ArrayList<>();
+    private final List<Project> oldProjects = new ArrayList<>();
 
     /**
      * A list of the oldProjectId's.
      */
-    private List<Integer> oldProjectsId = new ArrayList<>();
+    private final List<Integer> oldProjectsId = new ArrayList<>();
 
     /**
      * The constructor of the ProjectManager class.

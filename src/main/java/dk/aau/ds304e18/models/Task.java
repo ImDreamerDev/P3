@@ -23,7 +23,7 @@ public class Task {
     /**
      * The name of the task.
      */
-    private String name;
+    private final String name;
 
     /**
      * The estimated completion time of the task - This is used as mu in the inverse gaussian

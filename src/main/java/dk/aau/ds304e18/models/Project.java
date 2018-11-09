@@ -2,7 +2,6 @@ package dk.aau.ds304e18.models;
 
 import dk.aau.ds304e18.database.DatabaseManager;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +20,7 @@ public class Project {
     /**
      * The name of the project.
      */
-    private String name;
+    private final String name;
 
     private String sequence;
 

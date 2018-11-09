@@ -29,9 +29,9 @@ public class InputTab {
 
     private static InputTab instance;
 
-    private List<Task> taskDependencies = new ArrayList<>();
-    private Parent rootPane;
-    private OutputTab outputTab;
+    private final List<Task> taskDependencies = new ArrayList<>();
+    private final Parent rootPane;
+    private final OutputTab outputTab;
     private TableView<Task> tableView;
     public static HBox progressBarContainer;
 
@@ -57,7 +57,7 @@ public class InputTab {
                 task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
     }
 
-    void disableInput() {
+    private void disableInput() {
         var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
@@ -65,7 +65,7 @@ public class InputTab {
         inputVBox.setDisable(true);
     }
 
-    void enableInput() {
+    private void enableInput() {
         var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
@@ -76,7 +76,7 @@ public class InputTab {
     /**
      * The method that sets up the contents of the whole input tab.
      */
-    public void setupInputTab() {
+    private void setupInputTab() {
         var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
 
         //Table view
