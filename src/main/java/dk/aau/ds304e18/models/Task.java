@@ -4,6 +4,7 @@ import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.Probabilities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +23,7 @@ public class Task {
     /**
      * The name of the task.
      */
-    private String name;
+    private final String name;
 
     /**
      * The estimated completion time of the task - This is used as mu in the inverse gaussian
@@ -49,8 +50,6 @@ public class Task {
     private final List<Integer> dependencyIds = new ArrayList<>();
 
     private final List<Probabilities> probabilities = new ArrayList<>();
-
-    private int amountDependenciesLeft = -1;
 
     /**
      * The date that the task starts.
@@ -251,12 +250,7 @@ public class Task {
      * @param task - The tasks to add to dependencies
      */
     public void addDependency(Task... task) {
-        for (Task tsk : task) {
-            if (tsk != this && !dependencies.contains(tsk))
-                dependencies.add(tsk);
-        }
-        if (!project.getTasks().contains(this)) project.addNewTask(this);
-        DatabaseManager.updateTask(this);
+        addDependency(Arrays.asList(task));
     }
 
     public void addDependency(List<Task> tasks) {
@@ -282,6 +276,7 @@ public class Task {
 
     /**
      * The hashcode for the task
+     *
      * @return Hashcode of the object
      */
     @Override
@@ -291,6 +286,7 @@ public class Task {
 
     /**
      * The getter for the list of employee ids
+     *
      * @return employeeIds - A list of employee ids
      */
     public List<Integer> getEmployeeIds() {
@@ -299,6 +295,7 @@ public class Task {
 
     /**
      * The getter for the ids of the dependencies.
+     *
      * @return dependencyIds - a list of ids of the tasks dependencies.
      */
     public List<Integer> getDependencyIds() {
@@ -307,6 +304,7 @@ public class Task {
 
     /**
      * The setter for the startTime.
+     *
      * @param startTime - the time at which the task is started.
      */
     public void setStartTime(double startTime) {
@@ -314,26 +312,8 @@ public class Task {
     }
 
     /**
-     * The getter for amountDependenciesLeft.
-     * @return amountDependenciesLeft - how many dependencies the task has left.
-     */
-    public int getAmountDependenciesLeft() {
-        if (amountDependenciesLeft == -1) {
-            amountDependenciesLeft = dependencies.size();
-        }
-        return amountDependenciesLeft;
-    }
-
-    /**
-     * The setter for the Amountdepenciesleft.
-     * @param amountDependenciesLeft - how many dependencies the task has left.
-     */
-    public void setAmountDependenciesLeft(int amountDependenciesLeft) {
-        this.amountDependenciesLeft = amountDependenciesLeft;
-    }
-
-    /**
      * the getter for the list of probabilities.
+     *
      * @return probabilities - a list of the probabilities.
      */
     public List<Probabilities> getProbabilities() {
@@ -343,6 +323,7 @@ public class Task {
 
     /**
      * This method parses the information from the database which turns the probabilities into a string format.
+     *
      * @return Probability string - the probabilites turned into string format.
      */
     public String parseProbabilitiesForDatabase() {
@@ -363,6 +344,7 @@ public class Task {
 
     /**
      * The getter for the lambda value.
+     *
      * @return lambda.
      */
     public double getLambda() {
@@ -371,6 +353,7 @@ public class Task {
 
     /**
      * The setter for lambda.
+     *
      * @param lambda
      */
     public void setLambda(double lambda) {

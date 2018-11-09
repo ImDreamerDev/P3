@@ -122,6 +122,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <th class="colFirst" scope="row"><a href="#dk.aau.ds304e18.sequence">dk.aau.ds304e18.sequence</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="#dk.aau.ds304e18.ui">dk.aau.ds304e18.ui</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -240,6 +244,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>private static java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#getTasksForProjectManager(dk.aau.ds304e18.models.ProjectManager)">getTasksForProjectManager</a></span>&#8203;(<a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;projectManager)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>private static java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#parseTasksFromResultSet(java.sql.ResultSet)">parseTasksFromResultSet</a></span>&#8203;(java.sql.ResultSet&nbsp;rs)</code></th>
 <td class="colLast">
@@ -408,6 +417,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 </tbody>
 </table>
+<table class="useSummary">
+<caption><span>Method parameters in <a href="../package-summary.html">dk.aau.ds304e18.models</a> with type arguments of type <a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">Task.</span><code><span class="memberNameLink"><a href="../Task.html#addDependency(java.util.List)">addDependency</a></span>&#8203;(java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasks)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
 </section>
 </li>
 <li class="blockList">
@@ -415,6 +439,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!--   -->
 </a>
 <h3>Uses of <a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a> in <a href="../../sequence/package-summary.html">dk.aau.ds304e18.sequence</a></h3>
+<table class="useSummary">
+<caption><span>Fields in <a href="../../sequence/package-summary.html">dk.aau.ds304e18.sequence</a> with type parameters of type <a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>private java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">EstimateTimeCallable.</span><code><span class="memberNameLink"><a href="../../sequence/EstimateTimeCallable.html#taskList">taskList</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
 <table class="useSummary">
 <caption><span>Methods in <a href="../../sequence/package-summary.html">dk.aau.ds304e18.sequence</a> that return types with arguments of type <a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
@@ -477,6 +516,92 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
            java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;takeFrom,
            int&nbsp;tasksSize)</code></th>
 <td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Constructor parameters in <a href="../../sequence/package-summary.html">dk.aau.ds304e18.sequence</a> with type arguments of type <a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Constructor</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../sequence/EstimateTimeCallable.html#%3Cinit%3E(java.util.List,double,int,int)">EstimateTimeCallable</a></span>&#8203;(java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;taskList,
+                    double&nbsp;amountEmployees,
+                    int&nbsp;numOfThreads,
+                    int&nbsp;numOfMonte)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</section>
+</li>
+<li class="blockList">
+<section role="region"><a id="dk.aau.ds304e18.ui">
+<!--   -->
+</a>
+<h3>Uses of <a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a> in <a href="../../ui/package-summary.html">dk.aau.ds304e18.ui</a></h3>
+<table class="useSummary">
+<caption><span>Fields in <a href="../../ui/package-summary.html">dk.aau.ds304e18.ui</a> with type parameters of type <a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>private javafx.scene.control.TableView&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InputTab.</span><code><span class="memberNameLink"><a href="../../ui/InputTab.html#tableView">tableView</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InputTab.</span><code><span class="memberNameLink"><a href="../../ui/InputTab.html#taskDependencies">taskDependencies</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Method parameters in <a href="../../ui/package-summary.html">dk.aau.ds304e18.ui</a> with type arguments of type <a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InputTab.</span><code><span class="memberNameLink"><a href="../../ui/InputTab.html#addDependency(javafx.scene.control.ListView)">addDependency</a></span>&#8203;(javafx.scene.control.ListView&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency)</code></th>
+<td class="colLast">
+<div class="block">Method for adding a dependency to a new task.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InputTab.</span><code><span class="memberNameLink"><a href="../../ui/InputTab.html#addTask(java.lang.String,double,int,java.util.List,javafx.scene.control.TableView)">addTask</a></span>&#8203;(java.lang.String&nbsp;name,
+       double&nbsp;estimatedTime,
+       int&nbsp;priority,
+       java.util.List&lt;<a href="../../math/Probabilities.html" title="class in dk.aau.ds304e18.math">Probabilities</a>&gt;&nbsp;probabilities,
+       javafx.scene.control.TableView&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tableView)</code></th>
+<td class="colLast">
+<div class="block">The method for adding a task.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InputTab.</span><code><span class="memberNameLink"><a href="../../ui/InputTab.html#clearInputFields(javafx.scene.control.ListView,javafx.scene.control.TextField...)">clearInputFields</a></span>&#8203;(javafx.scene.control.ListView&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
+                javafx.scene.control.TextField...&nbsp;textFields)</code></th>
+<td class="colLast">
+<div class="block">This method clears the whole inputfield for creating a new task.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">InputTab.</span><code><span class="memberNameLink"><a href="../../ui/InputTab.html#removeDependency(javafx.scene.control.ListView)">removeDependency</a></span>&#8203;(javafx.scene.control.ListView&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency)</code></th>
+<td class="colLast">
+<div class="block">Method for revoming a dependency from the new task.</div>
+</td>
 </tr>
 </tbody>
 </table>

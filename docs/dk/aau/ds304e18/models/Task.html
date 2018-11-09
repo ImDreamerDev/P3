@@ -156,94 +156,89 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>private int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#amountDependenciesLeft">amountDependenciesLeft</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>private java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dependencies">dependencies</a></span></code></th>
 <td class="colLast">
 <div class="block">The list of tasks which the task has dependencies upon.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private java.util.List&lt;java.lang.Integer&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dependencyIds">dependencyIds</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private java.util.List&lt;java.lang.Integer&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#employeeIds">employeeIds</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private java.util.List&lt;<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#employees">employees</a></span></code></th>
 <td class="colLast">
 <div class="block">The list of the employees assigned to the task</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#endTime">endTime</a></span></code></th>
 <td class="colLast">
 <div class="block">The date the task should be completed.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimatedTime">estimatedTime</a></span></code></th>
 <td class="colLast">
 <div class="block">The estimated completion time of the task - This is used as mu in the inverse gaussian</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#id">id</a></span></code></th>
 <td class="colLast">
 <div class="block">The id of the task.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lambda">lambda</a></span></code></th>
 <td class="colLast">
 <div class="block">The estimated lambda value for the inverse gaussian</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name">name</a></span></code></th>
 <td class="colLast">
 <div class="block">The name of the task.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#priority">priority</a></span></code></th>
 <td class="colLast">
 <div class="block">The level of priority that the task has compared to other tasks.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private java.util.List&lt;<a href="../math/Probabilities.html" title="class in dk.aau.ds304e18.math">Probabilities</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#probabilities">probabilities</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private <a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#project">project</a></span></code></th>
 <td class="colLast">
 <div class="block">The project which the task is a part of.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#projectId">projectId</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startTime">startTime</a></span></code></th>
 <td class="colLast">
@@ -316,27 +311,25 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addDependency(java.util.List)">addDependency</a></span>&#8203;(java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasks)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEmployee(dk.aau.ds304e18.models.Employee...)">addEmployee</a></span>&#8203;(<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>...&nbsp;employee)</code></th>
 <td class="colLast">
 <div class="block">Assign employees to the Task.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#distributeAddDependency(dk.aau.ds304e18.models.Task)">distributeAddDependency</a></span>&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAmountDependenciesLeft()">getAmountDependenciesLeft</a></span>()</code></th>
-<td class="colLast">
-<div class="block">The getter for amountDependenciesLeft.</div>
-</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
@@ -450,57 +443,55 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAmountDependenciesLeft(int)">setAmountDependenciesLeft</a></span>&#8203;(int&nbsp;amountDependenciesLeft)</code></th>
-<td class="colLast">
-<div class="block">The setter for the Amountdepenciesleft.</div>
-</td>
-</tr>
-<tr id="i22" class="altColor">
-<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEndTime(double)">setEndTime</a></span>&#8203;(double&nbsp;endTime)</code></th>
 <td class="colLast">
 <div class="block">The setter for the end date.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEstimatedTime(double)">setEstimatedTime</a></span>&#8203;(double&nbsp;estimatedTime)</code></th>
 <td class="colLast">
 <div class="block">the setter for the Estimated time</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(int)">setId</a></span>&#8203;(int&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">The setter for the id</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLambda(double)">setLambda</a></span>&#8203;(double&nbsp;lambda)</code></th>
 <td class="colLast">
 <div class="block">The setter for lambda.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPriority(int)">setPriority</a></span>&#8203;(int&nbsp;priority)</code></th>
 <td class="colLast">
 <div class="block">The setter for the priority of the task.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProject(dk.aau.ds304e18.models.Project)">setProject</a></span>&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setStartTime(double)">setStartTime</a></span>&#8203;(double&nbsp;startTime)</code></th>
 <td class="colLast">
 <div class="block">The setter for the startTime.</div>
 </td>
+</tr>
+<tr id="i28" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -508,7 +499,7 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, finalize, getClass, notify, notifyAll, toString, wait, wait, wait</code></li>
+<code>clone, finalize, getClass, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -551,7 +542,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>name</h4>
-<pre>private final&nbsp;java.lang.String name</pre>
+<pre>private&nbsp;java.lang.String name</pre>
 <div class="block">The name of the task.</div>
 </li>
 </ul>
@@ -620,15 +611,6 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>probabilities</h4>
 <pre>private final&nbsp;java.util.List&lt;<a href="../math/Probabilities.html" title="class in dk.aau.ds304e18.math">Probabilities</a>&gt; probabilities</pre>
-</li>
-</ul>
-<a id="amountDependenciesLeft">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>amountDependenciesLeft</h4>
-<pre>private&nbsp;int amountDependenciesLeft</pre>
 </li>
 </ul>
 <a id="startTime">
@@ -957,6 +939,15 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="addDependency(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addDependency</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addDependency&#8203;(java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasks)</pre>
+</li>
+</ul>
 <a id="distributeAddDependency(dk.aau.ds304e18.models.Task)">
 <!--   -->
 </a>
@@ -1037,34 +1028,6 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getAmountDependenciesLeft()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAmountDependenciesLeft</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;getAmountDependenciesLeft()</pre>
-<div class="block">The getter for amountDependenciesLeft.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>amountDependenciesLeft - how many dependencies the task has left.</dd>
-</dl>
-</li>
-</ul>
-<a id="setAmountDependenciesLeft(int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAmountDependenciesLeft</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAmountDependenciesLeft&#8203;(int&nbsp;amountDependenciesLeft)</pre>
-<div class="block">The setter for the Amountdepenciesleft.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>amountDependenciesLeft</code> - - how many dependencies the task has left.</dd>
-</dl>
-</li>
-</ul>
 <a id="getProbabilities()">
 <!--   -->
 </a>
@@ -1110,7 +1073,7 @@ extends java.lang.Object</pre>
 <a id="setLambda(double)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setLambda</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setLambda&#8203;(double&nbsp;lambda)</pre>
@@ -1118,6 +1081,19 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>lambda</code> - </dd>
+</dl>
+</li>
+</ul>
+<a id="toString()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>toString</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
 </li>
 </ul>

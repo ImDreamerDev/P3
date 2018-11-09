@@ -4,6 +4,7 @@ import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -46,6 +47,9 @@ public class Sequence {
         //The sequence to return
         StringBuilder sequencedTasks = new StringBuilder();
 
+        //Temporary list of tasks sequenced
+        List<Task> tasksAlreadySequenced = new ArrayList<>();
+
         //Temporary lists, first to sort them and add them to sequencedTasks, second to remove the already sequenced tasks from the dependency list of each task
         List<Task> tasksToSort = new ArrayList<>();
         List<Task> tasksToRemove = new ArrayList<>();
@@ -55,14 +59,13 @@ public class Sequence {
 
             //For each task in the tasks to be sorted
             for (Task task : tasks) {
-
-                //If there are no dependencies left unsorted for the task
-                if (task.getAmountDependenciesLeft() == 0) {
-                    //Add the task to the two temporary lists
-                    tasksToSort.add(task);
-                    tasksToRemove.add(task);
-                }
+                if (!tasksAlreadySequenced.containsAll(task.getDependencies())) continue;
+                //Add the task to the two temporary lists
+                tasksToSort.add(task);
+                tasksToRemove.add(task);
             }
+
+            tasksAlreadySequenced.addAll(tasksToSort);
 
             //Remove the tasks from the tasks yet to be sorted
             tasks.removeAll(tasksToRemove);
@@ -72,27 +75,13 @@ public class Sequence {
             List<Task> tasksToInsert = sortTasks(tasksToSort);
             sequencedTasks = unparseList(sequencedTasks, tasksToInsert, tasks.size());
             tasksToSort = new ArrayList<>();
-
-            //For each task in the yet to be sorted list
-            for (Task task : tasks) {
-
-                //For each dependency of the tasks
-                for (Task dependency : task.getDependencies()) {
-
-                    //If the dependency is already sequenced
-                    if (!tasks.contains(dependency)) {
-                        //Count down the amount of dependencies left so we know that if they're at 0, it's ready to be sequenced
-                        task.setAmountDependenciesLeft(task.getAmountDependenciesLeft() - 1);
-                    }
-                }
-            }
         }
 
         //Set the list of sequenced tasks
         project.setSequence(sequencedTasks.toString());
 
         //Find the estimated time
-        if(!findSequenceMontecarlo)
+        if (!findSequenceMontecarlo)
             MonteCarlo.estimateTime(project);
     }
 
@@ -103,6 +92,32 @@ public class Sequence {
 
         //Return the sorted tasks
         return tasks;
+
+    }
+
+    public static String findRandomSequence(Project project) {
+
+        int tasksLeft = project.getTasks().size();
+        List<Task> tasksSequenced = new ArrayList<>();
+        List<Task> tasksNotSequenced = new ArrayList<>(project.getTasks());
+        List<Task> tasksToBeRemoved = new ArrayList<>();
+        Collections.shuffle(tasksNotSequenced);
+
+        //TODO: Optimize this to actually give relevant paths for multiple employees (etc. if there are 2 employees, the first 2 tasks shouldn't have dependencies if possible
+        while (tasksLeft > 0) {
+            for (Task task : tasksNotSequenced) {
+                if (!tasksSequenced.containsAll(task.getDependencies())) continue;
+                tasksSequenced.add(task);
+                tasksToBeRemoved.add(task);
+                tasksLeft--;
+            }
+
+            for (Task task : tasksToBeRemoved)
+                tasksNotSequenced.remove(task);
+            tasksToBeRemoved = new ArrayList<>();
+        }
+
+        return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, tasksNotSequenced.size()).toString();
 
     }
 

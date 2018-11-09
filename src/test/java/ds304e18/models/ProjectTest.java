@@ -423,10 +423,26 @@ class ProjectTest {
      */
     @Test
     void TestProjectSetRecommendedPath01() {
-        Project newProject = new Project(1,"Test Project", ProjectState.ONGOING, "", 4.4, "");
+        Project newProject = new Project(1,"Test Project", ProjectState.ONGOING, "", 4.4, "",1);
 
         newProject.setRecommendedPath("Right then Left");
 
         assertEquals("Right then Left", newProject.getRecommendedPath());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+    }
+
+    /**
+     * Tests the project setter for number of employees
+     */
+    @Test
+    void TestProjectSetNumberOfEmployees01() {
+        Project newProject = new Project(1,"Rasmus Test Project", ProjectState.ONGOING, "", 34, "",2);
+
+        newProject.setNumberOfEmployees(2.5);
+
+        assertEquals(2.5,newProject.getNumberOfEmployees());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
     }
 }

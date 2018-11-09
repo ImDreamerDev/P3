@@ -51,7 +51,7 @@ class DatabaseManagerTest {
     }
 
     @Test
-    void testAddProject() throws SQLException {
+    void testAddProject() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project testProj = new Project("TestProj", projectManager);
         String testSequence = "{123,35,234,324,5,6,57,65,7,567,243,235,45,634,346,456,45,67}";
@@ -68,7 +68,7 @@ class DatabaseManagerTest {
     }
 
     @Test
-    void testAddTask() throws SQLException {
+    void testAddTask() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project testProj = new Project("TestProj", projectManager);
         Task testTask = new Task("TestTask", 10, 1, testProj);

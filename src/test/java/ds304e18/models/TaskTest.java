@@ -653,4 +653,20 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
+    /**
+     * Tests the tasks toString returns the name correct.
+     */
+    @Test
+    void TestTaskToString01() {
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
+        Task newTask = new Task("Test Task", 1,1,newProject);
+
+        assertEquals("Test Task", newTask.toString());
+
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+        DatabaseManager.removeProjectManager(projectManager.getId());
+        DatabaseManager.removeTask(newTask.getId());
+    }
+
 }

@@ -2,6 +2,7 @@ package dk.aau.ds304e18.sequence;
 
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.Probabilities;
+import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.Task;
@@ -23,6 +24,15 @@ public class Main {
         Task task6 = new Task("Drik rom & cola", 15, 1, project);
         Task task7 = new Task("Stå i kø igen", 15, 1, project);
         Task task8 = new Task("Drik meget", 70, 1, project);
+
+        project.addNewEmployee(new Employee("Milton"));
+        project.addNewEmployee(new Employee("Rasmus"));
+        project.addNewEmployee(new Employee("Kasper"));
+        project.addNewEmployee(new Employee("Emil"));
+        /*project.addNewEmployee(new Employee("Test2"));
+        project.addNewEmployee(new Employee("Test2"));
+        project.addNewEmployee(new Employee("Test2"));
+        project.addNewEmployee(new Employee("Test2"));*/
 
         task5.addDependency(task4);
         task6.addDependency(task4);
@@ -90,8 +100,6 @@ public class Main {
         //Instant start2 = java.time.Instant.now();
         //MonteCarlo.estimateTime(project, true, 1000000);
         //Instant end2 = java.time.Instant.now();
-
-        System.out.println("Duration of the project: " + project.getDuration());
 
         Duration between = java.time.Duration.between(start, end);
         System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",

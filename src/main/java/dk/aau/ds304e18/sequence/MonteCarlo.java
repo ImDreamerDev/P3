@@ -1,18 +1,26 @@
 package dk.aau.ds304e18.sequence;
 
+import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.math.Calc;
 import dk.aau.ds304e18.math.CalculateLambda;
-import dk.aau.ds304e18.math.InverseGaussian;
 import dk.aau.ds304e18.models.Project;
+import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
+import dk.aau.ds304e18.ui.InputTab;
+import javafx.concurrent.Worker;
+import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MonteCarlo {
 
-    public static void findFastestSequence(Project project){
+    public static void findFastestSequence(Project project) {
 
         //Calls the function with the default value 100
         //If it finds a significant difference within the first 100, it will try another 100 etc.
@@ -20,25 +28,54 @@ public class MonteCarlo {
 
     }
 
-    public static void findFastestSequence(Project project, int monteCarloRepeats){
+    public static void findFastestSequence(Project project, int monteCarloRepeats) {
 
         int i = 0;
+        int j = 0;
         String bestSequence = "";
+        String worstSequence = "";
         double bestTime = -1;
-        //double worstTime = -1; //May be used in the future
+        double worstTime = -1; //May be used in the future
+        String[] randomSequences = new String[monteCarloRepeats];
 
-        while(i < monteCarloRepeats){
+        while (j < monteCarloRepeats) {
 
-            project.setRecommendedPath(findRandomSequence(project));
-            estimateTime(project, true);
+            boolean cont = false;
 
-            //if(project.getDuration() > worstTime || worstTime == -1)
-                //worstTime = project.getDuration();
+            if(j == Calc.amountMax(project.getTasks().size()))
+                break;
 
-            if(project.getDuration() < bestTime || bestTime == -1){
+            randomSequences[i] = Sequence.findRandomSequence(project);
+            for(int k = 0; k < j; k++) {
+                if (randomSequences[k].equals(randomSequences[j])) {
+                    cont = true;
+                    break;
+                }
+            }
+
+            if(cont)
+                continue;
+
+            j++;
+
+        }
+
+        while (i < monteCarloRepeats) {
+
+            //project.setRecommendedPath(findRandomSequence(project));
+            String tempSeq = randomSequences[i];
+            double time = estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks());
+            //estimateTime(project, true);
+
+            if (project.getDuration() > worstTime || worstTime == -1) {
+                worstSequence = tempSeq;
+                worstTime = time;
+            }
+
+            if (project.getDuration() < bestTime || bestTime == -1) {
                 //Set the best sequences and best times
-                bestSequence = project.getRecommendedPath();
-                bestTime = project.getDuration();
+                bestSequence = tempSeq;
+                bestTime = time;
             }
 
             i++;
@@ -47,97 +84,107 @@ public class MonteCarlo {
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
 
-    }
-
-    private static String findRandomSequence(Project project){
-
-        int tasksLeft = project.getTasks().size();
-        List<Task> tasksSequenced = new ArrayList<>();
-        List<Task> tasksNotSequenced = new ArrayList<>(project.getTasks());
-        List<Task> tasksToBeRemoved = new ArrayList<>();
-        Collections.shuffle(tasksNotSequenced);
-
-        while(tasksLeft > 0){
-            for (Task task : tasksNotSequenced) {
-                if (!tasksSequenced.containsAll(task.getDependencies())) continue;
-                tasksSequenced.add(task);
-                tasksToBeRemoved.add(task);
-                tasksLeft--;
-            }
-
-            for (Task task : tasksToBeRemoved)
-                tasksNotSequenced.remove(task);
-            tasksToBeRemoved = new ArrayList<>();
-        }
-
-        return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, tasksNotSequenced.size()).toString();
+        System.out.println("Worst Path: " + worstSequence);
+        System.out.println("With Time: " + worstTime);
 
     }
 
-    public static void estimateTime(Project project){
+    public static double estimateTime(String path, double numOfEmps, List<Task> tasks) {
+        Project project = new Project(-1, "Temp", ProjectState.ONGOING, path, 0d, path, numOfEmps);
+        for(Task task : tasks)
+            project.addNewTask(task);
+        return estimateTime(project);
+    }
+
+    public static double estimateTime(Project project) {
 
         //Calls the function with the default value 10000
-        estimateTime(project, false, 10000);
+        return estimateTime(project, false, 10000);
 
     }
 
-    public static void estimateTime(Project project, boolean rec){
+    public static double estimateTime(Project project, boolean rec) {
 
         //Calls the function with the default value 10000
-        estimateTime(project, rec, 10000);
+        return estimateTime(project, rec, 10000);
 
     }
 
     /**
      * Estimates the time assuming only one task can be done at a time from a project and an amount of time to repeat the tasks
-     * @param project the project where we want to find the estimated duration
+     *
+     * @param project           the project where we want to find the estimated duration
      * @param monteCarloRepeats how many times we want to repeat the project schedule (Higher number will be more accurate but will take longer time)
      */
-    public static void estimateTime(Project project, boolean rec, int monteCarloRepeats){
-
+    public static double estimateTime(Project project, boolean rec, int monteCarloRepeats) {
+        AtomicReference<Double> temp2 = new AtomicReference<>();
         //Gets the task list from the project
         List<Task> taskList = ParseSequence.parseToSingleList(project, rec);
-
-        //The duration that will be counted up and then divided by the amount of repeats we have
-        double duration = 0.0;
-
-        Random r = new Random();
-
         //For each task in taskList
-        for(Task task : taskList){
-
+        for (Task task : taskList) {
             //If the task does not have a lambda yet
-            if(task.getLambda() == -1){
+            if (task.getLambda() == -1) {
                 //Calculate the lambda and optimize the mu value
                 List<Double> temp = CalculateLambda.calculateLambda(task.getEstimatedTime(), task.getProbabilities());
                 task.setEstimatedTime(temp.get(0));
                 task.setLambda(temp.get(1));
             }
-
         }
 
-        //Repeat monteCarloRepeats time
-        for(int i = 0; i < monteCarloRepeats; i++){
+        int numOfThreads = Runtime.getRuntime().availableProcessors();
 
-            //For each task in the taskList
-            for(Task task : taskList){
+        List<javafx.concurrent.Task<Double>> tasks = new ArrayList<>();
+        for (int i = 0; i < numOfThreads; i++) {
+            tasks.add(new EstimateTimeCallable(taskList, project.getNumberOfEmployees(), numOfThreads, monteCarloRepeats));
+        }
 
-                //Create a random double between 0 and 100
-                double rand = r.nextDouble()*100;
-
-                //Create an inverse gaussian distribution for the task
-                InverseGaussian invG = new InverseGaussian(task.getEstimatedTime(), task.getLambda());
-
-                //Calculate the duration at the given random value and add that to duration
-                duration += invG.getDuration(rand);
-
+        List<Double> results = new ArrayList<>();
+        List<ProgressBar> progressBars = new ArrayList<>();
+        Instant start = Instant.now();
+        for (javafx.concurrent.Task<Double> doubleTask : tasks) {
+            if (!DatabaseManager.isTests) {
+                ProgressBar bar = new ProgressBar();
+                progressBars.add(bar);
+                bar.progressProperty().bind(doubleTask.progressProperty());
+                InputTab.progressBarContainer.getChildren().add(bar);
+                if (tasks.indexOf(doubleTask) == tasks.size() - 1) {
+                    Button cancelButton = new Button("Cancel");
+                    cancelButton.setOnMouseClicked(event -> tasks.forEach(javafx.concurrent.Task::cancel));
+                    cancelButton.setMaxHeight(bar.getHeight());
+                    InputTab.progressBarContainer.getChildren().add(cancelButton);
+                }
             }
+            doubleTask.setOnCancelled(event -> {
+                if (!DatabaseManager.isTests) {
+                    InputTab.progressBarContainer.getChildren().clear();
+                }
+            });
+            doubleTask.setOnSucceeded(event -> {
+                results.add(doubleTask.getValue());
+                if (!DatabaseManager.isTests)
+                    InputTab.progressBarContainer.getChildren().remove(progressBars.get(tasks.indexOf(doubleTask)));
 
+
+                if (tasks.stream().allMatch(doubleTask1 -> doubleTask1.getState() == Worker.State.SUCCEEDED)) {
+                    temp2.set(results.stream().mapToDouble(value -> value).sum() / monteCarloRepeats);
+                    System.out.println("All done");
+                    System.out.println(project.getDuration());
+                    InputTab.getInstance().updateOutput();
+                    Instant end = java.time.Instant.now();
+                    Duration between = java.time.Duration.between(start, end);
+                    System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
+                            between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
+                    if (!DatabaseManager.isTests) {
+                        InputTab.progressBarContainer.getChildren().clear();
+                    }
+                }
+            });
+            new Thread(doubleTask).start();
         }
 
-        //Set the duration of the project to the duration divided by amount of times it has been repeated (The average of all the tries)
-        project.setDuration(duration/monteCarloRepeats);
+        //TODO: To Rasmus or who it may concern
+        //This returns null because it doesn't wait for it to get assigned in the thing, make it do that please, project is not touched anymore thank you very much
+        return temp2.get();
 
     }
-
 }
