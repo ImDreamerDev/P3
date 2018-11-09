@@ -30,15 +30,36 @@ public class MonteCarlo {
     public static void findFastestSequence(Project project, int monteCarloRepeats) {
 
         int i = 0;
+        int j = 0;
         String bestSequence = "";
         String worstSequence = "";
         double bestTime = -1;
         double worstTime = -1; //May be used in the future
+        String[] randomSequences = new String[monteCarloRepeats];
+
+        while (j < monteCarloRepeats) {
+
+            boolean cont = false;
+
+            randomSequences[i] = Sequence.findRandomSequence(project);
+            for(int k = 0; k <= i; k++) {
+                if (randomSequences[k].equals(randomSequences[i])) {
+                    cont = true;
+                    break;
+                }
+            }
+
+            if(cont)
+                continue;
+
+            j++;
+
+        }
 
         while (i < monteCarloRepeats) {
 
             //project.setRecommendedPath(findRandomSequence(project));
-            String tempSeq = Sequence.findRandomSequence(project);
+            String tempSeq = randomSequences[i];
             double time = estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks());
             //estimateTime(project, true);
 
