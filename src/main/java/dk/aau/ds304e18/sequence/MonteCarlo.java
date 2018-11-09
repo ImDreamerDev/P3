@@ -62,7 +62,7 @@ public class MonteCarlo {
                 break;
 
             String tempSeq = randomSequences[i];
-            time.add(estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks()));
+            time.add(estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks(), project));
 
             i++;
         }
@@ -82,11 +82,14 @@ public class MonteCarlo {
 
     }
 
-    public static double estimateTime(String path, double numOfEmps, List<Task> tasks) {
+    public static double estimateTime(String path, double numOfEmps, List<Task> tasks, Project realPro) {
         Project project = new Project(-1, "Temp", ProjectState.ONGOING, path, 0d, path, numOfEmps);
         for (Task task : tasks)
             project.addNewTask(task);
-        return estimateTime(project);
+        double temp = estimateTime(project);
+        for (Task task : tasks)
+            realPro.addNewTask(task);
+        return temp;
     }
 
     public static double estimateTime(Project project) {
