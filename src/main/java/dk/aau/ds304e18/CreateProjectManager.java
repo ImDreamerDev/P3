@@ -66,7 +66,7 @@ public class CreateProjectManager extends Application {
         Button loginButton = ((Button) vBoxLogin.getChildrenUnmodifiable().get(8));
         loginButton.setOnMouseClicked(event -> CreatePM());
 
-        listView = ((ListView<String>) ((VBox) rootPane.lookup("#currentUsers")).getChildren().get(1));
+        listView = ((ListView) ((VBox) rootPane.lookup("#currentUsers")).getChildren().get(1));
         listView.setItems(FXCollections.observableArrayList(DatabaseManager.getAllProjectManagers().stream().
                 map(ProjectManager::getName).collect(Collectors.toList())));
 
@@ -92,16 +92,19 @@ public class CreateProjectManager extends Application {
             errorLabel.setTextFill(Color.RED);
             errorLabel.setText("Error: Passwords must not be empty");
             errorLabel.setVisible(true);
+        } else if (passwordField.getText().equals(usernameField.getText())) {
+            errorLabel.setTextFill(Color.RED);
+            errorLabel.setText("Error: Password can't be the same as username!");
+            errorLabel.setVisible(true);
         } else if (!passwordFieldRepeat.getText().equals(passwordField.getText())) {
             errorLabel.setTextFill(Color.RED);
             errorLabel.setText("Error: Passwords must match");
             errorLabel.setVisible(true);
-        }else if(listView.getItems().contains(usernameField.getText())) {
+        } else if (listView.getItems().contains(usernameField.getText())) {
             errorLabel.setTextFill(Color.RED);
             errorLabel.setText("Error: User exists!");
             errorLabel.setVisible(true);
-        }
-        else {
+        } else {
             new ProjectManager(usernameField.getText(), passwordField.getText());
             errorLabel.setTextFill(Color.BLACK);
             errorLabel.setText("Create the project manager: " + usernameField.getText());

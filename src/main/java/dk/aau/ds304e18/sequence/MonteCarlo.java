@@ -6,25 +6,19 @@ import dk.aau.ds304e18.math.CalculateLambda;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
-import dk.aau.ds304e18.ui.InputTab;
-import javafx.concurrent.Worker;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class MonteCarlo {
 
     public static void findFastestSequence(Project project) {
 
-        //Calls the function with the default value 100
-        //If it finds a significant difference within the first 100, it will try another 100 etc.
-        findFastestSequence(project, 100);
+        //Calls the function with the default value 10000
+        findFastestSequence(project, 10000);
 
     }
 
@@ -32,20 +26,26 @@ public class MonteCarlo {
 
         int i = 0;
         int j = 0;
-        String bestSequence = "";
-        String worstSequence = "";
-        double bestTime = -1;
-        double worstTime = -1; //May be used in the future
+        String bestSequence;
+        String worstSequence;
+        double bestTime;
+        double worstTime; //May be used in the future
         String[] randomSequences = new String[monteCarloRepeats];
+        List<Double> time = new ArrayList<>();
+        int counter = 0;
 
+        //TODO: Really needs some optimizing
         while (j < monteCarloRepeats) {
 
             boolean cont = false;
 
+            if(counter >= 1000)
+                break;
+
             if(j == Calc.amountMax(project.getTasks().size()))
                 break;
 
-            randomSequences[i] = Sequence.findRandomSequence(project);
+            randomSequences[j] = Sequence.findRandomSequence(project);
             for(int k = 0; k < j; k++) {
                 if (randomSequences[k].equals(randomSequences[j])) {
                     cont = true;
@@ -53,47 +53,50 @@ public class MonteCarlo {
                 }
             }
 
-            if(cont)
+            if (cont) {
+                counter++;
                 continue;
+            }
 
+            counter = 0;
             j++;
 
         }
 
         while (i < monteCarloRepeats) {
 
-            //project.setRecommendedPath(findRandomSequence(project));
+            if(randomSequences[i] == null)
+                break;
+
             String tempSeq = randomSequences[i];
-            double time = estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks());
-            //estimateTime(project, true);
-
-            if (project.getDuration() > worstTime || worstTime == -1) {
-                worstSequence = tempSeq;
-                worstTime = time;
-            }
-
-            if (project.getDuration() < bestTime || bestTime == -1) {
-                //Set the best sequences and best times
-                bestSequence = tempSeq;
-                bestTime = time;
-            }
+            time.add(estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks(), project));
 
             i++;
         }
+
+        bestTime = Collections.min(time);
+        bestSequence = randomSequences[time.indexOf(Collections.min(time))];
+        worstTime = Collections.max(time);
+        worstSequence = randomSequences[time.indexOf(Collections.max(time))];
 
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
 
         System.out.println("Worst Path: " + worstSequence);
         System.out.println("With Time: " + worstTime);
+        System.out.println("Best Path: " + bestSequence);
+        System.out.println("Best Time: " + bestTime);
 
     }
 
-    public static double estimateTime(String path, double numOfEmps, List<Task> tasks) {
+    public static double estimateTime(String path, double numOfEmps, List<Task> tasks, Project realPro) {
         Project project = new Project(-1, "Temp", ProjectState.ONGOING, path, 0d, path, numOfEmps);
-        for(Task task : tasks)
+        for (Task task : tasks)
             project.addNewTask(task);
-        return estimateTime(project);
+        double temp = estimateTime(project);
+        for (Task task : tasks)
+            realPro.addNewTask(task);
+        return temp;
     }
 
     public static double estimateTime(Project project) {
@@ -133,7 +136,32 @@ public class MonteCarlo {
 
         int numOfThreads = Runtime.getRuntime().availableProcessors();
 
-        List<javafx.concurrent.Task<Double>> tasks = new ArrayList<>();
+        double duration = 0.0;
+
+        ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
+        //create a list to hold the Future object associated with Callable
+        List<Future<Double>> list = new ArrayList<Future<Double>>();
+        //Create MyCallable instance
+        Callable<Double> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(), numOfThreads, monteCarloRepeats);
+        for (int i = 0; i < numOfThreads; i++) {
+            //submit Callable tasks to be executed by thread pool
+            Future<Double> future = executor.submit(callable);
+            //add Future to the list, we can get return value using Future
+            list.add(future);
+        }
+
+        for (Future<Double> fut : list) {
+            try {
+                // because Future.get() waits for task to get completed
+                duration = duration + fut.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        //shut down the executor service now
+        executor.shutdown();
+
+        /*List<javafx.concurrent.Task<Double>> tasks = new ArrayList<>();
         for (int i = 0; i < numOfThreads; i++) {
             tasks.add(new EstimateTimeCallable(taskList, project.getNumberOfEmployees(), numOfThreads, monteCarloRepeats));
         }
@@ -184,7 +212,7 @@ public class MonteCarlo {
 
         //TODO: To Rasmus or who it may concern
         //This returns null because it doesn't wait for it to get assigned in the thing, make it do that please, project is not touched anymore thank you very much
-        return temp2.get();
-
+        return temp2.get();*/
+        return duration / monteCarloRepeats;
     }
 }
