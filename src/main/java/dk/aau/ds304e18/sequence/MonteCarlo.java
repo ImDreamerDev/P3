@@ -3,6 +3,7 @@ package dk.aau.ds304e18.sequence;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.CalculateLambda;
 import dk.aau.ds304e18.models.Project;
+import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.ui.InputTab;
 import javafx.concurrent.Worker;
@@ -14,6 +15,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MonteCarlo {
 
@@ -35,18 +37,20 @@ public class MonteCarlo {
 
         while (i < monteCarloRepeats) {
 
-            project.setRecommendedPath(findRandomSequence(project));
-            estimateTime(project, true);
+            //project.setRecommendedPath(findRandomSequence(project));
+            String tempSeq = findRandomSequence(project);
+            double time = estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks());
+            //estimateTime(project, true);
 
             if (project.getDuration() > worstTime || worstTime == -1) {
-                worstSequence = project.getRecommendedPath();
-                worstTime = project.getDuration();
+                worstSequence = tempSeq;
+                worstTime = time;
             }
 
             if (project.getDuration() < bestTime || bestTime == -1) {
                 //Set the best sequences and best times
-                bestSequence = project.getRecommendedPath();
-                bestTime = project.getDuration();
+                bestSequence = tempSeq;
+                bestTime = time;
             }
 
             i++;
@@ -86,17 +90,24 @@ public class MonteCarlo {
 
     }
 
-    public static void estimateTime(Project project) {
+    public static double estimateTime(String path, double numOfEmps, List<Task> tasks) {
+        Project project = new Project(-1, "Test", ProjectState.ONGOING, path, 0d, path, numOfEmps);
+        for(Task task : tasks)
+            project.addNewTask(task);
+        return estimateTime(project);
+    }
+
+    public static double estimateTime(Project project) {
 
         //Calls the function with the default value 10000
-        estimateTime(project, false, 10000);
+        return estimateTime(project, false, 10000);
 
     }
 
-    public static void estimateTime(Project project, boolean rec) {
+    public static double estimateTime(Project project, boolean rec) {
 
         //Calls the function with the default value 10000
-        estimateTime(project, rec, 10000);
+        return estimateTime(project, rec, 10000);
 
     }
 
@@ -106,7 +117,8 @@ public class MonteCarlo {
      * @param project           the project where we want to find the estimated duration
      * @param monteCarloRepeats how many times we want to repeat the project schedule (Higher number will be more accurate but will take longer time)
      */
-    public static void estimateTime(Project project, boolean rec, int monteCarloRepeats) {
+    public static double estimateTime(Project project, boolean rec, int monteCarloRepeats) {
+        AtomicReference<Double> temp2 = new AtomicReference<>();
         //Gets the task list from the project
         List<Task> taskList = ParseSequence.parseToSingleList(project, rec);
         //For each task in taskList
@@ -155,7 +167,7 @@ public class MonteCarlo {
 
 
                 if (tasks.stream().allMatch(doubleTask1 -> doubleTask1.getState() == Worker.State.SUCCEEDED)) {
-                    project.setDuration(results.stream().mapToDouble(value -> value).sum() / monteCarloRepeats);
+                    temp2.set(results.stream().mapToDouble(value -> value).sum() / monteCarloRepeats);
                     System.out.println("All done");
                     System.out.println(project.getDuration());
                     InputTab.getInstance().updateOutput();
@@ -170,6 +182,10 @@ public class MonteCarlo {
             });
             new Thread(doubleTask).start();
         }
+
+        //TODO: To Rasmus or who it may concern
+        //This returns null because it doesn't wait for it to get assigned in the thing, make it do that please, project is not touched anymore thank you very much
+        return temp2.get();
 
     }
 }
