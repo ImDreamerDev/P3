@@ -39,7 +39,7 @@ public class ProjectTab {
     }
 
     @SuppressWarnings("unchecked")
-    public void setupProjectTab() {
+    private void setupProjectTab() {
 
         tableView = ((TableView<Project>) rootPane.lookup("#projectView"));
         projectToolBar = ((HBox) rootPane.lookup("#projectToolbar"));

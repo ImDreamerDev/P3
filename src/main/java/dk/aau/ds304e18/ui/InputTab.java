@@ -42,13 +42,7 @@ public class InputTab {
         instance = this;
     }
 
-    public void updateOutput() {
-        var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
-        VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
-        outputTab.drawOutputTab(((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected());
-    }
-
-    public void drawInputTab() {
+    void drawInputTab() {
         if (JavaFXMain.selectedProjectId != 0 && LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getState() == ProjectState.ARCHIVED)
             disableInput();
         else

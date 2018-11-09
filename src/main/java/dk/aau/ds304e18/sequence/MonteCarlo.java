@@ -39,14 +39,14 @@ public class MonteCarlo {
 
             boolean cont = false;
 
-            if(counter >= 1000)
+            if (counter >= 1000)
                 break;
 
-            if(j == Calc.amountMax(project.getTasks().size()))
+            if (j == Calc.amountMax(project.getTasks().size()))
                 break;
 
             randomSequences[j] = Sequence.findRandomSequence(project);
-            for(int k = 0; k < j; k++) {
+            for (int k = 0; k < j; k++) {
                 if (randomSequences[k].equals(randomSequences[j])) {
                     cont = true;
                     break;
@@ -65,7 +65,7 @@ public class MonteCarlo {
 
         while (i < monteCarloRepeats) {
 
-            if(randomSequences[i] == null)
+            if (randomSequences[i] == null)
                 break;
 
             String tempSeq = randomSequences[i];
@@ -142,8 +142,8 @@ public class MonteCarlo {
         //create a list to hold the Future object associated with Callable
         List<Future<Double>> list = new ArrayList<>();
         //Create MyCallable instance
-        Callable<Double> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(), numOfThreads, monteCarloRepeats);
         for (int i = 0; i < numOfThreads; i++) {
+            Callable<Double> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(), numOfThreads, monteCarloRepeats);
             //submit Callable tasks to be executed by thread pool
             Future<Double> future = executor.submit(callable);
             //add Future to the list, we can get return value using Future
