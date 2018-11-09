@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -124,7 +124,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
+<li>java.util.concurrent.FutureTask&lt;V&gt;</li>
+<li>
+<ul class="inheritance">
+<li>javafx.concurrent.Task&lt;java.lang.Double&gt;</li>
+<li>
+<ul class="inheritance">
 <li>dk.aau.ds304e18.sequence.EstimateTimeCallable</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -133,18 +143,34 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>java.util.concurrent.Callable&lt;java.lang.Double&gt;</code></dd>
+<dd><code>java.lang.Runnable</code>, <code>java.util.concurrent.Future&lt;java.lang.Double&gt;</code>, <code>java.util.concurrent.RunnableFuture&lt;java.lang.Double&gt;</code>, <code>javafx.concurrent.Worker&lt;java.lang.Double&gt;</code>, <code>javafx.event.EventTarget</code></dd>
 </dl>
 <hr>
-<pre>class <span class="typeNameLabel">EstimateTimeCallable</span>
-extends java.lang.Object
-implements java.util.concurrent.Callable&lt;java.lang.Double&gt;</pre>
+<pre>public class <span class="typeNameLabel">EstimateTimeCallable</span>
+extends javafx.concurrent.Task&lt;java.lang.Double&gt;</pre>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.javafx.concurrent.Worker">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;javafx.concurrent.Worker</h3>
+<code>javafx.concurrent.Worker.State</code></li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
 <section role="region">
 <ul class="blockList">
@@ -160,16 +186,21 @@ implements java.util.concurrent.Callable&lt;java.lang.Double&gt;</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>private int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#numOfMonte">numOfMonte</a></span></code></th>
+<td class="colFirst"><code>private double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#amountEmployees">amountEmployees</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#numOfThreads">numOfThreads</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#numOfMonte">numOfMonte</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>private int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#numOfThreads">numOfThreads</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>private java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#taskList">taskList</a></span></code></th>
 <td class="colLast">&nbsp;</td>
@@ -192,7 +223,8 @@ implements java.util.concurrent.Callable&lt;java.lang.Double&gt;</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.List,int,int)">EstimateTimeCallable</a></span>&#8203;(java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;taskList,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.List,double,int,int)">EstimateTimeCallable</a></span>&#8203;(java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;taskList,
+                    double&nbsp;amountEmployees,
                     int&nbsp;numOfThreads,
                     int&nbsp;numOfMonte)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -222,11 +254,25 @@ implements java.util.concurrent.Callable&lt;java.lang.Double&gt;</pre>
 </tr>
 </table>
 <ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.javafx.concurrent.Task">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;javafx.concurrent.Task</h3>
+<code>addEventFilter, addEventHandler, buildEventDispatchChain, cancel, cancel, cancelled, exceptionProperty, failed, fireEvent, getException, getMessage, getOnCancelled, getOnFailed, getOnRunning, getOnScheduled, getOnSucceeded, getProgress, getState, getTitle, getTotalWork, getValue, getWorkDone, isRunning, messageProperty, onCancelledProperty, onFailedProperty, onRunningProperty, onScheduledProperty, onSucceededProperty, progressProperty, removeEventFilter, removeEventHandler, running, runningProperty, scheduled, setEventHandler, setOnCancelled, setOnFailed, setOnRunning, setOnScheduled, setOnSucceeded, stateProperty, succeeded, titleProperty, totalWorkProperty, updateMessage, updateProgress, updateProgress, updateTitle, updateValue, valueProperty, workDoneProperty</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.java.util.concurrent.FutureTask">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.util.concurrent.FutureTask</h3>
+<code>done, get, get, isCancelled, isDone, run, runAndReset, set, setException, toString</code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -251,6 +297,15 @@ implements java.util.concurrent.Callable&lt;java.lang.Double&gt;</pre>
 <li class="blockList">
 <h4>taskList</h4>
 <pre>private&nbsp;java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt; taskList</pre>
+</li>
+</ul>
+<a id="amountEmployees">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>amountEmployees</h4>
+<pre>private&nbsp;double amountEmployees</pre>
 </li>
 </ul>
 <a id="numOfThreads">
@@ -281,13 +336,14 @@ implements java.util.concurrent.Callable&lt;java.lang.Double&gt;</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.util.List,int,int)">
+<a id="&lt;init&gt;(java.util.List,double,int,int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>EstimateTimeCallable</h4>
 <pre>public&nbsp;EstimateTimeCallable&#8203;(java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;taskList,
+                            double&nbsp;amountEmployees,
                             int&nbsp;numOfThreads,
                             int&nbsp;numOfMonte)</pre>
 </li>
@@ -308,13 +364,10 @@ implements java.util.concurrent.Callable&lt;java.lang.Double&gt;</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>call</h4>
-<pre class="methodSignature">public&nbsp;java.lang.Double&nbsp;call()
-                      throws java.lang.Exception</pre>
+<pre class="methodSignature">public&nbsp;java.lang.Double&nbsp;call()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>call</code>&nbsp;in interface&nbsp;<code>java.util.concurrent.Callable&lt;java.lang.Double&gt;</code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.Exception</code></dd>
+<dd><code>call</code>&nbsp;in class&nbsp;<code>javafx.concurrent.Task&lt;java.lang.Double&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -370,7 +423,7 @@ implements java.util.concurrent.Callable&lt;java.lang.Double&gt;</pre>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
