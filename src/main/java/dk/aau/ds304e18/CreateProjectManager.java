@@ -96,13 +96,21 @@ public class CreateProjectManager extends Application {
             errorLabel.setTextFill(Color.RED);
             errorLabel.setText("Error: Passwords must match");
             errorLabel.setVisible(true);
-        } else {
+        }else if(listView.getItems().contains(usernameField.getText())) {
+            errorLabel.setTextFill(Color.RED);
+            errorLabel.setText("Error: User exists!");
+            errorLabel.setVisible(true);
+        }
+        else {
             new ProjectManager(usernameField.getText(), passwordField.getText());
             errorLabel.setTextFill(Color.BLACK);
             errorLabel.setText("Create the project manager: " + usernameField.getText());
             errorLabel.setVisible(true);
             listView.setItems(FXCollections.observableArrayList(DatabaseManager.getAllProjectManagers().stream().
                     map(ProjectManager::getName).collect(Collectors.toList())));
+            usernameField.clear();
+            passwordField.clear();
+            passwordFieldRepeat.clear();
 
         }
 
