@@ -313,6 +313,28 @@ public class DatabaseManager {
     }
 
     /**
+     * The getter for the list of project managers
+     *
+     * @return ProjectManagers - an arraylist of the project managers.
+     */
+    public static List<ProjectManager> getAllProjectManagers() {
+        if(dbConnection == null)
+            connect();
+        try {
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers");
+            ResultSet rs = statement.executeQuery();
+            List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
+            if (projectManagers != null && projectManagers.size() != 0)
+                return projectManagers;
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    /**
      * Parses a ResultSet to a list of Employees.
      *
      * @param rs the ResultSet to parse.
