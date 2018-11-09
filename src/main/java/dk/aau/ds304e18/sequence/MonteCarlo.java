@@ -83,6 +83,8 @@ public class MonteCarlo {
 
         System.out.println("Worst Path: " + worstSequence);
         System.out.println("With Time: " + worstTime);
+        System.out.println("Best Path: " + bestSequence);
+        System.out.println("Best Time: " + bestTime);
 
     }
 
