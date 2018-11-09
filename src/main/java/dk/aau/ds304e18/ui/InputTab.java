@@ -28,13 +28,17 @@ public class InputTab {
     }
 
     private static InputTab instance;
-
     private final List<Task> taskDependencies = new ArrayList<>();
     private final Parent rootPane;
     private final OutputTab outputTab;
     private TableView<Task> tableView;
     public static HBox progressBarContainer;
 
+    /**
+     *
+     * @param rootPane
+     * @param outputTab
+     */
     public InputTab(Parent rootPane, OutputTab outputTab) {
         this.rootPane = rootPane;
         this.outputTab = outputTab;
@@ -42,8 +46,14 @@ public class InputTab {
         instance = this;
     }
 
+    /**
+     * The method that draws the inputTab. If the project is ongoing you can interact with the ui, if it isnt you cannot.
+     * Uses the method disableInput - if the project is archived.
+     * Uses the method enableInput - if the project is ongoing.
+     */
     void drawInputTab() {
-        if (JavaFXMain.selectedProjectId != 0 && LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getState() == ProjectState.ARCHIVED)
+        if (JavaFXMain.selectedProjectId != 0 && LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getState()
+                == ProjectState.ARCHIVED)
             disableInput();
         else
             enableInput();
@@ -51,6 +61,9 @@ public class InputTab {
                 task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
     }
 
+    /**
+     * Method that disables the interaction with the ui on the inputTab.
+     */
     private void disableInput() {
         var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
@@ -59,6 +72,9 @@ public class InputTab {
         inputVBox.setDisable(true);
     }
 
+    /**
+     *
+     */
     private void enableInput() {
         var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
