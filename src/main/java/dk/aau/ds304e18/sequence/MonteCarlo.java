@@ -33,12 +33,17 @@ public class MonteCarlo {
         double worstTime; //May be used in the future
         String[] randomSequences = new String[monteCarloRepeats];
         List<Double> time = new ArrayList<>();
+        int counter = 0;
 
+        //TODO: Really needs some optimizing
         while (j < monteCarloRepeats) {
 
             boolean cont = false;
 
-            if(j == project.getTasks().size() * (project.getTasks().size() - 1)) //Calc.amountMax(project.getTasks().size()))
+            if(counter >= 1000)
+                break;
+
+            if(j == Calc.amountMax(project.getTasks().size()))
                 break;
 
             randomSequences[j] = Sequence.findRandomSequence(project);
@@ -49,9 +54,12 @@ public class MonteCarlo {
                 }
             }
 
-            if (cont)
+            if (cont) {
+                counter++;
                 continue;
+            }
 
+            counter = 0;
             j++;
 
         }
