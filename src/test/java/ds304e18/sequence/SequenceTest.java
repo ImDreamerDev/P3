@@ -122,8 +122,6 @@ class SequenceTest {
         Task task2 = new Task("Test2", 2.0, 2, project);
         Task task3 = new Task("Test3", 5.0, 3, project);
         Task task4 = new Task("Test4", 2.0, 4, project);
-        Task task5 = new Task("Test5", 2.0, 2, project);
-        Task task6 = new Task("Test46", 9.0, 10, project);
 
         task3.addDependency(task1);
 
@@ -131,8 +129,6 @@ class SequenceTest {
         tasks.add(task2);
         tasks.add(task3);
         tasks.add(task4);
-        tasks.add(task5);
-        tasks.add(task6);
 
         Sequence.sequenceTasks(project, true);
         String assertedSequencedTasks = String.valueOf(task4.getId()) + "," +

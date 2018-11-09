@@ -36,10 +36,10 @@ public class MonteCarlo {
 
             boolean cont = false;
 
-            if(j == Calc.amountMax(project.getTasks().size()))
+            if(j == project.getTasks().size() * (project.getTasks().size() - 1)) //Calc.amountMax(project.getTasks().size()))
                 break;
 
-            randomSequences[i] = Sequence.findRandomSequence(project);
+            randomSequences[j] = Sequence.findRandomSequence(project);
             for(int k = 0; k < j; k++) {
                 if (randomSequences[k].equals(randomSequences[j])) {
                     cont = true;
@@ -55,6 +55,9 @@ public class MonteCarlo {
         }
 
         while (i < monteCarloRepeats) {
+
+            if(randomSequences[i] == null)
+                break;
 
             //project.setRecommendedPath(findRandomSequence(project));
             String tempSeq = randomSequences[i];
