@@ -791,4 +791,22 @@ public class DatabaseManager {
 
         return null;
     }
+
+    /**
+     * Used to log out. Closes connection do database and clears local storage.
+     */
+    public static void logOut() {
+        if (dbConnection != null) {
+            try {
+                dbConnection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        LocalObjStorage.getTaskList().clear();
+        LocalObjStorage.getProjectList().clear();
+        LocalObjStorage.getTaskList().clear();
+        LocalObjStorage.getProjectManager().clear();
+
+    }
 }
