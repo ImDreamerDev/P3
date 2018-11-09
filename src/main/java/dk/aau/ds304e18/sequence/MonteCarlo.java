@@ -8,6 +8,7 @@ import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -26,11 +27,12 @@ public class MonteCarlo {
 
         int i = 0;
         int j = 0;
-        String bestSequence = "";
-        String worstSequence = "";
-        double bestTime = -1;
-        double worstTime = -1; //May be used in the future
+        String bestSequence;
+        String worstSequence;
+        double bestTime;
+        double worstTime; //May be used in the future
         String[] randomSequences = new String[monteCarloRepeats];
+        List<Double> time = new ArrayList<>();
 
         while (j < monteCarloRepeats) {
 
@@ -59,24 +61,16 @@ public class MonteCarlo {
             if(randomSequences[i] == null)
                 break;
 
-            //project.setRecommendedPath(findRandomSequence(project));
             String tempSeq = randomSequences[i];
-            double time = estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks());
-            //estimateTime(project, true);
-
-            if (project.getDuration() > worstTime || worstTime == -1) {
-                worstSequence = tempSeq;
-                worstTime = time;
-            }
-
-            if (project.getDuration() < bestTime || bestTime == -1) {
-                //Set the best sequences and best times
-                bestSequence = tempSeq;
-                bestTime = time;
-            }
+            time.add(estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks()));
 
             i++;
         }
+
+        bestTime = Collections.min(time);
+        bestSequence = randomSequences[time.indexOf(Collections.min(time))];
+        worstTime = Collections.max(time);
+        worstSequence = randomSequences[time.indexOf(Collections.max(time))];
 
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
