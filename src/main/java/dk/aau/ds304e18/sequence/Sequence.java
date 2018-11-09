@@ -36,13 +36,11 @@ public class Sequence {
         7 has a dependency on 5
          */
 
-        List<Task> taskList = project.getTasks();
-
         if (findSequenceMontecarlo)
             findFastestSequence(project);
 
         //So we don't change the task list in the project
-        List<Task> tasks = new ArrayList<>(taskList);
+        List<Task> tasks = new ArrayList<>(project.getTasks());
 
         //The sequence to return
         StringBuilder sequencedTasks = new StringBuilder();
