@@ -1,6 +1,7 @@
 package dk.aau.ds304e18.sequence;
 
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.math.Calc;
 import dk.aau.ds304e18.math.CalculateLambda;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
@@ -41,9 +42,12 @@ public class MonteCarlo {
 
             boolean cont = false;
 
+            if(j == Calc.amountMax(project.getTasks().size()))
+                break;
+
             randomSequences[i] = Sequence.findRandomSequence(project);
-            for(int k = 0; k <= i; k++) {
-                if (randomSequences[k].equals(randomSequences[i])) {
+            for(int k = 0; k < j; k++) {
+                if (randomSequences[k].equals(randomSequences[j])) {
                     cont = true;
                     break;
                 }
