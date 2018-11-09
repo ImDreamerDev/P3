@@ -17,9 +17,8 @@ public class MonteCarlo {
 
     public static void findFastestSequence(Project project) {
 
-        //Calls the function with the default value 100
-        //If it finds a significant difference within the first 100, it will try another 100 etc.
-        findFastestSequence(project, 100);
+        //Calls the function with the default value 10000
+        findFastestSequence(project, 10000);
 
     }
 
