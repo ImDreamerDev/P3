@@ -55,6 +55,9 @@ public class MonteCarlo {
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
 
+        System.out.println("Worst Path: " + worstSequence);
+        System.out.println("With Time: " + worstTime);
+
     }
 
     private static String findRandomSequence(Project project) {
