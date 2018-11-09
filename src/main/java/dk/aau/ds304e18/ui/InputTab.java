@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -23,13 +24,7 @@ import java.util.stream.Collectors;
 
 public class InputTab {
 
-    public static InputTab getInstance() {
-        return instance;
-    }
-
-    private static InputTab instance;
-
-    private final List<Task> taskDependencies = new ArrayList<>();
+    private List<Task> taskDependencies = new ArrayList<>();
     private final Parent rootPane;
     private final OutputTab outputTab;
     private TableView<Task> tableView;
@@ -39,7 +34,6 @@ public class InputTab {
         this.rootPane = rootPane;
         this.outputTab = outputTab;
         setupInputTab();
-        instance = this;
     }
 
     void drawInputTab() {
@@ -47,8 +41,10 @@ public class InputTab {
             disableInput();
         else
             enableInput();
+        tableView.getItems().clear();
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task ->
                 task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+
     }
 
     private void disableInput() {
@@ -76,6 +72,7 @@ public class InputTab {
         //Table view
         tableView = ((TableView<Task>) flowPane.getChildren().get(2));
         setUpTaskTable();
+
 
         //Input view
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
@@ -122,7 +119,7 @@ public class InputTab {
             if (!probs5.getText().equals(""))
                 probabilities.add(new Probabilities(Double.parseDouble(probs5.getText()), Double.parseDouble(probs6.getText())));
             addTask(nameTextField.getText(), Double.parseDouble(estimatedTimeTextField.getText()),
-                    Integer.parseInt(priority.getText()), probabilities, tableView);
+                    Integer.parseInt(priority.getText()), probabilities);
             clearInputFields(listViewDependency, probs1, probs2, probs3,
                     probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority);
         });
@@ -141,6 +138,15 @@ public class InputTab {
                 ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
                 Double.parseDouble(numOfEmployees.getText())));
         vBoxSplitter.getChildren().get(0).setOnMouseClicked(event -> removeTask());
+
+        tableView.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    editTask(listViewDependency, probs1, probs2, probs3,
+                            probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority);
+                }
+            }
+        });
         drawInputTab();
     }
 
@@ -194,16 +200,40 @@ public class InputTab {
      * @param estimatedTime - filled into the textbox.
      * @param priority      - filled into textbox.
      * @param probabilities - filled into textbox.
-     * @param tableView     - the dependencies table - these are added through the addDependency method.
      */
-    private void addTask(String name, double estimatedTime, int priority, List<Probabilities> probabilities, TableView<Task> tableView) {
-        Task ttt = new Task(name, estimatedTime, priority,
-                LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
-        for (Probabilities pro : probabilities)
-            ttt.getProbabilities().add(pro);
-        ttt.addDependency(taskDependencies);
-        tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().
-                stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+    private void addTask(String name, double estimatedTime, int priority, List<Probabilities> probabilities) {
+        List<Task> tasks = LocalObjStorage.getTaskList().
+                stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList());
+        Task t = tasks.stream().filter(task -> task.getName().equals(name)).findFirst().orElse(null);
+        if (t != null) {
+            t.setEstimatedTime(estimatedTime);
+            t.setPriority(priority);
+            t.getProbabilities().clear();
+            t.getProbabilities().addAll(probabilities);
+            t.addDependency(taskDependencies);
+        } else {
+            Task ttt = new Task(name, estimatedTime, priority,
+                    LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
+            ttt.getProbabilities().addAll(probabilities);
+            ttt.addDependency(taskDependencies);
+        }
+    }
+
+    private void editTask(ListView<Task> listViewDependency, TextField... textFields) {
+        int taskId = (int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
+        Task task = LocalObjStorage.getTaskById(taskId);
+        textFields[0].setText(task.getProbabilities().get(0).getDuration() + "");
+        textFields[1].setText(task.getProbabilities().get(0).getProbability() + "");
+        textFields[2].setText(task.getProbabilities().get(1).getDuration() + "");
+        textFields[3].setText(task.getProbabilities().get(1).getProbability() + "");
+        textFields[4].setText(task.getProbabilities().get(2).getDuration() + "");
+        textFields[5].setText(task.getProbabilities().get(2).getProbability() + "");
+        textFields[6].setText(task.getName());
+        textFields[7].setText(task.getEstimatedTime() + "");
+        textFields[8].setText(task.getPriority() + "");
+        taskDependencies = task.getDependencies();
+        listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
+        drawInputTab();
     }
 
     /**
