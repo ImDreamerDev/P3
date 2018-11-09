@@ -5,7 +5,6 @@ import dk.aau.ds304e18.models.ProjectManager;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,7 +15,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class CreateProjectManager extends Application {
@@ -26,6 +24,7 @@ public class CreateProjectManager extends Application {
     private PasswordField passwordFieldRepeat;
     private Label errorLabel;
     private VBox vBoxLogin;
+    ListView<String> listView;
 
     @Override
     public void start(Stage stage) {
@@ -67,7 +66,7 @@ public class CreateProjectManager extends Application {
         Button loginButton = ((Button) vBoxLogin.getChildrenUnmodifiable().get(8));
         loginButton.setOnMouseClicked(event -> CreatePM());
 
-        ListView<String> listView = ((ListView<String>) ((VBox) rootPane.lookup("#currentUsers")).getChildren().get(1));
+        listView = ((ListView<String>) ((VBox) rootPane.lookup("#currentUsers")).getChildren().get(1));
         listView.setItems(FXCollections.observableArrayList(DatabaseManager.getAllProjectManagers().stream().
                 map(ProjectManager::getName).collect(Collectors.toList())));
 
@@ -97,11 +96,22 @@ public class CreateProjectManager extends Application {
             errorLabel.setTextFill(Color.RED);
             errorLabel.setText("Error: Passwords must match");
             errorLabel.setVisible(true);
-        } else {
+        }else if(listView.getItems().contains(usernameField.getText())) {
+            errorLabel.setTextFill(Color.RED);
+            errorLabel.setText("Error: User exists!");
+            errorLabel.setVisible(true);
+        }
+        else {
             new ProjectManager(usernameField.getText(), passwordField.getText());
             errorLabel.setTextFill(Color.BLACK);
             errorLabel.setText("Create the project manager: " + usernameField.getText());
             errorLabel.setVisible(true);
+            listView.setItems(FXCollections.observableArrayList(DatabaseManager.getAllProjectManagers().stream().
+                    map(ProjectManager::getName).collect(Collectors.toList())));
+            usernameField.clear();
+            passwordField.clear();
+            passwordFieldRepeat.clear();
+
         }
 
     }
