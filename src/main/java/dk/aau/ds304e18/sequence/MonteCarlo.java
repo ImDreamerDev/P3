@@ -120,7 +120,6 @@ public class MonteCarlo {
      * @param monteCarloRepeats how many times we want to repeat the project schedule (Higher number will be more accurate but will take longer time)
      */
     public static double estimateTime(Project project, boolean rec, int monteCarloRepeats) {
-        AtomicReference<Double> temp2 = new AtomicReference<>();
         //Gets the task list from the project
         List<Task> taskList = ParseSequence.parseToSingleList(project, rec);
         //For each task in taskList

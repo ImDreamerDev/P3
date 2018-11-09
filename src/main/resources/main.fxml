@@ -189,7 +189,7 @@
                                             <children>
                                                 <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="124.0" spacing="20.0">
                                                     <children>
-                                                        <Button mnemonicParsing="false" text="Cancel Task" />
+                                                        <Button mnemonicParsing="false" text="Delete Task" />
                                                         <Button mnemonicParsing="false" text="Calculate" />
                                                         <CheckBox mnemonicParsing="false" text="Sequence" />
                                                       <Label text="No. of employees" />
