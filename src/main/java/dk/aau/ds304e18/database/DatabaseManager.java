@@ -318,7 +318,7 @@ public class DatabaseManager {
      * @return ProjectManagers - an arraylist of the project managers.
      */
     public static List<ProjectManager> getAllProjectManagers() {
-        if(dbConnection == null)
+        if (dbConnection == null)
             connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers");
@@ -693,10 +693,10 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
 
         try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE username = ?",
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE LOWER(username) = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            statement.setString(1, username);
+            statement.setString(1, username.toLowerCase());
             ResultSet rs = statement.executeQuery();
             if (!rs.next()) return null;
 
