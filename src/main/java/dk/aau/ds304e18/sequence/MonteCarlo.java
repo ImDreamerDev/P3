@@ -6,16 +6,10 @@ import dk.aau.ds304e18.math.CalculateLambda;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
-import dk.aau.ds304e18.ui.InputTab;
-import javafx.concurrent.Worker;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class MonteCarlo {
@@ -53,7 +47,7 @@ public class MonteCarlo {
                 }
             }
 
-            if(cont)
+            if (cont)
                 continue;
 
             j++;
@@ -91,7 +85,7 @@ public class MonteCarlo {
 
     public static double estimateTime(String path, double numOfEmps, List<Task> tasks) {
         Project project = new Project(-1, "Temp", ProjectState.ONGOING, path, 0d, path, numOfEmps);
-        for(Task task : tasks)
+        for (Task task : tasks)
             project.addNewTask(task);
         return estimateTime(project);
     }
@@ -133,7 +127,32 @@ public class MonteCarlo {
 
         int numOfThreads = Runtime.getRuntime().availableProcessors();
 
-        List<javafx.concurrent.Task<Double>> tasks = new ArrayList<>();
+        double duration = 0.0;
+
+        ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
+        //create a list to hold the Future object associated with Callable
+        List<Future<Double>> list = new ArrayList<Future<Double>>();
+        //Create MyCallable instance
+        Callable<Double> callable = new EstimateTimeCallable(taskList, project.getEmployees().size(), numOfThreads, monteCarloRepeats);
+        for (int i = 0; i < numOfThreads; i++) {
+            //submit Callable tasks to be executed by thread pool
+            Future<Double> future = executor.submit(callable);
+            //add Future to the list, we can get return value using Future
+            list.add(future);
+        }
+
+        for (Future<Double> fut : list) {
+            try {
+                // because Future.get() waits for task to get completed
+                duration = duration + fut.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        //shut down the executor service now
+        executor.shutdown();
+
+        /*List<javafx.concurrent.Task<Double>> tasks = new ArrayList<>();
         for (int i = 0; i < numOfThreads; i++) {
             tasks.add(new EstimateTimeCallable(taskList, project.getNumberOfEmployees(), numOfThreads, monteCarloRepeats));
         }
@@ -184,7 +203,7 @@ public class MonteCarlo {
 
         //TODO: To Rasmus or who it may concern
         //This returns null because it doesn't wait for it to get assigned in the thing, make it do that please, project is not touched anymore thank you very much
-        return temp2.get();
-
+        return temp2.get();*/
+        return duration / monteCarloRepeats;
     }
 }

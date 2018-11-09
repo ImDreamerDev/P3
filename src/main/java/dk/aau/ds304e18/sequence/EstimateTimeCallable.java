@@ -4,8 +4,9 @@ import dk.aau.ds304e18.math.InverseGaussian;
 import dk.aau.ds304e18.models.Task;
 
 import java.util.*;
+import java.util.concurrent.Callable;
 
-public class EstimateTimeCallable extends javafx.concurrent.Task<Double> {
+public class EstimateTimeCallable implements Callable<Double> {
     private List<Task> taskList;
     private double amountEmployees;
     private int numOfThreads;
@@ -24,8 +25,6 @@ public class EstimateTimeCallable extends javafx.concurrent.Task<Double> {
         int repeats = numOfMonte / numOfThreads;
         //Repeat repeats time
         for (int i = 0; i < repeats; i++) {
-            if (isCancelled())
-                return 0.0;
             if (amountEmployees > 1) {
                 List<Task> tasksDone = new ArrayList<>();
                 List<Double> durations = new ArrayList<>();
@@ -103,7 +102,6 @@ public class EstimateTimeCallable extends javafx.concurrent.Task<Double> {
                     duration += invG.getDuration(rand);
                 }
             }
-            updateProgress(i, repeats);
         }
         return duration;
     }
