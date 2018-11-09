@@ -30,15 +30,36 @@ public class MonteCarlo {
     public static void findFastestSequence(Project project, int monteCarloRepeats) {
 
         int i = 0;
+        int j = 0;
         String bestSequence = "";
         String worstSequence = "";
         double bestTime = -1;
         double worstTime = -1; //May be used in the future
+        String[] randomSequences = new String[monteCarloRepeats];
+
+        while (j < monteCarloRepeats) {
+
+            boolean cont = false;
+
+            randomSequences[i] = Sequence.findRandomSequence(project);
+            for(int k = 0; k <= i; k++) {
+                if (randomSequences[k].equals(randomSequences[i])) {
+                    cont = true;
+                    break;
+                }
+            }
+
+            if(cont)
+                continue;
+
+            j++;
+
+        }
 
         while (i < monteCarloRepeats) {
 
             //project.setRecommendedPath(findRandomSequence(project));
-            String tempSeq = findRandomSequence(project);
+            String tempSeq = randomSequences[i];
             double time = estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks());
             //estimateTime(project, true);
 
@@ -61,32 +82,6 @@ public class MonteCarlo {
 
         System.out.println("Worst Path: " + worstSequence);
         System.out.println("With Time: " + worstTime);
-
-    }
-
-    private static String findRandomSequence(Project project) {
-
-        int tasksLeft = project.getTasks().size();
-        List<Task> tasksSequenced = new ArrayList<>();
-        List<Task> tasksNotSequenced = new ArrayList<>(project.getTasks());
-        List<Task> tasksToBeRemoved = new ArrayList<>();
-        Collections.shuffle(tasksNotSequenced);
-
-        //TODO: Optimize this to actually give relevant paths for multiple employees (etc. if there are 2 employees, the first 2 tasks shouldn't have dependencies if possible
-        while (tasksLeft > 0) {
-            for (Task task : tasksNotSequenced) {
-                if (!tasksSequenced.containsAll(task.getDependencies())) continue;
-                tasksSequenced.add(task);
-                tasksToBeRemoved.add(task);
-                tasksLeft--;
-            }
-
-            for (Task task : tasksToBeRemoved)
-                tasksNotSequenced.remove(task);
-            tasksToBeRemoved = new ArrayList<>();
-        }
-
-        return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, tasksNotSequenced.size()).toString();
 
     }
 
