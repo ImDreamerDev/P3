@@ -46,7 +46,7 @@ public class MonteCarlo {
                 break;
 
             randomSequences[i] = Sequence.findRandomSequence(project);
-            for(int k = 0; k <= j; k++) {
+            for(int k = 0; k < j; k++) {
                 if (randomSequences[k].equals(randomSequences[j])) {
                     cont = true;
                     break;
