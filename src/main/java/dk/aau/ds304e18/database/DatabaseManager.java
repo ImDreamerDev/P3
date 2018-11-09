@@ -159,6 +159,16 @@ public class DatabaseManager {
      * @param id id of the task to remove.
      */
     public static void removeTask(int id) {
+        Task tempTask = new Task(id, "", 0d, 0d, 0d, 0,
+                new ArrayList<>(), new ArrayList<>(), 0, new ArrayList<>());
+
+        //Removes the task as dependency from other tasks
+        LocalObjStorage.getTaskList().forEach(task-> {
+            if (task.getDependencies().contains(tempTask)) {
+                task.getDependencies().remove(tempTask);
+                DatabaseManager.updateTask(task);
+            }
+        });
         DatabaseManager.query("DELETE FROM tasks WHERE id = " + id);
     }
 
