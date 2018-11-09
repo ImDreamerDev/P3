@@ -140,7 +140,7 @@ public class MonteCarlo {
 
         ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
         //create a list to hold the Future object associated with Callable
-        List<Future<Double>> list = new ArrayList<Future<Double>>();
+        List<Future<Double>> list = new ArrayList<>();
         //Create MyCallable instance
         Callable<Double> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(), numOfThreads, monteCarloRepeats);
         for (int i = 0; i < numOfThreads; i++) {
@@ -160,59 +160,6 @@ public class MonteCarlo {
         }
         //shut down the executor service now
         executor.shutdown();
-
-        /*List<javafx.concurrent.Task<Double>> tasks = new ArrayList<>();
-        for (int i = 0; i < numOfThreads; i++) {
-            tasks.add(new EstimateTimeCallable(taskList, project.getNumberOfEmployees(), numOfThreads, monteCarloRepeats));
-        }
-
-        List<Double> results = new ArrayList<>();
-        List<ProgressBar> progressBars = new ArrayList<>();
-        Instant start = Instant.now();
-        for (javafx.concurrent.Task<Double> doubleTask : tasks) {
-            if (!DatabaseManager.isTests) {
-                ProgressBar bar = new ProgressBar();
-                progressBars.add(bar);
-                bar.progressProperty().bind(doubleTask.progressProperty());
-                InputTab.progressBarContainer.getChildren().add(bar);
-                if (tasks.indexOf(doubleTask) == tasks.size() - 1) {
-                    Button cancelButton = new Button("Cancel");
-                    cancelButton.setOnMouseClicked(event -> tasks.forEach(javafx.concurrent.Task::cancel));
-                    cancelButton.setMaxHeight(bar.getHeight());
-                    InputTab.progressBarContainer.getChildren().add(cancelButton);
-                }
-            }
-            doubleTask.setOnCancelled(event -> {
-                if (!DatabaseManager.isTests) {
-                    InputTab.progressBarContainer.getChildren().clear();
-                }
-            });
-            doubleTask.setOnSucceeded(event -> {
-                results.add(doubleTask.getValue());
-                if (!DatabaseManager.isTests)
-                    InputTab.progressBarContainer.getChildren().remove(progressBars.get(tasks.indexOf(doubleTask)));
-
-
-                if (tasks.stream().allMatch(doubleTask1 -> doubleTask1.getState() == Worker.State.SUCCEEDED)) {
-                    temp2.set(results.stream().mapToDouble(value -> value).sum() / monteCarloRepeats);
-                    System.out.println("All done");
-                    System.out.println(project.getDuration());
-                    InputTab.getInstance().updateOutput();
-                    Instant end = java.time.Instant.now();
-                    Duration between = java.time.Duration.between(start, end);
-                    System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
-                            between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
-                    if (!DatabaseManager.isTests) {
-                        InputTab.progressBarContainer.getChildren().clear();
-                    }
-                }
-            });
-            new Thread(doubleTask).start();
-        }
-
-        //TODO: To Rasmus or who it may concern
-        //This returns null because it doesn't wait for it to get assigned in the thing, make it do that please, project is not touched anymore thank you very much
-        return temp2.get();*/
         return duration / monteCarloRepeats;
     }
 }
