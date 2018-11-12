@@ -2,26 +2,37 @@ package dk.aau.ds304e18.ui;
 
 import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.LocalObjStorage;
+import dk.aau.ds304e18.math.Probabilities;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
 import javafx.collections.FXCollections;
 import javafx.scene.Parent;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class OutputTab {
     private final Parent rootPane;
+    private BarChart<String, Number> barChart;
 
     public OutputTab(Parent rootPane) {
         this.rootPane = rootPane;
+        barChart = ((BarChart<String, Number>) rootPane.lookup("#tasksDiagram"));
+
+
     }
 
     public void drawOutputTab(boolean useMonty) {
@@ -34,17 +45,31 @@ public class OutputTab {
         if (pro.getSequence() != null) {
             drawTasks(pro, pane);
             if (useMonty) {
-                ((ListView) ((AnchorPane) rootPane.lookup("#outputPane")).getChildren().get(0))
+                ((ListView) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
                         .setItems(FXCollections.observableArrayList(ParseSequence.parseToSingleList(pro, true)));
             } else if (pro.getRecommendedPath() != null && !pro.getRecommendedPath().equals("")) {
-                ((ListView) ((AnchorPane) rootPane.lookup("#outputPane")).getChildren().get(0))
+                ((ListView) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
                         .setItems(FXCollections.observableArrayList(ParseSequence.parseToSingleList(pro, true)));
             } else
-                ((ListView) ((AnchorPane) rootPane.lookup("#outputPane")).getChildren().get(0))
+                ((ListView) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
                         .getItems().clear();
 
             pane.getChildren().add(new Text(10, 10, "Time: " + pro.getDuration()));
         }
+        barChart.getData().clear();
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+        series1.setName("Probabilities");
+        List<Double> possibleCompletions = pro.getPossibleCompletions();
+        double total = possibleCompletions.stream().mapToDouble(value -> value).sum();
+        double sum = 0;
+        for (int i = 0; i < possibleCompletions.size(); i++) {
+            sum += possibleCompletions.get(i);
+            if (sum / total * 100 < 99)
+                series1.getData().add(new XYChart.Data<>(i + "", sum / total * 100));
+        }
+
+        barChart.getData().add(series1);
+
     }
 
     private void drawTasks(Project pro, AnchorPane pane) {

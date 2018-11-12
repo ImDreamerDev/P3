@@ -104,7 +104,7 @@ public class InputTab {
         HBox probsHBox3 = ((HBox) inputVBox.getChildren().get(9));
         ListView<Task> listViewDependency = ((ListView<Task>) inputVBox.getChildren().get(11));
         HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
-        HBox bottomButtonsHBox = (HBox) inputVBox.getChildren().get(13);
+
         progressBarContainer = ((HBox) flowPane.getChildren().get(3));
 
         priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true));
@@ -129,7 +129,17 @@ public class InputTab {
         buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> addDependency(listViewDependency));
         buttonsForDependencies.getChildren().get(1).setOnMouseClicked(event -> removeDependency(listViewDependency));
 
-        bottomButtonsHBox.getChildren().get(0).setOnMouseClicked(event -> {
+
+        //Middle column
+        VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
+        TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(4));
+        vBoxSplitter.getChildren().get(1).setOnMouseClicked(event -> {
+            clearInputFields(listViewDependency, probs1, probs2, probs3,
+                    probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority, numOfEmployees);
+            numOfEmployees.setText("0");
+        });
+
+        vBoxSplitter.getChildren().get(0).setOnMouseClicked(event -> {
             List<Probabilities> probabilities = new ArrayList<>();
             if (!probs1.getText().equals(""))
                 probabilities.add(new Probabilities(Double.parseDouble(probs1.getText()), Double.parseDouble(probs2.getText())));
@@ -142,21 +152,16 @@ public class InputTab {
             clearInputFields(listViewDependency, probs1, probs2, probs3,
                     probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority);
         });
-        //Middle column
-        VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
-        TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(4));
-        bottomButtonsHBox.getChildren().get(1).setOnMouseClicked(event -> clearInputFields(listViewDependency, probs1, probs2, probs3,
-                probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority, numOfEmployees));
 
 
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true));
         numOfEmployees.setText("0");
 
-        vBoxSplitter.getChildren().get(1).setOnMouseClicked(event -> calculate(
+        vBoxSplitter.getChildren().get(7).setOnMouseClicked(event -> calculate(
                 LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
-                ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
-                Double.parseDouble(numOfEmployees.getText())));
-        vBoxSplitter.getChildren().get(0).setOnMouseClicked(event -> removeTask());
+                ((CheckBox) vBoxSplitter.getChildren().get(5)).isSelected(),
+                Double.parseDouble(numOfEmployees.getText()), ((CheckBox) vBoxSplitter.getChildren().get(6)).isSelected()));
+        vBoxSplitter.getChildren().get(2).setOnMouseClicked(event -> removeTask());
 
         tableView.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
@@ -175,9 +180,9 @@ public class InputTab {
      * @param pro
      * @param useMonty - the monte carlo method is used.
      */
-    private void calculate(Project pro, boolean useMonty, double numOfEmployees) {
+    private void calculate(Project pro, boolean useMonty, double numOfEmployees, boolean useFast) {
         pro.setNumberOfEmployees(numOfEmployees);
-        Sequence.sequenceTasks(pro, useMonty);
+        Sequence.sequenceTasks(pro, useMonty, useFast);
         outputTab.drawOutputTab(useMonty);
         drawInputTab();
         tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
