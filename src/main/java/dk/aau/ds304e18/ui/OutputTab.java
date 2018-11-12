@@ -2,15 +2,12 @@ package dk.aau.ds304e18.ui;
 
 import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.LocalObjStorage;
-import dk.aau.ds304e18.math.Probabilities;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
 import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
@@ -20,9 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class OutputTab {
@@ -93,7 +88,7 @@ public class OutputTab {
                 taskBox.setLayoutY(50 + (y * 150));
                 Rectangle ret = new Rectangle(100, 100);
                 ret.setStroke(Color.BLACK);
-                ret.setFill(Color.web("#ed4b00"));
+                ret.setFill(Color.web("#ff9c00"));
                 String text = task.getName();
                 if (text.length() > 9) {
                     if (text.charAt(8) == ' ')
