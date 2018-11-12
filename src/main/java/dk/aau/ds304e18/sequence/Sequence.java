@@ -96,8 +96,9 @@ public class Sequence {
     /**
      * Finds a random sequence with a project
      * TODO: Optimize this so we only find relevant sequences when going fast (Or close to every relevant sequence)
+     *
      * @param project The project where we want a random sequence
-     * @param fast If you want to do fast calculation or slow
+     * @param fast    If you want to do fast calculation or slow
      * @return Returns a string with the sequence
      */
     public static String findRandomSequence(Project project, boolean fast) {
@@ -112,7 +113,7 @@ public class Sequence {
         sortTasks(tasksNotSequenced); //Might not make sense to put prioritised first - It can make the project longer than it should
 
         //If we're not going fast, just plug all of the tasks in, in a legal way and return that
-        if(!fast) {
+        if (!fast) {
             while (tasksLeft > 0) {
                 for (Task task : tasksNotSequenced) {
                     if (!tasksSequenced.containsAll(task.getDependencies())) continue;
@@ -123,8 +124,9 @@ public class Sequence {
 
                 for (Task task : tasksToBeRemoved)
                     tasksNotSequenced.remove(task);
-                tasksToBeRemoved = new ArrayList<>();
+                tasksToBeRemoved.clear();
             }
+            //TODO: Why this? (Dodo)
             return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, tasksNotSequenced.size()).toString();
         }
 
@@ -174,7 +176,7 @@ public class Sequence {
                 boolean cont = false;
 
                 //Skip the tasks without dependencies unless there are no other tasks left (This seems to give a better chance at good sequences)
-                if(tasksWithoutDeps.contains(task)) {
+                if (tasksWithoutDeps.contains(task)) {
                     for (Task task1 : tasksNotSequenced) {
                         if (!tasksWithoutDeps.contains(task1) && tasksSequenced.containsAll(task1.getDependencies()))
                             cont = true;
@@ -199,7 +201,5 @@ public class Sequence {
 
         //Return the list
         return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, tasksNotSequenced.size()).toString();
-
     }
-
 }

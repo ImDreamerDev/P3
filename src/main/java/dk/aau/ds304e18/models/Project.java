@@ -256,4 +256,8 @@ public class Project {
     public List<List<Double>> getPossibleCompletions() {
         return possibleCompletions;
     }
+
+    public void setPossibleCompletions(List<List<Double>> values) {
+        possibleCompletions = values;
+    }
 }

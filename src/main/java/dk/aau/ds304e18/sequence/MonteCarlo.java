@@ -61,7 +61,7 @@ public class MonteCarlo {
 
             //If the counter hits a million, skip
             if (counter >= 1000000) {
-                System.out.println(j+1);
+                System.out.println(j + 1);
                 break;
             }
 
@@ -110,12 +110,13 @@ public class MonteCarlo {
         int tempI = time.indexOf(Collections.min(time));
 
         //If it's not 0 (i.e. the first one)
-        if(!(tempI == 0)) {
+        if (tempI != 0) {
             //Clear the first one so we can fill it with the correct numbers
             project.getPossibleCompletions().get(0).clear();
 
+            //TODO: Why loop here? (Dodo)
             //Go through all the numbers in the minimum list
-            for(int k = 0; k < project.getPossibleCompletions().get(tempI).size(); k++){
+            for (int k = 0; k < project.getPossibleCompletions().get(tempI).size(); k++) {
 
                 //Add all of the minimum list to the first list
                 project.getPossibleCompletions().get(0).addAll(project.getPossibleCompletions().get(tempI));
@@ -134,7 +135,7 @@ public class MonteCarlo {
 
         //SOUT
         System.out.println("Worst Path: " + worstSequence);
-        System.out.println("With Time: " + worstTime);
+        System.out.println("Worst Time: " + worstTime);
         System.out.println("Best Path: " + bestSequence);
         System.out.println("Best Time: " + bestTime);
 
@@ -142,65 +143,68 @@ public class MonteCarlo {
 
     /**
      * If you want to estimate time without having a project
-     * @param path The path which will be estimated
+     *
+     * @param path      The path which will be estimated
      * @param numOfEmps The amount of employees on the project
-     * @param tasks The tasks that will be estimated
-     * @param realPro The actual project the tasks are on
-     * @param index Index of the loop this is called inside, if there is no loop, send 0
+     * @param tasks     The tasks that will be estimated
+     * @param project   The actual project the tasks are on
+     * @param index     Index of the loop this is called inside, if there is no loop, send 0
      * @return The estimated time
      */
-    public static double estimateTime(String path, double numOfEmps, List<Task> tasks, Project realPro, int index) {
-        Project project = new Project(-1, "Temp", ProjectState.ONGOING, path, 0d, path, numOfEmps);
+    public static double estimateTime(String path, double numOfEmps, List<Task> tasks, Project project, int index) {
+        Project tempProject = new Project(-1, "Temp", ProjectState.ONGOING, path, 0d, path, numOfEmps);
 
-        for(int i = 0; i < realPro.getPossibleCompletions().size(); i++)
-            project.getPossibleCompletions().add(i, realPro.getPossibleCompletions().get(i));
+        tempProject.setPossibleCompletions(new ArrayList<>(project.getPossibleCompletions()));
+        //   for (int i = 0; i < project.getPossibleCompletions().size(); i++)
+        //     tempProject.getPossibleCompletions().add(i, project.getPossibleCompletions().get(i));
 
+        for (Task task : tasks)
+            tempProject.addNewTask(task);
+        double temp = estimateTime(tempProject, index);
+        //TODO: Why added them back to the project?
         for (Task task : tasks)
             project.addNewTask(task);
-        double temp = estimateTime(project, index);
-        for (Task task : tasks)
-            realPro.addNewTask(task);
 
-        for(int i = 0; i < project.getPossibleCompletions().size(); i++)
-            try {
-                realPro.getPossibleCompletions().set(i, project.getPossibleCompletions().get(i));
-            } catch(IndexOutOfBoundsException e) {
-                realPro.getPossibleCompletions().add(i, project.getPossibleCompletions().get(i));
-            }
+        project.setPossibleCompletions(new ArrayList<>(tempProject.getPossibleCompletions()));
+        //  for (int i = 0; i < tempProject.getPossibleCompletions().size(); i++)
+        // try {
+        // project.getPossibleCompletions().add(i, tempProject.getPossibleCompletions().get(i));
+        //} catch (IndexOutOfBoundsException e) {
+        //   project.getPossibleCompletions().add(i, tempProject.getPossibleCompletions().get(i));
+        //}
 
         return temp;
     }
 
     /**
      * If you have a project you want to estimate the time in
+     *
      * @param project The project you want estimated
      * @return The estimated time
      */
     public static double estimateTime(Project project) {
-
         return estimateTime(project, 0);
-
     }
 
     /**
      * If you have a project in a loop you want estimated
+     *
      * @param project The project you want estimated
-     * @param index The index of the loop
+     * @param index   The index of the loop
      * @return The estimated time
      */
     public static double estimateTime(Project project, int index) {
-
         //Calls the function with the default value 10000
         return estimateTime(project, false, 10000, index);
-
     }
 
     /**
      * The main estimateTime function used to estimate the time of a project
-     * @param project The project you want estimated
-     * @param rec If it should estimate the recommended path or the normal path
+     *
+     * @param project           The project you want estimated
+     * @param rec               If it should estimate the recommended path or the normal path
      * @param monteCarloRepeats The amount of times you want it repeated
-     * @param index The index of the possible loop this is called in (If no loop, send 0)
+     * @param index             The index of the possible loop this is called in (If no loop, send 0)
      * @return Returns the estimated time of the project
      */
     public static double estimateTime(Project project, boolean rec, int monteCarloRepeats, int index) {
@@ -236,7 +240,7 @@ public class MonteCarlo {
             list.add(future);
         }
 
-        //Temporary list tthat will have the values we later add to the possibleCompletions list
+        //Temporary list that will have the values we later add to the possibleCompletions list
         List<Double> tempList;
         for (Future<List<List<Double>>> fut : list) {
             try {
@@ -245,14 +249,12 @@ public class MonteCarlo {
                 tempList = fut.get().get(1);
 
                 //Add all the values to the index of the possibleCompletions
-                for(int i = 0; i < tempList.size(); i++){
+                for (int i = 0; i < tempList.size(); i++) {
                     while (project.getPossibleCompletions().get(index).size() < tempList.size())
                         project.getPossibleCompletions().get(index).add(0d);
-
                     project.getPossibleCompletions().get(index).set(i, project.getPossibleCompletions().get(index).get(i) + tempList.get(i));
 
                 }
-                //System.out.println(temppp);
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }

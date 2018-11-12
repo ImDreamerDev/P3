@@ -11,6 +11,7 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
     private double amountEmployees;
     private int numOfThreads;
     private int numOfMonte;
+    private Random random = new Random();
 
     public EstimateTimeCallable(List<Task> taskList, double amountEmployees, int numOfThreads, int numOfMonte) {
         this.taskList = taskList;
@@ -20,10 +21,10 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
     }
 
     public List<List<Double>> call() {
-        List<List<Double>> toReturn = new ArrayList<>();
+        List<List<Double>> result = new ArrayList<>();
         List<Double> durationList = new ArrayList<>();
         List<Double> chances = new ArrayList<>();
-        Random r = new Random();
+
         double duration = 0.0;
         int repeats = numOfMonte / numOfThreads;
         //Repeat repeats time
@@ -59,7 +60,7 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
                                 temp = true;
 
                                 //Create a random double between 0 and 100
-                                double rand = r.nextDouble() * 100;
+                                double rand = random.nextDouble() * 100;
 
                                 //Create an inverse gaussian distribution for the task
                                 InverseGaussian invG = new InverseGaussian(task.getEstimatedTime(), task.getLambda());
@@ -79,9 +80,9 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
                         if (!temp) {
                             int temp2 = durations.indexOf(Collections.min(durations));
                             List<Double> tempDurations = new ArrayList<>();
-                            for (Double d : durations) {
-                                if (d > durations.get(temp2))
-                                    tempDurations.add(d);
+                            for (Double tempDuration : durations) {
+                                if (tempDuration > durations.get(temp2))
+                                    tempDurations.add(tempDuration);
                             }
                             if (tempDurations.size() != 0)
                                 durations.set(temp2, 0 + Collections.min(tempDurations));
@@ -96,7 +97,7 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
                 for (Task task : taskList) {
 
                     //Create a random double between 0 and 100
-                    double rand = r.nextDouble() * 100;
+                    double rand = random.nextDouble() * 100;
 
                     //Create an inverse gaussian distribution for the task
                     InverseGaussian invG = new InverseGaussian(task.getEstimatedTime(), task.getLambda());
@@ -106,18 +107,18 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
                 }
             }
 
-            try{
-                chances.set((int)Math.round((duration/(i+1))), chances.get((int)Math.round((duration/(i+1)))) + 1);
-            }catch(IndexOutOfBoundsException e){
-                while(chances.size() < (int)Math.round((duration/(i+1))))
+            try {
+                chances.set((int) Math.round((duration / (i + 1))), chances.get((int) Math.round((duration / (i + 1)))) + 1);
+            } catch (IndexOutOfBoundsException e) {
+                while (chances.size() < (int) Math.round((duration / (i + 1))))
                     chances.add(0d);
-                chances.add((int)Math.round((duration/(i+1))) /* This makes index -1 for some reason, I'll fix one day */, 1d);
+                chances.add((int) Math.round((duration / (i + 1))) /* This makes index -1 for some reason, I'll fix one day */, 1d);
             }
 
         }
         durationList.add(duration);
-        toReturn.add(durationList);
-        toReturn.add(chances);
-        return toReturn;
+        result.add(durationList);
+        result.add(chances);
+        return result;
     }
 }
