@@ -17,14 +17,15 @@ public class MonteCarlo {
 
     public static void findFastestSequence(Project project) {
 
-        //Calls the function with the default value 10000
-        findFastestSequence(project, 10000, true);
+        //Calls the function with the default value 200 - Might up this default value when/if we optimize estimateTime
+        //This might be enough if we find a better way of finding random sequences
+        findFastestSequence(project, 200, true);
 
     }
 
     public static void findFastestSequence(Project project, boolean fast) {
 
-        findFastestSequence(project, 10000, fast);
+        findFastestSequence(project, 200, fast);
 
     }
 
