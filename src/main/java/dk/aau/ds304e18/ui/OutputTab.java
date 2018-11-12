@@ -81,22 +81,14 @@ public class OutputTab {
         int x = 0, y;
         for (List<Task> seq : res) {
             y = 0;
-            pane.getChildren().add(new Text(100 * (x + 1) + 50, 50 + (y * 150) - 5, "" + x));
             for (Task task : seq) {
                 AnchorPane taskBox = new AnchorPane();
                 taskBox.setLayoutX(110 * (x + 1));
-                taskBox.setLayoutY(50 + (y * 150));
-                Rectangle ret = new Rectangle(100, 100);
+                taskBox.setLayoutY(25 + (y * 50));
+                Rectangle ret = new Rectangle(task.getEstimatedTime(), 20);
                 ret.setStroke(Color.BLACK);
                 ret.setFill(Color.web("#ff9c00"));
-                String text = task.getName();
-                if (text.length() > 9) {
-                    if (text.charAt(8) == ' ')
-                        text = text.substring(0, 9) + "\n" + text.substring(9);
-                    else
-                        text = text.substring(0, 9) + "-\n" + text.substring(9);
-                }
-                Text id = new Text(ret.getX() + 5, ret.getY() + 15, "Id: " + task.getId() + "\nName: " + text);
+                Text id = new Text(ret.getX() + 5, ret.getY() + 15, "\nName: " + task.getName());
                 taskBox.getChildren().addAll(ret, id);
                 tasks.add(taskBox);
                 y++;
