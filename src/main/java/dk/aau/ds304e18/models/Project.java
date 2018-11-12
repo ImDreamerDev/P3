@@ -55,6 +55,11 @@ public class Project {
     private String recommendedPath;
 
     /**
+     * The different chances of completion
+     */
+    private List<Double> possibleCompletions = new ArrayList<>();
+
+    /**
      * Constructor for project.
      *
      * @param name - The name of the project.
@@ -246,5 +251,9 @@ public class Project {
     public void setNumberOfEmployees(double numberOfEmployees) {
         this.numberOfEmployees = numberOfEmployees;
         DatabaseManager.updateProject(this);
+    }
+
+    public List<Double> getPossibleCompletions() {
+        return possibleCompletions;
     }
 }

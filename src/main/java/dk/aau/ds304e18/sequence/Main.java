@@ -25,7 +25,9 @@ public class Main {
         Task task7 = new Task("Stå i kø igen", 15, 1, project);
         Task task8 = new Task("Drik meget", 70, 1, project);
 
-        project.addNewEmployee(new Employee("Milton"));
+        project.setNumberOfEmployees(2);
+
+        /*project.addNewEmployee(new Employee("Milton"));
         project.addNewEmployee(new Employee("Rasmus"));
         project.addNewEmployee(new Employee("Kasper"));
         project.addNewEmployee(new Employee("Emil"));
@@ -96,6 +98,7 @@ public class Main {
         System.out.println("Duration of the project: " + project.getDuration());
         System.out.println("With sequence: " + project.getSequence());
         System.out.println("Rec path: " + project.getRecommendedPath());
+        System.out.println(project.getPossibleCompletions());
 
         //Instant start2 = java.time.Instant.now();
         //MonteCarlo.estimateTime(project, true, 1000000);

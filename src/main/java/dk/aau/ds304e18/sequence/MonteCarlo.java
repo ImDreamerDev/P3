@@ -34,13 +34,15 @@ public class MonteCarlo {
         List<Double> time = new ArrayList<>();
         int counter = 0;
 
-        //TODO: Really needs some optimizing
+        //TODO: Really needs some optimizing - Actually maybe not, it's fast apparently
         while (j < monteCarloRepeats) {
 
             boolean cont = false;
 
-            if (counter >= 1000)
+            if (counter >= 1000000) {
+                System.out.println(j+1);
                 break;
+            }
 
             if (j == Calc.amountMax(project.getTasks().size()))
                 break;
@@ -91,11 +93,23 @@ public class MonteCarlo {
 
     public static double estimateTime(String path, double numOfEmps, List<Task> tasks, Project realPro) {
         Project project = new Project(-1, "Temp", ProjectState.ONGOING, path, 0d, path, numOfEmps);
+
+        for(int i = 0; i < realPro.getPossibleCompletions().size(); i++)
+            project.getPossibleCompletions().add(i, realPro.getPossibleCompletions().get(i));
+
         for (Task task : tasks)
             project.addNewTask(task);
         double temp = estimateTime(project);
         for (Task task : tasks)
             realPro.addNewTask(task);
+
+        for(int i = 0; i < project.getPossibleCompletions().size(); i++)
+            try {
+                realPro.getPossibleCompletions().set(i, project.getPossibleCompletions().get(i));
+            } catch(IndexOutOfBoundsException e) {
+                realPro.getPossibleCompletions().add(i, project.getPossibleCompletions().get(i));
+            }
+
         return temp;
     }
 
@@ -149,12 +163,20 @@ public class MonteCarlo {
             list.add(future);
         }
 
-        double temppp = 0d;
+        List<Double> tempList;
         for (Future<List<List<Double>>> fut : list) {
             try {
                 // because Future.get() waits for task to get completed
                 duration = duration + fut.get().get(0).get(0);
-                temppp += fut.get().get(1).get(0);
+                tempList = fut.get().get(1);
+
+                for(int i = 0; i < tempList.size(); i++){
+                    while (project.getPossibleCompletions().size() < tempList.size())
+                        project.getPossibleCompletions().add(0d);
+
+                    project.getPossibleCompletions().set(i, project.getPossibleCompletions().get(i) + tempList.get(i));
+
+                }
                 //System.out.println(temppp);
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
