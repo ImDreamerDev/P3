@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,10 +46,10 @@ public class OutputTab {
         if (pro.getSequence() != null) {
             drawTasks(pro, pane);
             if (useMonty) {
-                ((ListView) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
+                ((ListView<Task>) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
                         .setItems(FXCollections.observableArrayList(ParseSequence.parseToSingleList(pro, true)));
             } else if (pro.getRecommendedPath() != null && !pro.getRecommendedPath().equals("")) {
-                ((ListView) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
+                ((ListView<Task>) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
                         .setItems(FXCollections.observableArrayList(ParseSequence.parseToSingleList(pro, true)));
             } else
                 ((ListView) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
@@ -75,6 +76,8 @@ public class OutputTab {
                 series1.getData().add(new XYChart.Data<>(i + "", sum / total * 100));
         }
         barChart.getData().add(series1);
+        series1.getChart().getXAxis().setLabel("Working hours");
+        series1.getChart().getYAxis().setLabel("Chance of completion");
     }
 
     private void drawTasks(Project pro, AnchorPane pane) {
