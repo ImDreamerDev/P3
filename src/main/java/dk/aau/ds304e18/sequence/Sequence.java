@@ -126,19 +126,24 @@ public class Sequence {
         if (amountEmployees >= tasksWithoutDeps.size() + tasksSequenced.size()) {
             tasksSequenced.addAll(tasksWithoutDeps);
             tasksNotSequenced.removeAll(tasksWithoutDeps);
-            tasksWithoutDeps = new ArrayList<>();
         } else {
             for (int i = 0; i < amountEmployees - tasksSequenced.size(); i++) {
                 tasksSequenced.add(tasksWithoutDeps.get(i));
                 tasksNotSequenced.remove(tasksWithoutDeps.get(i));
-                tasksWithoutDeps.remove(tasksWithoutDeps.get(i));
             }
         }
         tasksLeft -= tasksSequenced.size();
 
         while (tasksLeft > 0) {
             for (Task task : tasksNotSequenced) {
-                if (tasksWithoutDeps.contains(task) && tasksNotSequenced.size() != tasksWithoutDeps.size()) continue;
+                boolean cont = false;
+                if(tasksWithoutDeps.contains(task)) {
+                    for (Task task1 : tasksNotSequenced) {
+                        if (!tasksWithoutDeps.contains(task1) && tasksSequenced.containsAll(task1.getDependencies()))
+                            cont = true;
+                    }
+                }
+                if (cont) continue;
                 if (!tasksSequenced.containsAll(task.getDependencies())) continue;
                 tasksSequenced.add(task);
                 tasksToBeRemoved.add(task);
