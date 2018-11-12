@@ -29,7 +29,7 @@ public class OutputTab {
         assert pro != null;
         ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output: " +
                 pro.getName() + ":" + JavaFXMain.selectedProjectId);
-        var pane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
+        AnchorPane pane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
         pane.getChildren().clear();
         if (pro.getSequence() != null) {
             drawTasks(pro, pane);
@@ -49,7 +49,7 @@ public class OutputTab {
 
     private void drawTasks(Project pro, AnchorPane pane) {
         List<AnchorPane> tasks = new ArrayList<>();
-        var res = ParseSequence.parseToMultipleLists(pro);
+        List<List<Task>> res = ParseSequence.parseToMultipleLists(pro);
         int x = 0, y;
         for (List<Task> seq : res) {
             y = 0;
