@@ -25,6 +25,7 @@ public class ProjectTab {
     private TableView<Project> tableView;
     private FilteredList<Project> flProjects;
     private HBox projectToolBar;
+    private TabPane tabPane;
 
 
     public ProjectTab(Parent rootPane, ProjectManager projectManager, InputTab inputTab) {
@@ -32,6 +33,7 @@ public class ProjectTab {
         this.rootPane = rootPane;
         setupProjectTab();
         this.inputTab = inputTab;
+        tabPane = ((TabPane) rootPane.getChildrenUnmodifiable().get(1));
     }
 
     private SortedList<Project> updateProjects() {
@@ -45,7 +47,12 @@ public class ProjectTab {
         tableView = ((TableView<Project>) rootPane.lookup("#projectView"));
         projectToolBar = ((HBox) rootPane.lookup("#projectToolbar"));
         setUpProjectTable();
-        tableView.setOnMouseClicked(event -> onTableElementSelected());
+        tableView.setOnMouseClicked(event -> {
+            onTableElementSelected();
+            if (event.getClickCount() == 2) {
+                tabPane.getSelectionModel().select(tabPane.getTabs().get(1));
+            }
+        });
 
 
         Button createButton = ((Button) projectToolBar.getChildren().get(2));

@@ -29,6 +29,7 @@ public class InputTab {
     private final OutputTab outputTab;
     private TableView<Task> tableView;
     public static HBox progressBarContainer;
+    private TabPane tabPane;
 
     /**
      * @param rootPane
@@ -37,6 +38,7 @@ public class InputTab {
     public InputTab(Parent rootPane, OutputTab outputTab) {
         this.rootPane = rootPane;
         this.outputTab = outputTab;
+        tabPane = ((TabPane) rootPane.getChildrenUnmodifiable().get(1));
         setupInputTab();
     }
 
@@ -178,6 +180,7 @@ public class InputTab {
         Sequence.sequenceTasks(pro, useMonty);
         outputTab.drawOutputTab(useMonty);
         drawInputTab();
+        tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
     }
 
     /**
