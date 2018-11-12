@@ -18,11 +18,17 @@ public class MonteCarlo {
     public static void findFastestSequence(Project project) {
 
         //Calls the function with the default value 10000
-        findFastestSequence(project, 10000);
+        findFastestSequence(project, 10000, true);
 
     }
 
-    public static void findFastestSequence(Project project, int monteCarloRepeats) {
+    public static void findFastestSequence(Project project, boolean fast) {
+
+        findFastestSequence(project, 10000, fast);
+
+    }
+
+    public static void findFastestSequence(Project project, int monteCarloRepeats, boolean fast) {
 
         int i = 0;
         int j = 0;
@@ -47,7 +53,7 @@ public class MonteCarlo {
             if (j == Calc.amountMax(project.getTasks().size()))
                 break;
 
-            randomSequences[j] = Sequence.findRandomSequence(project);
+            randomSequences[j] = Sequence.findRandomSequence(project, fast);
             for (int k = 0; k < j; k++) {
                 if (randomSequences[k].equals(randomSequences[j])) {
                     cont = true;

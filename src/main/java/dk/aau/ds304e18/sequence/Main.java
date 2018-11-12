@@ -92,7 +92,7 @@ public class Main {
         task8.getProbabilities().add(new Probabilities(200, 99));
         DatabaseManager.updateTask(task8);
 
-        Sequence.sequenceTasks(project, true);
+        Sequence.sequenceTasks(project, true, true);
         Instant end = java.time.Instant.now();
 
         System.out.println("Duration of the project: " + project.getDuration());
