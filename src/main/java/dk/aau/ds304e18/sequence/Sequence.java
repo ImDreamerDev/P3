@@ -102,11 +102,26 @@ public class Sequence {
         int amountEmployees = (int) project.getNumberOfEmployees();
         List<Task> tasksWithoutDeps = new ArrayList<>();
         Collections.shuffle(tasksNotSequenced);
+        //sortTasks(tasksNotSequenced); //Might not make sense to put prioritised first - It can make the project longer than it should
 
-        for (int i = 0; i < project.getTasks().size(); i++) {
+        for (int i = 0; i < tasksNotSequenced.size(); i++) {
             if (tasksNotSequenced.get(i).getDependencies().size() == 0)
                 tasksWithoutDeps.add(tasksNotSequenced.get(i));
         }
+
+        for (int i = 0; i < tasksWithoutDeps.size(); i++) {
+            for (Task task : tasksNotSequenced)
+                if (task.getDependencies().contains(tasksWithoutDeps.get(i))) {
+                    tasksSequenced.add(tasksWithoutDeps.get(i));
+                    tasksNotSequenced.remove(tasksWithoutDeps.get(i));
+                    tasksToBeRemoved.add(tasksWithoutDeps.get(i));
+                    break;
+                }
+        }
+
+        for (Task task : tasksToBeRemoved)
+            tasksWithoutDeps.remove(task);
+        tasksToBeRemoved = new ArrayList<>();
 
         if (amountEmployees >= tasksWithoutDeps.size()) {
             tasksSequenced.addAll(tasksWithoutDeps);
