@@ -66,9 +66,10 @@ public class OutputTab {
         double total = possibleCompletions.stream().mapToDouble(value -> value).sum();
         double sum = 0;
         for (int i = 0; i < possibleCompletions.size(); i++) {
+            double percent = sum / total * 100;
             sum += possibleCompletions.get(i);
-            if (sum / total * 100 > 1 && sum / total * 100 < 99)
-                series1.getData().add(new XYChart.Data<>(i + "", sum / total * 100));
+            if (percent > 1 && sum / total * 100 < 99)
+                series1.getData().add(new XYChart.Data<>(i + "", percent));
         }
         barChart.getData().add(series1);
         series1.getChart().getXAxis().setLabel("Working hours");
