@@ -67,7 +67,7 @@ public class OutputTab {
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         series1.setName("Probabilities");
         barChart.setAnimated(false);
-        List<Double> possibleCompletions = pro.getPossibleCompletions();
+        List<Double> possibleCompletions = pro.getPossibleCompletions().get(0);
         double total = possibleCompletions.stream().mapToDouble(value -> value).sum();
         double sum = 0;
         for (int i = 0; i < possibleCompletions.size(); i++) {

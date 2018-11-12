@@ -78,11 +78,22 @@ public class MonteCarlo {
                 break;
 
             String tempSeq = randomSequences[i];
-            time.add(estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks(), project));
+            time.add(estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks(), project, i));
 
             i++;
         }
 
+        int tempI = time.indexOf(Collections.min(time));
+        if(!(tempI == 0)) {
+            project.getPossibleCompletions().get(0).clear();
+            for(int k = 0; k < project.getPossibleCompletions().get(tempI).size(); k++){
+                while (project.getPossibleCompletions().get(0).size() < project.getPossibleCompletions().get(tempI).size())
+                    project.getPossibleCompletions().get(0).add(0d);
+
+                project.getPossibleCompletions().get(0).set(k, project.getPossibleCompletions().get(tempI).get(k));
+
+            }
+        }
         bestTime = Collections.min(time);
         bestSequence = randomSequences[time.indexOf(Collections.min(time))];
         worstTime = Collections.max(time);
@@ -98,7 +109,7 @@ public class MonteCarlo {
 
     }
 
-    public static double estimateTime(String path, double numOfEmps, List<Task> tasks, Project realPro) {
+    public static double estimateTime(String path, double numOfEmps, List<Task> tasks, Project realPro, int index) {
         Project project = new Project(-1, "Temp", ProjectState.ONGOING, path, 0d, path, numOfEmps);
 
         for(int i = 0; i < realPro.getPossibleCompletions().size(); i++)
@@ -106,7 +117,7 @@ public class MonteCarlo {
 
         for (Task task : tasks)
             project.addNewTask(task);
-        double temp = estimateTime(project);
+        double temp = estimateTime(project, index);
         for (Task task : tasks)
             realPro.addNewTask(task);
 
@@ -122,15 +133,21 @@ public class MonteCarlo {
 
     public static double estimateTime(Project project) {
 
-        //Calls the function with the default value 10000
-        return estimateTime(project, false, 10000);
+        return estimateTime(project, 0);
 
     }
 
-    public static double estimateTime(Project project, boolean rec) {
+    public static double estimateTime(Project project, int index) {
 
         //Calls the function with the default value 10000
-        return estimateTime(project, rec, 10000);
+        return estimateTime(project, false, 10000, index);
+
+    }
+
+    public static double estimateTime(Project project, boolean rec, int index) {
+
+        //Calls the function with the default value 10000
+        return estimateTime(project, rec, 10000, index);
 
     }
 
@@ -140,7 +157,8 @@ public class MonteCarlo {
      * @param project           the project where we want to find the estimated duration
      * @param monteCarloRepeats how many times we want to repeat the project schedule (Higher number will be more accurate but will take longer time)
      */
-    public static double estimateTime(Project project, boolean rec, int monteCarloRepeats) {
+    public static double estimateTime(Project project, boolean rec, int monteCarloRepeats, int index) {
+        project.getPossibleCompletions().add(index, new ArrayList<>());
         //Gets the task list from the project
         List<Task> taskList = ParseSequence.parseToSingleList(project, rec);
         //For each task in taskList
@@ -178,10 +196,10 @@ public class MonteCarlo {
                 tempList = fut.get().get(1);
 
                 for(int i = 0; i < tempList.size(); i++){
-                    while (project.getPossibleCompletions().size() < tempList.size())
-                        project.getPossibleCompletions().add(0d);
+                    while (project.getPossibleCompletions().get(index).size() < tempList.size())
+                        project.getPossibleCompletions().get(index).add(0d);
 
-                    project.getPossibleCompletions().set(i, project.getPossibleCompletions().get(i) + tempList.get(i));
+                    project.getPossibleCompletions().get(index).set(i, project.getPossibleCompletions().get(index).get(i) + tempList.get(i));
 
                 }
                 //System.out.println(temppp);
