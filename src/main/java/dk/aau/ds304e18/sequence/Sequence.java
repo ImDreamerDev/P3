@@ -95,6 +95,12 @@ public class Sequence {
 
     public static String findRandomSequence(Project project) {
 
+        return findRandomSequence(project, true);
+
+    }
+
+    public static String findRandomSequence(Project project, boolean fast) {
+
         int tasksLeft = project.getTasks().size();
         List<Task> tasksSequenced = new ArrayList<>();
         List<Task> tasksNotSequenced = new ArrayList<>(project.getTasks());
@@ -102,6 +108,23 @@ public class Sequence {
         int amountEmployees = (int) project.getNumberOfEmployees();
         List<Task> tasksWithoutDeps = new ArrayList<>();
         Collections.shuffle(tasksNotSequenced);
+
+        if(!fast) {
+            while (tasksLeft > 0) {
+                for (Task task : tasksNotSequenced) {
+                    if (!tasksSequenced.containsAll(task.getDependencies())) continue;
+                    tasksSequenced.add(task);
+                    tasksToBeRemoved.add(task);
+                    tasksLeft--;
+                }
+
+                for (Task task : tasksToBeRemoved)
+                    tasksNotSequenced.remove(task);
+                tasksToBeRemoved = new ArrayList<>();
+            }
+            return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, tasksNotSequenced.size()).toString();
+        }
+
         //sortTasks(tasksNotSequenced); //Might not make sense to put prioritised first - It can make the project longer than it should
 
         for (Task aTasksNotSequenced : tasksNotSequenced) {
