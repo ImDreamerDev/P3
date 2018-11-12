@@ -45,15 +45,13 @@ public class JavaFXMain extends Application {
 
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                 new BackgroundPosition(Side.LEFT, 0.5, true, Side.TOP, 0.1, true), new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, false));
-        // Background color
-        //  rootPane.lookup("#loginPane").getParent().setStyle("-fx-background-color: black");
+
         ((Pane) rootPane.lookup("#loginPane")).setBackground(new Background(backgroundImage));
         rootPane.lookup("#loginPane").getParent().setVisible(true);
         vBoxLogin = ((VBox) rootPane.lookup("#loginPane"));
         Button loginButton = ((Button) vBoxLogin.getChildrenUnmodifiable().get(3));
         usernameField = (TextField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(0)).getChildren().get(1);
-        //Username label color
-        //  ((Label) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(0)).getChildren().get(0)).setTextFill(Color.WHITE);
+
         usernameField.setOnKeyPressed(ke -> {
             if (ke.getCode().equals(KeyCode.ENTER)) {
                 logIn();
@@ -61,8 +59,7 @@ public class JavaFXMain extends Application {
         });
 
         passwordField = (PasswordField) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(1)).getChildren().get(1);
-        // Password label color
-        //  ((Label) ((HBox) vBoxLogin.getChildrenUnmodifiable().get(1)).getChildren().get(0)).setTextFill(Color.WHITE);
+
         passwordField.setOnKeyPressed(ke -> {
             if (ke.getCode().equals(KeyCode.ENTER)) {
                 logIn();

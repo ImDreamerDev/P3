@@ -163,7 +163,7 @@ public class DatabaseManager {
                 new ArrayList<>(), new ArrayList<>(), 0, new ArrayList<>());
 
         //Removes the task as dependency from other tasks
-        LocalObjStorage.getTaskList().forEach(task-> {
+        LocalObjStorage.getTaskList().forEach(task -> {
             if (task.getDependencies().contains(tempTask)) {
                 task.getDependencies().remove(tempTask);
                 DatabaseManager.updateTask(task);
@@ -222,9 +222,11 @@ public class DatabaseManager {
             statement.setDouble(6, (task.getEndTime()));
             statement.setInt(7, task.getPriority());
 
-            //TODO what is this for
-            if (task.getProject() != null) statement.setInt(8, task.getProject().getId());
-            else statement.setInt(8, 0);
+
+            if (task.getProject() != null)
+                statement.setInt(8, task.getProject().getId());
+            else
+                statement.setInt(8, 0);
 
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
@@ -618,7 +620,7 @@ public class DatabaseManager {
             statement.setArray(1, dbConnection.createArrayOf("INTEGER",
                     employee.getPreviousTask().stream().map(Task::getId).toArray()
             ));
-            //TODO: Check if this is correct
+            
             if (employee.getProject() != null)
                 statement.setInt(2, employee.getProject().getId());
             else

@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":9,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -155,31 +155,26 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>private static <a href="InputTab.html" title="class in dk.aau.ds304e18.ui">InputTab</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#instance">instance</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>private <a href="OutputTab.html" title="class in dk.aau.ds304e18.ui">OutputTab</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputTab">outputTab</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static javafx.scene.layout.HBox</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#progressBarContainer">progressBarContainer</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private javafx.scene.Parent</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rootPane">rootPane</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private javafx.scene.control.TableView&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tableView">tableView</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#taskDependencies">taskDependencies</a></span></code></th>
 <td class="colLast">&nbsp;</td>
@@ -218,7 +213,7 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -233,11 +228,10 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>private void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addTask(java.lang.String,double,int,java.util.List,javafx.scene.control.TableView)">addTask</a></span>&#8203;(java.lang.String&nbsp;name,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addTask(java.lang.String,double,int,java.util.List)">addTask</a></span>&#8203;(java.lang.String&nbsp;name,
        double&nbsp;estimatedTime,
        int&nbsp;priority,
-       java.util.List&lt;<a href="../math/Probabilities.html" title="class in dk.aau.ds304e18.math">Probabilities</a>&gt;&nbsp;probabilities,
-       javafx.scene.control.TableView&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tableView)</code></th>
+       java.util.List&lt;<a href="../math/Probabilities.html" title="class in dk.aau.ds304e18.math">Probabilities</a>&gt;&nbsp;probabilities)</code></th>
 <td class="colLast">
 <div class="block">The method for adding a task.</div>
 </td>
@@ -260,23 +254,28 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>(package private) void</code></td>
+<td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#disableInput()">disableInput</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Method that disables the interaction with the ui on the inputTab.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>void</code></td>
+<td class="colFirst"><code>(package private) void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawInputTab()">drawInputTab</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The method that draws the inputTab.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>(package private) void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#enableInput()">enableInput</a></span>()</code></th>
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#editTask(javafx.scene.control.ListView,javafx.scene.control.TextField...)">editTask</a></span>&#8203;(javafx.scene.control.ListView&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
+        javafx.scene.control.TextField...&nbsp;textFields)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>static <a href="InputTab.html" title="class in dk.aau.ds304e18.ui">InputTab</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInstance()">getInstance</a></span>()</code></th>
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#enableInput()">enableInput</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
@@ -294,7 +293,7 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>void</code></td>
+<td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupInputTab()">setupInputTab</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The method that sets up the contents of the whole input tab.</div>
@@ -308,11 +307,6 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateOutput()">updateOutput</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i13" class="rowColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validateNumericInput(javafx.scene.control.TextField,java.lang.String,boolean)">validateNumericInput</a></span>&#8203;(javafx.scene.control.TextField&nbsp;textField,
                     java.lang.String&nbsp;newValue,
@@ -346,15 +340,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a id="instance">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>instance</h4>
-<pre>private static&nbsp;<a href="InputTab.html" title="class in dk.aau.ds304e18.ui">InputTab</a> instance</pre>
-</li>
-</ul>
 <a id="taskDependencies">
 <!--   -->
 </a>
@@ -370,7 +355,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>rootPane</h4>
-<pre>private&nbsp;javafx.scene.Parent rootPane</pre>
+<pre>private final&nbsp;javafx.scene.Parent rootPane</pre>
 </li>
 </ul>
 <a id="outputTab">
@@ -379,7 +364,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>outputTab</h4>
-<pre>private&nbsp;<a href="OutputTab.html" title="class in dk.aau.ds304e18.ui">OutputTab</a> outputTab</pre>
+<pre>private final&nbsp;<a href="OutputTab.html" title="class in dk.aau.ds304e18.ui">OutputTab</a> outputTab</pre>
 </li>
 </ul>
 <a id="tableView">
@@ -418,6 +403,11 @@ extends java.lang.Object</pre>
 <h4>InputTab</h4>
 <pre>public&nbsp;InputTab&#8203;(javafx.scene.Parent&nbsp;rootPane,
                 <a href="OutputTab.html" title="class in dk.aau.ds304e18.ui">OutputTab</a>&nbsp;outputTab)</pre>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>rootPane</code> - </dd>
+<dd><code>outputTab</code> - </dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -430,31 +420,16 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="getInstance()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getInstance</h4>
-<pre class="methodSignature">public static&nbsp;<a href="InputTab.html" title="class in dk.aau.ds304e18.ui">InputTab</a>&nbsp;getInstance()</pre>
-</li>
-</ul>
-<a id="updateOutput()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>updateOutput</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;updateOutput()</pre>
-</li>
-</ul>
 <a id="drawInputTab()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>drawInputTab</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;drawInputTab()</pre>
+<pre class="methodSignature">void&nbsp;drawInputTab()</pre>
+<div class="block">The method that draws the inputTab. If the project is ongoing you can interact with the ui, if it isnt you cannot.
+ Uses the method disableInput - if the project is archived.
+ Uses the method enableInput - if the project is ongoing.</div>
 </li>
 </ul>
 <a id="disableInput()">
@@ -463,7 +438,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>disableInput</h4>
-<pre class="methodSignature">void&nbsp;disableInput()</pre>
+<pre class="methodSignature">private&nbsp;void&nbsp;disableInput()</pre>
+<div class="block">Method that disables the interaction with the ui on the inputTab.</div>
 </li>
 </ul>
 <a id="enableInput()">
@@ -472,7 +448,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>enableInput</h4>
-<pre class="methodSignature">void&nbsp;enableInput()</pre>
+<pre class="methodSignature">private&nbsp;void&nbsp;enableInput()</pre>
 </li>
 </ul>
 <a id="setupInputTab()">
@@ -481,7 +457,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setupInputTab</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setupInputTab()</pre>
+<pre class="methodSignature">private&nbsp;void&nbsp;setupInputTab()</pre>
 <div class="block">The method that sets up the contents of the whole input tab.</div>
 </li>
 </ul>
@@ -536,7 +512,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="addTask(java.lang.String,double,int,java.util.List,javafx.scene.control.TableView)">
+<a id="addTask(java.lang.String,double,int,java.util.List)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -545,8 +521,7 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">private&nbsp;void&nbsp;addTask&#8203;(java.lang.String&nbsp;name,
                      double&nbsp;estimatedTime,
                      int&nbsp;priority,
-                     java.util.List&lt;<a href="../math/Probabilities.html" title="class in dk.aau.ds304e18.math">Probabilities</a>&gt;&nbsp;probabilities,
-                     javafx.scene.control.TableView&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tableView)</pre>
+                     java.util.List&lt;<a href="../math/Probabilities.html" title="class in dk.aau.ds304e18.math">Probabilities</a>&gt;&nbsp;probabilities)</pre>
 <div class="block">The method for adding a task.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -554,8 +529,17 @@ extends java.lang.Object</pre>
 <dd><code>estimatedTime</code> - - filled into the textbox.</dd>
 <dd><code>priority</code> - - filled into textbox.</dd>
 <dd><code>probabilities</code> - - filled into textbox.</dd>
-<dd><code>tableView</code> - - the dependencies table - these are added through the addDependency method.</dd>
 </dl>
+</li>
+</ul>
+<a id="editTask(javafx.scene.control.ListView,javafx.scene.control.TextField...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>editTask</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;editTask&#8203;(javafx.scene.control.ListView&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
+                      javafx.scene.control.TextField...&nbsp;textFields)</pre>
 </li>
 </ul>
 <a id="removeDependency(javafx.scene.control.ListView)">

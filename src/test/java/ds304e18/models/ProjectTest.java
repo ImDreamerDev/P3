@@ -30,35 +30,7 @@ class ProjectTest {
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
-
-   /* TODO: Fix tests
-    @Test
-    void TestProjectConstructor02() {
-        DatabaseProject newDatabaseProject = new DatabaseProject();
-        newDatabaseProject.id = 1;
-        Project newProject = new Project(newDatabaseProject);
-
-        assertEquals(1, newProject.getId());
-    }
-
-    @Test
-    void TestProjectConstructor03() {
-        DatabaseProject newDatabaseProject = new DatabaseProject();
-        newDatabaseProject.name = "Test Project";
-        Project newProject = new Project(newDatabaseProject);
-
-        assertEquals("Test Project", newProject.getName());
-    }
-
-    @Test
-    void TestProjectConstructor04() {
-        DatabaseProject newDatabaseProject = new DatabaseProject();
-        newDatabaseProject.state = ProjectState.ONGOING;
-        Project newProject = new Project(newDatabaseProject);
-
-        assertEquals(ProjectState.ONGOING, newProject.getState());
-    }*/
-
+    
     /**
      * Tests adding a new task to the project.
      */

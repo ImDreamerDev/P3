@@ -8,6 +8,7 @@ import dk.aau.ds304e18.models.ProjectState;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -149,6 +150,9 @@ public class ProjectTab {
             JavaFXMain.selectedProjectId = ((int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue());
             inputTab.drawInputTab();
             ((Label) projectToolBar.getChildren().get(4)).setText("Selected: " + LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getName());
+            TabPane tabPane = (TabPane) rootPane.getChildrenUnmodifiable().get(1);
+            tabPane.getTabs().get(1).setDisable(false);
+            tabPane.getTabs().get(2).setDisable(false);
         }
     }
 

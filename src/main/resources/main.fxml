@@ -7,7 +7,6 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
@@ -30,21 +29,9 @@
             <children>
                 <MenuBar prefHeight="25.0" prefWidth="1283.0">
                     <menus>
-                        <Menu mnemonicParsing="false" text="File">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Close" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Delete" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Help">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="About" />
-                            </items>
-                        </Menu>
+                        <Menu mnemonicParsing="false" text="File" />
+                        <Menu mnemonicParsing="false" text="Edit" />
+                        <Menu mnemonicParsing="false" text="Help" />
                     </menus>
                 </MenuBar>
             <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="22.0" prefWidth="60.0" text="Update">
@@ -120,7 +107,7 @@
                             </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab id="tabInput" text="Input">
+                <Tab id="tabInput" disable="true" text="Input">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
@@ -221,7 +208,7 @@
                             </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab id="tabOutput" text="Output">
+                <Tab id="tabOutput" disable="true" text="Output">
                     <content>
                         <AnchorPane id="outputPane" prefHeight="200.0" prefWidth="200.0">
                             <children>

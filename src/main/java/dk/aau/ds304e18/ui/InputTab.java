@@ -31,7 +31,6 @@ public class InputTab {
     public static HBox progressBarContainer;
 
     /**
-     *
      * @param rootPane
      * @param outputTab
      */
@@ -55,14 +54,15 @@ public class InputTab {
         tableView.getItems().clear();
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task ->
                 task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
-
+        if (JavaFXMain.selectedProjectId != 0)
+            outputTab.drawOutputTab(true);
     }
 
     /**
      * Method that disables the interaction with the ui on the inputTab.
      */
     private void disableInput() {
-        var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
+        FlowPane flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
         vBoxSplitter.getChildren().get(0).setDisable(true);
@@ -73,7 +73,7 @@ public class InputTab {
      *
      */
     private void enableInput() {
-        var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
+        FlowPane flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
         vBoxSplitter.getChildren().get(0).setDisable(false);
@@ -84,7 +84,7 @@ public class InputTab {
      * The method that sets up the contents of the whole input tab.
      */
     private void setupInputTab() {
-        var flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
+        FlowPane flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
 
         //Table view
         tableView = ((TableView<Task>) flowPane.getChildren().get(2));

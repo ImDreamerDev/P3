@@ -86,62 +86,6 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
-  /* TODO: Fix tests
-    
-    @Test
-    void TestTaskConstructor05() {
-        DatabaseTask newDatabaseTask = new DatabaseTask();
-        newDatabaseTask.id = 1;
-        Task newTask = new Task(newDatabaseTask);
-
-        assertEquals(1,newTask.getId());
-    }
-
-    @Test
-    void TestTaskConstructor06() {
-        DatabaseTask newDatabaseTask = new DatabaseTask();
-        newDatabaseTask.name = "Test Task";
-        Task newTask = new Task(newDatabaseTask);
-
-        assertEquals("Test Task",newTask.getName());
-    }
-
-    @Test
-    void TestTaskConstructor07() {
-        DatabaseTask newDatabaseTask = new DatabaseTask();
-        newDatabaseTask.priority = 2;
-        Task newTask = new Task(newDatabaseTask);
-
-        assertEquals(2,newTask.getPriority());
-    }
-
-    @Test
-    void TestTaskConstructor08() {
-        DatabaseTask newDatabaseTask = new DatabaseTask();
-        newDatabaseTask.estimatedTime = 10;
-        Task newTask = new Task(newDatabaseTask);
-
-        assertEquals(10,newTask.getEstimatedTime());
-    }
-
-    @Test
-    void TestTaskConstructor09() {
-        DatabaseTask newDatabaseTask = new DatabaseTask();
-        newDatabaseTask.startTime = 3;
-        Task newTask = new Task(newDatabaseTask);
-
-        assertEquals(3,newTask.getStartTime());
-    }
-
-    @Test
-    void TestTaskConstructor10() {
-        DatabaseTask newDatabaseTask = new DatabaseTask();
-        newDatabaseTask.endTime = 6;
-        Task newTask = new Task(newDatabaseTask);
-
-        assertEquals(6,newTask.getEndTime());
-    }*/
-
     /**
      * Tests the task getter for id
      */
@@ -471,7 +415,7 @@ class TaskTest {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
         Task task1 = new Task("Task1", 1, 1, newProject);
-        Task task2 = new Task("Task2", 2,2, newProject);
+        Task task2 = new Task("Task2", 2, 2, newProject);
 
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeTask(task1.getId());
@@ -481,7 +425,7 @@ class TaskTest {
         task1.setId(1);
         task2.setId(1);
 
-        assertEquals(task1,task2);
+        assertEquals(task1, task2);
     }
 
     /**
@@ -492,7 +436,7 @@ class TaskTest {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
         Task task1 = new Task("Task1", 1, 1, newProject);
-        Task task2 = new Task("Task1", 1,1, newProject);
+        Task task2 = new Task("Task1", 1, 1, newProject);
 
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeTask(task1.getId());
@@ -502,7 +446,7 @@ class TaskTest {
         task1.setId(1);
         task2.setId(2);
 
-        assertNotEquals(task1,task2);
+        assertNotEquals(task1, task2);
     }
 
     /**
@@ -513,7 +457,7 @@ class TaskTest {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
         Task task1 = new Task("Task1", 1, 1, newProject);
-        Task task2 = new Task("Task2", 2,2, newProject);
+        Task task2 = new Task("Task2", 2, 2, newProject);
 
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeTask(task1.getId());
@@ -523,7 +467,7 @@ class TaskTest {
         task1.setId(1);
         task2.setId(1);
 
-        assertEquals(task1.hashCode(),task2.hashCode());
+        assertEquals(task1.hashCode(), task2.hashCode());
     }
 
     /**
@@ -534,7 +478,7 @@ class TaskTest {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
         Task task1 = new Task("Task1", 1, 1, newProject);
-        Task task2 = new Task("Task2", 1,1, newProject);
+        Task task2 = new Task("Task2", 1, 1, newProject);
 
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeTask(task1.getId());
@@ -544,7 +488,7 @@ class TaskTest {
         task1.setId(1);
         task2.setId(2);
 
-        assertNotEquals(task1.hashCode(),task2.hashCode());
+        assertNotEquals(task1.hashCode(), task2.hashCode());
     }
 
     /**
@@ -568,9 +512,9 @@ class TaskTest {
 
         employeeIds.add(newEmployee.getId());
 
-        Task newTask = new Task(1,"Task", 1, 2, 3, 2, dependencyIds, employeeIds, newProject.getId(), probabilities);
+        Task newTask = new Task(1, "Task", 1, 2, 3, 2, dependencyIds, employeeIds, newProject.getId(), probabilities);
 
-        assertEquals(10,newTask.getEmployeeIds().get(0).intValue());
+        assertEquals(10, newTask.getEmployeeIds().get(0).intValue());
     }
 
     /**
@@ -580,7 +524,7 @@ class TaskTest {
     void TestTaskGetDependencyIds01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
-        Task dependency = new Task("Dependency", 1,1,newProject);
+        Task dependency = new Task("Dependency", 1, 1, newProject);
 
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeTask(dependency.getId());
@@ -594,7 +538,7 @@ class TaskTest {
 
         dependencyIds.add(dependency.getId());
 
-        Task newTask = new Task(1, "Task", 1, 2, 3, 2, dependencyIds, employeeIds, newProject.getId(),probabilities);
+        Task newTask = new Task(1, "Task", 1, 2, 3, 2, dependencyIds, employeeIds, newProject.getId(), probabilities);
 
         assertEquals(1, newTask.getDependencyIds().get(0).intValue());
     }
@@ -606,7 +550,7 @@ class TaskTest {
     void TestTaskSetStartTime01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
-        Task newTask = new Task("Task", 1,1,newProject);
+        Task newTask = new Task("Task", 1, 1, newProject);
 
         newTask.setStartTime(10);
 
@@ -624,7 +568,7 @@ class TaskTest {
     void TestTaskGetLambda01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
-        Task newTask = new Task("Task", 1,1,newProject);
+        Task newTask = new Task("Task", 1, 1, newProject);
 
         newTask.setLambda(10);
 
@@ -642,7 +586,7 @@ class TaskTest {
     void TestTaskSetLambda01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
-        Task newTask = new Task("New Task", 1,1,newProject);
+        Task newTask = new Task("New Task", 1, 1, newProject);
 
         newTask.setLambda(1);
 
@@ -660,7 +604,7 @@ class TaskTest {
     void TestTaskToString01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
-        Task newTask = new Task("Test Task", 1,1,newProject);
+        Task newTask = new Task("Test Task", 1, 1, newProject);
 
         assertEquals("Test Task", newTask.toString());
 

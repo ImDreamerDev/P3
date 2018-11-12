@@ -221,7 +221,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a></code></td>
-<th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#getProject(int)">getProject</a></span>&#8203;(int&nbsp;projId)</code></th>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#getProject(int)">getProject</a></span>&#8203;(int&nbsp;projectId)</code></th>
 <td class="colLast">
 <div class="block">Returns a project with projId from db.</div>
 </td>
@@ -237,18 +237,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>static java.util.List&lt;<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
-<th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#getAllProjects()">getAllProjects</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Return the projects from db which are ongoing.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>private static java.util.List&lt;<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#getPMProjects(dk.aau.ds304e18.models.ProjectManager)">getPMProjects</a></span>&#8203;(<a href="../ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;projectManager)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private static java.util.List&lt;<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#parseProjectsFromResultSet(java.sql.ResultSet)">parseProjectsFromResultSet</a></span>&#8203;(java.sql.ResultSet&nbsp;rs)</code></th>
 <td class="colLast">
@@ -266,7 +259,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>static java.lang.Boolean</code></td>
+<td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">DatabaseManager.</span><code><span class="memberNameLink"><a href="../../database/DatabaseManager.html#addProject(dk.aau.ds304e18.models.Project)">addProject</a></span>&#8203;(<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">
 <div class="block">Adds a project to the database and fetches the unique project ID and adds to project.</div>
@@ -452,18 +445,18 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>static void</code></td>
+<td class="colFirst"><code>static double</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">MonteCarlo.</span><code><span class="memberNameLink"><a href="../../sequence/MonteCarlo.html#estimateTime(dk.aau.ds304e18.models.Project)">estimateTime</a></span>&#8203;(<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static void</code></td>
+<td class="colFirst"><code>static double</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">MonteCarlo.</span><code><span class="memberNameLink"><a href="../../sequence/MonteCarlo.html#estimateTime(dk.aau.ds304e18.models.Project,boolean)">estimateTime</a></span>&#8203;(<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
             boolean&nbsp;rec)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static void</code></td>
+<td class="colFirst"><code>static double</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">MonteCarlo.</span><code><span class="memberNameLink"><a href="../../sequence/MonteCarlo.html#estimateTime(dk.aau.ds304e18.models.Project,boolean,int)">estimateTime</a></span>&#8203;(<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
             boolean&nbsp;rec,
             int&nbsp;monteCarloRepeats)</code></th>
@@ -472,27 +465,35 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static double</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">MonteCarlo.</span><code><span class="memberNameLink"><a href="../../sequence/MonteCarlo.html#estimateTime(java.lang.String,double,java.util.List,dk.aau.ds304e18.models.Project)">estimateTime</a></span>&#8203;(java.lang.String&nbsp;path,
+            double&nbsp;numOfEmps,
+            java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasks,
+            <a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;realPro)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">MonteCarlo.</span><code><span class="memberNameLink"><a href="../../sequence/MonteCarlo.html#findFastestSequence(dk.aau.ds304e18.models.Project)">findFastestSequence</a></span>&#8203;(<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">MonteCarlo.</span><code><span class="memberNameLink"><a href="../../sequence/MonteCarlo.html#findFastestSequence(dk.aau.ds304e18.models.Project,int)">findFastestSequence</a></span>&#8203;(<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
                    int&nbsp;monteCarloRepeats)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code>private static java.lang.String</code></td>
-<th class="colSecond" scope="row"><span class="typeNameLabel">MonteCarlo.</span><code><span class="memberNameLink"><a href="../../sequence/MonteCarlo.html#findRandomSequence(dk.aau.ds304e18.models.Project)">findRandomSequence</a></span>&#8203;(<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
+<tr class="altColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">Sequence.</span><code><span class="memberNameLink"><a href="../../sequence/Sequence.html#findRandomSequence(dk.aau.ds304e18.models.Project)">findRandomSequence</a></span>&#8203;(<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static java.util.List&lt;java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">ParseSequence.</span><code><span class="memberNameLink"><a href="../../sequence/ParseSequence.html#parseToMultipleLists(dk.aau.ds304e18.models.Project)">parseToMultipleLists</a></span>&#8203;(<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">ParseSequence.</span><code><span class="memberNameLink"><a href="../../sequence/ParseSequence.html#parseToSingleList(dk.aau.ds304e18.models.Project,boolean)">parseToSingleList</a></span>&#8203;(<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
                  boolean&nbsp;rec)</code></th>
@@ -500,12 +501,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Parses a sequence to a single list</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">Sequence.</span><code><span class="memberNameLink"><a href="../../sequence/Sequence.html#sequenceTasks(dk.aau.ds304e18.models.Project)">sequenceTasks</a></span>&#8203;(<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">Sequence.</span><code><span class="memberNameLink"><a href="../../sequence/Sequence.html#sequenceTasks(dk.aau.ds304e18.models.Project,boolean)">sequenceTasks</a></span>&#8203;(<a href="../Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
              boolean&nbsp;findSequenceMontecarlo)</code></th>
