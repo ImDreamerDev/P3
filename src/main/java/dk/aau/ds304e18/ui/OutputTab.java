@@ -66,9 +66,10 @@ public class OutputTab {
         double total = possibleCompletions.stream().mapToDouble(value -> value).sum();
         double sum = 0;
         for (int i = 0; i < possibleCompletions.size(); i++) {
+            double percent = sum / total * 100;
             sum += possibleCompletions.get(i);
-            if (sum / total * 100 > 1 && sum / total * 100 < 99)
-                series1.getData().add(new XYChart.Data<>(i + "", sum / total * 100));
+            if (percent > 1 && sum / total * 100 < 99)
+                series1.getData().add(new XYChart.Data<>(i + "", percent));
         }
         barChart.getData().add(series1);
         series1.getChart().getXAxis().setLabel("Working hours");
@@ -81,22 +82,14 @@ public class OutputTab {
         int x = 0, y;
         for (List<Task> seq : res) {
             y = 0;
-            pane.getChildren().add(new Text(100 * (x + 1) + 50, 50 + (y * 150) - 5, "" + x));
             for (Task task : seq) {
                 AnchorPane taskBox = new AnchorPane();
                 taskBox.setLayoutX(110 * (x + 1));
-                taskBox.setLayoutY(50 + (y * 150));
-                Rectangle ret = new Rectangle(100, 100);
+                taskBox.setLayoutY(25 + (y * 50));
+                Rectangle ret = new Rectangle(task.getEstimatedTime(), 20);
                 ret.setStroke(Color.BLACK);
                 ret.setFill(Color.web("#ff9c00"));
-                String text = task.getName();
-                if (text.length() > 9) {
-                    if (text.charAt(8) == ' ')
-                        text = text.substring(0, 9) + "\n" + text.substring(9);
-                    else
-                        text = text.substring(0, 9) + "-\n" + text.substring(9);
-                }
-                Text id = new Text(ret.getX() + 5, ret.getY() + 15, "Id: " + task.getId() + "\nName: " + text);
+                Text id = new Text(ret.getX() + 5, ret.getY() + 15, "\nName: " + task.getName());
                 taskBox.getChildren().addAll(ret, id);
                 tasks.add(taskBox);
                 y++;
