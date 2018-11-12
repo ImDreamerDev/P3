@@ -54,7 +54,8 @@ public class InputTab {
         tableView.getItems().clear();
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task ->
                 task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
-
+        if (JavaFXMain.selectedProjectId != 0)
+            outputTab.drawOutputTab(true);
     }
 
     /**
