@@ -99,9 +99,26 @@ public class Sequence {
         List<Task> tasksSequenced = new ArrayList<>();
         List<Task> tasksNotSequenced = new ArrayList<>(project.getTasks());
         List<Task> tasksToBeRemoved = new ArrayList<>();
+        int amountEmployees = (int) project.getNumberOfEmployees();
+        List<Task> tasksWithoutDeps = new ArrayList<>();
         Collections.shuffle(tasksNotSequenced);
 
-        //TODO: Optimize this to actually give relevant paths for multiple employees (etc. if there are 2 employees, the first 2 tasks shouldn't have dependencies if possible
+        for (int i = 0; i < project.getTasks().size(); i++) {
+            if (tasksNotSequenced.get(i).getDependencies().size() == 0)
+                tasksWithoutDeps.add(tasksNotSequenced.get(i));
+        }
+
+        if (amountEmployees >= tasksWithoutDeps.size()) {
+            tasksSequenced.addAll(tasksWithoutDeps);
+            tasksNotSequenced.removeAll(tasksWithoutDeps);
+        } else {
+            for (int i = 0; i < amountEmployees; i++) {
+                tasksSequenced.add(tasksWithoutDeps.get(i));
+                tasksNotSequenced.remove(tasksWithoutDeps.get(i));
+            }
+        }
+        tasksLeft -= tasksSequenced.size();
+
         while (tasksLeft > 0) {
             for (Task task : tasksNotSequenced) {
                 if (!tasksSequenced.containsAll(task.getDependencies())) continue;
