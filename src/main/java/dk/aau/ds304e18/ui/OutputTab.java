@@ -64,7 +64,7 @@ public class OutputTab {
         double sum = 0;
         for (int i = 0; i < possibleCompletions.size(); i++) {
             sum += possibleCompletions.get(i);
-            if (sum / total * 100 < 99)
+            if (sum / total * 100 > 1 || sum / total * 100 < 99)
                 series1.getData().add(new XYChart.Data<>(i + "", sum / total * 100));
         }
 

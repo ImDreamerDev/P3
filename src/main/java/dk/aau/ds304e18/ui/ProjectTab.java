@@ -50,7 +50,8 @@ public class ProjectTab {
         tableView.setOnMouseClicked(event -> {
             onTableElementSelected();
             if (event.getClickCount() == 2) {
-                tabPane.getSelectionModel().select(tabPane.getTabs().get(1));
+                if (JavaFXMain.selectedProjectId != 0)
+                    tabPane.getSelectionModel().select(tabPane.getTabs().get(1));
             }
         });
 
