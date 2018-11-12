@@ -30,6 +30,7 @@ public class MonteCarlo {
 
     public static void findFastestSequence(Project project, int monteCarloRepeats, boolean fast) {
 
+        project.getPossibleCompletions().clear();
         int i = 0;
         int j = 0;
         String bestSequence;
