@@ -18,6 +18,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -187,7 +189,13 @@ public class InputTab {
      */
     private void calculate(Project pro, boolean useMonty, double numOfEmployees, boolean useFast) {
         pro.setNumberOfEmployees(numOfEmployees);
+        Instant start = Instant.now();
         Sequence.sequenceTasks(pro, useMonty, useFast);
+        Instant end = java.time.Instant.now();
+        Duration between = java.time.Duration.between(start, end);
+        System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
+                between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
+
         outputTab.drawOutputTab(useMonty);
         drawInputTab();
         tabPane.getSelectionModel().select(tabPane.getTabs().get(2));

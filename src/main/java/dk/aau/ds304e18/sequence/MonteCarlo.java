@@ -152,28 +152,7 @@ public class MonteCarlo {
      * @return The estimated time
      */
     public static double estimateTime(String path, double numOfEmps, List<Task> tasks, Project project, int index) {
-        Project tempProject = new Project(-1, "Temp", ProjectState.ONGOING, path, 0d, path, numOfEmps);
-
-        tempProject.setPossibleCompletions(new ArrayList<>(project.getPossibleCompletions()));
-        //   for (int i = 0; i < project.getPossibleCompletions().size(); i++)
-        //     tempProject.getPossibleCompletions().add(i, project.getPossibleCompletions().get(i));
-
-        for (Task task : tasks)
-            tempProject.addNewTask(task);
-        double temp = estimateTime(tempProject, index);
-        //TODO: Why added them back to the project?
-        for (Task task : tasks)
-            project.addNewTask(task);
-
-        project.setPossibleCompletions(new ArrayList<>(tempProject.getPossibleCompletions()));
-        //  for (int i = 0; i < tempProject.getPossibleCompletions().size(); i++)
-        // try {
-        // project.getPossibleCompletions().add(i, tempProject.getPossibleCompletions().get(i));
-        //} catch (IndexOutOfBoundsException e) {
-        //   project.getPossibleCompletions().add(i, tempProject.getPossibleCompletions().get(i));
-        //}
-
-        return temp;
+        return estimateTime(project, index);
     }
 
     /**
