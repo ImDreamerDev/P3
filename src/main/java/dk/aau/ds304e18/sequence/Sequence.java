@@ -104,17 +104,17 @@ public class Sequence {
         Collections.shuffle(tasksNotSequenced);
         //sortTasks(tasksNotSequenced); //Might not make sense to put prioritised first - It can make the project longer than it should
 
-        for (int i = 0; i < tasksNotSequenced.size(); i++) {
-            if (tasksNotSequenced.get(i).getDependencies().size() == 0)
-                tasksWithoutDeps.add(tasksNotSequenced.get(i));
+        for (Task aTasksNotSequenced : tasksNotSequenced) {
+            if (aTasksNotSequenced.getDependencies().size() == 0)
+                tasksWithoutDeps.add(aTasksNotSequenced);
         }
 
-        for (int i = 0; i < tasksWithoutDeps.size(); i++) {
+        for (Task tasksWithoutDep : tasksWithoutDeps) {
             for (Task task : tasksNotSequenced)
-                if (task.getDependencies().contains(tasksWithoutDeps.get(i))) {
-                    tasksSequenced.add(tasksWithoutDeps.get(i));
-                    tasksNotSequenced.remove(tasksWithoutDeps.get(i));
-                    tasksToBeRemoved.add(tasksWithoutDeps.get(i));
+                if (task.getDependencies().contains(tasksWithoutDep)) {
+                    tasksSequenced.add(tasksWithoutDep);
+                    tasksNotSequenced.remove(tasksWithoutDep);
+                    tasksToBeRemoved.add(tasksWithoutDep);
                     break;
                 }
         }
