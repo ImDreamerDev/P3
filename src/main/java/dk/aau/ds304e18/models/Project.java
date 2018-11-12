@@ -57,7 +57,7 @@ public class Project {
     /**
      * The different chances of completion
      */
-    private List<Double> possibleCompletions = new ArrayList<>();
+    private List<List<Double>> possibleCompletions = new ArrayList<>();
 
     /**
      * Constructor for project.
@@ -253,7 +253,7 @@ public class Project {
         DatabaseManager.updateProject(this);
     }
 
-    public List<Double> getPossibleCompletions() {
+    public List<List<Double>> getPossibleCompletions() {
         return possibleCompletions;
     }
 }
