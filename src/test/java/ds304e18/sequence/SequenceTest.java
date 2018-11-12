@@ -130,7 +130,7 @@ class SequenceTest {
         tasks.add(task3);
         tasks.add(task4);
 
-        Sequence.sequenceTasks(project, true);
+        Sequence.sequenceTasks(project, true, true);
         String assertedSequencedTasks = String.valueOf(task4.getId()) + "," +
                 task2.getId() + "," +
                 task1.getId() + "|" +
@@ -160,7 +160,7 @@ class SequenceTest {
 
         task3.addDependency(task1);
 
-        Sequence.sequenceTasks(project, true);
+        Sequence.sequenceTasks(project, true, true);
         String assertedSequencedTasks = String.valueOf(task4.getId()) + "," +
                 task2.getId() + "," +
                 task1.getId() + "|" +
