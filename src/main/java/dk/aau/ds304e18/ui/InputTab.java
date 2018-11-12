@@ -29,6 +29,7 @@ public class InputTab {
     private final OutputTab outputTab;
     private TableView<Task> tableView;
     public static HBox progressBarContainer;
+    private TabPane tabPane;
 
     /**
      * @param rootPane
@@ -37,6 +38,7 @@ public class InputTab {
     public InputTab(Parent rootPane, OutputTab outputTab) {
         this.rootPane = rootPane;
         this.outputTab = outputTab;
+        tabPane = ((TabPane) rootPane.getChildrenUnmodifiable().get(1));
         setupInputTab();
     }
 
@@ -178,6 +180,7 @@ public class InputTab {
         Sequence.sequenceTasks(pro, useMonty);
         outputTab.drawOutputTab(useMonty);
         drawInputTab();
+        tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
     }
 
     /**
@@ -223,32 +226,43 @@ public class InputTab {
                 stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList());
         Task t = tasks.stream().filter(task -> task.getName().equals(name)).findFirst().orElse(null);
         if (t != null) {
+            List<Task> deps = new ArrayList<>(taskDependencies);
+            LocalObjStorage.getTaskList().remove(t);
             t.setEstimatedTime(estimatedTime);
             t.setPriority(priority);
             t.getProbabilities().clear();
             t.getProbabilities().addAll(probabilities);
-            t.addDependency(taskDependencies);
+            t.getDependencies().clear();
+            t.addDependency(new ArrayList<>(deps));
+            LocalObjStorage.getTaskList().add(t);
         } else {
             Task ttt = new Task(name, estimatedTime, priority,
                     LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
             ttt.getProbabilities().addAll(probabilities);
             ttt.addDependency(taskDependencies);
+
         }
     }
 
     private void editTask(ListView<Task> listViewDependency, TextField... textFields) {
         int taskId = (int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
         Task task = LocalObjStorage.getTaskById(taskId);
-        textFields[0].setText(task.getProbabilities().get(0).getDuration() + "");
-        textFields[1].setText(task.getProbabilities().get(0).getProbability() + "");
-        textFields[2].setText(task.getProbabilities().get(1).getDuration() + "");
-        textFields[3].setText(task.getProbabilities().get(1).getProbability() + "");
-        textFields[4].setText(task.getProbabilities().get(2).getDuration() + "");
-        textFields[5].setText(task.getProbabilities().get(2).getProbability() + "");
+        if (task.getProbabilities().size() > 0) {
+            textFields[0].setText(task.getProbabilities().get(0).getDuration() + "");
+            textFields[1].setText(task.getProbabilities().get(0).getProbability() + "");
+        }
+        if (task.getProbabilities().size() > 1) {
+            textFields[2].setText(task.getProbabilities().get(1).getDuration() + "");
+            textFields[3].setText(task.getProbabilities().get(1).getProbability() + "");
+        }
+        if (task.getProbabilities().size() > 2) {
+            textFields[4].setText(task.getProbabilities().get(2).getDuration() + "");
+            textFields[5].setText(task.getProbabilities().get(2).getProbability() + "");
+        }
         textFields[6].setText(task.getName());
         textFields[7].setText(task.getEstimatedTime() + "");
         textFields[8].setText(task.getPriority() + "");
-        taskDependencies = task.getDependencies();
+        taskDependencies = new ArrayList<>(task.getDependencies());
         listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
         drawInputTab();
     }
