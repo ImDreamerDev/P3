@@ -231,30 +231,16 @@
                                 <tabs>
                                   <Tab text="Tasks">
                                     <content>
-                                      <AnchorPane>
+                                      <AnchorPane prefWidth="1200.0">
                                              <children>
-                                                <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                   <children>
-                                                      <BarChart id="tasksDiagram" alternativeColumnFillVisible="true" barGap="1.0" categoryGap="1.0" prefHeight="446.0" prefWidth="970.0">
-                                                        <xAxis>
-                                                          <CategoryAxis side="BOTTOM" />
-                                                        </xAxis>
-                                                        <yAxis>
-                                                          <NumberAxis side="LEFT" />
-                                                        </yAxis>
-                                                      </BarChart>
-                                                      <VBox alignment="TOP_CENTER">
-                                                         <children>
-                                                            <Label text="Tasks" textAlignment="CENTER">
-                                                               <font>
-                                                                  <Font name="System Bold" size="25.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <ListView prefHeight="524.0" prefWidth="173.0" />
-                                                         </children>
-                                                      </VBox>
-                                                   </children>
-                                                </HBox>
+                                                <BarChart id="tasksDiagram" alternativeColumnFillVisible="true" barGap="1.0" categoryGap="1.0" prefHeight="631.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                  <xAxis>
+                                                    <CategoryAxis side="BOTTOM" />
+                                                  </xAxis>
+                                                  <yAxis>
+                                                    <NumberAxis side="LEFT" />
+                                                  </yAxis>
+                                                </BarChart>
                                              </children></AnchorPane>
                                     </content>
                                   </Tab>
