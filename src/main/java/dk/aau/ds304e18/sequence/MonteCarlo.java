@@ -31,78 +31,110 @@ public class MonteCarlo {
 
     public static void findFastestSequence(Project project, int monteCarloRepeats, boolean fast) {
 
+        //Resets the possible completions every time so it's accurate
         project.getPossibleCompletions().clear();
+
+        //2 index integers
         int i = 0;
         int j = 0;
+
+        //The strings that will hold the best and worst sequence
         String bestSequence;
         String worstSequence;
+
+        //The times that will hold the best and worst time
         double bestTime;
         double worstTime; //May be used in the future
+
+        //Initialize an array of strings, we use array because array is faster than list
         String[] randomSequences = new String[monteCarloRepeats];
+
+        //Initialize a list of doubles which we will use as temporary placeholder
         List<Double> time = new ArrayList<>();
+
+        //Used to check if we can find any other random sequences within a million tries
         int counter = 0;
 
         //TODO: Really needs some optimizing - Actually maybe not, it's fast apparently
         while (j < monteCarloRepeats) {
 
+            //If this is true skip
             boolean cont = false;
 
+            //If the counter hits a million, skip
             if (counter >= 1000000) {
                 System.out.println(j+1);
                 break;
             }
 
+            //If there is literally no other possible sequences, skip
             if (j == Calc.amountMax(project.getTasks().size()))
                 break;
 
+            //Find a random sequence and work on it
             randomSequences[j] = Sequence.findRandomSequence(project, fast);
             for (int k = 0; k < j; k++) {
+                //If it's equal to another one
                 if (randomSequences[k].equals(randomSequences[j])) {
                     cont = true;
                     break;
                 }
             }
 
+            //Count up the counter and skip
             if (cont) {
                 counter++;
                 continue;
             }
 
+            //Reset counter
             counter = 0;
             j++;
 
         }
 
+        //Go through all the sequences made
         while (i < monteCarloRepeats) {
 
+            //If there is no more random sequences break
             if (randomSequences[i] == null)
                 break;
 
+            //Use the random sequence at index i and work on it
             String tempSeq = randomSequences[i];
+            //Add whatever is returned to the time list
             time.add(estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks(), project, i));
 
             i++;
         }
 
+        //Set temporary index to the index of the minimum
         int tempI = time.indexOf(Collections.min(time));
-        if(!(tempI == 0)) {
-            project.getPossibleCompletions().get(0).clear();
-            for(int k = 0; k < project.getPossibleCompletions().get(tempI).size(); k++){
-                while (project.getPossibleCompletions().get(0).size() < project.getPossibleCompletions().get(tempI).size())
-                    project.getPossibleCompletions().get(0).add(0d);
 
-                project.getPossibleCompletions().get(0).set(k, project.getPossibleCompletions().get(tempI).get(k));
+        //If it's not 0 (i.e. the first one)
+        if(!(tempI == 0)) {
+            //Clear the first one so we can fill it with the correct numbers
+            project.getPossibleCompletions().get(0).clear();
+
+            //Go through all the numbers in the minimum list
+            for(int k = 0; k < project.getPossibleCompletions().get(tempI).size(); k++){
+
+                //Add all of the minimum list to the first list
+                project.getPossibleCompletions().get(0).addAll(project.getPossibleCompletions().get(tempI));
 
             }
         }
+        //Set the variables to correct stuff
         bestTime = Collections.min(time);
         bestSequence = randomSequences[time.indexOf(Collections.min(time))];
         worstTime = Collections.max(time);
         worstSequence = randomSequences[time.indexOf(Collections.max(time))];
 
+        //Set the projects values to correct stuff
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
 
+        //SOUT
         System.out.println("Worst Path: " + worstSequence);
         System.out.println("With Time: " + worstTime);
         System.out.println("Best Path: " + bestSequence);
@@ -110,6 +142,15 @@ public class MonteCarlo {
 
     }
 
+    /**
+     * If you want to estimate time without having a project
+     * @param path The path which will be estimated
+     * @param numOfEmps The amount of employees on the project
+     * @param tasks The tasks that will be estimated
+     * @param realPro The actual project the tasks are on
+     * @param index Index of the loop this is called inside, if there is no loop, send 0
+     * @return The estimated time
+     */
     public static double estimateTime(String path, double numOfEmps, List<Task> tasks, Project realPro, int index) {
         Project project = new Project(-1, "Temp", ProjectState.ONGOING, path, 0d, path, numOfEmps);
 
@@ -132,12 +173,23 @@ public class MonteCarlo {
         return temp;
     }
 
+    /**
+     * If you have a project you want to estimate the time in
+     * @param project The project you want estimated
+     * @return The estimated time
+     */
     public static double estimateTime(Project project) {
 
         return estimateTime(project, 0);
 
     }
 
+    /**
+     * If you have a project in a loop you want estimated
+     * @param project The project you want estimated
+     * @param index The index of the loop
+     * @return The estimated time
+     */
     public static double estimateTime(Project project, int index) {
 
         //Calls the function with the default value 10000
@@ -145,20 +197,16 @@ public class MonteCarlo {
 
     }
 
-    public static double estimateTime(Project project, boolean rec, int index) {
-
-        //Calls the function with the default value 10000
-        return estimateTime(project, rec, 10000, index);
-
-    }
-
     /**
-     * Estimates the time assuming only one task can be done at a time from a project and an amount of time to repeat the tasks
-     *
-     * @param project           the project where we want to find the estimated duration
-     * @param monteCarloRepeats how many times we want to repeat the project schedule (Higher number will be more accurate but will take longer time)
+     * The main estimateTime function used to estimate the time of a project
+     * @param project The project you want estimated
+     * @param rec If it should estimate the recommended path or the normal path
+     * @param monteCarloRepeats The amount of times you want it repeated
+     * @param index The index of the possible loop this is called in (If no loop, send 0)
+     * @return Returns the estimated time of the project
      */
     public static double estimateTime(Project project, boolean rec, int monteCarloRepeats, int index) {
+        //Adds a list to the index of the possibleCompletions list on the project
         project.getPossibleCompletions().add(index, new ArrayList<>());
         //Gets the task list from the project
         List<Task> taskList = ParseSequence.parseToSingleList(project, rec);
@@ -173,6 +221,7 @@ public class MonteCarlo {
             }
         }
 
+        //Find number of threads
         int numOfThreads = Runtime.getRuntime().availableProcessors();
 
         double duration = 0.0;
@@ -189,6 +238,7 @@ public class MonteCarlo {
             list.add(future);
         }
 
+        //Temporary list tthat will have the values we later add to the possibleCompletions list
         List<Double> tempList;
         for (Future<List<List<Double>>> fut : list) {
             try {
@@ -196,6 +246,7 @@ public class MonteCarlo {
                 duration = duration + fut.get().get(0).get(0);
                 tempList = fut.get().get(1);
 
+                //Add all the values to the index of the possibleCompletions
                 for(int i = 0; i < tempList.size(); i++){
                     while (project.getPossibleCompletions().get(index).size() < tempList.size())
                         project.getPossibleCompletions().get(index).add(0d);

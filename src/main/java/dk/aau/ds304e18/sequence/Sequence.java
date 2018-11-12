@@ -93,6 +93,13 @@ public class Sequence {
 
     }
 
+    /**
+     * Finds a random sequence with a project
+     * TODO: Optimize this so we only find relevant sequences when going fast (Or close to every relevant sequence)
+     * @param project The project where we want a random sequence
+     * @param fast If you want to do fast calculation or slow
+     * @return Returns a string with the sequence
+     */
     public static String findRandomSequence(Project project, boolean fast) {
 
         int tasksLeft = project.getTasks().size();
@@ -102,7 +109,9 @@ public class Sequence {
         int amountEmployees = (int) project.getNumberOfEmployees();
         List<Task> tasksWithoutDeps = new ArrayList<>();
         Collections.shuffle(tasksNotSequenced);
+        sortTasks(tasksNotSequenced); //Might not make sense to put prioritised first - It can make the project longer than it should
 
+        //If we're not going fast, just plug all of the tasks in, in a legal way and return that
         if(!fast) {
             while (tasksLeft > 0) {
                 for (Task task : tasksNotSequenced) {
@@ -119,13 +128,13 @@ public class Sequence {
             return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, tasksNotSequenced.size()).toString();
         }
 
-        //sortTasks(tasksNotSequenced); //Might not make sense to put prioritised first - It can make the project longer than it should
-
+        //Add all the tasks without dependencies to a list
         for (Task aTasksNotSequenced : tasksNotSequenced) {
             if (aTasksNotSequenced.getDependencies().size() == 0)
                 tasksWithoutDeps.add(aTasksNotSequenced);
         }
 
+        //Check every task to check if they have a task without dependency as a dependency, in which case we will do that task first to get a higher chance of having a better sequence
         for (Task tasksWithoutDep : tasksWithoutDeps) {
             for (Task task : tasksNotSequenced)
                 if (task.getDependencies().contains(tasksWithoutDep)) {
@@ -136,10 +145,12 @@ public class Sequence {
                 }
         }
 
+        //Remove every task that has been added already from the tasksWithoutDeps list
         for (Task task : tasksToBeRemoved)
             tasksWithoutDeps.remove(task);
         tasksToBeRemoved = new ArrayList<>();
 
+        //Add enough tasks at the start so every employee has something to do, if there's not enough tasks without dependencies for everyone just add everyone
         if (amountEmployees >= tasksWithoutDeps.size() + tasksSequenced.size()) {
             tasksSequenced.addAll(tasksWithoutDeps);
             tasksNotSequenced.removeAll(tasksWithoutDeps);
@@ -149,11 +160,20 @@ public class Sequence {
                 tasksNotSequenced.remove(tasksWithoutDeps.get(i));
             }
         }
+
+        //Count down tasksLeft so we don't end up in an infinite loop
         tasksLeft -= tasksSequenced.size();
 
+        //While there are still tasksLeft to plug into the sequence
         while (tasksLeft > 0) {
+
+            //For each task in the tasksNotSequenced List
             for (Task task : tasksNotSequenced) {
+
+                //Initialize a boolean to false
                 boolean cont = false;
+
+                //Skip the tasks without dependencies unless there are no other tasks left (This seems to give a better chance at good sequences)
                 if(tasksWithoutDeps.contains(task)) {
                     for (Task task1 : tasksNotSequenced) {
                         if (!tasksWithoutDeps.contains(task1) && tasksSequenced.containsAll(task1.getDependencies()))
@@ -161,17 +181,23 @@ public class Sequence {
                     }
                 }
                 if (cont) continue;
+
+                //If the tasks previously sequenced does not contains all the dependencies: skip
                 if (!tasksSequenced.containsAll(task.getDependencies())) continue;
+
+                //Add the task to the sequence and remove it from the other list
                 tasksSequenced.add(task);
                 tasksToBeRemoved.add(task);
                 tasksLeft--;
             }
 
+            //Remove the tasks that should be removed
             for (Task task : tasksToBeRemoved)
                 tasksNotSequenced.remove(task);
             tasksToBeRemoved = new ArrayList<>();
         }
 
+        //Return the list
         return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, tasksNotSequenced.size()).toString();
 
     }
