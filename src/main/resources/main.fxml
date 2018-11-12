@@ -182,8 +182,8 @@
                                                 <Insets left="3.0" right="3.0" top="-20.0" />
                                              </VBox.margin>
                                           </TextField>
-                                                        <CheckBox mnemonicParsing="false" text="Sequence" />
-                                          <CheckBox mnemonicParsing="false" text="Use fast" />
+                                                        <CheckBox mnemonicParsing="false" selected="true" text="Sequence" />
+                                          <CheckBox mnemonicParsing="false" selected="true" text="Use fast" />
                                                         <Button mnemonicParsing="false" text="Calculate" />
                                                     </children>
                                                     <padding>

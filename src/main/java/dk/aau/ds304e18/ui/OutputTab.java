@@ -56,9 +56,16 @@ public class OutputTab {
 
             pane.getChildren().add(new Text(10, 10, "Time: " + pro.getDuration()));
         }
+
+    }
+
+    public void populateChart() {
+        Project pro = LocalObjStorage.getProjectList().stream().filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
+        assert pro != null;
         barChart.getData().clear();
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         series1.setName("Probabilities");
+        barChart.setAnimated(false);
         List<Double> possibleCompletions = pro.getPossibleCompletions();
         double total = possibleCompletions.stream().mapToDouble(value -> value).sum();
         double sum = 0;
@@ -67,9 +74,7 @@ public class OutputTab {
             if (sum / total * 100 > 1 && sum / total * 100 < 99)
                 series1.getData().add(new XYChart.Data<>(i + "", sum / total * 100));
         }
-
         barChart.getData().add(series1);
-
     }
 
     private void drawTasks(Project pro, AnchorPane pane) {

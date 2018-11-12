@@ -136,7 +136,7 @@ public class InputTab {
         vBoxSplitter.getChildren().get(1).setOnMouseClicked(event -> {
             clearInputFields(listViewDependency, probs1, probs2, probs3,
                     probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority, numOfEmployees);
-            numOfEmployees.setText("0");
+            numOfEmployees.setText("1");
         });
 
         vBoxSplitter.getChildren().get(0).setOnMouseClicked(event -> {
@@ -151,11 +151,12 @@ public class InputTab {
                     Integer.parseInt(priority.getText()), probabilities);
             clearInputFields(listViewDependency, probs1, probs2, probs3,
                     probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority);
+            numOfEmployees.setText("1");
         });
 
 
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true));
-        numOfEmployees.setText("0");
+        numOfEmployees.setText("1");
 
         vBoxSplitter.getChildren().get(7).setOnMouseClicked(event -> calculate(
                 LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
@@ -186,6 +187,7 @@ public class InputTab {
         outputTab.drawOutputTab(useMonty);
         drawInputTab();
         tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
+        outputTab.populateChart();
     }
 
     /**
