@@ -1,6 +1,5 @@
 package dk.aau.ds304e18.sequence;
 
-import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.Calc;
 import dk.aau.ds304e18.math.CalculateLambda;
 import dk.aau.ds304e18.models.Project;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class MonteCarlo {
 
