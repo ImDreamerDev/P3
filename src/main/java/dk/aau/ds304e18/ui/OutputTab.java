@@ -15,6 +15,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
@@ -23,6 +25,7 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class OutputTab {
@@ -94,11 +97,11 @@ public class OutputTab {
     }
 
     private void drawTasks(Project pro, AnchorPane pane) {
-        List<AnchorPane> andhorPanes = new ArrayList<>();
+        List<AnchorPane> anchorPanes = new ArrayList<>();
         List<List<Task>> taskListOfTasks = ParseSequence.parseToMultipleLists(pro);
         List<Shape> shapeList = new ArrayList<>();
         HashMap<Task, AnchorPane> taskToAP = new HashMap<>();
-        int paddingY = 50;
+        int paddingY = 55, xPadding = 50;
         int yPerManHour = 110;
 
         int x = 0, y;
@@ -107,15 +110,18 @@ public class OutputTab {
             for (Task task : seq) {
                 AnchorPane taskBox = new AnchorPane();
                 AtomicReference<Double> xVar = new AtomicReference<>((double) 0);
-                if (x == 0) xVar.set((double) yPerManHour);
+                if (x == 0) xVar.set((double) xPadding);
 
                 else {
                     //If current list contains more than prev line
                     if (taskListOfTasks.get(x - 1).size() < taskListOfTasks.get(x).size() && y >= taskListOfTasks.get(x - 1).size()) {
-                        xVar.set(andhorPanes.get(andhorPanes.size() - 1).getLayoutX());
-                    } else
-                        xVar.set(andhorPanes.get(andhorPanes.size() - (y + 2)).getLayoutX() + (taskListOfTasks.get(x - 1).get(y).getEstimatedTime()));
-
+                        xVar.set(anchorPanes.get(anchorPanes.size() - 1).getLayoutX());
+                    } else {
+                        if (y == 0)
+                            xVar.set(anchorPanes.get(anchorPanes.size() - (1)).getLayoutX() + (taskListOfTasks.get(x - 1).get(y).getEstimatedTime()));
+                        else
+                            xVar.set(anchorPanes.get(anchorPanes.size() - (y + 2)).getLayoutX() + (taskListOfTasks.get(x - 1).get(y).getEstimatedTime()));
+                    }
                     if (task.getDependencies().size() > 0) {
                         task.getDependencies().forEach(dependency -> {
                             if (dependency.getEstimatedTime() + taskToAP.get(dependency).getLayoutX() > xVar.get())
@@ -125,7 +131,8 @@ public class OutputTab {
                 }
 
                 taskBox.setLayoutX(xVar.get());
-                taskBox.setLayoutY(25 + ((y + (0.5 * x)) * paddingY));
+
+                taskBox.setLayoutY(35 + ((1.5 * y + (0.5 * x)) * paddingY));
                 Rectangle ret = new Rectangle(task.getEstimatedTime(), 20);
                 ret.setStroke(Color.BLACK);
                 ret.setFill(Color.web("#ff9c00"));
@@ -134,33 +141,78 @@ public class OutputTab {
                 Tooltip.install(ret, tooltip);
 
                 taskBox.getChildren().addAll(ret);
-                andhorPanes.add(taskBox);
+                anchorPanes.add(taskBox);
                 y++;
                 taskToAP.put(task, taskBox);
             }
             x++;
         }
-        /*for (Task task : taskToAP.keySet()) {
+
+        for (int i = 0; i < anchorPanes.get(anchorPanes.size() - 1).getLayoutX() + ((Rectangle) anchorPanes.get(anchorPanes.size() - 1).getChildrenUnmodifiable().get(0)).getWidth(); i = i + 20) {
+            Text text = new Text((i) + xPadding, 25, "" + i);
+            text.setRotate(90);
+
+            pane.getChildren().add(text);
+            pane.getChildren().add(new Line(i + xPadding, 15, i + xPadding, 20));
+        }
+
+        HashMap<Task, AtomicInteger> numberOfTasksDependingOnTask = new HashMap<>();
+        HashMap<Task, AtomicInteger> numberOfTimesLineHasBeenDrawnForTask = new HashMap<>();
+
+        taskListOfTasks.forEach(lTask -> lTask.forEach(task -> {
+            numberOfTasksDependingOnTask.put(task, new AtomicInteger(0));
+            numberOfTimesLineHasBeenDrawnForTask.put(task, new AtomicInteger(0));
+        }));
+        taskListOfTasks.forEach(lTask -> lTask.forEach(task -> {
+            task.getDependencies().forEach(dep -> numberOfTasksDependingOnTask.get(dep).incrementAndGet());
+        }));
+
+
+        for (Task task : taskToAP.keySet()) {
             List<Task> dependencies = task.getDependencies();
             if (dependencies != null && dependencies.size() != 0) {
                 dependencies.forEach(depTask -> {
-                    AnchorPane startAncPane = taskToAP.get(task);
-                    AnchorPane endAncPane = taskToAP.get(depTask);
+                    int depNum = numberOfTasksDependingOnTask.get(depTask).get() - numberOfTimesLineHasBeenDrawnForTask.get(depTask).incrementAndGet();
+
+                    AnchorPane startAncPane = taskToAP.get(depTask);
+                    AnchorPane endAncPane = taskToAP.get(task);
+
+
                     double sx, sy, ex, ey;
-                    sx = startAncPane.getLayoutX() + startAncPane.getWidth() / 2;
-                    sy = startAncPane.getLayoutY() + startAncPane.getHeight() / 2;
+                    sx = startAncPane.getLayoutX() + ((Rectangle) startAncPane.getChildrenUnmodifiable().get(0)).getWidth();
+                    sy = startAncPane.getLayoutY() + ((Rectangle) startAncPane.getChildrenUnmodifiable().get(0)).getHeight() / 2;
 
-                    ex = endAncPane.getLayoutX() - endAncPane.getWidth() / 2;
-                    ey = endAncPane.getLayoutY() - endAncPane.getHeight() / 2;
-                    Line line = new Line();
-                    Line arrow1 = new Line();
-                    Line arrow2 = new Line();
-                    line.setStartX(sx);
-                    line.setStartY(sy);
-                    line.setEndX(ex);
-                    line.setEndY(ey);
+                    //To kinda ensure EVERYTHING isn't drawn on top of each other
+                    if (sy - (depNum * 2) < (sy - ((Rectangle) startAncPane.getChildrenUnmodifiable().get(0)).getHeight() / 2))
+                        sy = startAncPane.getLayoutY() + (depNum * 2);
+                    else
+                        sy -= (depNum * 2);
+
+                    ex = endAncPane.getLayoutX();
+                    ey = endAncPane.getLayoutY() + ((Rectangle) endAncPane.getChildrenUnmodifiable().get(0)).getHeight();
+
+                    if (((Rectangle) endAncPane.getChildrenUnmodifiable().get(0)).getWidth() / 2 > 10) ex += 10;
+
+                    if (sy < ey) ey -= ((Rectangle) endAncPane.getChildrenUnmodifiable().get(0)).getHeight();
 
 
+                    Line horizontalLine = new Line();
+                    horizontalLine.setStartX(sx);
+                    horizontalLine.setStartY(sy);
+                    horizontalLine.setEndX(ex);
+                    horizontalLine.setEndY(sy);
+                    shapeList.add(horizontalLine);
+
+                    Line verticalLine = new Line();
+                    verticalLine.setStartX(ex);
+                    verticalLine.setStartY(sy);
+                    verticalLine.setEndX(ex);
+                    verticalLine.setEndY(ey);
+                    shapeList.add(verticalLine);
+
+
+                    /*
+                    sx = ex;
                     double factor = arrowLength / Math.hypot(sx - ex, sy - ey);
                     double factorO = arrowWidth / Math.hypot(sx - ex, sy - ey);
 
@@ -172,17 +224,28 @@ public class OutputTab {
                     double ox = (sx - ex) * factorO;
                     double oy = (sy - ey) * factorO;
                     double triangleP1X = ex + dx - oy, triangleP1Y = ey + dy + ox;
-                    double triandleP2X = ex + dx + oy, triangleP2Y = ey + dy - ox;
+                    double triandleP2X = ex + dx + oy, triangleP2Y = ey + dy - ox;*/
+
+                    double triangleP1X, triangleP1Y, triandleP2X, triangleP2Y;
+                    if (ey > sy) {
+                        triangleP1X = ex - 4;
+                        triangleP1Y = ey - 4;
+                        triandleP2X = ex + 4;
+                        triangleP2Y = ey - 4;
+                    } else {
+                        triangleP1X = ex - 4;
+                        triangleP1Y = ey + 4;
+                        triandleP2X = ex + 4;
+                        triangleP2Y = ey + 4;
+                    }
 
                     Polygon triangle = new Polygon(ex, ey, triangleP1X, triangleP1Y, triandleP2X, triangleP2Y);
-                    shapeList.add(line);
                     shapeList.add(triangle);
-
                 });
 
             }
-        }*/
-        pane.getChildren().addAll(andhorPanes);
-        //pane.getChildren().addAll(shapeList);
+        }
+        pane.getChildren().addAll(anchorPanes);
+        pane.getChildren().addAll(shapeList);
     }
 }
