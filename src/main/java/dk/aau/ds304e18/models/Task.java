@@ -52,16 +52,6 @@ public class Task {
     private final List<Probabilities> probabilities = new ArrayList<>();
 
     /**
-     * The date that the task starts.
-     */
-    private double startTime;
-
-    /**
-     * The date the task should be completed.
-     */
-    private double endTime;
-
-    /**
      * The level of priority that the task has compared to other tasks.
      */
     private int priority;
@@ -89,13 +79,11 @@ public class Task {
     }
 
 
-    public Task(int id, String name, double estimatedTime, double startTime, double endTime, int priority,
+    public Task(int id, String name, double estimatedTime, int priority,
                 List<Integer> dependencyIds, List<Integer> employeeIds, int projectId, List<Probabilities> probabilities) {
         this.name = name;
         this.id = id;
         this.estimatedTime = estimatedTime;
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.priority = priority;
         this.dependencyIds.addAll(dependencyIds);
         this.employeeIds.addAll(employeeIds);
@@ -151,25 +139,7 @@ public class Task {
     public List<Task> getDependencies() {
         return dependencies;
     }
-
-    /**
-     * The getter for the start date
-     *
-     * @return startTime - The date the task was started.
-     */
-    public double getStartTime() {
-        return startTime;
-    }
-
-    /**
-     * The getter for the end date of the task.
-     *
-     * @return endTime - The date at which the task should be completed.
-     */
-    public double getEndTime() {
-        return endTime;
-    }
-
+    
     /**
      * The getter for the priority
      *
@@ -209,16 +179,7 @@ public class Task {
     public void setEstimatedTime(double estimatedTime) {
         this.estimatedTime = estimatedTime;
     }
-
-    /**
-     * The setter for the end date.
-     *
-     * @param endTime - The date at which the task should be completed
-     */
-    public void setEndTime(double endTime) {
-        this.endTime = endTime;
-    }
-
+    
     /**
      * The setter for the priority of the task.
      *
@@ -297,16 +258,7 @@ public class Task {
     public List<Integer> getDependencyIds() {
         return dependencyIds;
     }
-
-    /**
-     * The setter for the startTime.
-     *
-     * @param startTime - the time at which the task is started.
-     */
-    public void setStartTime(double startTime) {
-        this.startTime = startTime;
-    }
-
+    
     /**
      * the getter for the list of probabilities.
      *

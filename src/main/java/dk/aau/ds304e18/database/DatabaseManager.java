@@ -161,7 +161,7 @@ public class DatabaseManager {
      * @param id id of the task to remove.
      */
     public static void removeTask(int id) {
-        Task tempTask = new Task(id, "", 0d, 0d, 0d, 0,
+        Task tempTask = new Task(id, "", 0d, 0,
                 new ArrayList<>(), new ArrayList<>(), 0, new ArrayList<>());
 
         //Removes the task as dependency from other tasks
@@ -207,8 +207,8 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO tasks (name, estimatedtime," +
-                    " employees, dependencies, startdate, enddate, priority, projectid) " +
-                    "values (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    " employees, dependencies, priority, projectid)" +
+                    " values (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, task.getName());
             statement.setDouble(2, task.getEstimatedTime());
             if (task.getEmployees().size() == 0)
@@ -221,15 +221,13 @@ public class DatabaseManager {
             statement.setArray(4, dbConnection.createArrayOf("INTEGER",
                     task.getDependencies().stream().map(Task::getId).toArray()
             ));
-            statement.setDouble(5, (task.getStartTime()));
-            statement.setDouble(6, (task.getEndTime()));
-            statement.setInt(7, task.getPriority());
+            statement.setInt(5, task.getPriority());
 
 
             if (task.getProject() != null)
-                statement.setInt(8, task.getProject().getId());
+                statement.setInt(6, task.getProject().getId());
             else
-                statement.setInt(8, 0);
+                statement.setInt(6, 0);
 
             if (statement.execute()) return false;
             ResultSet rs = statement.getGeneratedKeys();
@@ -512,7 +510,7 @@ public class DatabaseManager {
     public static void updateTask(Task task) {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE tasks SET employees = ?" +
-                    ", dependencies = ?, projectid = ?, estimatedtime = ?, priority = ?, startdate = ?, enddate = ?," +
+                    ", dependencies = ?, projectid = ?, estimatedtime = ?, priority = ?," +
                     " probabilities =" + DatabaseParser.parseProbabilities(task) + "   WHERE id = ?");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER",
                     task.getEmployees().stream().map(Employee::getId).toArray()
@@ -523,9 +521,7 @@ public class DatabaseManager {
             statement.setInt(3, task.getProject().getId());
             statement.setDouble(4, task.getEstimatedTime());
             statement.setInt(5, task.getPriority());
-            statement.setDouble(6, task.getStartTime());
-            statement.setDouble(7, task.getEndTime());
-            statement.setInt(8, task.getId());
+            statement.setInt(6, task.getId());
             statement.execute();
 
         } catch (SQLException e) {

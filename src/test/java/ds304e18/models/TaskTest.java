@@ -205,39 +205,6 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
-    /**
-     * Tests the task getter for start time
-     */
-    @Test
-    void TestTaskGetStartTime01() {
-        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
-        Project newProject = new Project("Test Project", projectManager);
-        Task newTask = new Task("Test Task", 1, 1, newProject);
-
-        assertEquals(0, newTask.getStartTime());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
-    }
-
-    /**
-     * Tests the task getter for end time
-     */
-    @Test
-    void TestTaskGetEndTime01() {
-        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
-        Project newProject = new Project("Test Project", projectManager);
-        Task newTask = new Task("Test Task", 1, 1, newProject);
-
-        newTask.setEndTime(1010);
-
-        assertEquals(1010, newTask.getEndTime());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
-    }
 
     /**
      * Tests the task getter for project
@@ -255,23 +222,6 @@ class TaskTest {
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
-    /**
-     * Tests the task setter for end time
-     */
-    @Test
-    void TestTaskSetEndTime01() {
-        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
-        Project newProject = new Project("Test Project", projectManager);
-        Task newTask = new Task("Test Task", 1, 1, newProject);
-
-        newTask.setEndTime(12.4);
-
-        assertEquals(12.4, newTask.getEndTime());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
-    }
 
     /**
      * Tests the task setter for priority
@@ -513,7 +463,7 @@ class TaskTest {
 
         employeeIds.add(newEmployee.getId());
 
-        Task newTask = new Task(1, "Task", 1, 2, 3, 2, dependencyIds, employeeIds, newProject.getId(), probabilities);
+        Task newTask = new Task(1, "Task", 1, 2, dependencyIds, employeeIds, newProject.getId(), probabilities);
 
         assertEquals(10, newTask.getEmployeeIds().get(0).intValue());
     }
@@ -539,27 +489,9 @@ class TaskTest {
 
         dependencyIds.add(dependency.getId());
 
-        Task newTask = new Task(1, "Task", 1, 2, 3, 2, dependencyIds, employeeIds, newProject.getId(), probabilities);
+        Task newTask = new Task(1, "Task", 1, 2, dependencyIds, employeeIds, newProject.getId(), probabilities);
 
         assertEquals(1, newTask.getDependencyIds().get(0).intValue());
-    }
-
-    /**
-     * Tests the task setter for start time
-     */
-    @Test
-    void TestTaskSetStartTime01() {
-        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
-        Project newProject = new Project("Test Project", projectManager);
-        Task newTask = new Task("Task", 1, 1, newProject);
-
-        newTask.setStartTime(10);
-
-        assertEquals(10, newTask.getStartTime());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**

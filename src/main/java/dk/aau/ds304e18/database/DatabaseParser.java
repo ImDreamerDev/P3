@@ -103,8 +103,6 @@ public class DatabaseParser {
                 double estimatedTime = rs.getDouble(3);
                 int priority = rs.getInt(5);
                 int projectId = rs.getInt(6);
-                double startTime = rs.getDouble(7);
-                double endTime = rs.getDouble(8);
 
                 List<Integer> dependenceIds = new ArrayList<>();
                 List<Integer> employeeIds = new ArrayList<>();
@@ -113,12 +111,12 @@ public class DatabaseParser {
                     dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
                 }
 
-                if (rs.getArray(9) != null) {
-                    employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
+                if (rs.getArray(7) != null) {
+                    employeeIds = Arrays.asList((Integer[]) rs.getArray(7).getArray());
                 }
 
-                if (rs.getArray(10) != null) {
-                    ResultSet rsw = rs.getArray(10).getResultSet();
+                if (rs.getArray(8) != null) {
+                    ResultSet rsw = rs.getArray(8).getResultSet();
 
                     while (rsw.next()) {
                         String[] probValues = rsw.getString(2).replaceAll("[/(/)]", "")
@@ -128,7 +126,7 @@ public class DatabaseParser {
                     }
                 }
 
-                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds,
+                Task task = new Task(id, name, estimatedTime, priority, dependenceIds, employeeIds,
                         projectId, probabilities);
                 tasks.add(task);
             }
