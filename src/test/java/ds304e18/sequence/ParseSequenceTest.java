@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,7 +31,7 @@ class ParseSequenceTest {
         Task task3 = new Task("Test3", 5.0, 1, project);
         Task task4 = new Task("Test4", 2.0, 1, project);
 
-        task3.addDependency(task1);
+        task3.addDependency(Arrays.asList(task1));
 
         Sequence.sequenceTasks(project);
 

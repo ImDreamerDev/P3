@@ -247,12 +247,8 @@ public class Task {
     /**
      * Assign Dependencies to the Task
      *
-     * @param task - The tasks to add to dependencies
+     * @param tasks - The tasks to add to dependencies
      */
-    public void addDependency(Task... task) {
-        addDependency(Arrays.asList(task));
-    }
-
     public void addDependency(List<Task> tasks) {
         for (Task tsk : tasks) {
             if (tsk != this && !dependencies.contains(tsk))
