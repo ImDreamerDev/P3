@@ -1,7 +1,6 @@
 package dk.aau.ds304e18.database;
 
 import dk.aau.ds304e18.LocalObjStorage;
-import dk.aau.ds304e18.math.Probabilities;
 import dk.aau.ds304e18.models.*;
 import org.postgresql.util.PSQLException;
 
@@ -9,7 +8,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Properties;
 
 @SuppressWarnings("ALL")
 public class DatabaseManager {
@@ -242,89 +244,6 @@ public class DatabaseManager {
     }
 
     /**
-     * Parses Project manager from the resultset set.
-     *
-     * @param rs - the resultset to parse
-     * @return ProjectManagers - a list of project managers.
-     */
-    private static List<ProjectManager> parseProjectManagerFromResultSet(ResultSet rs) {
-
-        List<ProjectManager> projectManagers = new ArrayList<>();
-        try {
-            if (rs == null) return null;
-            while (rs.next()) {
-                ProjectManager projectManager;
-                if (rs.getArray(5) != null)
-                    projectManager = new ProjectManager(rs.getInt(1), rs.getString(2),
-                            rs.getInt(4), Arrays.asList((Integer[]) rs.getArray(5).getArray()));
-                else {
-                    projectManager = new ProjectManager(rs.getInt(1), rs.getString(2),
-                            rs.getInt(4), null);
-                }
-                projectManagers.add(projectManager);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return projectManagers;
-    }
-
-
-    /**
-     * Parses a ResultSet to Task(s).
-     *
-     * @param rs the ResultSet to parse.
-     * @return a list of Task that got parsed.
-     */
-    private static List<Task> parseTasksFromResultSet(ResultSet rs) {
-
-        List<Task> tasks = new ArrayList<>();
-
-        try {
-            if (rs == null) return null;
-
-            while (rs.next()) {
-                int id = rs.getInt(1);
-                String name = rs.getString(2);
-                double estimatedTime = rs.getDouble(3);
-                int priority = rs.getInt(5);
-                int projectId = rs.getInt(6);
-                double startTime = rs.getDouble(7);
-                double endTime = rs.getDouble(8);
-
-                List<Integer> dependenceIds = new ArrayList<>();
-                List<Integer> employeeIds = new ArrayList<>();
-                List<Probabilities> probabilities = new ArrayList<>();
-                if (rs.getArray(4) != null) {
-                    dependenceIds = Arrays.asList((Integer[]) rs.getArray(4).getArray());
-                }
-
-                if (rs.getArray(9) != null) {
-                    employeeIds = Arrays.asList((Integer[]) rs.getArray(9).getArray());
-                }
-
-                if (rs.getArray(10) != null) {
-                    ResultSet rsw = rs.getArray(10).getResultSet();
-
-                    while (rsw.next()) {
-                        String[] probValues = rsw.getString(2).replaceAll("[/(/)]", "").split(",");
-                        probabilities.add(new Probabilities(Double.parseDouble(probValues[0]),
-                                Double.parseDouble(probValues[1])));
-                    }
-                }
-
-                Task task = new Task(id, name, estimatedTime, startTime, endTime, priority, dependenceIds, employeeIds,
-                        projectId, probabilities);
-                tasks.add(task);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return tasks;
-
-    }
-
-    /**
      * The getter for the list of project managers
      *
      * @return ProjectManagers - an arraylist of the project managers.
@@ -335,7 +254,7 @@ public class DatabaseManager {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers");
             ResultSet rs = statement.executeQuery();
-            List<ProjectManager> projectManagers = parseProjectManagerFromResultSet(rs);
+            List<ProjectManager> projectManagers = DatabaseParser.parseProjectManagersFromResultSet(rs);
             if (projectManagers != null && projectManagers.size() != 0)
                 return projectManagers;
             return null;
@@ -344,50 +263,6 @@ public class DatabaseManager {
             return null;
         }
 
-    }
-
-    /**
-     * Parses a ResultSet to a list of Employees.
-     *
-     * @param rs the ResultSet to parse.
-     * @return list of Employees that got parsed or null.
-     */
-    private static List<Employee> parseEmployeesFromResultSet(ResultSet rs) {
-        List<Employee> empList = new ArrayList<>();
-        try {
-            if (rs == null) return null;
-            while (rs.next()) {
-                Employee emp = new Employee(rs.getInt(1), rs.getString(2),
-                        Arrays.asList((Integer[]) rs.getArray(3).getArray()));
-                emp.setProjectId(rs.getInt(4));
-                empList.add(emp);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return empList;
-    }
-
-    /**
-     * Parses a ResultSet to Projects.
-     *
-     * @param rs the ResultSet to parse.
-     * @return a list of Projects that got passed or null.
-     */
-    private static List<Project> parseProjectsFromResultSet(ResultSet rs) {
-        List<Project> projects = new ArrayList<>();
-        try {
-            if (rs == null) return null;
-            while (rs.next()) {
-                Project project = new Project(rs.getInt(1), rs.getString(2),
-                        ProjectState.values()[rs.getInt(3)], rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getDouble(7));
-                projects.add(project);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return projects;
     }
 
     /**
@@ -403,7 +278,7 @@ public class DatabaseManager {
 
             ResultSet rs = statement.executeQuery();
             if (rs == null) return null;
-            return Objects.requireNonNull(DatabaseManager.parseTasksFromResultSet(rs)).get(0);
+            return Objects.requireNonNull(DatabaseParser.parseTasksFromResultSet(rs)).get(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -421,7 +296,7 @@ public class DatabaseManager {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM employees WHERE id = ?");
             statement.setInt(1, empId);
             ResultSet rs = statement.executeQuery();
-            return Objects.requireNonNull(parseEmployeesFromResultSet(rs)).get(0);
+            return Objects.requireNonNull(DatabaseParser.parseEmployeesFromResultSet(rs)).get(0);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -439,7 +314,7 @@ public class DatabaseManager {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projects WHERE id = ?");
             statement.setInt(1, projectId);
             ResultSet rs = statement.executeQuery();
-            return Objects.requireNonNull(parseProjectsFromResultSet(rs)).get(0);
+            return Objects.requireNonNull(DatabaseParser.parseProjectsFromResultSet(rs)).get(0);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -463,7 +338,7 @@ public class DatabaseManager {
             statement.setArray(1, queryArray);
             ResultSet rs = statement.executeQuery();
             if (rs == null) return null;
-            return parseProjectsFromResultSet(rs);
+            return DatabaseParser.parseProjectsFromResultSet(rs);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -489,7 +364,7 @@ public class DatabaseManager {
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM employees WHERE projectid = ANY (?)");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER", employeeIdsToQuery.toArray()));
             ResultSet rs = statement.executeQuery();
-            return parseEmployeesFromResultSet(rs);
+            return DatabaseParser.parseEmployeesFromResultSet(rs);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -507,7 +382,7 @@ public class DatabaseManager {
                     "WHERE projectid = ANY (?)");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER", queryArray.toArray()));
             ResultSet rs = statement.executeQuery();
-            return parseTasksFromResultSet(rs);
+            return DatabaseParser.parseTasksFromResultSet(rs);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -620,7 +495,7 @@ public class DatabaseManager {
             statement.setArray(1, dbConnection.createArrayOf("INTEGER",
                     employee.getPreviousTask().stream().map(Task::getId).toArray()
             ));
-            
+
             if (employee.getProject() != null)
                 statement.setInt(2, employee.getProject().getId());
             else
@@ -717,7 +592,7 @@ public class DatabaseManager {
 
             if (Password.isExpectedPassword(clearTextPassword.toCharArray(), salt, passwd)) {
                 rs.previous();
-                return Objects.requireNonNull(parseProjectManagerFromResultSet(rs)).get(0);
+                return Objects.requireNonNull(DatabaseParser.parseProjectManagersFromResultSet(rs)).get(0);
             }
         } catch (SQLException e) {
             e.printStackTrace();
