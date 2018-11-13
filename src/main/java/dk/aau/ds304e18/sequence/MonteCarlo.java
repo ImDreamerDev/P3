@@ -102,8 +102,6 @@ public class MonteCarlo {
             if (randomSequences[i] == null)
                 break;
 
-            //Use the random sequence at index i and work on it
-            //String tempSeq = randomSequences[i];
             //Add whatever is returned to the time list
             time.add(estimateTime(project,true, i));
 
