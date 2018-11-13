@@ -78,14 +78,23 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
                         }
 
                         if (!temp) {
-                            int temp2 = durations.indexOf(Collections.min(durations));
-                            List<Double> tempDurations = new ArrayList<>();
-                            for (Double tempDuration : durations) {
-                                if (tempDuration > durations.get(temp2))
-                                    tempDurations.add(tempDuration);
+                            List<Double> temp2 = new ArrayList<>();
+                            List<Integer> temp3 = new ArrayList<>();
+                            double minUpper;
+
+                            double tempDuration = Collections.min(durations);
+
+                            for (Double tempDur : durations) {
+                                if (tempDur > tempDuration)
+                                    temp2.add(tempDur);
+                                else
+                                    temp3.add(durations.indexOf(tempDur));
                             }
-                            if (tempDurations.size() != 0)
-                                durations.set(temp2, 0 + Collections.min(tempDurations));
+
+                            minUpper = Collections.min(temp2);
+
+                            for (Integer tempIndex : temp3)
+                                durations.set(tempIndex, minUpper);
                         }
                     }
                 }
