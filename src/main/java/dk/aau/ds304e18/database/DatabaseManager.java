@@ -207,7 +207,8 @@ public class DatabaseManager {
         if (dbConnection == null) connect();
         try {
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO tasks (name, estimatedtime," +
-                    " employees, dependencies, startdate, enddate, priority, projectid) values (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    " employees, dependencies, startdate, enddate, priority, projectid) " +
+                    "values (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, task.getName());
             statement.setDouble(2, task.getEstimatedTime());
             if (task.getEmployees().size() == 0)

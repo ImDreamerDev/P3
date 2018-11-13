@@ -44,7 +44,8 @@ public class DatabaseParser {
             if (rs == null) return null;
             while (rs.next()) {
                 Project project = new Project(rs.getInt(1), rs.getString(2),
-                        ProjectState.values()[rs.getInt(3)], rs.getString(4), rs.getDouble(5), rs.getString(6), rs.getDouble(7));
+                        ProjectState.values()[rs.getInt(3)], rs.getString(4),
+                        rs.getDouble(5), rs.getString(6), rs.getDouble(7));
                 projects.add(project);
             }
         } catch (SQLException e) {
@@ -120,7 +121,8 @@ public class DatabaseParser {
                     ResultSet rsw = rs.getArray(10).getResultSet();
 
                     while (rsw.next()) {
-                        String[] probValues = rsw.getString(2).replaceAll("[/(/)]", "").split(",");
+                        String[] probValues = rsw.getString(2).replaceAll("[/(/)]", "")
+                                .split(",");
                         probabilities.add(new Probabilities(Double.parseDouble(probValues[0]),
                                 Double.parseDouble(probValues[1])));
                     }

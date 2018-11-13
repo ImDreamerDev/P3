@@ -80,7 +80,8 @@ public class Project {
         creator.setCurrentProject(this);
     }
 
-    public Project(int id, String name, ProjectState projectState, String sequence, double duration, String recommendedPath, double numberOfEmployees) {
+    public Project(int id, String name, ProjectState projectState, String sequence,
+                   double duration, String recommendedPath, double numberOfEmployees) {
         this.id = id;
         this.state = projectState;
         this.name = name;

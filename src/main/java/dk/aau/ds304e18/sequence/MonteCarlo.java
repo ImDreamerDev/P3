@@ -90,7 +90,7 @@ public class MonteCarlo {
             counter = 0;
             j++;
 
-            if(j == monteCarloRepeats)
+            if (j == monteCarloRepeats)
                 System.out.println(j);
 
         }
@@ -103,7 +103,7 @@ public class MonteCarlo {
                 break;
 
             //Add whatever is returned to the time list
-            time.add(estimateTime(project,true, i));
+            time.add(estimateTime(project, true, i));
 
             i++;
         }
@@ -115,10 +115,10 @@ public class MonteCarlo {
         if (!(tempI == 0)) {
             //Clear the first one so we can fill it with the correct numbers
             project.getPossibleCompletions().get(0).clear();
-            
+
             //Add all of the minimum list to the first list
             project.getPossibleCompletions().get(0).addAll(project.getPossibleCompletions().get(tempI));
-            
+
         }
         //Set the variables to correct stuff
         bestTime = Collections.min(time);
@@ -150,9 +150,10 @@ public class MonteCarlo {
 
     /**
      * If you have a project you want to estimate the time in with random sequences
+     *
      * @param project The project you want etimated
-     * @param random Want to specify that it's random sequences
-     * @param index The index we're at in the random sequences
+     * @param random  Want to specify that it's random sequences
+     * @param index   The index we're at in the random sequences
      * @return The estimated time
      */
     public static double estimateTime(Project project, boolean random, int index) {
@@ -193,7 +194,8 @@ public class MonteCarlo {
         List<Future<List<List<Double>>>> list = new ArrayList<>();
         //Create MyCallable instance
         for (int i = 0; i < numOfThreads; i++) {
-            Callable<List<List<Double>>> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(), numOfThreads, monteCarloRepeats);
+            Callable<List<List<Double>>> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(),
+                    numOfThreads, monteCarloRepeats);
             //submit Callable tasks to be executed by thread pool
             Future<List<List<Double>>> future = executor.submit(callable);
             //add Future to the list, we can get return value using Future
@@ -212,7 +214,8 @@ public class MonteCarlo {
                 for (int i = 0; i < tempList.size(); i++) {
                     while (project.getPossibleCompletions().get(index).size() < tempList.size())
                         project.getPossibleCompletions().get(index).add(0d);
-                    project.getPossibleCompletions().get(index).set(i, project.getPossibleCompletions().get(index).get(i) + tempList.get(i));
+                    project.getPossibleCompletions().get(index).set(i,
+                            project.getPossibleCompletions().get(index).get(i) + tempList.get(i));
 
                 }
             } catch (InterruptedException | ExecutionException e) {

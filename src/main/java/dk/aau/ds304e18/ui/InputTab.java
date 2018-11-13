@@ -114,7 +114,8 @@ public class InputTab {
         progressBarContainer = ((HBox) flowPane.getChildren().get(3));
 
         priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true));
-        estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(estimatedTimeTextField, newValue, false));
+        estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) -> 
+                validateNumericInput(estimatedTimeTextField, newValue, false));
 
 
         TextField probs1 = ((TextField) probsHBox.getChildren().get(0));
@@ -193,7 +194,8 @@ public class InputTab {
         Sequence.sequenceTasks(pro, useMonty, useFast);
         Instant end = java.time.Instant.now();
         Duration between = java.time.Duration.between(start, end);
-        System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 + "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
+        System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 +
+                        "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
                 between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
 
         outputTab.drawOutputTab(useMonty);
@@ -264,7 +266,8 @@ public class InputTab {
     }
 
     private void editTask(ListView<Task> listViewDependency, TextField... textFields) {
-        int taskId = (int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
+        int taskId = (int) ((TableColumn) tableView.getColumns().get(0)).
+                getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
         Task task = LocalObjStorage.getTaskById(taskId);
         if (task.getProbabilities().size() > 0) {
             textFields[0].setText(task.getProbabilities().get(0).getDuration() + "");
@@ -287,7 +290,8 @@ public class InputTab {
     }
 
     /**
-     * Method for revoming a dependency from the new task. This happens by selecting the task and pressing the remove button.
+     * Method for revoming a dependency from the new task.
+     * This happens by selecting the task and pressing the remove button.
      *
      * @param listViewDependency
      */
@@ -305,7 +309,8 @@ public class InputTab {
      * @param listViewDependency
      */
     private void addDependency(ListView<Task> listViewDependency) {
-        int taskId = (int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
+        int taskId = (int) ((TableColumn) tableView.getColumns().get(0))
+                .getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
         Task task = LocalObjStorage.getTaskById(taskId);
         if (!taskDependencies.contains(task)) {
             taskDependencies.add(LocalObjStorage.getTaskById(taskId));
@@ -314,10 +319,12 @@ public class InputTab {
     }
 
     /**
-     * Method for removing a task. A task is selected in the table, and then if the button(cancel task) is pressed the task is removed.
+     * Method for removing a task. A task is selected in the table,
+     * and then if the button(cancel task) is pressed the task is removed.
      */
     private void removeTask() {
-        int taskId = (int) ((TableColumn) tableView.getColumns().get(0)).getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
+        int taskId = (int) ((TableColumn) tableView.getColumns().get(0))
+                .getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
         Project project = LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId);
         project.getTasks().remove(LocalObjStorage.getTaskById(taskId));
         project.setSequence("");
@@ -331,7 +338,9 @@ public class InputTab {
      * The method that sets up the task table.
      */
     private void setUpTaskTable() {
-        tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+        tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
+                .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
+                .collect(Collectors.toList())));
         tableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         tableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
         tableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("estimatedTime"));

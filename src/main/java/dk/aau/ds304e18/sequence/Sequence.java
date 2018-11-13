@@ -48,7 +48,8 @@ public class Sequence {
         //Temporary list of tasks sequenced
         List<Task> tasksAlreadySequenced = new ArrayList<>();
 
-        //Temporary lists, first to sort them and add them to sequencedTasks, second to remove the already sequenced tasks from the dependency list of each task
+        //Temporary lists, first to sort them and add them to sequencedTasks, 
+        // second to remove the already sequenced tasks from the dependency list of each task
         List<Task> tasksToSort = new ArrayList<>();
         List<Task> tasksToRemove = new ArrayList<>();
 
@@ -135,7 +136,8 @@ public class Sequence {
                 tasksWithoutDeps.add(aTasksNotSequenced);
         }
 
-        //Check every task to check if they have a task without dependency as a dependency, in which case we will do that task first to get a higher chance of having a better sequence
+        //Check every task to check if they have a task without dependency as a dependency, 
+        // in which case we will do that task first to get a higher chance of having a better sequence
         for (Task tasksWithoutDep : tasksWithoutDeps) {
             for (Task task : tasksNotSequenced)
                 if (task.getDependencies().contains(tasksWithoutDep)) {
@@ -151,7 +153,8 @@ public class Sequence {
             tasksWithoutDeps.remove(task);
         tasksToBeRemoved = new ArrayList<>();
 
-        //Add enough tasks at the start so every employee has something to do, if there's not enough tasks without dependencies for everyone just add everyone
+        //Add enough tasks at the start so every employee has something to do, 
+        // if there's not enough tasks without dependencies for everyone just add everyone
         if (amountEmployees >= tasksWithoutDeps.size() + tasksSequenced.size()) {
             tasksSequenced.addAll(tasksWithoutDeps);
             tasksNotSequenced.removeAll(tasksWithoutDeps);
@@ -174,7 +177,8 @@ public class Sequence {
                 //Initialize a boolean to false
                 boolean cont = false;
 
-                //Skip the tasks without dependencies unless there are no other tasks left (This seems to give a better chance at good sequences)
+                //Skip the tasks without dependencies unless there are no other tasks left 
+                // (This seems to give a better chance at good sequences)
                 if (tasksWithoutDeps.contains(task)) {
                     for (Task task1 : tasksNotSequenced) {
                         if (!tasksWithoutDeps.contains(task1) && tasksSequenced.containsAll(task1.getDependencies()))

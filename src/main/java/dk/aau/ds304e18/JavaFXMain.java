@@ -44,7 +44,9 @@ public class JavaFXMain extends Application {
         }
 
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                new BackgroundPosition(Side.LEFT, 0.5, true, Side.TOP, 0.1, true), new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, false));
+                new BackgroundPosition(Side.LEFT, 0.5, true, Side.TOP, 0.1,
+                        true), new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO,
+                false, false, false, false));
 
         ((Pane) rootPane.lookup("#loginPane")).setBackground(new Background(backgroundImage));
         rootPane.lookup("#loginPane").getParent().setVisible(true);

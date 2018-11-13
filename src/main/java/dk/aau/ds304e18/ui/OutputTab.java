@@ -32,7 +32,8 @@ public class OutputTab {
     }
 
     public void drawOutputTab(boolean useMonty) {
-        Project pro = LocalObjStorage.getProjectList().stream().filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
+        Project pro = LocalObjStorage.getProjectList().stream().
+                filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
         assert pro != null;
         ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output: " +
                 pro.getName() + ":" + JavaFXMain.selectedProjectId);
@@ -56,7 +57,8 @@ public class OutputTab {
     }
 
     public void populateChart() {
-        Project pro = LocalObjStorage.getProjectList().stream().filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
+        Project pro = LocalObjStorage.getProjectList().stream()
+                .filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
         assert pro != null;
         barChart.getData().clear();
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
