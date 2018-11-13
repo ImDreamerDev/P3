@@ -141,59 +141,39 @@ public class MonteCarlo {
     }
 
     /**
-     * If you want to estimate time without having a project
-     *
-     * @param path      The path which will be estimated
-     * @param numOfEmps The amount of employees on the project
-     * @param tasks     The tasks that will be estimated
-     * @param project   The actual project the tasks are on
-     * @param index     Index of the loop this is called inside, if there is no loop, send 0
-     * @return The estimated time
-     */
-    public static double estimateTime(String path, double numOfEmps, List<Task> tasks, Project project, int index) {
-        return estimateTime(project, index);
-    }
-
-    /**
      * If you have a project you want to estimate the time in
      *
      * @param project The project you want estimated
      * @return The estimated time
      */
     public static double estimateTime(Project project) {
-        return estimateTime(project, 0);
-    }
-
-    public static double estimateTime(Project project, boolean random, int index) {
-        return estimateTime(project, true, 10000, random, index);
+        return estimateTime(project, 10000, false, 0);
     }
 
     /**
-     * If you have a project in a loop you want estimated
-     *
-     * @param project The project you want estimated
-     * @param index   The index of the loop
+     * If you have a project you want to estimate the time in with random sequences
+     * @param project The project you want etimated
+     * @param random Want to specify that it's random sequences
+     * @param index The index we're at in the random sequences
      * @return The estimated time
      */
-    public static double estimateTime(Project project, int index) {
-        //Calls the function with the default value 10000
-        return estimateTime(project, false, 10000, false, index);
+    public static double estimateTime(Project project, boolean random, int index) {
+        return estimateTime(project, 10000, random, index);
     }
 
     /**
      * The main estimateTime function used to estimate the time of a project
      *
      * @param project           The project you want estimated
-     * @param rec               If it should estimate the recommended path or the normal path
      * @param monteCarloRepeats The amount of times you want it repeated
      * @param index             The index of the possible loop this is called in (If no loop, send 0)
      * @return Returns the estimated time of the project
      */
-    public static double estimateTime(Project project, boolean rec, int monteCarloRepeats, boolean random, int index) {
+    public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index) {
         //Adds a list to the index of the possibleCompletions list on the project
         project.getPossibleCompletions().add(index, new ArrayList<>());
         //Gets the task list from the project
-        List<Task> taskList = ParseSequence.parseToSingleList(project, rec, random, index);
+        List<Task> taskList = ParseSequence.parseToSingleList(project, false, random, index);
         //For each task in taskList
         for (Task task : taskList) {
             //If the task does not have a lambda yet
