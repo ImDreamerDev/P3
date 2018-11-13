@@ -213,7 +213,7 @@
                             <children>
                         <HBox prefHeight="667.0" prefWidth="1330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <VBox id="outputPane" alignment="TOP_CENTER" prefWidth="130.0">
+                              <VBox id="outputPane" alignment="TOP_CENTER" prefHeight="667.0" prefWidth="326.0">
                                  <children>
                                             <Label text="Recommend path">
                                                 <font>
@@ -266,7 +266,7 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <StackPane alignment="TOP_LEFT" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <StackPane alignment="TOP_LEFT" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <VBox id="loginPane" alignment="CENTER" prefHeight="783.0" prefWidth="1396.0">
                     <children>

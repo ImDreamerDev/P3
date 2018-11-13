@@ -15,8 +15,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
@@ -37,11 +35,18 @@ public class OutputTab {
     public OutputTab(Parent rootPane) {
         this.rootPane = rootPane;
         barChart = ((BarChart<String, Number>) rootPane.lookup("#tasksDiagram"));
-
-
+        AnchorPane pane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
+        pane.getChildren().clear();
+        ((ListView<Task>) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1)).getItems().clear();
+        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output");
+        barChart.getData().clear();
     }
 
     public void drawOutputTab(boolean useMonty) {
+        if (JavaFXMain.selectedProjectId == 0) {
+
+            return;
+        }
         Project pro = LocalObjStorage.getProjectList().stream().
                 filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
         assert pro != null;

@@ -90,10 +90,14 @@ public class JavaFXMain extends Application {
             rootPane.getChildrenUnmodifiable().get(2).setVisible(true);
             usernameField.clear();
             passwordField.clear();
+            TabPane tabPane = (TabPane) rootPane.getChildrenUnmodifiable().get(1);
+            tabPane.getSelectionModel().select(0);
             outputTab = null;
             inputTab = null;
             projectTab = null;
             selectedProjectId = 0;
+            tabPane.getTabs().get(1).setDisable(true);
+            tabPane.getTabs().get(2).setDisable(true);
         });
 
         loginButton.setOnMouseClicked(event -> logIn());
