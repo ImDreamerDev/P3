@@ -166,7 +166,7 @@
                                                 </HBox>
                                             </children>
                                             <FlowPane.margin>
-                                                <Insets left="5.0" />
+                                                <Insets left="5.0" right="5.0" />
                                             </FlowPane.margin>
                                         </VBox>
                                         <TableView prefHeight="646.0" prefWidth="887.0">
