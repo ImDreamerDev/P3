@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -189,7 +190,7 @@ class TaskTest {
         Task dependency01 = new Task("Dependency01", 1, 1, newProject);
         Task dependency02 = new Task("Dependency02", 1, 1, newProject);
 
-        newTask.addDependency(dependency01, dependency02);
+        newTask.addDependency(Arrays.asList(dependency01, dependency02));
 
         List<Task> testList = new ArrayList<>();
         testList.add(dependency01);
@@ -332,7 +333,7 @@ class TaskTest {
         Task dependency02 = new Task("Dependency02", 1, 1, newProject);
         Task dependency03 = new Task("Dependency03", 1, 1, newProject);
 
-        newTask.addDependency(dependency01, dependency02, dependency03);
+        newTask.addDependency(Arrays.asList(dependency01, dependency02, dependency03));
 
         List<Task> testList = new ArrayList<>();
         testList.add(dependency01);

@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,10 +32,8 @@ class SequenceTest {
         Task task2 = new Task("Test2", 2.0, 5, project);
         Task task3 = new Task("Test3", 5.0, 5, project);
         Task task4 = new Task("Test4", 2.0, 5, project);
-        task2.addDependency(task1);
-        task2.addDependency(task3);
-        task4.addDependency(task2);
-
+        task2.addDependency(Arrays.asList(task1, task3));
+        task4.addDependency(Collections.singletonList(task2));
         tasks.add(task1);
         tasks.add(task2);
         tasks.add(task3);
@@ -92,7 +92,7 @@ class SequenceTest {
         Task task3 = new Task("Test3", 5.0, 3, project);
         Task task4 = new Task("Test4", 2.0, 4, project);
 
-        task3.addDependency(task1);
+        task3.addDependency(Collections.singletonList(task1));
 
         tasks.add(task1);
         tasks.add(task2);
@@ -122,7 +122,7 @@ class SequenceTest {
         Task task3 = new Task("Test3", 5.0, 3, project);
         Task task4 = new Task("Test4", 2.0, 4, project);
 
-        task3.addDependency(task1);
+        task3.addDependency(Collections.singletonList(task1));
 
         Sequence.sequenceTasks(project, true, false);
         String assertedSequencedTasks = String.valueOf(task4.getId()) + "," +
@@ -151,7 +151,7 @@ class SequenceTest {
         Employee employee2 = new Employee("Tester2");
         project.addNewEmployee(employee1, employee2);
 
-        task3.addDependency(task1);
+        task3.addDependency(Collections.singletonList(task1));
 
         Sequence.sequenceTasks(project, true, false);
         String assertedSequencedTasks = String.valueOf(task4.getId()) + "," +

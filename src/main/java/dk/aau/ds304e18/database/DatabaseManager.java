@@ -513,7 +513,7 @@ public class DatabaseManager {
         try {
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE tasks SET employees = ?" +
                     ", dependencies = ?, projectid = ?, estimatedtime = ?, priority = ?, startdate = ?, enddate = ?," +
-                    " probabilities =" + task.parseProbabilitiesForDatabase() + "   WHERE id = ?");
+                    " probabilities =" + DatabaseParser.parseProbabilities(task) + "   WHERE id = ?");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER",
                     task.getEmployees().stream().map(Employee::getId).toArray()
             ));

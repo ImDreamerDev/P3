@@ -247,12 +247,8 @@ public class Task {
     /**
      * Assign Dependencies to the Task
      *
-     * @param task - The tasks to add to dependencies
+     * @param tasks - The tasks to add to dependencies
      */
-    public void addDependency(Task... task) {
-        addDependency(Arrays.asList(task));
-    }
-
     public void addDependency(List<Task> tasks) {
         for (Task tsk : tasks) {
             if (tsk != this && !dependencies.contains(tsk))
@@ -318,28 +314,6 @@ public class Task {
      */
     public List<Probabilities> getProbabilities() {
         return probabilities;
-    }
-
-
-    /**
-     * This method parses the information from the database which turns the probabilities into a string format.
-     *
-     * @return Probability string - the probabilites turned into string format.
-     */
-    public String parseProbabilitiesForDatabase() {
-        //Turns the Probabilities into a string in the following format
-        //     * '{"(1.1,2.2)","(534.1,3123.2)"}'
-        //     * '{"(duration,probability)"}'
-        StringBuilder probsSQL = new StringBuilder("'{");
-        getProbabilities().forEach(probabilities -> {
-            probsSQL.append("\"(").append(probabilities.getDuration()).append(",").
-                    append(probabilities.getProbability()).append(")\"");
-            if (getProbabilities().indexOf(probabilities) != getProbabilities().size() - 1) {
-                probsSQL.append(",");
-            }
-        });
-        probsSQL.append("}'");
-        return probsSQL.toString();
     }
 
     /**
