@@ -3,7 +3,6 @@ package dk.aau.ds304e18.sequence;
 import dk.aau.ds304e18.math.Calc;
 import dk.aau.ds304e18.math.CalculateLambda;
 import dk.aau.ds304e18.models.Project;
-import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 
 import java.util.ArrayList;
@@ -110,18 +109,13 @@ public class MonteCarlo {
         int tempI = time.indexOf(Collections.min(time));
 
         //If it's not 0 (i.e. the first one) get the minimum to the first one
-        if(!(tempI == 0)) {
+        if (!(tempI == 0)) {
             //Clear the first one so we can fill it with the correct numbers
             project.getPossibleCompletions().get(0).clear();
-
-            //TODO: Why loop here? (Dodo)
-            //Go through all the numbers in the minimum list
-            for (int k = 0; k < project.getPossibleCompletions().get(tempI).size(); k++) {
-
-                //Add all of the minimum list to the first list
-                project.getPossibleCompletions().get(0).addAll(project.getPossibleCompletions().get(tempI));
-
-            }
+            
+            //Add all of the minimum list to the first list
+            project.getPossibleCompletions().get(0).addAll(project.getPossibleCompletions().get(tempI));
+            
         }
         //Set the variables to correct stuff
         bestTime = Collections.min(time);

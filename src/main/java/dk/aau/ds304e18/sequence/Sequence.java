@@ -126,7 +126,6 @@ public class Sequence {
                     tasksNotSequenced.remove(task);
                 tasksToBeRemoved.clear();
             }
-            //TODO: Why this? (Dodo)
             return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, tasksNotSequenced.size()).toString();
         }
 
