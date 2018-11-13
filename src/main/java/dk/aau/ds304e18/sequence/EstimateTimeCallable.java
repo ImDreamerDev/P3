@@ -12,6 +12,7 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
     private int numOfThreads;
     private int numOfMonte;
     private Random random = new Random();
+    private InverseGaussian invG = new InverseGaussian();
 
     public EstimateTimeCallable(List<Task> taskList, double amountEmployees, int numOfThreads, int numOfMonte) {
         this.taskList = taskList;
@@ -63,7 +64,7 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
                                 double rand = random.nextDouble() * 100;
 
                                 //Create an inverse gaussian distribution for the task
-                                InverseGaussian invG = new InverseGaussian(task.getEstimatedTime(), task.getLambda());
+                                invG.setParams(task.getEstimatedTime(), task.getLambda());
 
                                 //Calculate the duration at the given random value and add that to duration
                                 durations.set(j, durations.get(j) + invG.getDuration(rand));
@@ -73,7 +74,6 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
 
                                 if (!(durations.indexOf(Collections.min(durations)) == j))
                                     break;
-
                             }
                         }
 
@@ -100,7 +100,7 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
                     double rand = random.nextDouble() * 100;
 
                     //Create an inverse gaussian distribution for the task
-                    InverseGaussian invG = new InverseGaussian(task.getEstimatedTime(), task.getLambda());
+                    invG.setParams(task.getEstimatedTime(), task.getLambda());
 
                     //Calculate the duration at the given random value and add that to duration
                     duration += invG.getDuration(rand);
