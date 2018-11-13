@@ -41,13 +41,12 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
 
                 while (taskList.size() != tasksDone.size()) {
                     for (int j = 0; j < amountEmployees; j++) {
-                        if (!(0 + durations.get(j) == 0 + Collections.min(durations))) continue;
+                        if (0 + durations.get(j) != 0 + Collections.min(durations)) continue;
                         boolean temp = false;
                         for (Task task : taskList) {
                             if (tasksDone.contains(task)) continue;
 
                             if (tasksDone.containsAll(task.getDependencies())) {
-
                                 boolean skip = false;
 
                                 for (Task dependency : task.getDependencies()) {
