@@ -67,7 +67,7 @@ public class InputTab {
     private void disableInput() {
         FlowPane flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
-        VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
+        VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0));
         vBoxSplitter.getChildren().get(0).setDisable(true);
         vBoxSplitter.getChildren().get(1).setDisable(true);
         vBoxSplitter.getChildren().get(2).setDisable(true);
