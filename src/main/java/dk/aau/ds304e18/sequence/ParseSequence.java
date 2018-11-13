@@ -8,23 +8,27 @@ import java.util.List;
 
 public class ParseSequence {
 
+    public static List<Task> parseToSingleList(Project project, boolean rec) {
+        return parseToSingleList(project, rec, false, 0);
+    }
+
     /**
      * Parses a sequence to a single list
      *
      * @param project Takes project as parameter so we can get all the tasks in it and the sequence
      * @return returns an ordered list from the sequence
      */
-    public static List<Task> parseToSingleList(Project project, boolean rec) {
+    public static List<Task> parseToSingleList(Project project, boolean rec, boolean random, int index) {
 
         //List to return
         List<Task> parsedList = new ArrayList<>();
 
         //Splits the sequence so we just need to find the corresponding taskIds in order
         String taskList;
-        if (rec)
-            taskList = project.getRecommendedPath();
-        else
-            taskList = project.getSequence();
+        if (!random)
+            if (rec) taskList = project.getRecommendedPath();
+            else taskList = project.getSequence();
+        else taskList = project.getPossibleSequences()[index];
         taskList = taskList.replaceAll("[/(/)|]", ",");
         String[] taskListSplit = taskList.split(",");
 

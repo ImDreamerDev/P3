@@ -55,6 +55,11 @@ public class Project {
     private String recommendedPath;
 
     /**
+     * Possible sequences
+     */
+    private String[] possibleSequences;
+
+    /**
      * The different chances of completion
      */
     private List<List<Double>> possibleCompletions = new ArrayList<>();
@@ -259,5 +264,13 @@ public class Project {
 
     public void setPossibleCompletions(List<List<Double>> values) {
         possibleCompletions = values;
+    }
+
+    public String[] getPossibleSequences() {
+        return possibleSequences;
+    }
+
+    public void setPossibleSequences(String[] possibleSequences) {
+        this.possibleSequences = possibleSequences;
     }
 }

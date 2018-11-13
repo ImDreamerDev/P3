@@ -43,8 +43,10 @@ public class MonteCarlo {
         double bestTime;
         double worstTime; //May be used in the future
 
+        project.setPossibleSequences(new String[monteCarloRepeats]);
+
         //Initialize an array of strings, we use array because array is faster than list
-        String[] randomSequences = new String[monteCarloRepeats];
+        String[] randomSequences = project.getPossibleSequences();
 
         //Initialize a list of doubles which we will use as temporary placeholder
         List<Double> time = new ArrayList<>();
@@ -88,6 +90,9 @@ public class MonteCarlo {
             counter = 0;
             j++;
 
+            if(j == monteCarloRepeats)
+                System.out.println(j);
+
         }
 
         //Go through all the sequences made
@@ -98,9 +103,9 @@ public class MonteCarlo {
                 break;
 
             //Use the random sequence at index i and work on it
-            String tempSeq = randomSequences[i];
+            //String tempSeq = randomSequences[i];
             //Add whatever is returned to the time list
-            time.add(estimateTime(tempSeq, project.getNumberOfEmployees(), project.getTasks(), project, i));
+            time.add(estimateTime(project,true, i));
 
             i++;
         }
@@ -159,6 +164,10 @@ public class MonteCarlo {
         return estimateTime(project, 0);
     }
 
+    public static double estimateTime(Project project, boolean random, int index) {
+        return estimateTime(project, true, 10000, random, index);
+    }
+
     /**
      * If you have a project in a loop you want estimated
      *
@@ -168,7 +177,7 @@ public class MonteCarlo {
      */
     public static double estimateTime(Project project, int index) {
         //Calls the function with the default value 10000
-        return estimateTime(project, false, 10000, index);
+        return estimateTime(project, false, 10000, false, index);
     }
 
     /**
@@ -180,11 +189,11 @@ public class MonteCarlo {
      * @param index             The index of the possible loop this is called in (If no loop, send 0)
      * @return Returns the estimated time of the project
      */
-    public static double estimateTime(Project project, boolean rec, int monteCarloRepeats, int index) {
+    public static double estimateTime(Project project, boolean rec, int monteCarloRepeats, boolean random, int index) {
         //Adds a list to the index of the possibleCompletions list on the project
         project.getPossibleCompletions().add(index, new ArrayList<>());
         //Gets the task list from the project
-        List<Task> taskList = ParseSequence.parseToSingleList(project, rec);
+        List<Task> taskList = ParseSequence.parseToSingleList(project, rec, random, index);
         //For each task in taskList
         for (Task task : taskList) {
             //If the task does not have a lambda yet
