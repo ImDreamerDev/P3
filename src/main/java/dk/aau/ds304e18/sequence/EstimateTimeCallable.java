@@ -113,8 +113,7 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
             } catch (IndexOutOfBoundsException e) {
                 while (chances.size() < (int) Math.round((duration / (i + 1))))
                     chances.add(0d);
-                chances.add((int) Math.round((duration / (i + 1)))
-                        /* This makes index -1 for some reason, I'll fix one day */, 1d);
+                chances.add((int) Math.round((duration / (i + 1))), 1d);
             }
 
         }
