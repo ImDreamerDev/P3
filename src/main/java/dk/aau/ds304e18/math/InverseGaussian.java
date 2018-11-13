@@ -157,12 +157,12 @@ public class InverseGaussian {
      * @return x - Duration of task.
      */
     public double getDuration(double y) {
-        double x = 10;
+        double x = 20;
         double startX = -1;
         double endX = -1;
 
         //While we're not within a margin from the probability
-        while(getProbability(x) < (y-0.1) || getProbability(x) > (y+0.1)) {
+        while(getProbability(x) < (y-1) || getProbability(x) > (y+1)) {
 
             //Check if we're lower
             if(getProbability(x) < y) {
