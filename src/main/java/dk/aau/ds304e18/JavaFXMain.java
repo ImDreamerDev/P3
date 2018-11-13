@@ -102,7 +102,7 @@ public class JavaFXMain extends Application {
 
         stage.setScene(scene);
         stage.show();
-
+        usernameField.requestFocus();
     }
 
 
