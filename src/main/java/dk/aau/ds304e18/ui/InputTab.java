@@ -30,7 +30,6 @@ public class InputTab {
     private final Parent rootPane;
     private final OutputTab outputTab;
     private TableView<Task> tableView;
-    public static HBox progressBarContainer;
     private TabPane tabPane;
 
     /**
@@ -81,7 +80,7 @@ public class InputTab {
     private void enableInput() {
         FlowPane flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
-        VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
+        VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0));
         vBoxSplitter.getChildren().get(0).setDisable(false);
         vBoxSplitter.getChildren().get(1).setDisable(false);
         vBoxSplitter.getChildren().get(2).setDisable(false);
@@ -95,7 +94,7 @@ public class InputTab {
         FlowPane flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
 
         //Table view
-        tableView = ((TableView<Task>) flowPane.getChildren().get(2));
+        tableView = ((TableView<Task>) flowPane.getChildren().get(1));
         setUpTaskTable();
 
 
@@ -111,7 +110,6 @@ public class InputTab {
         ListView<Task> listViewDependency = ((ListView<Task>) inputVBox.getChildren().get(11));
         HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
 
-        progressBarContainer = ((HBox) flowPane.getChildren().get(3));
 
         priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true));
         estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) -> 
@@ -138,7 +136,7 @@ public class InputTab {
 
 
         //Middle column
-        VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
+        VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(4));
         vBoxSplitter.getChildren().get(1).setOnMouseClicked(event -> {
             clearInputFields(listViewDependency, probs1, probs2, probs3,
