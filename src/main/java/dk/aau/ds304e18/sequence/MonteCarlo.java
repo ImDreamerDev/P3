@@ -109,7 +109,7 @@ public class MonteCarlo {
         //Set temporary index to the index of the minimum
         int tempI = time.indexOf(Collections.min(time));
 
-        //If it's not 0 (i.e. the first one)
+        //If it's not 0 (i.e. the first one) get the minimum to the first one
         if(!(tempI == 0)) {
             //Clear the first one so we can fill it with the correct numbers
             project.getPossibleCompletions().get(0).clear();
