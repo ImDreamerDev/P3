@@ -20,6 +20,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -124,6 +125,7 @@ public class OutputTab {
                 ret.setStroke(Color.BLACK);
                 ret.setFill(Color.web("#ff9c00"));
                 Tooltip tooltip = new Tooltip(task.getName());
+                tooltip.setShowDelay(Duration.millis(100));
                 Tooltip.install(ret, tooltip);
 
                 taskBox.getChildren().addAll(ret);
