@@ -36,12 +36,14 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
                 HashMap<Task, Double> taskDoneAt = new HashMap<>();
 
                 for (int j = 0; j < amountEmployees; j++) {
+                    if (j >= taskList.size()) break;
                     durations.add(0d);
                 }
 
                 while (taskList.size() != tasksDone.size()) {
-                    for (int j = 0; j < amountEmployees; j++) {
-                        if (0 + durations.get(j) != 0 + Collections.min(durations)) continue;
+                    for (int j = 0; j < amountEmployees && j < taskList.size(); j++) {
+                        if (taskList.size() == tasksDone.size()) break;
+                        if (0 + durations.get(j) != 0 + Collections.min(durations) && durations.get(j) != 0) continue;
                         boolean temp = false;
                         for (Task task : taskList) {
                             if (tasksDone.contains(task)) continue;
@@ -77,23 +79,21 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
                         }
 
                         if (!temp) {
-                            List<Double> temp2 = new ArrayList<>();
-                            List<Integer> temp3 = new ArrayList<>();
-                            double minUpper;
+                            int index = 0;
 
-                            double tempDuration = Collections.min(durations);
+                            Collections.sort(durations);
 
-                            for (Double tempDur : durations) {
-                                if (tempDur > tempDuration)
-                                    temp2.add(tempDur);
-                                else
-                                    temp3.add(durations.indexOf(tempDur));
+                            for(Double tempDur : durations) {
+                                if (tempDur > durations.get(0)) {
+                                    index = durations.indexOf(tempDur);
+                                    break;
+                                }
                             }
 
-                            minUpper = Collections.min(temp2);
+                            double minUpper = durations.get(index);
 
-                            for (Integer tempIndex : temp3)
-                                durations.set(tempIndex, minUpper);
+                            for(int k = 0; k < index; k++)
+                                durations.set(k, minUpper);
                         }
                     }
                 }
