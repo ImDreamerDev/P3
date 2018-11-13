@@ -27,7 +27,6 @@ public class MonteCarlo {
     }
 
     public static void findFastestSequence(Project project, int monteCarloRepeats, boolean fast) {
-
         //Resets the possible completions every time so it's accurate
         project.getPossibleCompletions().clear();
 
@@ -58,7 +57,7 @@ public class MonteCarlo {
         while (j < monteCarloRepeats) {
 
             //If this is true skip
-            boolean cont = false;
+            boolean continueLoop = false;
 
             //If the counter hits a million, skip
             if (counter >= 1000000) {
@@ -75,13 +74,13 @@ public class MonteCarlo {
             for (int k = 0; k < j; k++) {
                 //If it's equal to another one
                 if (randomSequences[k].equals(randomSequences[j])) {
-                    cont = true;
+                    continueLoop = true;
                     break;
                 }
             }
 
             //Count up the counter and skip
-            if (cont) {
+            if (continueLoop) {
                 counter++;
                 continue;
             }
@@ -120,7 +119,6 @@ public class MonteCarlo {
 
             //Add all of the minimum list to the first list
             project.getPossibleCompletions().get(0).addAll(project.getPossibleCompletions().get(tempI));
-
         }
         //Set the variables to correct stuff
         bestTime = Collections.min(time);
@@ -212,13 +210,13 @@ public class MonteCarlo {
                 duration = duration + fut.get().get(0).get(0);
                 tempList = fut.get().get(1);
 
+                while (project.getPossibleCompletions().get(index).size() < tempList.size())
+                    project.getPossibleCompletions().get(index).add(0d);
+
                 //Add all the values to the index of the possibleCompletions
                 for (int i = 0; i < tempList.size(); i++) {
-                    while (project.getPossibleCompletions().get(index).size() < tempList.size())
-                        project.getPossibleCompletions().get(index).add(0d);
                     project.getPossibleCompletions().get(index).set(i,
                             project.getPossibleCompletions().get(index).get(i) + tempList.get(i));
-
                 }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();

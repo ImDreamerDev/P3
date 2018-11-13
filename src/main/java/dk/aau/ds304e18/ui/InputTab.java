@@ -83,8 +83,8 @@ public class InputTab {
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         VBox vBoxSplitter = ((VBox) ((Pane) flowPane.getChildren().get(1)).getChildren().get(0));
         vBoxSplitter.getChildren().get(0).setDisable(false);
-        vBoxSplitter.getChildren().get(1).setDisable(true);
-        vBoxSplitter.getChildren().get(2).setDisable(true);
+        vBoxSplitter.getChildren().get(1).setDisable(false);
+        vBoxSplitter.getChildren().get(2).setDisable(false);
         inputVBox.setDisable(false);
     }
 
