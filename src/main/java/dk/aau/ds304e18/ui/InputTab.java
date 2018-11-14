@@ -68,7 +68,7 @@ public class InputTab {
     private void disableInput() {
         FlowPane flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
-        ((Pane) flowPane.getChildren().get(2)).getChildren().get(0).setDisable(true);
+        ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren().get(0).setDisable(true);
         inputVBox.setDisable(true);
     }
 
@@ -78,7 +78,7 @@ public class InputTab {
     private void enableInput() {
         FlowPane flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
-        ((Pane) flowPane.getChildren().get(2)).getChildren().get(0).setDisable(false);
+        ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren().get(0).setDisable(false);
         inputVBox.setDisable(false);
     }
 
