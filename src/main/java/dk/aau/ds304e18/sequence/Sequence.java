@@ -97,7 +97,7 @@ public class Sequence {
     /**
      * Finds a random sequence with a project
      * TODO: Optimize this so we only find relevant sequences when going fast (Or close to every relevant sequence)
-     *
+     * TODO: Still not good enough, there are significantly better sequences found if you do it slow rather than fast
      * @param project The project where we want a random sequence
      * @param fast    If you want to do fast calculation or slow
      * @return Returns a string with the sequence
@@ -111,21 +111,29 @@ public class Sequence {
         int amountEmployees = (int) project.getNumberOfEmployees();
         List<Task> tasksWithoutDeps = new ArrayList<>();
         Collections.shuffle(tasksNotSequenced);
-        sortTasks(tasksNotSequenced); //Might not make sense to put prioritised first - It can make the project longer than it should
 
         //If we're not going fast, just plug all of the tasks in, in a legal way and return that
         if (!fast) {
             while (tasksLeft > 0) {
-                for (Task task : tasksNotSequenced) {
-                    if (!tasksSequenced.containsAll(task.getDependencies())) continue;
-                    tasksSequenced.add(task);
-                    tasksToBeRemoved.add(task);
+                for (int i = 0; i < tasksLeft; i++) {
+                    if (!tasksSequenced.containsAll(tasksNotSequenced.get(i).getDependencies())) continue;
+                    tasksSequenced.add(tasksNotSequenced.get(i));
+                    tasksNotSequenced.remove(tasksNotSequenced.get(i));
                     tasksLeft--;
                 }
+            }
+            return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, tasksNotSequenced.size()).toString();
+        }
 
-                for (Task task : tasksToBeRemoved)
-                    tasksNotSequenced.remove(task);
-                tasksToBeRemoved.clear();
+        //sortTasks(tasksNotSequenced); //Might not make sense to put prioritised first - It can make the project longer than it should
+
+        if(project.getNumberOfEmployees() < 2) {
+            for(int i = 0; i < tasksLeft; i++) {
+                if (!tasksSequenced.containsAll(tasksNotSequenced.get(i).getDependencies())) continue;
+                tasksSequenced.add(tasksNotSequenced.get(i));
+                tasksNotSequenced.remove(tasksNotSequenced.get(i));
+                i = -1;
+                tasksLeft--;
             }
             return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, tasksNotSequenced.size()).toString();
         }
