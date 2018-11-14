@@ -58,6 +58,11 @@ public class ParseSequence {
         return parsedList;
     }
 
+    /**
+     * Parses a projects sequence to multiple lists
+     * @param project The project so we can get the sequence
+     * @return a list of lists of tasks that contains the tasks in the correct order, parallels seperated by each list
+     */
     public static List<List<Task>> parseToMultipleLists(Project project) {
 
         String taskList = project.getSequence();
@@ -87,7 +92,13 @@ public class ParseSequence {
         return returnList;
     }
 
-    //Why stringbuilder param (Dodo)
+    /**
+     * Parses a list of tasks to a string
+     * @param putInto The stringbuilder to put the list into - Only necessary if unparsing with parallels (Otherwise just new StringBuilder())
+     * @param takeFrom The list of tasks to unparse
+     * @param tasksSize The size of the other tasks not unparsed in first try - Only necessary if unparsing with parallels (Otherwise just 0)
+     * @return StringBuilder with the unparsed list
+     */
     public static StringBuilder unparseList(StringBuilder putInto, List<Task> takeFrom, int tasksSize) {
         StringBuilder putIntoStringBuilder = new StringBuilder(putInto);
         List<Task> takeFromList = new ArrayList<>(takeFrom);
@@ -108,6 +119,11 @@ public class ParseSequence {
         return putIntoStringBuilder;
     }
 
+    /**
+     * Appends dependencies to the tasks
+     * @param task the task to add dependencies to
+     * @return the string with dependencies - i.e. (id, id, id)
+     */
     private static String appendDependencies(Task task) {
         if (task.getDependencies().size() == 0) return "";
 
