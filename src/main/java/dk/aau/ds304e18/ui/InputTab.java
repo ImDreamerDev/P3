@@ -140,7 +140,7 @@ public class InputTab {
         VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(1));
 
-        ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0).setOnMouseClicked(event -> {
+        ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0).setOnMouseClicked(event -> {
             List<Probabilities> probabilities = new ArrayList<>();
             if (!probs1.getText().equals(""))
                 probabilities.add(new Probabilities(Double.parseDouble(probs1.getText()), Double.parseDouble(probs2.getText())));
@@ -163,7 +163,7 @@ public class InputTab {
                 LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
                 ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
                 Double.parseDouble(numOfEmployees.getText()), ((CheckBox) vBoxSplitter.getChildren().get(3)).isSelected()));
-        ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1).setOnMouseClicked(event -> removeTask());
+        ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1).setOnMouseClicked(event -> removeTask());
 
         tableView.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
