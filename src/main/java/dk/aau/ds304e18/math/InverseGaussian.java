@@ -176,8 +176,10 @@ public class InverseGaussian {
         //While we're not within a margin from the probability
         while(getProbability(x) < (y-1) || getProbability(x) > (y+1)) {
 
+            double tempProb = getProbability(x);
+
             //Check if we're lower
-            if (getProbability(x) < y) {
+            if (tempProb < y) {
                 //Set startX so we know where to look
                 startX = x;
 
