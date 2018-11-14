@@ -33,8 +33,8 @@ public class DatabaseManager {
      * @return The result from the DB.
      */
     public static ResultSet query(String query) {
-        if (dbConnection == null) connect();
         try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
             Statement st = dbConnection.createStatement();
             return st.executeQuery(query);
         } catch (PSQLException e) {
@@ -85,8 +85,8 @@ public class DatabaseManager {
      * @param emp Employee to add.
      */
     public static void addEmployees(Employee emp) {
-        if (dbConnection == null) connect();
         try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employees (name," +
                     " previoustasks, projectid) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, emp.getName());
@@ -115,8 +115,8 @@ public class DatabaseManager {
      * @param password clear text of password to add.
      */
     public static void addProjectManager(ProjectManager pm, String password) {
-        if (dbConnection == null) connect();
         try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement checkName = dbConnection.prepareStatement("SELECT id FROM projectmanagers WHERE username = ?");
             checkName.setString(1, pm.getName());
             ResultSet checkNameRs = checkName.executeQuery();
@@ -180,8 +180,8 @@ public class DatabaseManager {
      * @param project the project to add.
      */
     public static void addProject(Project project) {
-        if (dbConnection == null) connect();
         try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO projects " +
                     "(name, state) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, project.getName());
@@ -204,8 +204,8 @@ public class DatabaseManager {
      * @return Whether the operation was successful or not
      */
     public static boolean addTask(Task task) {
-        if (dbConnection == null) connect();
         try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO tasks (name, estimatedtime," +
                     " employees, dependencies, priority, projectid)" +
                     " values (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
@@ -248,9 +248,9 @@ public class DatabaseManager {
      * @return ProjectManagers - an arraylist of the project managers.
      */
     public static List<ProjectManager> getAllProjectManagers() {
-        if (dbConnection == null)
-            connect();
         try {
+            if (dbConnection == null || dbConnection.isClosed())
+                connect();
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers");
             ResultSet rs = statement.executeQuery();
             List<ProjectManager> projectManagers = DatabaseParser.parseProjectManagersFromResultSet(rs);
@@ -321,9 +321,9 @@ public class DatabaseManager {
     }
 
     private static List<Project> getPMProjects(ProjectManager projectManager) {
-        if (dbConnection == null) connect();
 
         try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projects WHERE id = ANY(?)");
             List<Integer> queryList = new ArrayList<>();
             if (projectManager.getCurrentProjectId() != 0) {
@@ -358,8 +358,8 @@ public class DatabaseManager {
         //We want employees from the current project
         employeeIdsToQuery.add(projectManager.getCurrentProjectId());
 
-        if (dbConnection == null) connect();
         try {
+            if (dbConnection == null || dbConnection.isClosed() || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM employees WHERE projectid = ANY (?)");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER", employeeIdsToQuery.toArray()));
             ResultSet rs = statement.executeQuery();
@@ -375,8 +375,8 @@ public class DatabaseManager {
         queryArray.add(projectManager.getCurrentProjectId());
         queryArray.addAll(projectManager.getOldProjectsId());
 
-        if (dbConnection == null) connect();
         try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM tasks " +
                     "WHERE projectid = ANY (?)");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER", queryArray.toArray()));
@@ -488,6 +488,7 @@ public class DatabaseManager {
 
     public static void updateEmployee(Employee employee) {
         try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET " +
                     " previoustasks = ?, projectid = ? WHERE id = ?");
 
@@ -509,6 +510,7 @@ public class DatabaseManager {
 
     public static void updateTask(Task task) {
         try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE tasks SET employees = ?" +
                     ", dependencies = ?, projectid = ?, estimatedtime = ?, priority = ?," +
                     " probabilities =" + DatabaseParser.parseProbabilities(task) + "   WHERE id = ?");
@@ -530,8 +532,8 @@ public class DatabaseManager {
     }
 
     public static void updateProject(Project project) {
-        if (dbConnection == null) connect();
         try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?, sequence = ?" +
                     ", duration = ?, recommendedpath = ?, numberofemployees = ? WHERE id = ?");
             statement.setInt(1, project.getState().getValue());
@@ -548,8 +550,8 @@ public class DatabaseManager {
     }
 
     public static void updateProjectManager(ProjectManager manager) {
-        if (dbConnection == null) connect();
         try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE projectmanagers SET currentproject " +
                     "= ?, oldprojects = ? WHERE id = ? ");
             if (manager.getCurrentProject() != null)
@@ -574,9 +576,9 @@ public class DatabaseManager {
      * @return the ProjectManager found, else null.
      */
     public static ProjectManager logIn(String username, String clearTextPassword) {
-        if (dbConnection == null) connect();
 
         try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE LOWER(username) = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
