@@ -95,7 +95,7 @@ public class MonteCarlo {
 
             }
         } else {
-            randomSequences[0] = ParseSequence.unparseList(new StringBuilder(), Sequence.sortTasks(ParseSequence.parseToSingleList(project, false)), 0).toString();
+            randomSequences[0] = Sequence.findRandomSequence(project, fast);
         }
 
         //Go through all the sequences made
