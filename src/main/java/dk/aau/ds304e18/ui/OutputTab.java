@@ -171,8 +171,9 @@ public class OutputTab {
         for (Task task : taskToAP.keySet()) {
             List<Task> dependencies = task.getDependencies();
             if (dependencies != null && dependencies.size() != 0) {
+                AtomicInteger depNum = new AtomicInteger(0);
                 dependencies.forEach(depTask -> {
-                    int depNum = numberOfTasksDependingOnTask.get(depTask).get() - numberOfTimesLineHasBeenDrawnForTask.get(depTask).incrementAndGet();
+                    int numDependantOfTHisTask = numberOfTasksDependingOnTask.get(depTask).get() - numberOfTimesLineHasBeenDrawnForTask.get(depTask).incrementAndGet();
 
                     AnchorPane startAncPane = taskToAP.get(depTask);
                     AnchorPane endAncPane = taskToAP.get(task);
@@ -182,16 +183,22 @@ public class OutputTab {
                     sx = startAncPane.getLayoutX() + ((Rectangle) startAncPane.getChildrenUnmodifiable().get(0)).getWidth();
                     sy = startAncPane.getLayoutY() + ((Rectangle) startAncPane.getChildrenUnmodifiable().get(0)).getHeight() / 2;
 
+                    int pixelsBetweenLines = 3;
+                    int pixelsBetweenVerticalLines = 4;
+
                     //To kinda ensure EVERYTHING isn't drawn on top of each other
-                    if (sy - (depNum * 2) < (sy - ((Rectangle) startAncPane.getChildrenUnmodifiable().get(0)).getHeight() / 2))
-                        sy = startAncPane.getLayoutY() + (depNum * 2);
+                    if (sy - (numDependantOfTHisTask * pixelsBetweenLines) < (sy - ((Rectangle) startAncPane.getChildrenUnmodifiable().get(0)).getHeight() / 2))
+                        sy = startAncPane.getLayoutY() + (numDependantOfTHisTask * pixelsBetweenLines);
                     else
-                        sy -= (depNum * 2);
+                        sy -= (numDependantOfTHisTask * pixelsBetweenLines);
 
                     ex = endAncPane.getLayoutX();
                     ey = endAncPane.getLayoutY() + ((Rectangle) endAncPane.getChildrenUnmodifiable().get(0)).getHeight();
 
-                    if (((Rectangle) endAncPane.getChildrenUnmodifiable().get(0)).getWidth() / 2 > 10) ex += 10;
+                    int pixelsRightOfPaneStartToPoint = 5;
+                    if (((Rectangle) endAncPane.getChildrenUnmodifiable().get(0)).getWidth() / 2 >
+                            pixelsRightOfPaneStartToPoint + (pixelsBetweenVerticalLines * depNum.get()))
+                        ex += pixelsRightOfPaneStartToPoint + (pixelsBetweenVerticalLines * depNum.get());
 
                     if (sy < ey) ey -= ((Rectangle) endAncPane.getChildrenUnmodifiable().get(0)).getHeight();
 
@@ -224,23 +231,24 @@ public class OutputTab {
                     double ox = (sx - ex) * factorO;
                     double oy = (sy - ey) * factorO;
                     double triangleP1X = ex + dx - oy, triangleP1Y = ey + dy + ox;
-                    double triandleP2X = ex + dx + oy, triangleP2Y = ey + dy - ox;*/
+                    double triangleP2X = ex + dx + oy, triangleP2Y = ey + dy - ox;*/
 
-                    double triangleP1X, triangleP1Y, triandleP2X, triangleP2Y;
+                    double triangleP1X, triangleP1Y, triangleP2X, triangleP2Y;
                     if (ey > sy) {
                         triangleP1X = ex - 4;
                         triangleP1Y = ey - 4;
-                        triandleP2X = ex + 4;
+                        triangleP2X = ex + 4;
                         triangleP2Y = ey - 4;
                     } else {
                         triangleP1X = ex - 4;
                         triangleP1Y = ey + 4;
-                        triandleP2X = ex + 4;
+                        triangleP2X = ex + 4;
                         triangleP2Y = ey + 4;
                     }
 
-                    Polygon triangle = new Polygon(ex, ey, triangleP1X, triangleP1Y, triandleP2X, triangleP2Y);
+                    Polygon triangle = new Polygon(ex, ey, triangleP1X, triangleP1Y, triangleP2X, triangleP2Y);
                     shapeList.add(triangle);
+                    depNum.incrementAndGet();
                 });
 
             }
