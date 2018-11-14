@@ -137,7 +137,7 @@ public class InputTab {
 
         //Middle column
         Pane paneSplitter = ((Pane) flowPane.getChildren().get(2));
-        VBox vBoxSplitter = ((VBox) paneSplitter.getChildren().get(1));
+        VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(1));
 
         ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0).setOnMouseClicked(event -> {
