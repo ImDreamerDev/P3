@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 
-@SuppressWarnings("ALL")
+
 public class DatabaseManager {
 
     /**
@@ -56,8 +56,9 @@ public class DatabaseManager {
             url = "jdbc:postgresql://molae.duckdns.org/P3";
         Properties props = new Properties();
         props.setProperty("user", "projectplanner");
-
         props.setProperty("password", loadPassword());
+        props.setProperty("tcpKeepAlive", "true");
+
         try {
             dbConnection = DriverManager.getConnection(url, props);
         } catch (SQLException e) {
@@ -524,10 +525,26 @@ public class DatabaseManager {
             statement.setDouble(4, task.getEstimatedTime());
             statement.setInt(5, task.getPriority());
             statement.setInt(6, task.getId());
-            statement.execute();
 
+            int maxRetry = 5;
+            int i = 0;
+            sendStatementMaxRetryTimes(statement, maxRetry, i);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    //TODO THIS SHOULD BE FIXED AND NOT EXIST. REALLY BAD FIX TO SOCKETTIMEOUT
+    private static void sendStatementMaxRetryTimes(PreparedStatement statement, int maxRetry, int i) throws SQLException {
+        while (i < maxRetry) {
+
+            try {
+                statement.execute();
+                i = maxRetry;
+            } catch (PSQLException e) {
+                i++;
+                connect();
+            }
         }
     }
 
@@ -542,7 +559,10 @@ public class DatabaseManager {
             statement.setString(4, project.getRecommendedPath());
             statement.setDouble(5, project.getNumberOfEmployees());
             statement.setInt(6, project.getId());
-            statement.execute();
+
+            int maxRetry = 5;
+            int i = 0;
+            sendStatementMaxRetryTimes(statement, maxRetry, i);
 
         } catch (SQLException e) {
             e.printStackTrace();
