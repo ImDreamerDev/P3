@@ -85,7 +85,8 @@ public class ParseSequence {
 
                 Task taskToInsert = project.getTasks().stream().filter(task1 -> task1.getId() == taskId).findFirst().
                         orElse(null);
-                listToInsert.add(taskToInsert);
+                if (taskToInsert != null)
+                    listToInsert.add(taskToInsert);
             }
             returnList.add(listToInsert);
         }
