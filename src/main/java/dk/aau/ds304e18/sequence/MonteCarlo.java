@@ -54,44 +54,48 @@ public class MonteCarlo {
         int counter = 0;
 
         //TODO: Really needs some optimizing - Actually maybe not, it's fast apparently
-        while (j < monteCarloRepeats) {
+        if (project.getNumberOfEmployees() > 1) {
+            while (j < monteCarloRepeats) {
 
-            //If this is true skip
-            boolean continueLoop = false;
+                //If this is true skip
+                boolean continueLoop = false;
 
-            //If the counter hits a million, skip
-            if (counter >= 1000000) {
-                System.out.println(j + 1);
-                break;
-            }
-
-            //If there is literally no other possible sequences, skip
-            if (j == Calc.amountMax(project.getTasks().size()))
-                break;
-
-            //Find a random sequence and work on it
-            randomSequences[j] = Sequence.findRandomSequence(project, fast);
-            for (int k = 0; k < j; k++) {
-                //If it's equal to another one
-                if (randomSequences[k].equals(randomSequences[j])) {
-                    continueLoop = true;
+                //If the counter hits a million, skip
+                if (counter >= 1000000) {
+                    System.out.println(j + 1);
                     break;
                 }
+
+                //If there is literally no other possible sequences, skip
+                if (j == Calc.amountMax(project.getTasks().size()))
+                    break;
+
+                //Find a random sequence and work on it
+                randomSequences[j] = Sequence.findRandomSequence(project, fast);
+                for (int k = 0; k < j; k++) {
+                    //If it's equal to another one
+                    if (randomSequences[k].equals(randomSequences[j])) {
+                        continueLoop = true;
+                        break;
+                    }
+                }
+
+                //Count up the counter and skip
+                if (continueLoop) {
+                    counter++;
+                    continue;
+                }
+
+                //Reset counter
+                counter = 0;
+                j++;
+
+                if (j == monteCarloRepeats)
+                    System.out.println(j);
+
             }
-
-            //Count up the counter and skip
-            if (continueLoop) {
-                counter++;
-                continue;
-            }
-
-            //Reset counter
-            counter = 0;
-            j++;
-
-            if (j == monteCarloRepeats)
-                System.out.println(j);
-
+        } else {
+            randomSequences[0] = ParseSequence.unparseList(new StringBuilder(), Sequence.sortTasks(ParseSequence.parseToSingleList(project, false)), 0).toString();
         }
 
         //Go through all the sequences made

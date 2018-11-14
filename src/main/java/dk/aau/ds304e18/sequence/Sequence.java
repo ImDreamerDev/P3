@@ -84,7 +84,7 @@ public class Sequence {
             MonteCarlo.estimateTime(project);
     }
 
-    private static List<Task> sortTasks(List<Task> tasks) {
+    public static List<Task> sortTasks(List<Task> tasks) {
 
         //Sort tasks after their priority in descending order
         tasks.sort(Comparator.comparingInt(Task::getPriority).reversed());
