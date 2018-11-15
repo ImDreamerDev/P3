@@ -9,9 +9,11 @@ import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -71,6 +73,27 @@ public class OutputTab {
                 }
 
             });
+
+            Label zoomFactorLabel = (Label) rootPane.lookup("#zoomLevelLabel");
+            rootPane.lookup("#zoomInButton").setOnMouseClicked(mouseEvent -> {
+                zoomIn(pro, pane, zoomFactorLabel);
+            });
+            rootPane.lookup("#zoomOutButton").setOnMouseClicked(mouseEvent -> {
+                zoomOut(pro, pane, zoomFactorLabel);
+            });
+
+            rootPane.setOnKeyReleased(keyEvent -> {
+                if (keyEvent.isControlDown()) {
+                    if (keyEvent.getText().equals("-")) {
+                        zoomOut(pro, pane, zoomFactorLabel);
+                    } else if (keyEvent.getText().equals("+")) {
+                        zoomIn(pro, pane, zoomFactorLabel);
+                    }
+                    keyEvent.consume();
+
+                }
+            });
+
             drawTasks(pro, pane);
             if (useMonty) {
                 ((ListView<Task>) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
@@ -85,6 +108,24 @@ public class OutputTab {
             pane.getChildren().add(new Text(10, 10, "Time: " + pro.getDuration()));
         }
 
+    }
+
+    private void zoomOut(Project pro, AnchorPane pane, Label zoomFactorLabel) {
+        if (zoomFactor > 0.5) {
+            zoomFactor -= 0.1;
+            zoomFactorLabel.setText("Zoom level: " + (int) (zoomFactor * 100d) + "%");
+            pane.getChildren().clear();
+            drawTasks(pro, pane);
+        }
+    }
+
+    private void zoomIn(Project pro, AnchorPane pane, Label zoomFactorLabel) {
+        if (zoomFactor <= 4d) {
+            zoomFactor += 0.1;
+            zoomFactorLabel.setText("Zoom level: " + (int) (zoomFactor * 100d) + "%");
+            pane.getChildren().clear();
+            drawTasks(pro, pane);
+        }
     }
 
     public void populateChart() {
@@ -168,7 +209,15 @@ public class OutputTab {
             if (thisXMax > maxX) maxX = thisXMax;
         }
         maxX /= zoomFactor;
-        for (int i = 0; i < maxX; i = i + 20) {
+
+        int pixelsBetweenText = 20;
+        if (zoomFactor <= 0.7) pixelsBetweenText = 40;
+        else if (zoomFactor < 1) pixelsBetweenText = 30;
+        else if (zoomFactor > 1.3 && zoomFactor <= 1.6) pixelsBetweenText = 15;
+        else if (zoomFactor > 1.6) pixelsBetweenText = 10;
+
+        for (int i = 0; i < maxX; i = i + pixelsBetweenText) {
+
             Text text = new Text((i * zoomFactor) + xPadding, 25, "" + i);
             text.setRotate(90);
 

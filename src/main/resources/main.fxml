@@ -271,9 +271,9 @@
                                              <children>
                                                 <ToolBar prefHeight="40.0">
                                                   <items>
-                                                    <Button mnemonicParsing="false" text="+" />
-                                                      <Button mnemonicParsing="false" text="-" />
-                                                      <Label text="Zoom level: 100%" />
+                                                    <Button id="zoomInButton" mnemonicParsing="false" text="+" />
+                                                      <Button id="zoomOutButton" mnemonicParsing="false" text="-" />
+                                                      <Label id="zoomLevelLabel" text="Zoom level: 100%" />
                                                   </items>
                                                 </ToolBar>
                                                         <ScrollPane layoutY="39.0" prefHeight="599.0" prefWidth="1077.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.0">
