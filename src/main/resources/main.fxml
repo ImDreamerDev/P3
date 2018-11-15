@@ -299,7 +299,7 @@
                                         <Insets left="50.0" />
                                     </HBox.margin>
                                 </Label>
-                                <TextField text="Rasmus Smit Lindholt">
+                                <TextField text="">
                                     <HBox.margin>
                                         <Insets left="7.0" />
                                     </HBox.margin>
@@ -313,7 +313,7 @@
                                         <Insets left="50.0" />
                                     </HBox.margin>
                                 </Label>
-                                <PasswordField text="hardcore">
+                                <PasswordField text="">
                                     <HBox.margin>
                                         <Insets left="10.0" />
                                     </HBox.margin>
