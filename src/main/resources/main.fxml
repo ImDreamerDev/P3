@@ -20,6 +20,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -116,9 +117,9 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <FlowPane id="inputFlowPane" prefHeight="347.0" prefWidth="599.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <children>
-                                        <VBox alignment="TOP_CENTER" prefHeight="646.0" prefWidth="222.0" spacing="5.0">
+                        <BorderPane id="inputFlowPane" prefHeight="667.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <left>
+                                        <VBox alignment="TOP_CENTER" prefHeight="646.0" prefWidth="222.0" spacing="5.0" BorderPane.alignment="CENTER">
                                             <children>
                                                 <Label text="Name:" />
                                                 <TextField />
@@ -177,11 +178,10 @@
                                           <Insets top="40.0" />
                                        </VBox.margin></Button>
                                             </children>
-                                            <FlowPane.margin>
-                                                <Insets left="5.0" right="5.0" />
-                                            </FlowPane.margin>
                                         </VBox>
-                                        <TableView prefHeight="646.0" prefWidth="921.0">
+                           </left>
+                           <center>
+                                        <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="667.0" prefWidth="921.0" BorderPane.alignment="CENTER">
                                             <columns>
                                                 <TableColumn prefWidth="75.0" text="Id" />
                                                 <TableColumn prefWidth="130.0" text="Name" />
@@ -191,7 +191,9 @@
                                                 <TableColumn prefWidth="123.0" text="Dependencies" />
                                             </columns>
                                         </TableView>
-                                        <Pane prefHeight="646.0" prefWidth="124.0">
+                           </center>
+                           <right>
+                                        <Pane maxWidth="125.0" prefHeight="646.0" prefWidth="124.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <VBox prefHeight="647.0" prefWidth="124.0">
                                        <children>
@@ -224,8 +226,8 @@
                                     </VBox>
                                  </children>
                                         </Pane>
-                                    </children>
-                                </FlowPane>
+                           </right>
+                        </BorderPane>
                             </children></AnchorPane>
                     </content>
                 </Tab>
@@ -235,7 +237,7 @@
                             <children>
                         <HBox prefHeight="667.0" prefWidth="1330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <VBox id="outputPane" alignment="TOP_CENTER" prefHeight="667.0" prefWidth="326.0">
+                              <VBox id="outputPane" alignment="TOP_CENTER" maxWidth="330.0" prefHeight="667.0" prefWidth="326.0">
                                  <children>
                                             <Label text="Recommend path">
                                                 <font>
@@ -285,6 +287,61 @@
                                           </AnchorPane>
                                     </content>
                                   </Tab>
+                                    <Tab text="Employees">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <BorderPane id="employeesBorderPane" prefHeight="638.0" prefWidth="1077.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <right>
+                                                      <VBox alignment="TOP_CENTER" prefHeight="638.0" prefWidth="145.0" spacing="20.0" BorderPane.alignment="CENTER">
+                                                         <children>
+                                                            <Button mnemonicParsing="false" text="Add employee(s)" />
+                                                            <Button mnemonicParsing="false" text="Remove employee(s)" />
+                                                         </children>
+                                                         <BorderPane.margin>
+                                                            <Insets top="24.0" />
+                                                         </BorderPane.margin>
+                                                      </VBox>
+                                                   </right>
+                                                   <left>
+                                                      <VBox prefHeight="638.0" prefWidth="461.0" BorderPane.alignment="CENTER">
+                                                         <children>
+                                                            <Label alignment="TOP_CENTER" prefHeight="17.0" prefWidth="384.0" text="Tasks">
+                                                               <font>
+                                                                  <Font name="System Bold" size="17.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <TableView prefHeight="619.0" prefWidth="382.0">
+                                                              <columns>
+                                                                <TableColumn prefWidth="234.0" text="Name" />
+                                                                <TableColumn prefWidth="226.0" text="Employees" />
+                                                              </columns>
+                                                            </TableView>
+                                                         </children>
+                                                      </VBox>
+                                                   </left>
+                                                   <center>
+                                                      <VBox prefHeight="638.0" prefWidth="472.0" BorderPane.alignment="CENTER">
+                                                         <children>
+                                                            <Label alignment="CENTER" prefHeight="17.0" prefWidth="552.0" text="Employees">
+                                                               <font>
+                                                                  <Font name="System Bold" size="17.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <TableView prefHeight="620.0" prefWidth="550.0">
+                                                              <columns>
+                                                                <TableColumn prefWidth="236.0" text="Name" />
+                                                                <TableColumn minWidth="0.0" prefWidth="234.0" text="Assigned" />
+                                                              </columns>
+                                                            </TableView>
+                                                         </children>
+                                                      </VBox>
+                                                   </center>
+                                                </BorderPane>
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </Tab>
                                 </tabs>
                               </TabPane>
                            </children>

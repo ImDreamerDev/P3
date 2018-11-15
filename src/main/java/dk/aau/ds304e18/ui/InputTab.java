@@ -14,10 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -90,7 +87,7 @@ public class InputTab {
      * Method that disables the interaction with the ui on the inputTab.
      */
     private void disableInput() {
-        FlowPane flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
+        BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren().get(0).setDisable(true);
         inputVBox.setDisable(true);
@@ -100,7 +97,7 @@ public class InputTab {
      *
      */
     private void enableInput() {
-        FlowPane flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
+        BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren().get(0).setDisable(false);
         inputVBox.setDisable(false);
@@ -110,7 +107,7 @@ public class InputTab {
      * The method that sets up the contents of the whole input tab.
      */
     private void setupInputTab() {
-        FlowPane flowPane = ((FlowPane) rootPane.lookup("#inputFlowPane"));
+        BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
 
         //Table view
         tableView = ((TableView<Task>) flowPane.getChildren().get(1));

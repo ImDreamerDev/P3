@@ -2,19 +2,24 @@ package dk.aau.ds304e18.ui;
 
 import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.LocalObjStorage;
+import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -29,12 +34,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 public class OutputTab {
     private final Parent rootPane;
     private BarChart<String, Number> barChart;
     private static final double arrowLength = 8;
     private static final double arrowWidth = 4;
+    TableView<Employee> employeeTableView;
+    TableView<Task> taskTableView;
 
     public double zoomFactor = 1;
 
@@ -46,7 +54,11 @@ public class OutputTab {
         pane.getChildren().clear();
         ((ListView<Task>) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1)).getItems().clear();
         ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output");
+        BorderPane borderPane = (BorderPane) rootPane.lookup("#employeesBorderPane");
+        taskTableView = (TableView<Task>) ((VBox) borderPane.getLeft()).getChildren().get(1);
+        employeeTableView = (TableView<Employee>) ((VBox) borderPane.getCenter()).getChildren().get(1);
         barChart.getData().clear();
+        setupEmployees();
     }
 
     public void drawOutputTab(boolean useMonty) {
@@ -106,6 +118,7 @@ public class OutputTab {
                         .getItems().clear();
 
             pane.getChildren().add(new Text(10, 10, "Time: " + pro.getDuration()));
+            drawEmployees();
         }
 
     }
@@ -126,6 +139,81 @@ public class OutputTab {
             pane.getChildren().clear();
             drawTasks(pro, pane);
         }
+    }
+
+    private void drawEmployees() {
+taskTableView.getItems().clear();
+employeeTableView.getItems().clear();
+        taskTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().
+                stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+        employeeTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getEmployeeList().
+                stream().filter(emp -> emp.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+
+    }
+
+    private void setupEmployees() {
+        taskTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+        taskTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("employees"));
+
+        taskTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().
+                stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+
+
+        employeeTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        employeeTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+
+
+        TableColumn<Employee, String> column = (TableColumn<Employee, String>) employeeTableView.getColumns().get(1);
+        column.setCellValueFactory(cellData ->
+        {
+            if (cellData.getValue().getCurrentTask() != null && cellData.getValue().getCurrentTask().size() != 0)
+                return new SimpleStringProperty("Assigned");
+            return new SimpleStringProperty("Not assigned");
+        });
+        employeeTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getEmployeeList().
+                stream().filter(emp -> emp.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+
+        BorderPane borderPane = (BorderPane) rootPane.lookup("#employeesBorderPane");
+        VBox buttons = ((VBox) borderPane.getRight());
+        buttons.getChildren().get(0).setOnMouseClicked(event -> assignEmployee());
+        buttons.getChildren().get(1).setOnMouseClicked(event -> unassignEmployee());
+
+    }
+
+
+    private void assignEmployee() {
+        if (taskTableView.getSelectionModel().getSelectedItem() == null) {
+            return;
+        }
+        if (employeeTableView.getSelectionModel().getSelectedItems() == null) {
+            return;
+        }
+
+        for (Employee employee : employeeTableView.getSelectionModel().getSelectedItems()) {
+            taskTableView.getSelectionModel().getSelectedItem().addEmployee(employee);
+        }
+
+
+        drawEmployees();
+    }
+
+    private void unassignEmployee() {
+        if (taskTableView.getSelectionModel().getSelectedItem() == null) {
+            return;
+        }
+        if (employeeTableView.getSelectionModel().getSelectedItems() == null) {
+            return;
+        }
+
+        for (Employee employee : employeeTableView.getSelectionModel().getSelectedItems()) {
+            taskTableView.getSelectionModel().getSelectedItem().getEmployees().remove(employee);
+            employee.getCurrentTask().remove(taskTableView.getSelectionModel().getSelectedItem());
+            DatabaseManager.updateEmployee(employee);
+        }
+
+        DatabaseManager.updateTask(taskTableView.getSelectionModel().getSelectedItem());
+
+        drawEmployees();
     }
 
     public void populateChart() {
