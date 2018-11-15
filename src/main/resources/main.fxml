@@ -252,7 +252,7 @@
                               </VBox>
                               <TabPane prefHeight="660.0" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
                                 <tabs>
-                                  <Tab text="Tasks">
+                                  <Tab text="Probability">
                                     <content>
                                       <AnchorPane prefWidth="1200.0">
                                              <children>
@@ -267,7 +267,7 @@
                                              </children></AnchorPane>
                                     </content>
                                   </Tab>
-                                  <Tab text="Boxes">
+                                  <Tab text="Gantt">
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                              <children>
@@ -288,7 +288,7 @@
                                           </AnchorPane>
                                     </content>
                                   </Tab>
-                                    <Tab text="Employees">
+                                    <Tab text="Assignments">
                                       <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                              <children>
