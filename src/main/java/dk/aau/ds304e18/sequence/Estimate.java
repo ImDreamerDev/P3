@@ -2,12 +2,12 @@ package dk.aau.ds304e18.sequence;
 
 import java.util.List;
 
-public class FUMilton {
+public class Estimate {
 
     private List<Double> chances;
     private double duration;
 
-    public FUMilton(List<Double> chances, double duration) {
+    public Estimate(List<Double> chances, double duration) {
         this.chances = chances;
         this.duration = duration;
     }
