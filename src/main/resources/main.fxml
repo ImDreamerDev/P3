@@ -274,7 +274,7 @@
                                                 <ToolBar prefHeight="40.0">
                                                   <items>
                                                     <Button id="zoomInButton" mnemonicParsing="false" text="+" />
-                                                      <Button mnemonicParsing="false" text="1:1" />
+                                                      <Button id="resetZoomButton" mnemonicParsing="false" text="1:1" />
                                                       <Button id="zoomOutButton" mnemonicParsing="false" text="-" />
                                                       <Label id="zoomLevelLabel" text="Zoom level: 100%" />
                                                   </items>

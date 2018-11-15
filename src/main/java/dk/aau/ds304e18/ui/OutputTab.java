@@ -14,10 +14,6 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -94,6 +90,13 @@ public class OutputTab {
                 zoomOut(pro, pane, zoomFactorLabel);
             });
 
+            rootPane.lookup("#resetZoomButton").setOnMouseClicked(mouseEvent -> {
+                zoomFactor = 1;
+                zoomFactorLabel.setText("Zoom level: 100%");
+                pane.getChildren().clear();
+                drawTasks(pro, pane);
+            });
+
             rootPane.setOnKeyReleased(keyEvent -> {
                 if (keyEvent.isControlDown()) {
                     if (keyEvent.getText().equals("-")) {
@@ -142,8 +145,8 @@ public class OutputTab {
     }
 
     private void drawEmployees() {
-taskTableView.getItems().clear();
-employeeTableView.getItems().clear();
+        taskTableView.getItems().clear();
+        employeeTableView.getItems().clear();
         taskTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().
                 stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
         employeeTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getEmployeeList().
