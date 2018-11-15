@@ -147,8 +147,12 @@ public class OutputTab {
             }
             x++;
         }
-
-        for (int i = 0; i < anchorPanes.get(anchorPanes.size() - 1).getLayoutX() + ((Rectangle) anchorPanes.get(anchorPanes.size() - 1).getChildrenUnmodifiable().get(0)).getWidth(); i = i + 20) {
+        double maxX = 0;
+        for (AnchorPane ap : anchorPanes) {
+            double thisXMax = ap.getLayoutX() + ((Rectangle) ap.getChildrenUnmodifiable().get(0)).getWidth();
+            if (thisXMax > maxX) maxX = thisXMax;
+        }
+        for (int i = 0; i < maxX; i = i + 20) {
             Text text = new Text((i) + xPadding, 25, "" + i);
             text.setRotate(90);
 
