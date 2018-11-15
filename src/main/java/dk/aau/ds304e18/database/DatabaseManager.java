@@ -62,7 +62,7 @@ public class DatabaseManager {
         try {
             dbConnection = DriverManager.getConnection(url, props);
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
@@ -596,9 +596,10 @@ public class DatabaseManager {
      * @return the ProjectManager found, else null.
      */
     public static ProjectManager logIn(String username, String clearTextPassword) {
-
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
+            if (dbConnection == null)
+                return new ProjectManager(-1, "Connection error", -1, null);
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE LOWER(username) = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
@@ -615,6 +616,7 @@ public class DatabaseManager {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
 
         return null;

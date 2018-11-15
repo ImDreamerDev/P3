@@ -117,12 +117,15 @@ public class JavaFXMain extends Application {
     private void logIn() {
         String username = usernameField.getText();
         String password = passwordField.getText();
-        System.out.println(password + " " + username);
         AtomicReference<ProjectManager> pm = new AtomicReference<>(DatabaseManager.logIn(username, password));
 
         if (pm.get() == null) {
             Label error = ((Label) vBoxLogin.getChildren().get(2));
-            error.setText("Error: Username and Password does not match");
+            error.setText("Error: Username and Password does not match any user");
+            error.setVisible(true);
+        } else if (pm.get().getName().equals("Connection error")) {
+            Label error = ((Label) vBoxLogin.getChildren().get(2));
+            error.setText("Error: Couldn't connect to the database");
             error.setVisible(true);
         } else {
 

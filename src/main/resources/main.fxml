@@ -10,7 +10,6 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
@@ -335,45 +334,39 @@
                 </VBox>
             </children>
         </StackPane>
-      <FlowPane layoutX="104.0" layoutY="43.0" prefHeight="568.0" prefWidth="1050.0" style="-fx-border-width: 5; -fx-border-color: grey;">
+      <FlowPane layoutX="104.0" layoutY="43.0" prefHeight="568.0" prefWidth="1050.0" style="-fx-border-width: 5; -fx-border-color: grey;" visible="false">
          <children>
-            <MenuBar prefHeight="25.0" prefWidth="1040.0">
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
+            <ToolBar layoutX="15.0" layoutY="533.0" prefHeight="40.0" prefWidth="1040.0">
+               <items>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="1020.0">
+                     <children>
+                        <Label text="Add Dependencies">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </items>
+            </ToolBar>
             <TableView prefHeight="493.0" prefWidth="1040.0">
               <columns>
                   <TableColumn prefWidth="75.0" text="Id" />
                   <TableColumn prefWidth="130.0" text="Name" />
                   <TableColumn prefWidth="107.0" text="Estimated Time" />
                   <TableColumn prefWidth="93.0" text="Priority" />
-                  <TableColumn prefWidth="104.0" text="Probabilities" />
-                  <TableColumn prefWidth="123.0" text="Dependencies" />
+                  <TableColumn prefWidth="234.0" text="Probabilities" />
+                  <TableColumn prefWidth="396.0" text="Dependencies" />
               </columns>
             </TableView>
             <ToolBar prefHeight="40.0" prefWidth="1040.0">
               <items>
-                  <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="445.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="505.0">
                      <children>
                       <Button mnemonicParsing="false" text="Add" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="445.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="511.0">
                      <children>
                         <Button mnemonicParsing="false" text="Close" />
                      </children>
