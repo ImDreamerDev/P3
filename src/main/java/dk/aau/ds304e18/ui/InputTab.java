@@ -70,7 +70,7 @@ public class InputTab {
     }
 
     void setupDependenciesPopup() {
-        TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(0));
+        TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
         dependencies.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
                 .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
                 .collect(Collectors.toList())));
@@ -80,7 +80,7 @@ public class InputTab {
         dependencies.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("priority"));
         dependencies.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("probabilities"));
         dependencies.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dependencies"));
-        ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
+        ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
         ((HBox) bar.getItems().get(0)).getChildren().get(0).setOnMouseClicked(event -> addDependency(dependencies.getSelectionModel().getSelectedItem(), listViewDependency));
         ((HBox) bar.getItems().get(1)).getChildren().get(0).setOnMouseClicked(event -> closeDependenciesPopup());
     }
