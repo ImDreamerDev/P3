@@ -34,6 +34,8 @@ public class OutputTab {
     private static final double arrowLength = 8;
     private static final double arrowWidth = 4;
 
+    public double zoomFactor = 1;
+
 
     public OutputTab(Parent rootPane) {
         this.rootPane = rootPane;
@@ -58,6 +60,17 @@ public class OutputTab {
         AnchorPane pane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
         pane.getChildren().clear();
         if (pro.getSequence() != null) {
+            pane.setOnScroll(scrollEvent -> {
+                if (scrollEvent.isControlDown()) {
+                    zoomFactor += scrollEvent.getDeltaY() * 0.05;
+                    if (zoomFactor < 1) zoomFactor = 1;
+                    else {
+                        pane.getChildren().clear();
+                        drawTasks(pro, pane);
+                    }
+                }
+
+            });
             drawTasks(pro, pane);
             if (useMonty) {
                 ((ListView<Task>) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
@@ -118,14 +131,16 @@ public class OutputTab {
                         xVar.set(anchorPanes.get(anchorPanes.size() - 1).getLayoutX());
                     } else {
                         if (y == 0)
-                            xVar.set(anchorPanes.get(anchorPanes.size() - (1)).getLayoutX() + (taskListOfTasks.get(x - 1).get(y).getEstimatedTime()));
+                            xVar.set(anchorPanes.get(anchorPanes.size() - (1)).getLayoutX() +
+                                    ((taskListOfTasks.get(x - 1).get(y).getEstimatedTime() * zoomFactor)));
                         else
-                            xVar.set(anchorPanes.get(anchorPanes.size() - (y + 2)).getLayoutX() + (taskListOfTasks.get(x - 1).get(y).getEstimatedTime()));
+                            xVar.set(anchorPanes.get(anchorPanes.size() - (y + 2)).getLayoutX() +
+                                    ((taskListOfTasks.get(x - 1).get(y).getEstimatedTime() * zoomFactor)));
                     }
                     if (task.getDependencies().size() > 0) {
                         task.getDependencies().forEach(dependency -> {
-                            if (dependency.getEstimatedTime() + taskToAP.get(dependency).getLayoutX() > xVar.get())
-                                xVar.set(dependency.getEstimatedTime() + taskToAP.get(dependency).getLayoutX());
+                            if (dependency.getEstimatedTime() * zoomFactor + taskToAP.get(dependency).getLayoutX() > xVar.get())
+                                xVar.set(dependency.getEstimatedTime() * zoomFactor + taskToAP.get(dependency).getLayoutX());
                         });
                     }
                 }
@@ -133,7 +148,7 @@ public class OutputTab {
                 taskBox.setLayoutX(xVar.get());
 
                 taskBox.setLayoutY(35 + ((1.5 * y + (0.5 * x)) * paddingY));
-                Rectangle ret = new Rectangle(task.getEstimatedTime(), 20);
+                Rectangle ret = new Rectangle(task.getEstimatedTime() * zoomFactor, 20);
                 ret.setStroke(Color.BLACK);
                 ret.setFill(Color.web("#ff9c00"));
                 Tooltip tooltip = new Tooltip(task.getName());
@@ -152,12 +167,13 @@ public class OutputTab {
             double thisXMax = ap.getLayoutX() + ((Rectangle) ap.getChildrenUnmodifiable().get(0)).getWidth();
             if (thisXMax > maxX) maxX = thisXMax;
         }
+        maxX /= zoomFactor;
         for (int i = 0; i < maxX; i = i + 20) {
-            Text text = new Text((i) + xPadding, 25, "" + i);
+            Text text = new Text((i * zoomFactor) + xPadding, 25, "" + i);
             text.setRotate(90);
 
             pane.getChildren().add(text);
-            pane.getChildren().add(new Line(i + xPadding, 15, i + xPadding, 20));
+            pane.getChildren().add(new Line((i * zoomFactor) + xPadding, 15, (i * zoomFactor) + xPadding, 20));
         }
 
         HashMap<Task, AtomicInteger> numberOfTasksDependingOnTask = new HashMap<>();
