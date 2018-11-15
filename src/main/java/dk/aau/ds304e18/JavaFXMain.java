@@ -122,7 +122,7 @@ public class JavaFXMain extends Application {
 
         if (pm.get() == null) {
             Label error = ((Label) vBoxLogin.getChildren().get(2));
-            error.setText("Error: No such user");
+            error.setText("Error: Username and Password does not match");
             error.setVisible(true);
         } else {
 
