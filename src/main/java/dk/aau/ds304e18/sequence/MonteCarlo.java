@@ -195,24 +195,24 @@ public class MonteCarlo {
 
         ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
         //create a list to hold the Future object associated with Callable
-        List<Future<List<List<Double>>>> list = new ArrayList<>();
+        List<Future<FUMilton>> list = new ArrayList<>();
         //Create MyCallable instance
         for (int i = 0; i < numOfThreads; i++) {
-            Callable<List<List<Double>>> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(),
+            Callable<FUMilton> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(),
                     numOfThreads, monteCarloRepeats);
             //submit Callable tasks to be executed by thread pool
-            Future<List<List<Double>>> future = executor.submit(callable);
+            Future<FUMilton> future = executor.submit(callable);
             //add Future to the list, we can get return value using Future
             list.add(future);
         }
 
         //Temporary list that will have the values we later add to the possibleCompletions list
         List<Double> tempList;
-        for (Future<List<List<Double>>> fut : list) {
+        for (Future<FUMilton> fut : list) {
             try {
                 // because Future.get() waits for task to get completed
-                duration = duration + fut.get().get(0).get(0);
-                tempList = fut.get().get(1);
+                duration = duration + fut.get().getDuration();
+                tempList = fut.get().getChances();
 
                 while (project.getPossibleCompletions().get(index).size() < tempList.size())
                     project.getPossibleCompletions().get(index).add(0d);

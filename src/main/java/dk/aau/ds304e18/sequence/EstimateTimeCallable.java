@@ -6,7 +6,7 @@ import dk.aau.ds304e18.models.Task;
 import java.util.*;
 import java.util.concurrent.Callable;
 
-public class EstimateTimeCallable implements Callable<List<List<Double>>> {
+public class EstimateTimeCallable implements Callable<FUMilton> {
     private List<Task> taskList;
     private double amountEmployees;
     private int numOfThreads;
@@ -21,7 +21,7 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
         this.numOfMonte = numOfMonte;
     }
 
-    public List<List<Double>> call() {
+    public FUMilton call() {
         List<List<Double>> result = new ArrayList<>();
         List<Double> durationList = new ArrayList<>();
         List<Double> chances = new ArrayList<>();
@@ -83,7 +83,7 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
 
                             Collections.sort(durations);
 
-                            for(Double tempDur : durations) {
+                            for (Double tempDur : durations) {
                                 if (tempDur > durations.get(0)) {
                                     index = durations.indexOf(tempDur);
                                     break;
@@ -92,7 +92,7 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
 
                             double minUpper = durations.get(index);
 
-                            for(int k = 0; k < index; k++)
+                            for (int k = 0; k < index; k++)
                                 durations.set(k, minUpper);
                         }
                     }
@@ -125,9 +125,10 @@ public class EstimateTimeCallable implements Callable<List<List<Double>>> {
             }
 
         }
+        FUMilton res = new FUMilton(chances, duration);
         durationList.add(duration);
         result.add(durationList);
         result.add(chances);
-        return result;
+        return res;
     }
 }
