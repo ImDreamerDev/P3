@@ -114,16 +114,10 @@ public class MonteCarlo {
         //Set temporary index to the index of the minimum
         int tempI = time.indexOf(Collections.min(time));
 
-        System.out.println(project.getPossibleCompletions().get(tempI));
+        System.out.println(project.getTempPossibleCompletions().get(tempI));
 
-        //If it's not 0 (i.e. the first one) get the minimum to the first one
-        if (!(tempI == 0)) {
-            //Clear the first one so we can fill it with the correct numbers
-            project.getPossibleCompletions().get(0).clear();
+        project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(tempI));
 
-            //Add all of the minimum list to the first list
-            project.getPossibleCompletions().get(0).addAll(project.getPossibleCompletions().get(tempI));
-        }
         //Set the variables to correct stuff
         bestTime = Collections.min(time);
         bestSequence = randomSequences[time.indexOf(Collections.min(time))];
@@ -174,7 +168,7 @@ public class MonteCarlo {
      */
     public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index) {
         //Adds a list to the index of the possibleCompletions list on the project
-        project.getPossibleCompletions().add(index, new ArrayList<>());
+        project.getTempPossibleCompletions().add(index, new ArrayList<>());
         //Gets the task list from the project
         List<Task> taskList = ParseSequence.parseToSingleList(project, false, random, index);
         //For each task in taskList
@@ -214,13 +208,13 @@ public class MonteCarlo {
                 duration = duration + fut.get().getDuration();
                 tempList = fut.get().getChances();
 
-                while (project.getPossibleCompletions().get(index).size() < tempList.size())
-                    project.getPossibleCompletions().get(index).add(0d);
+                while (project.getTempPossibleCompletions().get(index).size() < tempList.size())
+                    project.getTempPossibleCompletions().get(index).add(0d);
 
                 //Add all the values to the index of the possibleCompletions
                 for (int i = 0; i < tempList.size(); i++) {
-                    project.getPossibleCompletions().get(index).set(i,
-                            project.getPossibleCompletions().get(index).get(i) + tempList.get(i));
+                    project.getTempPossibleCompletions().get(index).set(i,
+                            project.getTempPossibleCompletions().get(index).get(i) + tempList.get(i));
                 }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();

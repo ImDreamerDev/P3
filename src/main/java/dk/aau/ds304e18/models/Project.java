@@ -62,7 +62,8 @@ public class Project {
     /**
      * The different chances of completion
      */
-    private List<List<Double>> possibleCompletions = new ArrayList<>();
+    private List<Double> possibleCompletions = new ArrayList<>();
+    private List<List<Double>> tempPossibleCompletions = new ArrayList<>();
 
     /**
      * Constructor for project.
@@ -259,11 +260,11 @@ public class Project {
         DatabaseManager.updateProject(this);
     }
 
-    public List<List<Double>> getPossibleCompletions() {
+    public List<Double> getPossibleCompletions() {
         return possibleCompletions;
     }
 
-    public void setPossibleCompletions(List<List<Double>> values) {
+    public void setPossibleCompletions(List<Double> values) {
         possibleCompletions = values;
     }
 
@@ -273,5 +274,13 @@ public class Project {
 
     public void setPossibleSequences(String[] possibleSequences) {
         this.possibleSequences = possibleSequences;
+    }
+
+    public List<List<Double>> getTempPossibleCompletions() {
+        return tempPossibleCompletions;
+    }
+
+    public void setTempPossibleCompletions(List<List<Double>> tempPossibleCompletions) {
+        this.tempPossibleCompletions = tempPossibleCompletions;
     }
 }
