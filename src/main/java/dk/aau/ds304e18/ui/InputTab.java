@@ -32,6 +32,7 @@ public class InputTab {
     private final OutputTab outputTab;
     private TableView<Task> tableView;
     private TabPane tabPane;
+    private ListView<Task> listViewDependency;
 
     /**
      * @param rootPane
@@ -58,8 +59,30 @@ public class InputTab {
         tableView.getItems().clear();
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task ->
                 task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+
+        TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(0));
+        dependencies.getItems().clear();
+        dependencies.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
+                .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
+                .collect(Collectors.toList())));
         if (JavaFXMain.selectedProjectId != 0)
             outputTab.drawOutputTab(true);
+    }
+
+    void setupDependenciesPopup() {
+        TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(0));
+        dependencies.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
+                .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
+                .collect(Collectors.toList())));
+        dependencies.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
+        dependencies.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+        dependencies.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("estimatedTime"));
+        dependencies.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("priority"));
+        dependencies.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("probabilities"));
+        dependencies.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dependencies"));
+        ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
+        ((HBox) bar.getItems().get(0)).getChildren().get(0).setOnMouseClicked(event -> addDependency(dependencies.getSelectionModel().getSelectedItem(), listViewDependency));
+        ((HBox) bar.getItems().get(1)).getChildren().get(0).setOnMouseClicked(event -> closeDependenciesPopup());
     }
 
     /**
@@ -90,7 +113,7 @@ public class InputTab {
 
         //Table view
         tableView = ((TableView<Task>) flowPane.getChildren().get(1));
-        setUpTaskTable();
+        setupTaskTable();
 
 
         //Input view
@@ -102,7 +125,7 @@ public class InputTab {
         HBox probsHBox = ((HBox) inputVBox.getChildren().get(7));
         HBox probsHBox2 = ((HBox) inputVBox.getChildren().get(8));
         HBox probsHBox3 = ((HBox) inputVBox.getChildren().get(9));
-        ListView<Task> listViewDependency = ((ListView<Task>) inputVBox.getChildren().get(11));
+        listViewDependency = ((ListView<Task>) inputVBox.getChildren().get(11));
         HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
 
 
@@ -126,7 +149,8 @@ public class InputTab {
         TextField probs6 = ((TextField) probsHBox3.getChildren().get(1));
         probs6.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs6, newValue, false));
 
-        buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> addDependency(listViewDependency));
+
+        buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> openDependenciesPopup());
         buttonsForDependencies.getChildren().get(1).setOnMouseClicked(event -> removeDependency(listViewDependency));
 
         inputVBox.getChildren().get(13).setOnMouseClicked(event -> {
@@ -173,7 +197,18 @@ public class InputTab {
                 }
             }
         });
+        setupDependenciesPopup();
+
         drawInputTab();
+    }
+
+
+    private void openDependenciesPopup() {
+        rootPane.getChildrenUnmodifiable().get(3).setVisible(true);
+    }
+
+    private void closeDependenciesPopup() {
+        rootPane.getChildrenUnmodifiable().get(3).setVisible(false);
     }
 
     /**
@@ -302,12 +337,11 @@ public class InputTab {
      *
      * @param listViewDependency
      */
-    private void addDependency(ListView<Task> listViewDependency) {
-        int taskId = (int) ((TableColumn) tableView.getColumns().get(0))
-                .getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
-        Task task = LocalObjStorage.getTaskById(taskId);
+    private void addDependency(Task task, ListView<Task> listViewDependency) {
+        if (task == null)
+            return;
         if (!taskDependencies.contains(task)) {
-            taskDependencies.add(LocalObjStorage.getTaskById(taskId));
+            taskDependencies.add(task);
             listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
         }
     }
@@ -331,7 +365,7 @@ public class InputTab {
     /**
      * The method that sets up the task table.
      */
-    private void setUpTaskTable() {
+    private void setupTaskTable() {
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
                 .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
                 .collect(Collectors.toList())));

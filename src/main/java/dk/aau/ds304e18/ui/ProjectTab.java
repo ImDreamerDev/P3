@@ -5,14 +5,16 @@ import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.ProjectState;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 
 import java.util.stream.Collectors;
 
@@ -131,12 +133,24 @@ public class ProjectTab {
         tableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("sequence"));
         tableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("duration"));
         tableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("state"));
+        TableColumn<Project, String> column = (TableColumn<Project, String>) tableView.getColumns().get(6);
+        column.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getTasks().size() + ""));
+
         flProjects = (new FilteredList<>(FXCollections.observableArrayList(LocalObjStorage.getProjectList())));
         sortedList = new SortedList<>(flProjects);
-        sortedList.comparatorProperty().bind(tableView.comparatorProperty());
-        tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
-                ProjectState.ONGOING && project.getCreator() != null && project.getCreator()
-                .getId() == projectManager.getId()).collect(Collectors.toList())));
+        sortedList.comparatorProperty().
+
+                bind(tableView.comparatorProperty());
+        tableView.setItems(FXCollections.observableArrayList(sortedList.stream().
+
+                filter(project -> project.getState() ==
+                        ProjectState.ONGOING && project.getCreator() != null && project.getCreator()
+                        .
+
+                                getId() == projectManager.getId()).
+
+                collect(Collectors.toList())));
 
     }
 
