@@ -60,7 +60,7 @@ public class InputTab {
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task ->
                 task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
 
-        TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(0));
+        TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
         dependencies.getItems().clear();
         dependencies.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
                 .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
