@@ -288,7 +288,7 @@
                                           </AnchorPane>
                                     </content>
                                   </Tab>
-                                    <Tab text="Assignments">
+                                    <Tab disable="true" text="Assignments">
                                       <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                              <children>
