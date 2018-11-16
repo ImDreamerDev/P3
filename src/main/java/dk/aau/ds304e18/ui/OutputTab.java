@@ -224,8 +224,8 @@ public class OutputTab {
                 .filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
         assert pro != null;
         barChart.getData().clear();
-        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        series1.setName("Probabilities");
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Probabilities");
         barChart.setAnimated(false);
         List<Double> possibleCompletions = pro.getPossibleCompletions();
         double total = possibleCompletions.stream().mapToDouble(value -> value).sum();
@@ -234,11 +234,17 @@ public class OutputTab {
             double percent = sum / total * 100;
             sum += possibleCompletions.get(i);
             if (percent > 1 && sum / total * 100 < 99)
-                series1.getData().add(new XYChart.Data<>(i + "", percent));
+                series.getData().add(new XYChart.Data<>(i + "", percent));
         }
-        barChart.getData().add(series1);
-        series1.getChart().getXAxis().setLabel("Working hours");
-        series1.getChart().getYAxis().setLabel("Chance of completion");
+        barChart.getData().add(series);
+
+        series.getChart().getXAxis().setLabel("Working hours");
+        series.getChart().getYAxis().setLabel("Chance of completion");
+        for (XYChart.Data<String, Number> entry : series.getData()) {
+            Tooltip t = new Tooltip("Duration: " + entry.getXValue() + "\nChance: " + entry.getYValue().intValue() + "%");
+            t.setShowDelay(Duration.millis(15));
+            Tooltip.install(entry.getNode(), t);
+        }
     }
 
     private void drawTasks(Project pro, AnchorPane pane) {
