@@ -151,10 +151,8 @@ public class InputTab {
         buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> openDependenciesPopup());
         buttonsForDependencies.getChildren().get(1).setOnMouseClicked(event -> removeDependency(listViewDependency));
 
-        inputVBox.getChildren().get(13).setOnMouseClicked(event -> {
-            clearInputFields(listViewDependency, probs1, probs2, probs3,
-                    probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority);
-        });
+        inputVBox.getChildren().get(13).setOnMouseClicked(event -> clearInputFields(listViewDependency, probs1, probs2, probs3,
+                probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority));
 
 
         //Middle column
@@ -359,8 +357,7 @@ public class InputTab {
         project.setSequence("");
         DatabaseManager.removeTask(taskId);
         LocalObjStorage.getTaskList().remove(LocalObjStorage.getTaskById(taskId));
-        tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().
-                stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+        drawInputTab();
     }
 
     /**

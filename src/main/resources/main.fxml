@@ -121,7 +121,7 @@
                            <left>
                                         <VBox alignment="TOP_CENTER" prefHeight="646.0" prefWidth="222.0" spacing="5.0" BorderPane.alignment="CENTER">
                                             <children>
-                                                <Label text="Name:" />
+                                                <Label text="Name" />
                                                 <TextField />
                                                 <Label text="Priority" />
                                                 <TextField />
