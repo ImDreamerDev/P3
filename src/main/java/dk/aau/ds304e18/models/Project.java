@@ -63,6 +63,10 @@ public class Project {
      * The different chances of completion
      */
     private List<Double> possibleCompletions = new ArrayList<>();
+
+    /**
+     * Used to find the quickest one to put into the above one
+     */
     private List<List<Double>> tempPossibleCompletions = new ArrayList<>();
 
     /**
