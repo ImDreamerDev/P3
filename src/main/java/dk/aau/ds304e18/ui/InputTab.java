@@ -344,6 +344,7 @@ public class InputTab {
                 listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
             }
         }
+        closeDependenciesPopup();
     }
 
     /**
