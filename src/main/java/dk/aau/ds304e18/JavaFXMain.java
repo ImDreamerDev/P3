@@ -33,6 +33,10 @@ public class JavaFXMain extends Application {
     private InputTab inputTab;
     private ProjectTab projectTab;
 
+    /**
+     * The method that starts the program. The program starts on the login page.
+     * @param stage - the primary stage for this application, onto which the application scene can be set.
+     */
     @Override
     public void start(Stage stage) {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("main.fxml"));
