@@ -280,7 +280,7 @@ public class Task {
     /**
      * The setter for lambda.
      *
-     * @param lambda
+     * @param lambda - the shape parameter.
      */
     public void setLambda(double lambda) {
         this.lambda = lambda;

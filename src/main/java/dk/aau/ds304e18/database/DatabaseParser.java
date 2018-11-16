@@ -139,7 +139,7 @@ public class DatabaseParser {
 
     /**
      * This method parses the information from the database which turns the probabilities into a string format.
-     *
+     * @param task - the task to parse.
      * @return Probability string - the probabilites turned into string format.
      */
     public static String parseProbabilities(Task task) {

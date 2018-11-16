@@ -16,6 +16,9 @@ public class ParseSequence {
      * Parses a sequence to a single list
      *
      * @param project Takes project as parameter so we can get all the tasks in it and the sequence
+     * @param random - is it a random sequence or not.
+     * @param index - The index of the possible loop this is called in (If no loop, it is 0)
+     * @param rec - a boolean standing for recommended. Used to calculate time.
      * @return returns an ordered list from the sequence
      */
     public static List<Task> parseToSingleList(Project project, boolean rec, boolean random, int index) {

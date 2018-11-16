@@ -32,8 +32,8 @@ public class InputTab {
     private ListView<Task> listViewDependency;
 
     /**
-     * @param rootPane
-     * @param outputTab
+     * @param rootPane - This is the parent of all ui elements in the inputTab.
+     * @param outputTab - The class outputTab is used.
      */
     public InputTab(Parent rootPane, OutputTab outputTab) {
         this.rootPane = rootPane;
@@ -210,7 +210,9 @@ public class InputTab {
     /**
      * This method calculates and produces the output.
      *
-     * @param pro
+     * @param pro - the project to calculate.
+     * @param numOfEmployees - the amount of employees.
+     * @param useFast - Is the useFast toggled or not. (boolean)
      * @param useMonty - the monte carlo method is used.
      */
     private void calculate(Project pro, boolean useMonty, double numOfEmployees, boolean useFast) {
@@ -232,7 +234,7 @@ public class InputTab {
     /**
      * This method is used to make sure that the estimated time and all the textboxes that only are supposed to take numeric values,
      * actually contain numeric values.
-     *
+     * @param intField - a textbox where only numbers can be entered.
      * @param textField - the textbox
      * @param newValue  - the contents of the textbox
      */
@@ -317,8 +319,7 @@ public class InputTab {
     /**
      * Method for revoming a dependency from the new task.
      * This happens by selecting the task and pressing the remove button.
-     *
-     * @param listViewDependency
+     * @param listViewDependency - The list of tasks in the dependency box.
      */
     private void removeDependency(ListView<Task> listViewDependency) {
         Task task = listViewDependency.getSelectionModel().getSelectedItem();
@@ -331,7 +332,8 @@ public class InputTab {
     /**
      * Method for adding a dependency to a new task.
      *
-     * @param listViewDependency
+     * @param listViewDependency - The list of tasks in the dependency box.
+     * @param tasks - The list of the tasks in the project.
      */
     private void addDependency(List<Task> tasks, ListView<Task> listViewDependency) {
         if (tasks == null || tasks.size() == 0)

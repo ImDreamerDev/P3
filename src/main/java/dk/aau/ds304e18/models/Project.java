@@ -73,6 +73,7 @@ public class Project {
      * Constructor for project.
      *
      * @param name - The name of the project.
+     * @param creator - the ProjectManager who created the project.
      */
     public Project(String name, ProjectManager creator) {
         this.name = name;

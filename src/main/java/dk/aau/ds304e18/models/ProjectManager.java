@@ -45,6 +45,7 @@ public class ProjectManager {
      * The constructor of the ProjectManager class.
      *
      * @param name - The name of the manager.
+     * @param password - the password of the manager.
      */
     public ProjectManager(String name, String password) {
         this.name = name;

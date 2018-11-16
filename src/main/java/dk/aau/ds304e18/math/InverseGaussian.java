@@ -31,10 +31,10 @@ public class InverseGaussian {
     /**
      * Calculate the y-value given an x value, i.e. the probability of a task completing at a certain time (y : probability, x : time) using the CDF
      *
-     * @param mu
-     * @param lambda
-     * @param x
-     * @return
+     * @param mu - the mean.
+     * @param lambda - shape parameter.
+     * @param x - completion time of a given task.
+     * @return The probability of the task being completed at x time.
      */
     private static double cdf(double mu, double lambda, double x) {
         if (mu <= 0.0D) {
@@ -54,7 +54,7 @@ public class InverseGaussian {
     /**
      * The CDF for the Gaussian Distribution aka normal distribution (Used to calculate the CDF of the Inverse Gaussian Distribution)
      *
-     * @param x
+     * @param x - It's the x value of the normal distribution.
      * @return r - The result of the function
      */
     private static double cdf01(double x) {
@@ -82,10 +82,10 @@ public class InverseGaussian {
     /**
      * Used to calculate the CDF of the normal distribution
      *
-     * @param a -
-     * @param n -
-     * @param x -
-     * @return
+     * @param a - coefficients of the polynomials
+     * @param n -largest degree of polynomials.
+     * @param x -the parameter of the Tj functions.
+     * @return the value of a series of Chebyshev polynomials Tj..
      */
     private static double evalCheby(double[] a, int n, double x) {
         if (Math.abs(x) > 1.0D) {
@@ -109,8 +109,8 @@ public class InverseGaussian {
     /**
      * Sets the parameters for the Inverse Gaussian Distribution, if mu or lambda is less than or equal to 0, throw exception
      *
-     * @param mu
-     * @param lambda
+     * @param mu - the mean.
+     * @param lambda - the shape parameter.
      */
     public void setParams(double mu, double lambda) {
         if (mu <= 0.0D) {
@@ -144,7 +144,7 @@ public class InverseGaussian {
     /**
      * The getter for Density
      *
-     * @param x
+     * @param x - x value
      * @return density
      */
     public double getDensity(double x) {
@@ -154,7 +154,7 @@ public class InverseGaussian {
     /**
      * The getter for the probability
      *
-     * @param x
+     * @param x - the x value from the cdf (the task estimated completion time)
      * @return cdf(probability).
      */
     public double getProbability(double x) {

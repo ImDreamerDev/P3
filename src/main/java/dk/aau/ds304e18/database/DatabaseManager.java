@@ -391,6 +391,8 @@ public class DatabaseManager {
 
     /**
      * Retrieves everything from the database and converts it to objects.
+     * @param projectManager - the projectManager that is logged in.
+     * @return null if the distributeModels is cancelled, or if the ProjectManager is null. (new javafx.concurrent.task)
      */
     public static javafx.concurrent.Task<Void> distributeModels(ProjectManager projectManager) {
         return new javafx.concurrent.Task<>() {
@@ -486,7 +488,11 @@ public class DatabaseManager {
 
     }
 
-
+    /**
+     * The update method for the employee.
+     * Updates the information stored in the database.
+     * @param employee - the employee to update.
+     */
     public static void updateEmployee(Employee employee) {
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
@@ -509,6 +515,11 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * The update method for the Task.
+     * Updates the information stored in the database.
+     * @param task - the task to update.
+     */
     public static void updateTask(Task task) {
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
@@ -548,6 +559,11 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * The method for updating the Project.
+     * Updates the information stored in the database.
+     * @param project - the project to update.
+     */
     public static void updateProject(Project project) {
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
@@ -569,6 +585,11 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * The method to update the ProjectManager.
+     * Updates the information stored in the database.
+     * @param manager - the ProjectManager to update.
+     */
     public static void updateProjectManager(ProjectManager manager) {
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
@@ -623,7 +644,7 @@ public class DatabaseManager {
     }
 
     /**
-     * Used to log out. Closes connection do database and clears local storage.
+     * Used to log out. Closes connection to database and clears local storage.
      */
     public static void logOut() {
         if (dbConnection != null) {

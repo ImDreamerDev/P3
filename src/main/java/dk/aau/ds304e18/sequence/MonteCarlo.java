@@ -164,6 +164,7 @@ public class MonteCarlo {
      * @param project           The project you want estimated
      * @param monteCarloRepeats The amount of times you want it repeated
      * @param index             The index of the possible loop this is called in (If no loop, send 0)
+     * @param random            Is it a random sequence or not.
      * @return Returns the estimated time of the project
      */
     public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index) {
