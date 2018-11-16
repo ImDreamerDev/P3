@@ -391,6 +391,7 @@ public class DatabaseManager {
 
     /**
      * Retrieves everything from the database and converts it to objects.
+     *
      * @param projectManager - the projectManager that is logged in.
      * @return null if the distributeModels is cancelled, or if the ProjectManager is null. (new javafx.concurrent.task)
      */
@@ -491,6 +492,7 @@ public class DatabaseManager {
     /**
      * The update method for the employee.
      * Updates the information stored in the database.
+     *
      * @param employee - the employee to update.
      */
     public static void updateEmployee(Employee employee) {
@@ -518,6 +520,7 @@ public class DatabaseManager {
     /**
      * The update method for the Task.
      * Updates the information stored in the database.
+     *
      * @param task - the task to update.
      */
     public static void updateTask(Task task) {
@@ -562,6 +565,7 @@ public class DatabaseManager {
     /**
      * The method for updating the Project.
      * Updates the information stored in the database.
+     *
      * @param project - the project to update.
      */
     public static void updateProject(Project project) {
@@ -574,8 +578,9 @@ public class DatabaseManager {
             statement.setDouble(3, project.getDuration());
             statement.setString(4, project.getRecommendedPath());
             statement.setDouble(5, project.getNumberOfEmployees());
-            statement.setArray(6,
-                    dbConnection.createArrayOf("FLOAT", project.getPossibleCompletions().toArray()));
+            if (project.getPossibleCompletions() != null)
+                statement.setArray(6,
+                        dbConnection.createArrayOf("FLOAT", project.getPossibleCompletions().toArray()));
             statement.setInt(7, project.getId());
 
             int maxRetry = 5;
@@ -590,6 +595,7 @@ public class DatabaseManager {
     /**
      * The method to update the ProjectManager.
      * Updates the information stored in the database.
+     *
      * @param manager - the ProjectManager to update.
      */
     public static void updateProjectManager(ProjectManager manager) {

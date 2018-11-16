@@ -395,7 +395,7 @@ class ProjectTest {
      */
     @Test
     void TestProjectSetRecommendedPath01() {
-        Project newProject = new Project(1,"Test Project", ProjectState.ONGOING, "", 4.4, "",1);
+        Project newProject = new Project(1,"Test Project", ProjectState.ONGOING, "", 4.4, "",1, null);
 
         newProject.setRecommendedPath("Right then Left");
 
@@ -409,7 +409,7 @@ class ProjectTest {
      */
     @Test
     void TestProjectSetNumberOfEmployees01() {
-        Project newProject = new Project(1,"Rasmus Test Project", ProjectState.ONGOING, "", 34, "",2);
+        Project newProject = new Project(1,"Rasmus Test Project", ProjectState.ONGOING, "", 34, "",2, null);
 
         newProject.setNumberOfEmployees(2.5);
 
