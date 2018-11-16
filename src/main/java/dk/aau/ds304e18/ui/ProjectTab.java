@@ -102,6 +102,8 @@ public class ProjectTab {
         projectName.clear();
         sortedList = updateProjects();
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+
+        tableView.getItems().clear();
         tableView.setItems(FXCollections.observableArrayList(sortedList.stream().filter(project -> project.getState() ==
                 ProjectState.ONGOING && project.getCreator() != null && project.getCreator()
                 .getId() == projectManager.getId()).collect(Collectors.toList())));

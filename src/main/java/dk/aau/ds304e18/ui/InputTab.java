@@ -9,7 +9,6 @@ import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.Sequence;
 import javafx.collections.FXCollections;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -32,7 +31,7 @@ public class InputTab {
     private ListView<Task> listViewDependency;
 
     /**
-     * @param rootPane - This is the parent of all ui elements in the inputTab.
+     * @param rootPane  - This is the parent of all ui elements in the inputTab.
      * @param outputTab - The class outputTab is used.
      */
     public InputTab(Parent rootPane, OutputTab outputTab) {
@@ -210,10 +209,10 @@ public class InputTab {
     /**
      * This method calculates and produces the output.
      *
-     * @param pro - the project to calculate.
+     * @param pro            - the project to calculate.
      * @param numOfEmployees - the amount of employees.
-     * @param useFast - Is the useFast toggled or not. (boolean)
-     * @param useMonty - the monte carlo method is used.
+     * @param useFast        - Is the useFast toggled or not. (boolean)
+     * @param useMonty       - the monte carlo method is used.
      */
     private void calculate(Project pro, boolean useMonty, double numOfEmployees, boolean useFast) {
         pro.setNumberOfEmployees(numOfEmployees);
@@ -234,7 +233,8 @@ public class InputTab {
     /**
      * This method is used to make sure that the estimated time and all the textboxes that only are supposed to take numeric values,
      * actually contain numeric values.
-     * @param intField - a textbox where only numbers can be entered.
+     *
+     * @param intField  - a textbox where only numbers can be entered.
      * @param textField - the textbox
      * @param newValue  - the contents of the textbox
      */
@@ -319,6 +319,7 @@ public class InputTab {
     /**
      * Method for revoming a dependency from the new task.
      * This happens by selecting the task and pressing the remove button.
+     *
      * @param listViewDependency - The list of tasks in the dependency box.
      */
     private void removeDependency(ListView<Task> listViewDependency) {
@@ -333,7 +334,7 @@ public class InputTab {
      * Method for adding a dependency to a new task.
      *
      * @param listViewDependency - The list of tasks in the dependency box.
-     * @param tasks - The list of the tasks in the project.
+     * @param tasks              - The list of the tasks in the project.
      */
     private void addDependency(List<Task> tasks, ListView<Task> listViewDependency) {
         if (tasks == null || tasks.size() == 0)

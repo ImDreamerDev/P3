@@ -76,6 +76,7 @@ public class JavaFXMain extends Application {
         //Update button
         ((Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1)).setTooltip(new Tooltip("RE"));
         ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1).setOnMouseClicked(event -> {
+            JavaFXMain.selectedProjectId = 0;
             Task<Void> voidTask = DatabaseManager.distributeModels(LocalObjStorage.getProjectManager().get(0));
             ProgressBar bar = new ProgressBar();
             bar.progressProperty().bind(voidTask.progressProperty());
@@ -134,7 +135,9 @@ public class JavaFXMain extends Application {
             error.setText("Error: Couldn't connect to the database");
             error.setVisible(true);
         } else {
-
+            Label error = ((Label) vBoxLogin.getChildren().get(2));
+            error.setText("");
+            error.setVisible(false);
             Task<Void> voidTask = DatabaseManager.distributeModels(pm.get());
             ProgressBar bar = new ProgressBar();
             bar.progressProperty().bind(voidTask.progressProperty());

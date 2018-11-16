@@ -1,5 +1,6 @@
 package dk.aau.ds304e18.models;
 
+import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class Project {
     /**
      * Constructor for project.
      *
-     * @param name - The name of the project.
+     * @param name    - The name of the project.
      * @param creator - the ProjectManager who created the project.
      */
     public Project(String name, ProjectManager creator) {
@@ -83,7 +84,7 @@ public class Project {
             creator.addOldProject(creator.getCurrentProject());
         }
         DatabaseManager.addProject(this);
-        creator.setCurrentProject(this);
+        creator.setCurrentProject(LocalObjStorage.getProjectById(getId()));
     }
 
     public Project(int id, String name, ProjectState projectState, String sequence,
