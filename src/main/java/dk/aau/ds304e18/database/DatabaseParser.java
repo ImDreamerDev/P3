@@ -43,9 +43,16 @@ public class DatabaseParser {
         try {
             if (rs == null) return null;
             while (rs.next()) {
+
+                List<Double> possibleCompletions = new ArrayList<>();
+
+                if (rs.getArray("possiblecompletions") != null)
+
+                    possibleCompletions.addAll(Arrays.asList((Double[]) rs.getArray("possiblecompletions").getArray()));
+
                 Project project = new Project(rs.getInt(1), rs.getString(2),
                         ProjectState.values()[rs.getInt(3)], rs.getString(4),
-                        rs.getDouble(5), rs.getString(6), rs.getDouble(7));
+                        rs.getDouble(5), rs.getString(6), rs.getDouble(7), possibleCompletions);
                 projects.add(project);
             }
         } catch (SQLException e) {

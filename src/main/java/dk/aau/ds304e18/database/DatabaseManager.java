@@ -568,13 +568,15 @@ public class DatabaseManager {
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?, sequence = ?" +
-                    ", duration = ?, recommendedpath = ?, numberofemployees = ? WHERE id = ?");
+                    ", duration = ?, recommendedpath = ?, numberofemployees = ?, possiblecompletions = ? WHERE id = ?");
             statement.setInt(1, project.getState().getValue());
             statement.setString(2, project.getSequence());
             statement.setDouble(3, project.getDuration());
             statement.setString(4, project.getRecommendedPath());
             statement.setDouble(5, project.getNumberOfEmployees());
-            statement.setInt(6, project.getId());
+            statement.setArray(6,
+                    dbConnection.createArrayOf("FLOAT", project.getPossibleCompletions().toArray()));
+            statement.setInt(7, project.getId());
 
             int maxRetry = 5;
             int i = 0;

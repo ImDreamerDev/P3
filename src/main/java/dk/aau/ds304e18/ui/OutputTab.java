@@ -124,6 +124,8 @@ public class OutputTab {
             drawEmployees();
         }
 
+        if (pro.getPossibleCompletions() != null) populateChart();
+        
     }
 
     private void zoomOut(Project pro, AnchorPane pane, Label zoomFactorLabel) {

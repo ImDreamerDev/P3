@@ -87,7 +87,7 @@ public class Project {
     }
 
     public Project(int id, String name, ProjectState projectState, String sequence,
-                   double duration, String recommendedPath, double numberOfEmployees) {
+                   double duration, String recommendedPath, double numberOfEmployees, List<Double> possibleCompletions) {
         this.id = id;
         this.state = projectState;
         this.name = name;
@@ -95,6 +95,7 @@ public class Project {
         this.duration = duration;
         this.recommendedPath = recommendedPath;
         this.numberOfEmployees = numberOfEmployees;
+        this.possibleCompletions = possibleCompletions;
     }
 
     /**
