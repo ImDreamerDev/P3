@@ -70,19 +70,20 @@ public class OutputTab {
         AnchorPane pane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
         pane.getChildren().clear();
         if (pro.getSequence() != null) {
+
+            Label zoomFactorLabel = (Label) rootPane.lookup("#zoomLevelLabel");
             pane.setOnScroll(scrollEvent -> {
                 if (scrollEvent.isControlDown()) {
                     zoomFactor += scrollEvent.getDeltaY() * 0.05;
-                    if (zoomFactor < 1) zoomFactor = 1;
-                    else {
-                        pane.getChildren().clear();
-                        drawTasks(pro, pane);
-                    }
+                    if (zoomFactor < 0.5) zoomFactor = 0.5;
+                    else if (zoomFactor > 4) zoomFactor = 4;
+
+                    zoomFactorLabel.setText("Zoom level: " + (int) (zoomFactor * 100d) + "%");
+                    pane.getChildren().clear();
+                    drawTasks(pro, pane);
                 }
 
             });
-
-            Label zoomFactorLabel = (Label) rootPane.lookup("#zoomLevelLabel");
             rootPane.lookup("#zoomInButton").setOnMouseClicked(mouseEvent -> {
                 zoomIn(pro, pane, zoomFactorLabel);
             });
@@ -125,12 +126,13 @@ public class OutputTab {
         }
 
         if (pro.getPossibleCompletions() != null) populateChart();
-        
+
     }
 
     private void zoomOut(Project pro, AnchorPane pane, Label zoomFactorLabel) {
         if (zoomFactor > 0.5) {
             zoomFactor -= 0.1;
+            if (zoomFactor < 0.5) zoomFactor = 0.5;
             zoomFactorLabel.setText("Zoom level: " + (int) (zoomFactor * 100d) + "%");
             pane.getChildren().clear();
             drawTasks(pro, pane);
@@ -140,6 +142,7 @@ public class OutputTab {
     private void zoomIn(Project pro, AnchorPane pane, Label zoomFactorLabel) {
         if (zoomFactor <= 4d) {
             zoomFactor += 0.1;
+            if (zoomFactor > 4) zoomFactor = 4;
             zoomFactorLabel.setText("Zoom level: " + (int) (zoomFactor * 100d) + "%");
             pane.getChildren().clear();
             drawTasks(pro, pane);
