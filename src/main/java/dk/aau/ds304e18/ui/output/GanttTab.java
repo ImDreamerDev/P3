@@ -1,23 +1,15 @@
-package dk.aau.ds304e18.ui;
+package dk.aau.ds304e18.ui.output;
 
 import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.LocalObjStorage;
-import dk.aau.ds304e18.database.DatabaseManager;
-import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
@@ -31,103 +23,59 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
-public class OutputTab {
+public class GanttTab {
+    public double zoomFactor = 1;
     private final Parent rootPane;
-    private BarChart<String, Number> barChart;
     private static final double arrowLength = 8;
     private static final double arrowWidth = 4;
-    TableView<Employee> employeeTableView;
-    TableView<Task> taskTableView;
 
-    public double zoomFactor = 1;
-
-
-    public OutputTab(Parent rootPane) {
-        this.rootPane = rootPane;
-        barChart = ((BarChart<String, Number>) rootPane.lookup("#tasksDiagram"));
-        AnchorPane pane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
-        pane.getChildren().clear();
-        ((ListView<Task>) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1)).getItems().clear();
-        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output");
-        BorderPane borderPane = (BorderPane) rootPane.lookup("#employeesBorderPane");
-        taskTableView = (TableView<Task>) ((VBox) borderPane.getLeft()).getChildren().get(1);
-        employeeTableView = (TableView<Employee>) ((VBox) borderPane.getCenter()).getChildren().get(1);
-        barChart.getData().clear();
-        setupEmployees();
-    }
-
-    public void drawOutputTab(boolean useMonty) {
-        if (JavaFXMain.selectedProjectId == 0) {
-
-            return;
-        }
+    public GanttTab(Parent rootPane) {
         Project pro = LocalObjStorage.getProjectList().stream().
                 filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
         assert pro != null;
         ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output: " +
                 pro.getName() + ":" + JavaFXMain.selectedProjectId);
         AnchorPane pane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
-        pane.getChildren().clear();
-        if (pro.getSequence() != null) {
+        this.rootPane = rootPane;
+        Label zoomFactorLabel = (Label) rootPane.lookup("#zoomLevelLabel");
+        pane.setOnScroll(scrollEvent -> {
+            if (scrollEvent.isControlDown()) {
+                zoomFactor += scrollEvent.getDeltaY() * 0.05;
+                if (zoomFactor < 0.5) zoomFactor = 0.5;
+                else if (zoomFactor > 4) zoomFactor = 4;
 
-            Label zoomFactorLabel = (Label) rootPane.lookup("#zoomLevelLabel");
-            pane.setOnScroll(scrollEvent -> {
-                if (scrollEvent.isControlDown()) {
-                    zoomFactor += scrollEvent.getDeltaY() * 0.05;
-                    if (zoomFactor < 0.5) zoomFactor = 0.5;
-                    else if (zoomFactor > 4) zoomFactor = 4;
-
-                    zoomFactorLabel.setText("Zoom level: " + (int) (zoomFactor * 100d) + "%");
-                    pane.getChildren().clear();
-                    drawTasks(pro, pane);
-                }
-
-            });
-            rootPane.lookup("#zoomInButton").setOnMouseClicked(mouseEvent -> {
-                zoomIn(pro, pane, zoomFactorLabel);
-            });
-            rootPane.lookup("#zoomOutButton").setOnMouseClicked(mouseEvent -> {
-                zoomOut(pro, pane, zoomFactorLabel);
-            });
-
-            rootPane.lookup("#resetZoomButton").setOnMouseClicked(mouseEvent -> {
-                zoomFactor = 1;
-                zoomFactorLabel.setText("Zoom level: 100%");
+                zoomFactorLabel.setText("Zoom level: " + (int) (zoomFactor * 100d) + "%");
                 pane.getChildren().clear();
                 drawTasks(pro, pane);
-            });
+            }
 
-            rootPane.setOnKeyReleased(keyEvent -> {
-                if (keyEvent.isControlDown()) {
-                    if (keyEvent.getText().equals("-")) {
-                        zoomOut(pro, pane, zoomFactorLabel);
-                    } else if (keyEvent.getText().equals("+")) {
-                        zoomIn(pro, pane, zoomFactorLabel);
-                    }
-                    keyEvent.consume();
+        });
+        rootPane.lookup("#zoomInButton").setOnMouseClicked(mouseEvent -> {
+            zoomIn(pro, pane, zoomFactorLabel);
+        });
+        rootPane.lookup("#zoomOutButton").setOnMouseClicked(mouseEvent -> {
+            zoomOut(pro, pane, zoomFactorLabel);
+        });
 
-                }
-            });
-
+        rootPane.lookup("#resetZoomButton").setOnMouseClicked(mouseEvent -> {
+            zoomFactor = 1;
+            zoomFactorLabel.setText("Zoom level: 100%");
+            pane.getChildren().clear();
             drawTasks(pro, pane);
-            if (useMonty) {
-                ((ListView<Task>) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
-                        .setItems(FXCollections.observableArrayList(ParseSequence.parseToSingleList(pro, true)));
-            } else if (pro.getRecommendedPath() != null && !pro.getRecommendedPath().equals("")) {
-                ((ListView<Task>) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
-                        .setItems(FXCollections.observableArrayList(ParseSequence.parseToSingleList(pro, true)));
-            } else
-                ((ListView) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
-                        .getItems().clear();
+        });
 
-            pane.getChildren().add(new Text(10, 10, "Time: " + pro.getDuration()));
-            drawEmployees();
-        }
+        rootPane.setOnKeyReleased(keyEvent -> {
+            if (keyEvent.isControlDown()) {
+                if (keyEvent.getText().equals("-")) {
+                    zoomOut(pro, pane, zoomFactorLabel);
+                } else if (keyEvent.getText().equals("+")) {
+                    zoomIn(pro, pane, zoomFactorLabel);
+                }
+                keyEvent.consume();
 
-        if (pro.getPossibleCompletions() != null) populateChart();
-
+            }
+        });
     }
 
     private void zoomOut(Project pro, AnchorPane pane, Label zoomFactorLabel) {
@@ -150,115 +98,7 @@ public class OutputTab {
         }
     }
 
-    private void drawEmployees() {
-        taskTableView.getItems().clear();
-        employeeTableView.getItems().clear();
-        taskTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().
-                stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
-        employeeTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getEmployeeList().stream().
-                filter(employee -> {
-                    if (employee.getProject() == null) return false;
-                    return employee.getProject().getId()
-                            == JavaFXMain.selectedProjectId;
-                }).collect(Collectors.toList())));
-
-    }
-
-    private void setupEmployees() {
-        taskTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
-        taskTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("employees"));
-
-        taskTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().
-                stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
-
-
-        employeeTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        employeeTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
-
-
-        TableColumn<Employee, String> column = (TableColumn<Employee, String>) employeeTableView.getColumns().get(1);
-        column.setCellValueFactory(cellData ->
-        {
-            if (cellData.getValue().getCurrentTask() != null && cellData.getValue().getCurrentTask().size() != 0)
-                return new SimpleStringProperty("Assigned");
-            return new SimpleStringProperty("Not assigned");
-        });
-
-        BorderPane borderPane = (BorderPane) rootPane.lookup("#employeesBorderPane");
-        VBox buttons = ((VBox) borderPane.getRight());
-
-        ((Button) buttons.getChildren().get(0)).setTooltip(new Tooltip("Assigns an selected employee to the selected task"));
-        buttons.getChildren().get(0).setOnMouseClicked(event -> assignEmployee());
-        ((Button) buttons.getChildren().get(1)).setTooltip(new Tooltip("Removes an selected employee for their task"));
-        buttons.getChildren().get(1).setOnMouseClicked(event -> unassignEmployee());
-
-    }
-
-
-    private void assignEmployee() {
-        if (taskTableView.getSelectionModel().getSelectedItem() == null) {
-            return;
-        }
-        if (employeeTableView.getSelectionModel().getSelectedItems() == null) {
-            return;
-        }
-
-        for (Employee employee : employeeTableView.getSelectionModel().getSelectedItems()) {
-            taskTableView.getSelectionModel().getSelectedItem().addEmployee(employee);
-        }
-
-
-        drawEmployees();
-    }
-
-    private void unassignEmployee() {
-        if (taskTableView.getSelectionModel().getSelectedItem() == null) {
-            return;
-        }
-        if (employeeTableView.getSelectionModel().getSelectedItems() == null) {
-            return;
-        }
-
-        for (Employee employee : employeeTableView.getSelectionModel().getSelectedItems()) {
-            taskTableView.getSelectionModel().getSelectedItem().getEmployees().remove(employee);
-            employee.getCurrentTask().remove(taskTableView.getSelectionModel().getSelectedItem());
-            DatabaseManager.updateEmployee(employee);
-        }
-
-        DatabaseManager.updateTask(taskTableView.getSelectionModel().getSelectedItem());
-
-        drawEmployees();
-    }
-
-    public void populateChart() {
-        Project pro = LocalObjStorage.getProjectList().stream()
-                .filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
-        assert pro != null;
-        barChart.getData().clear();
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Probabilities");
-        barChart.setAnimated(false);
-        List<Double> possibleCompletions = pro.getPossibleCompletions();
-        double total = possibleCompletions.stream().mapToDouble(value -> value).sum();
-        double sum = 0;
-        for (int i = 0; i < possibleCompletions.size(); i++) {
-            double percent = sum / total * 100;
-            sum += possibleCompletions.get(i);
-            if (percent > 1 && sum / total * 100 < 99)
-                series.getData().add(new XYChart.Data<>(i + "", percent));
-        }
-        barChart.getData().add(series);
-
-        series.getChart().getXAxis().setLabel("Working hours");
-        series.getChart().getYAxis().setLabel("Chance of completion");
-        for (XYChart.Data<String, Number> entry : series.getData()) {
-            Tooltip t = new Tooltip("Duration: " + entry.getXValue() + "\nChance: " + entry.getYValue().intValue() + "%");
-            t.setShowDelay(Duration.millis(15));
-            Tooltip.install(entry.getNode(), t);
-        }
-    }
-
-    private void drawTasks(Project pro, AnchorPane pane) {
+    public void drawTasks(Project pro, AnchorPane pane) {
         List<AnchorPane> anchorPanes = new ArrayList<>();
         List<List<Task>> taskListOfTasks = ParseSequence.parseToMultipleLists(pro);
         List<Shape> shapeList = new ArrayList<>();

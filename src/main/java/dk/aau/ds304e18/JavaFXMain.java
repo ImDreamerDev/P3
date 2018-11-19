@@ -2,14 +2,13 @@ package dk.aau.ds304e18;
 
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.ProjectManager;
-import dk.aau.ds304e18.ui.InputTab;
-import dk.aau.ds304e18.ui.OutputTab;
+import dk.aau.ds304e18.ui.input.InputTab;
+import dk.aau.ds304e18.ui.output.OutputTab;
 import dk.aau.ds304e18.ui.ProjectTab;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;

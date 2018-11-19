@@ -1,17 +1,16 @@
-package dk.aau.ds304e18.ui;
+package dk.aau.ds304e18.ui.input;
 
 import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.Maths;
 import dk.aau.ds304e18.math.Probabilities;
-import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.Sequence;
+import dk.aau.ds304e18.ui.output.OutputTab;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -34,8 +33,8 @@ public class InputTab {
     private TableView<Task> tableView;
     private TabPane tabPane;
     private ListView<Task> listViewDependency;
-    private TableView<Employee> employeeTableView;
-    private TableView<Employee> employeeProjectTableView;
+    private DependenciesPopup dependenciesPopup;
+    private EmployeeTab employeeTab;
 
     /**
      * @param rootPane  - This is the parent of all ui elements in the inputTab.
@@ -53,7 +52,7 @@ public class InputTab {
      * Uses the method disableInput - if the project is archived.
      * Uses the method enableInput - if the project is ongoing.
      */
-    void drawInputTab() {
+    public void drawInputTab() {
         if (JavaFXMain.selectedProjectId != 0 && LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getState()
                 == ProjectState.ARCHIVED)
             disableInput();
@@ -68,30 +67,10 @@ public class InputTab {
         dependencies.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
                 .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
                 .collect(Collectors.toList())));
-        drawEmployees();
+
+        employeeTab.drawEmployees();
         if (JavaFXMain.selectedProjectId != 0)
             outputTab.drawOutputTab(true);
-    }
-
-    void setupDependenciesPopup() {
-        TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
-        dependencies.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
-                .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
-                .collect(Collectors.toList())));
-        dependencies.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
-        dependencies.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
-        dependencies.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("estimatedTime"));
-        dependencies.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("priority"));
-        dependencies.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("probabilities"));
-        dependencies.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dependencies"));
-        dependencies.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
-        ((HBox) bar.getItems().get(0)).getChildren().get(0).setOnMouseClicked(event -> addDependency(dependencies.getSelectionModel().getSelectedItems()));
-        Button removeDep = (Button) ((HBox) bar.getItems().get(0)).getChildren().get(1);
-        removeDep.setOnMouseClicked(event -> removeDependency(dependencies.getSelectionModel().getSelectedItems()));
-        removeDep.setTooltip(new Tooltip("Removes the selected task from dependencies"));
-
-        ((HBox) bar.getItems().get(1)).getChildren().get(0).setOnMouseClicked(event -> closeDependenciesPopup());
     }
 
     /**
@@ -160,7 +139,7 @@ public class InputTab {
         probs6.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs6, newValue, false));
 
         ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(new Tooltip("Opens a list of tasks in the project to add as dependencies"));
-        buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> openDependenciesPopup());
+        buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> dependenciesPopup.openDependenciesPopup());
 
         ((Button) inputVBox.getChildren().get(13)).setTooltip(new Tooltip("Clears all the input fields"));
         inputVBox.getChildren().get(13).setOnMouseClicked(event -> clearInputFields(listViewDependency, probs1, probs2, probs3,
@@ -209,18 +188,9 @@ public class InputTab {
                 }
             }
         });
-        setupDependenciesPopup();
-        setupEmployees();
+        dependenciesPopup = new DependenciesPopup(rootPane, listViewDependency, taskDependencies);
+        employeeTab = new EmployeeTab(rootPane, outputTab);
         drawInputTab();
-    }
-
-
-    private void openDependenciesPopup() {
-        rootPane.getChildrenUnmodifiable().get(3).setVisible(true);
-    }
-
-    private void closeDependenciesPopup() {
-        rootPane.getChildrenUnmodifiable().get(3).setVisible(false);
     }
 
     /**
@@ -333,37 +303,6 @@ public class InputTab {
         drawInputTab();
     }
 
-    /**
-     * Method for revoming a dependency from the new task.
-     * This happens by selecting the task and pressing the remove button.
-     *
-     * @param selectedItems
-     */
-    private void removeDependency(ObservableList<Task> selectedItems) {
-        for (Task task : selectedItems) {
-            if (taskDependencies.contains(task)) {
-                taskDependencies.remove(task);
-                listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
-            }
-        }
-    }
-
-    /**
-     * Method for adding a dependency to a new task.
-     *
-     * @param tasks - The list of the tasks in the project.
-     */
-    private void addDependency(List<Task> tasks) {
-        if (tasks == null || tasks.size() == 0)
-            return;
-        for (Task task : tasks) {
-            if (!taskDependencies.contains(task)) {
-                taskDependencies.add(task);
-                listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
-            }
-        }
-        closeDependenciesPopup();
-    }
 
     /**
      * Method for removing a task. A task is selected in the table,
@@ -378,99 +317,6 @@ public class InputTab {
         DatabaseManager.removeTask(taskId);
         LocalObjStorage.getTaskList().remove(LocalObjStorage.getTaskById(taskId));
         drawInputTab();
-    }
-
-    private void setupEmployees() {
-        BorderPane borderPane = (BorderPane) rootPane.lookup("#employeesBorderpane");
-        VBox buttonPane = ((VBox) ((Pane) borderPane.getRight()).getChildren().get(0));
-        //Assign
-        ((Button) buttonPane.getChildren().get(0)).setTooltip(new Tooltip("Assigns an selected employee to the project"));
-        buttonPane.getChildren().get(0).setOnMouseClicked(event -> assignEmployee());
-        buttonPane.getChildren().get(0).setVisible(false);
-        //Unassign
-        ((Button) buttonPane.getChildren().get(1)).setTooltip(new Tooltip("Removes an selected employee from the project"));
-        buttonPane.getChildren().get(1).setOnMouseClicked(event -> unassignEmployee());
-
-
-        VBox inputVbox = (VBox) borderPane.getLeft();
-        TextField nameTextField = (TextField) inputVbox.getChildren().get(1);
-        //Add emp
-        ((Button) inputVbox.getChildren().get(2)).setTooltip(new Tooltip("Adds an employee to the system"));
-        inputVbox.getChildren().get(2).setOnMouseClicked(event -> addEmployee(nameTextField));
-
-
-        TabPane tabPane = (TabPane) borderPane.getCenter();
-        employeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(0).getContent()).getChildren().get(0);
-        employeeTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        employeeTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
-        employeeTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
-        employeeTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("currentTask"));
-        tabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.intValue() == 0) {
-                buttonPane.getChildren().get(0).setVisible(false);
-                buttonPane.getChildren().get(1).setVisible(true);
-            } else if (newValue.intValue() == 1) {
-                buttonPane.getChildren().get(0).setVisible(true);
-                buttonPane.getChildren().get(1).setVisible(false);
-            }
-        });
-        employeeProjectTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(1).getContent()).getChildren().get(0);
-        employeeProjectTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
-        employeeProjectTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
-        employeeProjectTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("currentTask"));
-        employeeProjectTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-
-    }
-
-    private void assignEmployee() {
-        if (employeeProjectTableView.getSelectionModel().getSelectedItems() == null
-                && employeeProjectTableView.getSelectionModel().getSelectedItems().size() == 0) {
-            return;
-        }
-        LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).addNewEmployee(employeeProjectTableView.getSelectionModel().getSelectedItems());
-        drawEmployees();
-        outputTab.drawOutputTab(false);
-    }
-
-    private void unassignEmployee() {
-        if (employeeTableView.getSelectionModel().getSelectedItems() == null
-                && employeeTableView.getSelectionModel().getSelectedItems().size() == 0) {
-            return;
-        }
-        for (Employee employee : employeeTableView.getSelectionModel().getSelectedItems()) {
-            for (Task task : employee.getCurrentTask()) {
-                task.getEmployees().remove(employee);
-                DatabaseManager.updateTask(task);
-            }
-            LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).removeEmployee(employee);
-
-        }
-
-        drawEmployees();
-        outputTab.drawOutputTab(false);
-    }
-
-    private void drawEmployees() {
-        employeeTableView.getItems().clear();
-        employeeProjectTableView.getItems().clear();
-        employeeTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getEmployeeList().stream().
-                filter(employee -> {
-                    if (employee.getProject() == null) return false;
-                    return employee.getProject().getId()
-                            == JavaFXMain.selectedProjectId;
-                }).collect(Collectors.toList())));
-        employeeProjectTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getEmployeeList().
-                stream().filter(emp -> emp.getProject() == null || emp.getProject().getId()
-                != JavaFXMain.selectedProjectId).collect(Collectors.toList())));
-    }
-
-    private void addEmployee(TextField name) {
-        if (!name.getText().equals("")) {
-            new Employee(name.getText(), LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
-            drawEmployees();
-            name.clear();
-        }
     }
 
     /**
