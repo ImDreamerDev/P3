@@ -60,17 +60,21 @@ public class ProjectTab {
         createButton.setOnMouseClicked(event ->
                 createProject(((TextField) projectToolBar.getChildrenUnmodifiable().get(1))));
 
-        Button archiveButton = ((Button) projectToolBar.getChildren().get(5));
+        HBox projectToolBar2 = ((HBox) rootPane.lookup("#projectToolbar2"));
+
+        Button archiveButton = ((Button) projectToolBar2.getChildren().get(0));
         archiveButton.setTooltip(new Tooltip("Archives the selected project"));
         archiveButton.setOnMouseClicked(event -> archiveProject());
 
-        CheckBox showArchived = ((CheckBox) rootPane.lookup("#showArchivedCheckbox"));
+        TextField searchField = ((TextField) projectToolBar2.getChildren().get(2));
+        searchField.setPromptText("Search here!");
+        searchField.setOnKeyReleased(keyEvent -> search(searchField));
+
+        CheckBox showArchived = ((CheckBox) projectToolBar2.getChildren().get(3));
         showArchived.selectedProperty().addListener((ov, old_val, new_val) -> onShowArchived(new_val));
         showArchived.setSelected(false);
 
-        TextField searchField = ((TextField) projectToolBar.getChildren().get(7));
-        searchField.setPromptText("Search here!");
-        searchField.setOnKeyReleased(keyEvent -> search(searchField, showArchived));
+
     }
 
     /**
@@ -115,10 +119,9 @@ public class ProjectTab {
     /**
      * Method for searching for projects using the text box
      *
-     * @param searchField  - the input field for the text.
-     * @param showArchived - if the show archived box is toggled or not.
+     * @param searchField - the input field for the text.
      */
-    private void search(TextField searchField, CheckBox showArchived) {
+    private void search(TextField searchField) {
         if (isFirstLetter(searchField.getText())) {
             flProjects.setPredicate(p -> Integer.toString(p.getId()).contains(searchField.getText().toLowerCase().trim()));
         } else
