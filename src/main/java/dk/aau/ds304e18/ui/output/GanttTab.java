@@ -18,7 +18,9 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -100,6 +102,10 @@ public class GanttTab {
         int y = 0;
 
         for (Task task : sortedTask) {
+            //We don't want to draw anything if any of the tasks does not have a set time yet.
+            if (task.getStartTime() < 0) return;
+
+
             AnchorPane taskBox = new AnchorPane();
             AtomicReference<Double> xVar = new AtomicReference<>((double) 0);
 
@@ -164,13 +170,13 @@ public class GanttTab {
         }));
 
 
-        for (
-                Task task : taskToAP.keySet()) {
+        for (Task task : taskToAP.keySet()) {
             List<Task> dependencies = task.getDependencies();
             if (dependencies != null && dependencies.size() != 0) {
                 AtomicInteger depNum = new AtomicInteger(0);
                 dependencies.forEach(depTask -> {
-                    int numDependantOfTHisTask = numberOfTasksDependingOnTask.get(depTask).get() - numberOfTimesLineHasBeenDrawnForTask.get(depTask).incrementAndGet();
+                    int numDependantOfTHisTask = numberOfTasksDependingOnTask.get(depTask).get()
+                            - numberOfTimesLineHasBeenDrawnForTask.get(depTask).incrementAndGet();
 
                     AnchorPane startAncPane = taskToAP.get(depTask);
                     AnchorPane endAncPane = taskToAP.get(task);
@@ -184,7 +190,8 @@ public class GanttTab {
                     int pixelsBetweenVerticalLines = 4;
 
                     //To kinda ensure EVERYTHING isn't drawn on top of each other
-                    if (sy - (numDependantOfTHisTask * pixelsBetweenLines) < (sy - ((Rectangle) startAncPane.getChildrenUnmodifiable().get(0)).getHeight() / 2))
+                    if (sy - (numDependantOfTHisTask * pixelsBetweenLines) <
+                            (sy - ((Rectangle) startAncPane.getChildrenUnmodifiable().get(0)).getHeight() / 2))
                         sy = startAncPane.getLayoutY() + (numDependantOfTHisTask * pixelsBetweenLines);
                     else
                         sy -= (numDependantOfTHisTask * pixelsBetweenLines);
