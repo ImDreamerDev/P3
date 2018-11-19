@@ -149,7 +149,7 @@ public class MonteCarlo {
     /**
      * If you have a project you want to estimate the time in with random sequences
      *
-     * @param project The project you want etimated
+     * @param project The project you want estimated
      * @param random  Want to specify that it's random sequences
      * @param index   The index we're at in the random sequences
      * @return The estimated time
