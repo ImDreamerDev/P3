@@ -1,4 +1,4 @@
-package dk.aau.ds304e18.sequence;
+package dk.aau.ds304e18.estimatetime;
 
 import dk.aau.ds304e18.models.Task;
 

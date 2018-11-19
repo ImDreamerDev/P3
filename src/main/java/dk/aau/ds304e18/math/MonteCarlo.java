@@ -1,9 +1,13 @@
-package dk.aau.ds304e18.sequence;
+package dk.aau.ds304e18.math;
 
+import dk.aau.ds304e18.estimatetime.Estimate;
+import dk.aau.ds304e18.estimatetime.EstimateTimeCallable;
 import dk.aau.ds304e18.math.Maths;
 import dk.aau.ds304e18.math.CalculateLambda;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
+import dk.aau.ds304e18.sequence.ParseSequence;
+import dk.aau.ds304e18.sequence.Sequence;
 
 import java.util.ArrayList;
 import java.util.Collections;

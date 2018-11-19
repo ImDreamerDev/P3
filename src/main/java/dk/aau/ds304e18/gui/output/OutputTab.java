@@ -1,12 +1,10 @@
-package dk.aau.ds304e18.ui.output;
+package dk.aau.ds304e18.gui.output;
 
 import dk.aau.ds304e18.JavaFXMain;
-import dk.aau.ds304e18.LocalObjStorage;
+import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
-import dk.aau.ds304e18.ui.output.AssignmentTab;
-import dk.aau.ds304e18.ui.output.GanttTab;
 import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;

@@ -1,10 +1,11 @@
 package dk.aau.ds304e18;
 
 import dk.aau.ds304e18.database.DatabaseManager;
-import dk.aau.ds304e18.ui.Login;
-import dk.aau.ds304e18.ui.input.InputTab;
-import dk.aau.ds304e18.ui.output.OutputTab;
-import dk.aau.ds304e18.ui.ProjectTab;
+import dk.aau.ds304e18.database.LocalObjStorage;
+import dk.aau.ds304e18.gui.Login;
+import dk.aau.ds304e18.gui.input.InputTab;
+import dk.aau.ds304e18.gui.output.OutputTab;
+import dk.aau.ds304e18.gui.ProjectTab;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;

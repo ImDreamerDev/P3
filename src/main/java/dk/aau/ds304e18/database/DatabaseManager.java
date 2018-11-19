@@ -1,6 +1,5 @@
 package dk.aau.ds304e18.database;
 
-import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.models.*;
 import org.postgresql.util.PSQLException;
 

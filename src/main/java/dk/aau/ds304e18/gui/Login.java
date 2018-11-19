@@ -1,11 +1,11 @@
-package dk.aau.ds304e18.ui;
+package dk.aau.ds304e18.gui;
 
 import dk.aau.ds304e18.JavaFXMain;
-import dk.aau.ds304e18.LocalObjStorage;
+import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.ProjectManager;
-import dk.aau.ds304e18.ui.input.InputTab;
-import dk.aau.ds304e18.ui.output.OutputTab;
+import dk.aau.ds304e18.gui.input.InputTab;
+import dk.aau.ds304e18.gui.output.OutputTab;
 import javafx.concurrent.Task;
 import javafx.geometry.Side;
 import javafx.scene.Parent;

@@ -1,7 +1,7 @@
-package dk.aau.ds304e18.ui.input;
+package dk.aau.ds304e18.gui.input;
 
 import dk.aau.ds304e18.JavaFXMain;
-import dk.aau.ds304e18.LocalObjStorage;
+import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.Maths;
 import dk.aau.ds304e18.math.Probabilities;
@@ -33,7 +33,7 @@ public class InputTab {
     public EmployeeTab employeeTab;
 
     /**
-     * @param rootPane - This is the parent of all ui elements in the inputTab.
+     * @param rootPane - This is the parent of all gui elements in the inputTab.
      */
     public InputTab(Parent rootPane) {
         this.rootPane = rootPane;
@@ -42,7 +42,7 @@ public class InputTab {
     }
 
     /**
-     * The method that draws the inputTab. If the project is ongoing you can interact with the ui, if it isn't you cannot.
+     * The method that draws the inputTab. If the project is ongoing you can interact with the gui, if it isn't you cannot.
      * Uses the method disableInput - if the project is archived.
      * Uses the method enableInput - if the project is ongoing.
      */
@@ -68,7 +68,7 @@ public class InputTab {
     }
 
     /**
-     * Method that disables the interaction with the ui on the inputTab.
+     * Method that disables the interaction with the gui on the inputTab.
      */
     private void disableInput() {
         BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));

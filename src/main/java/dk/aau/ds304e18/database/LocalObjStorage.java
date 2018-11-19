@@ -1,4 +1,4 @@
-package dk.aau.ds304e18;
+package dk.aau.ds304e18.database;
 
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;

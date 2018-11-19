@@ -1,5 +1,6 @@
 package dk.aau.ds304e18.sequence;
 
+import dk.aau.ds304e18.math.MonteCarlo;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 
@@ -8,7 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static dk.aau.ds304e18.sequence.MonteCarlo.findFastestSequence;
+import static dk.aau.ds304e18.math.MonteCarlo.findFastestSequence;
 import static dk.aau.ds304e18.sequence.ParseSequence.unparseList;
 
 public class Sequence {

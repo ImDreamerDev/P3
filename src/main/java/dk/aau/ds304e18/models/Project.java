@@ -1,6 +1,6 @@
 package dk.aau.ds304e18.models;
 
-import dk.aau.ds304e18.LocalObjStorage;
+import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 
 import java.util.ArrayList;
