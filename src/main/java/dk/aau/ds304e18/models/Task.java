@@ -95,6 +95,7 @@ public class Task {
         this.project = project;
         DatabaseManager.addTask(this);
         this.project.addNewTask(this);
+        this.startTime = -1d;
     }
 
 
