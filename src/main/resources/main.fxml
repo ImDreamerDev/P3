@@ -78,19 +78,26 @@
                             <Insets top="5.0" />
                         </HBox.margin>
                     </Label>
-                    <Button mnemonicParsing="false" text="Archive Project">
-                        <HBox.margin>
-                            <Insets left="40.0" />
-                        </HBox.margin>
-                    </Button>
-                    <Label prefHeight="24.0" prefWidth="43.0" text="Search:" />
-                    <TextField prefHeight="10.0" prefWidth="141.0" />
-                    <CheckBox id="showArchivedCheckbox" mnemonicParsing="false" text="Show Archived">
-                        <HBox.margin>
-                            <Insets left="10.0" top="4.0" />
-                        </HBox.margin>
-                    </CheckBox>
                 </HBox>
+            <HBox id="projectToolbar2" alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="1280.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+               <children>
+                       <Button mnemonicParsing="false" text="Archive Project">
+                           <HBox.margin>
+                               <Insets left="40.0" />
+                           </HBox.margin>
+                       </Button>
+                       <Label prefHeight="24.0" prefWidth="43.0" text="Search:">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin></Label>
+                       <TextField prefHeight="10.0" prefWidth="141.0" />
+                       <CheckBox id="showArchivedCheckbox" mnemonicParsing="false" text="Show Archived">
+                           <HBox.margin>
+                               <Insets left="10.0" top="4.0" />
+                           </HBox.margin>
+                       </CheckBox>
+               </children>
+            </HBox>
                 <TableView fx:id="projectView" layoutY="39.0" prefHeight="304.0" prefWidth="1191.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                     <columns>
                         <TableColumn id="idCol" prefWidth="39.0" text="Id" />
