@@ -118,10 +118,10 @@ public class MonteCarlo {
 
         project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(tempI));
         for(Task task : ParseSequence.parseToSingleList(project, true)) {
-            task.setStartTime(task.getStartTimeList().get(tempI));
-            task.setEndTime(task.getEndTimeList().get(tempI));
-            System.out.println(task.getName() + ": " + task.getStartTime()/10000);
-            System.out.println(task.getName() + ": " + task.getEndTime()/10000);
+            task.setStartTime(task.getStartTimeList().get(tempI)/monteCarloRepeats);
+            task.setEndTime(task.getEndTimeList().get(tempI)/monteCarloRepeats);
+            System.out.println(task.getName() + ": " + task.getStartTime());
+            System.out.println(task.getName() + ": " + task.getEndTime());
         }
 
         //Set the variables to correct stuff
