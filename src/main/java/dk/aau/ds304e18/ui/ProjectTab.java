@@ -53,7 +53,7 @@ public class ProjectTab {
                     tabPane.getSelectionModel().select(tabPane.getTabs().get(1));
             }
         });
-
+        tableView.getSortOrder().add(tableView.getColumns().get(0));
 
         Button createButton = ((Button) projectToolBar.getChildren().get(2));
         createButton.setTooltip(new Tooltip("Creates a new project with the selected name"));
@@ -124,8 +124,7 @@ public class ProjectTab {
         } else
             flProjects.setPredicate(p -> p.getName().toLowerCase().contains(searchField.getText().toLowerCase().trim()));
 
-        showArchived.setSelected(!showArchived.isSelected());
-        showArchived.setSelected(!showArchived.isSelected());
+        tableView.setItems(flProjects);
     }
 
     /**
@@ -173,6 +172,8 @@ public class ProjectTab {
             tableView.setItems(FXCollections.observableArrayList(sortedList.stream()
                     .filter(project -> project.getCreator() != null && project.getCreator().getId()
                             == projectManager.getId()).collect(Collectors.toList())));
+
+        tableView.getSortOrder().add(tableView.getColumns().get(0));
     }
 
     /**

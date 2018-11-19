@@ -105,6 +105,8 @@ public class EmployeeTab {
         employeeProjectTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getEmployeeList().
                 stream().filter(emp -> emp.getProject() == null || emp.getProject().getId()
                 != JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+        employeeProjectTableView.getSortOrder().add(employeeProjectTableView.getColumns().get(0));
+        employeeTableView.getSortOrder().add(employeeTableView.getColumns().get(0));
     }
 
     private void addEmployee(TextField name) {

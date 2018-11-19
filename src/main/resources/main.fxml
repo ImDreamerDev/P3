@@ -73,14 +73,14 @@
                             <Insets top="-3.0" />
                         </HBox.margin>
                     </Separator>
-                    <Label prefHeight="17.0" prefWidth="126.0" text="Selected: ">
+                    <Label prefHeight="17.0" prefWidth="355.0" text="Selected: ">
                         <HBox.margin>
                             <Insets top="5.0" />
                         </HBox.margin>
                     </Label>
                     <Button mnemonicParsing="false" text="Archive Project">
                         <HBox.margin>
-                            <Insets left="200.0" />
+                            <Insets left="40.0" />
                         </HBox.margin>
                     </Button>
                     <Label prefHeight="24.0" prefWidth="43.0" text="Search:" />

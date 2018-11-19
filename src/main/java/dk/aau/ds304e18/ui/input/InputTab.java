@@ -302,6 +302,8 @@ public class InputTab {
     }
 
     private void editTask(ListView<Task> listViewDependency, TextField... textFields) {
+        if (tableView.getSelectionModel().getSelectedIndex() == -1)
+            return;
         int taskId = (int) ((TableColumn) tableView.getColumns().get(0)).
                 getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
         Task task = LocalObjStorage.getTaskById(taskId);
@@ -354,5 +356,6 @@ public class InputTab {
         tableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("priority"));
         tableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("probabilities"));
         tableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dependencies"));
+        tableView.getSortOrder().add(tableView.getColumns().get(0));
     }
 }
