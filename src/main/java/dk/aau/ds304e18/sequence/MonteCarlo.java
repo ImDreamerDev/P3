@@ -117,6 +117,10 @@ public class MonteCarlo {
         System.out.println(project.getTempPossibleCompletions().get(tempI));
 
         project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(tempI));
+        for(Task task : project.getTasks()) {
+            task.setStartTime(task.getStartTimeList().get(tempI));
+            System.out.println(task.getStartTime());
+        }
 
         //Set the variables to correct stuff
         bestTime = Collections.min(time);
@@ -170,6 +174,8 @@ public class MonteCarlo {
     public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index) {
         //Adds a list to the index of the possibleCompletions list on the project
         project.getTempPossibleCompletions().add(index, new ArrayList<>());
+        for(Task task : project.getTasks())
+            task.getStartTimeList().add(index, 0d);
         //Gets the task list from the project
         List<Task> taskList = ParseSequence.parseToSingleList(project, false, random, index);
         //For each task in taskList
@@ -194,7 +200,7 @@ public class MonteCarlo {
         //Create MyCallable instance
         for (int i = 0; i < numOfThreads; i++) {
             Callable<Estimate> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(),
-                    numOfThreads, monteCarloRepeats);
+                    numOfThreads, monteCarloRepeats, index);
             //submit Callable tasks to be executed by thread pool
             Future<Estimate> future = executor.submit(callable);
             //add Future to the list, we can get return value using Future
@@ -208,6 +214,8 @@ public class MonteCarlo {
                 // because Future.get() waits for task to get completed
                 duration = duration + fut.get().getDuration();
                 tempList = fut.get().getChances();
+                for(Task task : project.getTasks())
+                    task.getStartTimeList().set(index, task.getStartTimeList().get(index) + fut.get().getStartTimes().get(task));
 
                 while (project.getTempPossibleCompletions().get(index).size() < tempList.size())
                     project.getTempPossibleCompletions().get(index).add(0d);

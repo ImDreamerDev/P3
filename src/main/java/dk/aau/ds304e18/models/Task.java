@@ -5,7 +5,6 @@ import dk.aau.ds304e18.math.Probabilities;
 
 import javax.xml.stream.events.StartDocument;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,6 +34,11 @@ public class Task {
      * Start time of the task
      */
     private double startTime;
+
+    /**
+     * Start time of the task, but in a list so we can have more than one
+     */
+    private List<Double> startTimeList = new ArrayList<>();
 
     /**
      * The estimated lambda value for the inverse gaussian
@@ -313,5 +317,13 @@ public class Task {
      */
     public void setStartTime(double startTime) {
         this.startTime = startTime;
+    }
+
+    /**
+     * The getter for the startTimeList
+     * @return startTimeList
+     */
+    public List<Double> getStartTimeList() {
+        return startTimeList;
     }
 }
