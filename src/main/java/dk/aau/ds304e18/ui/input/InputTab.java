@@ -19,6 +19,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 
+import javax.swing.*;
+import javax.swing.plaf.BorderUIResource;
+import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -153,6 +156,17 @@ public class InputTab {
 
         ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).setTooltip(new Tooltip("Adds the task to the project"));
         ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0).setOnMouseClicked(event -> {
+
+            Border defaultBorder = probs3.getBorder();
+            if((probs1.getText().equals("") || probs2.getText().equals("")) && (probs3.getText().equals("") || probs4.getText().equals("")) && (probs5.getText().equals("") || probs6.getText().equals(""))){
+                probs1.setStyle("-fx-border-color: #ff3e12");
+                probs2.setStyle("-fx-border-color:  #ff3e12");
+                return;
+            } else {
+                probs1.setBorder(defaultBorder);
+                probs2.setBorder(defaultBorder);
+            }
+
             List<Probabilities> probabilities = new ArrayList<>();
             if (!probs1.getText().equals(""))
                 probabilities.add(new Probabilities(Double.parseDouble(probs1.getText()), Maths.clamp(Double.parseDouble(probs2.getText()), 0.0, 100.0)));
