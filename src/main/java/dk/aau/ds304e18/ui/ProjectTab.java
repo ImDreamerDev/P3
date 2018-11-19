@@ -96,7 +96,12 @@ public class ProjectTab {
      * @param projectName - the name of the project.
      */
     private void createProject(TextField projectName) {
-        new Project(projectName.getText(), projectManager);
+        if (projectName.getText().isBlank()) {
+            projectName.setStyle("-fx-border-color: red");
+            return;
+        }
+        projectName.setStyle("");
+        new Project(projectName.getText().trim(), projectManager);
         projectName.clear();
         sortedList = updateProjects();
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
