@@ -221,7 +221,8 @@ public class InputTab {
         JavaFXMain.outputTab.drawOutputTab(useMonty);
         drawInputTab();
         tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
-        JavaFXMain.outputTab.populateChart();
+        outputTab.populateChart();
+        project.getTasks().forEach(DatabaseManager::updateTask);
     }
 
     /**
