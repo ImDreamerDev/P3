@@ -24,6 +24,7 @@ public class EmployeeTab {
     public EmployeeTab(Parent rootPane) {
         BorderPane borderPane = (BorderPane) rootPane.lookup("#employeesBorderpane");
         VBox buttonPane = ((VBox) ((Pane) borderPane.getRight()).getChildren().get(0));
+
         //Assign
         ((Button) buttonPane.getChildren().get(0)).setTooltip(new Tooltip("Assigns an selected employee to the project"));
         buttonPane.getChildren().get(0).setOnMouseClicked(event -> assignEmployee());
@@ -32,15 +33,19 @@ public class EmployeeTab {
         ((Button) buttonPane.getChildren().get(1)).setTooltip(new Tooltip("Removes an selected employee from the project"));
         buttonPane.getChildren().get(1).setOnMouseClicked(event -> unassignEmployee());
 
-
         VBox inputVBox = (VBox) borderPane.getLeft();
+
         TextField nameTextField = (TextField) inputVBox.getChildren().get(1);
+
         //Add emp
         ((Button) inputVBox.getChildren().get(2)).setTooltip(new Tooltip("Adds an employee to the system"));
         inputVBox.getChildren().get(2).setOnMouseClicked(event -> addEmployee(nameTextField));
 
 
         TabPane tabPane = (TabPane) borderPane.getCenter();
+        ((TabPane) borderPane.getCenter()).getTabs().get(0).setTooltip(new Tooltip("Page with all employees assigned to the selected project"));
+        ((TabPane) borderPane.getCenter()).getTabs().get(1).setTooltip(new Tooltip("Page with all the available employees"));
+
         employeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(0).getContent()).getChildren().get(0);
         employeeTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         employeeTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));

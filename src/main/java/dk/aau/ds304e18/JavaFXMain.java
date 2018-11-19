@@ -47,6 +47,11 @@ public class JavaFXMain extends Application {
 
         loginScreen = new Login(image, rootPane);
 
+        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).setTooltip(new Tooltip("The page with all the projects"));
+        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(1).setTooltip(new Tooltip("The page to input tasks and employees to the selected project"));
+        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setTooltip(new Tooltip("The page with the result of the selected project"));
+
+
         //Update button
         ((Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1)).setTooltip(new Tooltip("Updates the program"));
         ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1).setOnMouseClicked(event -> {
@@ -60,9 +65,13 @@ public class JavaFXMain extends Application {
                 outputTab = new OutputTab(rootPane);
                 inputTab = new InputTab(rootPane);
                 projectTab = new ProjectTab(rootPane, LocalObjStorage.getProjectManager().get(0));
+
+
+
                 ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getSelectionModel().select(0);
                 ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(1).setDisable(true);
                 ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setDisable(true);
+
             });
             voidTask.setOnFailed(observable -> bar.setStyle("-fx-progress-color: red"));
             new Thread(voidTask).start();
