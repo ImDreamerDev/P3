@@ -3,6 +3,7 @@ package dk.aau.ds304e18.models;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.Probabilities;
 
+import javax.xml.stream.events.StartDocument;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -85,7 +86,8 @@ public class Task {
 
 
     public Task(int id, String name, double estimatedTime, int priority,
-                List<Integer> dependencyIds, List<Integer> employeeIds, int projectId, List<Probabilities> probabilities) {
+                List<Integer> dependencyIds, List<Integer> employeeIds, int projectId,
+                List<Probabilities> probabilities, double startTime) {
         this.name = name;
         this.id = id;
         this.estimatedTime = estimatedTime;
@@ -94,6 +96,7 @@ public class Task {
         this.employeeIds.addAll(employeeIds);
         this.projectId = projectId;
         this.probabilities.addAll(probabilities);
+        this.startTime = startTime;
     }
 
     /**
