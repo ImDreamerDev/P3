@@ -40,6 +40,16 @@ public class Task {
     private final List<Double> startTimeList = new ArrayList<>();
 
     /**
+     * End time of the task
+     */
+    private double endTime;
+
+    /**
+     * End time of the task, but in a list so we can have more than one
+     */
+    private List<Double> endTimeList = new ArrayList<>();
+
+    /**
      * The estimated lambda value for the inverse gaussian
      */
     private double lambda = -1;
@@ -312,7 +322,7 @@ public class Task {
 
     /**
      * The setter for startTime
-     * @param startTime - the time where a task starts
+     * @param startTime - the time where the task starts
      */
     public void setStartTime(double startTime) {
         this.startTime = startTime;
@@ -324,5 +334,29 @@ public class Task {
      */
     public List<Double> getStartTimeList() {
         return startTimeList;
+    }
+
+    /**
+     * The getter for endTime
+     * @return endTime
+     */
+    public double getEndTime() {
+        return endTime;
+    }
+
+    /**
+     * The setter for the endTime
+     * @param endTime - the time where the task ends
+     */
+    public void setEndTime(double endTime) {
+        this.endTime = endTime;
+    }
+
+    /**
+     * The getter for the endTimeList
+     * @return endTimeList
+     */
+    public List<Double> getEndTimeList() {
+        return endTimeList;
     }
 }

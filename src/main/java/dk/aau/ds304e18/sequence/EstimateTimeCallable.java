@@ -24,6 +24,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
     public Estimate call() {
         List<Double> chances = new ArrayList<>();
         HashMap<Task, Double> taskStartAt = new HashMap<>();
+        HashMap<Task, Double> taskEndAt = new HashMap<>();
 
         double duration = 0.0;
         int repeats = numOfMonte / numOfThreads;
@@ -60,10 +61,11 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
                                 temp = true;
 
-                                if (taskStartAt.containsKey(task))
-                                    taskStartAt.put(task, taskStartAt.get(task) + durations.get(j) / numOfMonte);
-                                else
-                                    taskStartAt.put(task, durations.get(j) / numOfMonte);
+                                if(taskStartAt.containsKey(task)) {
+                                    taskStartAt.put(task, taskStartAt.get(task) + durations.get(j));
+                                } else {
+                                    taskStartAt.put(task, durations.get(j));
+                                }
 
                                 //Create a random double between 0 and 100
                                 double rand = random.nextDouble() * 100;
@@ -73,6 +75,12 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
                                 //Calculate the duration at the given random value and add that to duration
                                 durations.set(j, durations.get(j) + invG.getDuration(rand));
+
+                                if(taskEndAt.containsKey(task)) {
+                                    taskEndAt.put(task, taskEndAt.get(task) + durations.get(j));
+                                } else {
+                                    taskEndAt.put(task, durations.get(j));
+                                }
 
                                 taskDoneAt.put(task, durations.get(j));
                                 tasksDone.add(task);
@@ -114,11 +122,11 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                     //Create a random double between 0 and 100
                     double rand = random.nextDouble() * 100;
 
-                    //Adds start point of task
-                    if (taskStartAt.containsKey(task))
-                        taskStartAt.put(task, taskStartAt.get(task) + currentTime / numOfMonte);
+                    //Adds startpoint of task
+                    if(taskStartAt.containsKey(task))
+                        taskStartAt.put(task, taskStartAt.get(task) + currentTime);
                     else
-                        taskStartAt.put(task, currentTime / numOfMonte);
+                        taskStartAt.put(task, currentTime);
 
                     //Create an inverse gaussian distribution for the task
                     invG.setParams(task.getEstimatedTime(), task.getLambda());
@@ -127,6 +135,12 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                     double temp = invG.getDuration(rand);
                     duration += temp;
                     currentTime += temp;
+
+                    if(taskEndAt.containsKey(task)) {
+                        taskEndAt.put(task, taskEndAt.get(task) + currentTime);
+                    } else {
+                        taskEndAt.put(task, currentTime);
+                    }
                 }
             }
 
@@ -141,6 +155,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
         }
         //Also send the start time of each task back
-        return new Estimate(chances, taskStartAt, duration);
+        final Estimate estimate = new Estimate(chances, taskStartAt, taskEndAt, duration);
+        return estimate;
     }
 }
