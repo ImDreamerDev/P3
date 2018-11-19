@@ -12,9 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class DatabaseManagerTest {
 
@@ -116,11 +114,4 @@ class DatabaseManagerTest {
         DatabaseManager.query("DELETE FROM projects WHERE id = " + testProj.getId());
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
-
-    /*@Test
-    void testGetAllTasks() {
-        DatabaseManager.distributeModels();
-    }*/
-
-
 }
