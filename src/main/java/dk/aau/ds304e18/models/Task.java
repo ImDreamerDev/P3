@@ -31,6 +31,11 @@ public class Task {
     private double estimatedTime;
 
     /**
+     * Start time of the task
+     */
+    private double startTime;
+
+    /**
      * The estimated lambda value for the inverse gaussian
      */
     private double lambda = -1;
@@ -289,5 +294,21 @@ public class Task {
     @Override
     public String toString() {
         return name;
+    }
+
+    /**
+     * The getter for startTime
+     * @return startTime
+     */
+    public double getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * The setter for startTime
+     * @param startTime - the time where a task starts
+     */
+    public void setStartTime(double startTime) {
+        this.startTime = startTime;
     }
 }
