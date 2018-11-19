@@ -118,6 +118,11 @@ public class InputTab {
         HBox probsHBox2 = ((HBox) inputVBox.getChildren().get(8));
         HBox probsHBox3 = ((HBox) inputVBox.getChildren().get(9));
         listViewDependency = ((ListView<Task>) inputVBox.getChildren().get(11));
+        listViewDependency.setOnMouseClicked(event -> {
+            if (event.getClickCount() > 1) {
+                dependenciesPopup.openDependenciesPopup();
+            }
+        });
         HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
 
 
