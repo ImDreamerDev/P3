@@ -8,6 +8,7 @@ import dk.aau.ds304e18.ui.ProjectTab;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -59,7 +60,9 @@ public class JavaFXMain extends Application {
                 outputTab = new OutputTab(rootPane);
                 inputTab = new InputTab(rootPane);
                 projectTab = new ProjectTab(rootPane, LocalObjStorage.getProjectManager().get(0));
-                rootPane.getChildrenUnmodifiable().get(2).setVisible(false);
+                ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getSelectionModel().select(0);
+                ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(1).setDisable(true);
+                ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setDisable(true);
             });
             voidTask.setOnFailed(observable -> bar.setStyle("-fx-progress-color: red"));
             new Thread(voidTask).start();
