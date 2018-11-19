@@ -463,7 +463,7 @@ class TaskTest {
 
         employeeIds.add(newEmployee.getId());
 
-        Task newTask = new Task(1, "Task", 1, 2, dependencyIds, employeeIds, newProject.getId(), probabilities);
+        Task newTask = new Task(1, "Task", 1, 2, dependencyIds, employeeIds, newProject.getId(), probabilities, 1);
 
         assertEquals(10, newTask.getEmployeeIds().get(0).intValue());
     }
@@ -489,7 +489,7 @@ class TaskTest {
 
         dependencyIds.add(dependency.getId());
 
-        Task newTask = new Task(1, "Task", 1, 2, dependencyIds, employeeIds, newProject.getId(), probabilities);
+        Task newTask = new Task(1, "Task", 1, 2, dependencyIds, employeeIds, newProject.getId(), probabilities, -1);
 
         assertEquals(1, newTask.getDependencyIds().get(0).intValue());
     }
