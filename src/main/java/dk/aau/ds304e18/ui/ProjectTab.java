@@ -5,7 +5,6 @@ import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.ProjectState;
-import dk.aau.ds304e18.ui.input.InputTab;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;

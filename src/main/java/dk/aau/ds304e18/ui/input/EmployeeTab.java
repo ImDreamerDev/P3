@@ -5,7 +5,6 @@ import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Task;
-import dk.aau.ds304e18.ui.output.OutputTab;
 import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.control.*;

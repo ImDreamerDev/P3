@@ -3,7 +3,6 @@ package dk.aau.ds304e18.models;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.Probabilities;
 
-import javax.xml.stream.events.StartDocument;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
