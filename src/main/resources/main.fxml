@@ -189,7 +189,7 @@
                                                     <Insets bottom="5.0" left="10.0" right="10.0" />
                                                 </padding>
                                                 <Label text="No. of employees" />
-                                                <TextField>
+                                                <TextField promptText="No. of employees">
                                                     <VBox.margin>
                                                         <Insets left="3.0" right="3.0" top="-20.0" />
                                                     </VBox.margin>

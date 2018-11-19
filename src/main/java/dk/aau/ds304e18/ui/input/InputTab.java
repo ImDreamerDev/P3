@@ -19,7 +19,6 @@ import javafx.scene.layout.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,8 +89,6 @@ public class InputTab {
         ((TabPane) flowPane.getParent().getParent().getParent()).getTabs().get(1).setDisable(false);
     }
 
-    List<TextField> textFields = new ArrayList<>();
-
     /**
      * The method that sets up the contents of the whole input tab.
      */
@@ -128,25 +125,25 @@ public class InputTab {
         HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
 
 
-        priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true, false));
+        priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true));
         estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) ->
-                validateNumericInput(estimatedTimeTextField, newValue, false, false));
+                validateNumericInput(estimatedTimeTextField, newValue, false));
 
 
         TextField duration1 = ((TextField) probabilityHBox.getChildren().get(0));
-        duration1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration1, newValue, false, true));
+        duration1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration1, newValue, false));
         TextField probability1 = ((TextField) probabilityHBox.getChildren().get(1));
-        probability1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability1, newValue, false, true));
+        probability1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability1, newValue, false));
 
         TextField duration2 = ((TextField) probabilityHBox2.getChildren().get(0));
-        duration2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration2, newValue, false, true));
+        duration2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration2, newValue, false));
         TextField probability2 = ((TextField) probabilityHBox2.getChildren().get(1));
-        probability2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability2, newValue, false, true));
+        probability2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability2, newValue, false));
 
         TextField duration3 = ((TextField) probabilityHBox3.getChildren().get(0));
-        duration3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration3, newValue, false, true));
+        duration3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration3, newValue, false));
         TextField probability3 = ((TextField) probabilityHBox3.getChildren().get(1));
-        probability3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability3, newValue, false, true));
+        probability3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability3, newValue, false));
 
         ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(new Tooltip("Opens a list of tasks in the project to add as dependencies"));
         buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> dependenciesPopup.openDependenciesPopup());
@@ -172,23 +169,15 @@ public class InputTab {
                 probabilities.add(new Probabilities(Double.parseDouble(probability3.getText()), Maths.clamp(Double.parseDouble(duration2.getText()), 0.0, 100.0)));
             if (!probability3.getText().isBlank())
                 probabilities.add(new Probabilities(Double.parseDouble(probability3.getText()), Maths.clamp(Double.parseDouble(duration3.getText()), 0.0, 100.0)));
-            if (probabilities.stream().allMatch(probabilities1 -> probabilities1.getProbability() == 0 && probabilities1.getDuration() == 0))
+            if (validate(estimatedTimeTextField, priority, nameTextField) != 0)
                 return;
-            if (nameTextField.getText().isBlank() || estimatedTimeTextField.getText().isBlank() || priority.getText().isBlank()) {
-                return;
-            }
-
-
             addTask(nameTextField.getText(), Double.parseDouble(estimatedTimeTextField.getText()),
                     Integer.parseInt(priority.getText()), probabilities);
             clearInputFields(listViewDependency, duration1, probability1, duration2, probability2, duration3, probability3,
                     nameTextField, estimatedTimeTextField, priority);
-            numOfEmployees.setText("1");
         });
 
-
-        numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true, false));
-        numOfEmployees.setText("1");
+        numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true));
 
         ((Button) vBoxSplitter.getChildren().get(4)).setTooltip(new Tooltip("Calculates the probability for the length of the project"));
         vBoxSplitter.getChildren().get(4).setOnMouseClicked(event -> calculate(
@@ -211,6 +200,18 @@ public class InputTab {
         employeeTab = new EmployeeTab(rootPane);
         drawInputTab();
     }
+
+    private int validate(TextField... textFields) {
+        int failed = 0;
+        for (TextField textField : textFields) {
+            if (textField.getText().isBlank()) {
+                failed++;
+                textField.setStyle("-fx-border-color: red");
+            }
+        }
+        return failed;
+    }
+
 
     /**
      * This method calculates and produces the output.
@@ -245,7 +246,7 @@ public class InputTab {
      * @param textField - the text box
      * @param newValue  - the contents of the text box
      */
-    private void validateNumericInput(TextField textField, String newValue, boolean intField, boolean probability) {
+    private void validateNumericInput(TextField textField, String newValue, boolean intField) {
         if (intField) {
             if (!newValue.matches("\\d*")) {
                 textField.setText(newValue.replaceAll("[[\\D]]", ""));
@@ -253,13 +254,6 @@ public class InputTab {
         } else if (!newValue.matches("\\d*\\.")) {
             textField.setText(newValue.replaceAll("[[^\\d^\\.]]", ""));
         }
-        if (probability) {
-            return;
-        }
-        if (newValue.equals(""))
-            textField.setStyle("-fx-border-color: red");
-        else
-            textField.setStyle("");
     }
 
     /**
