@@ -18,9 +18,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -104,58 +102,41 @@ public class GanttTab {
         List<Shape> shapeList = new ArrayList<>();
         HashMap<Task, AnchorPane> taskToAP = new HashMap<>();
         int paddingY = 55, xPadding = 50;
-        int yPerManHour = 110;
+        List<Task> sortedTask = pro.getTasks();
+        sortedTask.sort((o1, o2) -> (int) (o1.getStartTime() - o2.getStartTime()));
 
-        int x = 0, y;
-        for (List<Task> seq : taskListOfTasks) {
-            y = 0;
-            for (Task task : seq) {
-                AnchorPane taskBox = new AnchorPane();
-                AtomicReference<Double> xVar = new AtomicReference<>((double) 0);
-                if (x == 0) xVar.set((double) xPadding);
+        int y = 0;
 
-                else {
-                    //If current list contains more than prev line
-                    if (taskListOfTasks.get(x - 1).size() < taskListOfTasks.get(x).size() && y >= taskListOfTasks.get(x - 1).size()) {
-                        xVar.set(anchorPanes.get(anchorPanes.size() - 1).getLayoutX());
-                    } else {
-                        if (y == 0)
-                            xVar.set(anchorPanes.get(anchorPanes.size() - (1)).getLayoutX() +
-                                    ((taskListOfTasks.get(x - 1).get(y).getEstimatedTime() * zoomFactor)));
-                        else
-                            xVar.set(anchorPanes.get(anchorPanes.size() - (y + 2)).getLayoutX() +
-                                    ((taskListOfTasks.get(x - 1).get(y).getEstimatedTime() * zoomFactor)));
-                    }
-                    if (task.getDependencies().size() > 0) {
-                        task.getDependencies().forEach(dependency -> {
-                            if (dependency.getEstimatedTime() * zoomFactor + taskToAP.get(dependency).getLayoutX() > xVar.get())
-                                xVar.set(dependency.getEstimatedTime() * zoomFactor + taskToAP.get(dependency).getLayoutX());
-                        });
-                    }
-                }
+        for (Task task : sortedTask) {
+            AnchorPane taskBox = new AnchorPane();
+            AtomicReference<Double> xVar = new AtomicReference<>((double) 0);
 
-                taskBox.setLayoutX(xVar.get());
+            xVar.set(task.getStartTime());
 
-                taskBox.setLayoutY(35 + ((1.5 * y + (0.5 * x)) * paddingY));
-                Rectangle ret = new Rectangle(task.getEstimatedTime() * zoomFactor, 20);
-                ret.setStroke(Color.BLACK);
-                ret.setFill(Color.web("#ff9c00"));
-                Tooltip tooltip = new Tooltip(task.getName());
-                tooltip.setShowDelay(Duration.millis(100));
-                Tooltip.install(ret, tooltip);
 
-                taskBox.getChildren().addAll(ret);
-                anchorPanes.add(taskBox);
-                y++;
-                taskToAP.put(task, taskBox);
-            }
-            x++;
+            taskBox.setLayoutX(xVar.get() * zoomFactor + xPadding);
+
+            taskBox.setLayoutY(35 * y + paddingY);
+            Rectangle ret = new Rectangle(task.getEstimatedTime() * zoomFactor, 20);
+            ret.setStroke(Color.BLACK);
+            ret.setFill(Color.web("#ff9c00"));
+            Tooltip tooltip = new Tooltip(task.getName());
+            tooltip.setShowDelay(Duration.millis(100));
+            Tooltip.install(ret, tooltip);
+
+            taskBox.getChildren().addAll(ret);
+            anchorPanes.add(taskBox);
+            y++;
+            taskToAP.put(task, taskBox);
         }
+
         double maxX = 0;
-        for (AnchorPane ap : anchorPanes) {
+        for (
+                AnchorPane ap : anchorPanes) {
             double thisXMax = ap.getLayoutX() + ((Rectangle) ap.getChildrenUnmodifiable().get(0)).getWidth();
             if (thisXMax > maxX) maxX = thisXMax;
         }
+
         maxX /= zoomFactor;
 
         int pixelsBetweenText = 20;
@@ -164,7 +145,9 @@ public class GanttTab {
         else if (zoomFactor > 1.3 && zoomFactor <= 1.6) pixelsBetweenText = 15;
         else if (zoomFactor > 1.6) pixelsBetweenText = 10;
 
-        for (int i = 0; i < maxX; i = i + pixelsBetweenText) {
+        for (
+                int i = 0;
+                i < maxX; i = i + pixelsBetweenText) {
 
             Text text = new Text((i * zoomFactor) + xPadding, 25, "" + i);
             text.setRotate(90);
@@ -176,16 +159,21 @@ public class GanttTab {
         HashMap<Task, AtomicInteger> numberOfTasksDependingOnTask = new HashMap<>();
         HashMap<Task, AtomicInteger> numberOfTimesLineHasBeenDrawnForTask = new HashMap<>();
 
-        taskListOfTasks.forEach(lTask -> lTask.forEach(task -> {
+        taskListOfTasks.forEach(lTask -> lTask.forEach(task ->
+
+        {
             numberOfTasksDependingOnTask.put(task, new AtomicInteger(0));
             numberOfTimesLineHasBeenDrawnForTask.put(task, new AtomicInteger(0));
         }));
-        taskListOfTasks.forEach(lTask -> lTask.forEach(task -> {
+        taskListOfTasks.forEach(lTask -> lTask.forEach(task ->
+
+        {
             task.getDependencies().forEach(dep -> numberOfTasksDependingOnTask.get(dep).incrementAndGet());
         }));
 
 
-        for (Task task : taskToAP.keySet()) {
+        for (
+                Task task : taskToAP.keySet()) {
             List<Task> dependencies = task.getDependencies();
             if (dependencies != null && dependencies.size() != 0) {
                 AtomicInteger depNum = new AtomicInteger(0);
@@ -270,7 +258,11 @@ public class GanttTab {
 
             }
         }
-        pane.getChildren().addAll(anchorPanes);
-        pane.getChildren().addAll(shapeList);
+        pane.getChildren().
+
+                addAll(anchorPanes);
+        pane.getChildren().
+
+                addAll(shapeList);
     }
 }

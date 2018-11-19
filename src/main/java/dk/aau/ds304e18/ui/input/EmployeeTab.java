@@ -5,7 +5,6 @@ import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Task;
-import dk.aau.ds304e18.ui.output.OutputTab;
 import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
@@ -19,12 +18,10 @@ import java.util.stream.Collectors;
 
 public class EmployeeTab {
 
-    private OutputTab outputTab;
     private TableView<Employee> employeeTableView;
     private TableView<Employee> employeeProjectTableView;
 
-    public EmployeeTab(Parent rootPane, OutputTab outputTab) {
-        this.outputTab = outputTab;
+    public EmployeeTab(Parent rootPane) {
         BorderPane borderPane = (BorderPane) rootPane.lookup("#employeesBorderpane");
         VBox buttonPane = ((VBox) ((Pane) borderPane.getRight()).getChildren().get(0));
         //Assign
@@ -74,7 +71,7 @@ public class EmployeeTab {
         }
         LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).addNewEmployee(employeeProjectTableView.getSelectionModel().getSelectedItems());
         drawEmployees();
-        outputTab.drawOutputTab(false);
+        JavaFXMain.outputTab.drawOutputTab(false);
     }
 
     private void unassignEmployee() {
@@ -87,12 +84,13 @@ public class EmployeeTab {
                 task.getEmployees().remove(employee);
                 DatabaseManager.updateTask(task);
             }
+            employee.getCurrentTask().removeAll(employee.getCurrentTask());
             LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).removeEmployee(employee);
-
+            DatabaseManager.updateEmployee(employee);
         }
 
         drawEmployees();
-        outputTab.drawOutputTab(false);
+        JavaFXMain.outputTab.drawOutputTab(false);
     }
 
     public void drawEmployees() {

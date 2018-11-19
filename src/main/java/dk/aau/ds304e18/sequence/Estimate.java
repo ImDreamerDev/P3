@@ -1,14 +1,19 @@
 package dk.aau.ds304e18.sequence;
 
+import dk.aau.ds304e18.models.Task;
+
+import java.util.HashMap;
 import java.util.List;
 
 public class Estimate {
 
     private List<Double> chances;
+    private HashMap<Task, Double> startTimes;
     private double duration;
 
-    public Estimate(List<Double> chances, double duration) {
+    public Estimate(List<Double> chances, HashMap<Task, Double> startTimes, double duration) {
         this.chances = chances;
+        this.startTimes = startTimes;
         this.duration = duration;
     }
 
@@ -24,7 +29,7 @@ public class Estimate {
         return chances;
     }
 
-    public void setChances(List<Double> chances) {
-        this.chances = chances;
+    public HashMap<Task, Double> getStartTimes() {
+        return startTimes;
     }
 }

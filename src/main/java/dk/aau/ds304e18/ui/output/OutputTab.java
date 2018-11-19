@@ -2,20 +2,16 @@ package dk.aau.ds304e18.ui.output;
 
 import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.LocalObjStorage;
-import dk.aau.ds304e18.database.DatabaseManager;
-import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
 import dk.aau.ds304e18.ui.output.AssignmentTab;
 import dk.aau.ds304e18.ui.output.GanttTab;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -23,7 +19,6 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OutputTab {
     private final Parent rootPane;

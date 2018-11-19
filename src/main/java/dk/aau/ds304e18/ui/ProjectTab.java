@@ -5,7 +5,6 @@ import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.ProjectState;
-import dk.aau.ds304e18.ui.input.InputTab;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
@@ -22,18 +21,16 @@ public class ProjectTab {
     private final Parent rootPane;
     private SortedList<Project> sortedList;
     private final ProjectManager projectManager;
-    private final InputTab inputTab;
     private TableView<Project> tableView;
     private FilteredList<Project> flProjects;
     private HBox projectToolBar;
     private TabPane tabPane;
 
 
-    public ProjectTab(Parent rootPane, ProjectManager projectManager, InputTab inputTab) {
+    public ProjectTab(Parent rootPane, ProjectManager projectManager) {
         this.projectManager = projectManager;
         this.rootPane = rootPane;
         setupProjectTab();
-        this.inputTab = inputTab;
         tabPane = ((TabPane) rootPane.getChildrenUnmodifiable().get(1));
     }
 
@@ -182,7 +179,7 @@ public class ProjectTab {
                         tableView.getSelectionModel().getSelectedIndex()).getValue())) {
             JavaFXMain.selectedProjectId = ((int) ((TableColumn) tableView.getColumns().get(0))
                     .getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue());
-            inputTab.drawInputTab();
+            JavaFXMain.inputTab.drawInputTab();
             ((Label) projectToolBar.getChildren().get(4)).setText("Selected: " +
                     LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getName());
             TabPane tabPane = (TabPane) rootPane.getChildrenUnmodifiable().get(1);

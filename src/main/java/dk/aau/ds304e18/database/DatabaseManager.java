@@ -528,7 +528,7 @@ public class DatabaseManager {
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE tasks SET employees = ?" +
-                    ", dependencies = ?, projectid = ?, estimatedtime = ?, priority = ?," +
+                    ", dependencies = ?, projectid = ?, estimatedtime = ?, priority = ?, starttime = ?," +
                     " probabilities =" + DatabaseParser.parseProbabilities(task) + "   WHERE id = ?");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER",
                     task.getEmployees().stream().map(Employee::getId).toArray()
@@ -539,7 +539,8 @@ public class DatabaseManager {
             statement.setInt(3, task.getProject().getId());
             statement.setDouble(4, task.getEstimatedTime());
             statement.setInt(5, task.getPriority());
-            statement.setInt(6, task.getId());
+            statement.setDouble(6, task.getStartTime());
+            statement.setInt(7, task.getId());
 
             int maxRetry = 5;
             int i = 0;

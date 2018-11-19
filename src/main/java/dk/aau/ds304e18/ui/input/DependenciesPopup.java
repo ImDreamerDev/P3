@@ -4,13 +4,13 @@ import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.models.Task;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +28,13 @@ public class DependenciesPopup {
         dependencies.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
                 .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
                 .collect(Collectors.toList())));
+        dependencies.setOnMouseClicked(event -> {
+            if (event.getClickCount() > 1 && taskDependencies.stream().noneMatch(task -> task.getId() == dependencies.getSelectionModel().getSelectedItem().getId())) {
+                addDependency(Collections.singletonList(dependencies.getSelectionModel().getSelectedItem()));
+            } else if (event.getClickCount() > 1) {
+                removeDependency(Collections.singletonList(dependencies.getSelectionModel().getSelectedItem()));
+            }
+        });
         dependencies.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         dependencies.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
         dependencies.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("estimatedTime"));
@@ -60,7 +67,7 @@ public class DependenciesPopup {
      *
      * @param selectedItems
      */
-    private void removeDependency(ObservableList<Task> selectedItems) {
+    private void removeDependency(List<Task> selectedItems) {
         for (Task task : selectedItems) {
             if (taskDependencies.contains(task)) {
                 taskDependencies.remove(task);
@@ -83,6 +90,5 @@ public class DependenciesPopup {
                 listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
             }
         }
-        closeDependenciesPopup();
     }
 }
