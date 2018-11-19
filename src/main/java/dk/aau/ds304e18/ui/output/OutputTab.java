@@ -22,9 +22,8 @@ import java.util.List;
 
 public class OutputTab {
     private final Parent rootPane;
-    private BarChart<String, Number> barChart;
-    private GanttTab ganttTab;
-    private AssignmentTab assignmentTab;
+    private final BarChart<String, Number> barChart;
+    private final AssignmentTab assignmentTab;
 
     public OutputTab(Parent rootPane) {
         this.rootPane = rootPane;
@@ -44,7 +43,7 @@ public class OutputTab {
 
             return;
         }
-        ganttTab = new GanttTab(rootPane);
+        GanttTab ganttTab = new GanttTab(rootPane);
         Project pro = LocalObjStorage.getProjectList().stream().
                 filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
         assert pro != null;

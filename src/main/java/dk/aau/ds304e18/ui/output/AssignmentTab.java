@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 
 public class AssignmentTab {
 
-    private TableView<Employee> employeeTableView;
-    private TableView<Task> taskTableView;
+    private final TableView<Employee> employeeTableView;
+    private final TableView<Task> taskTableView;
 
     public AssignmentTab(BorderPane borderPane) {
         taskTableView = (TableView<Task>) ((VBox) borderPane.getLeft()).getChildren().get(1);

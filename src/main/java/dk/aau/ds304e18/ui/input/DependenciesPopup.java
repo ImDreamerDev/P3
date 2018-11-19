@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 
 public class DependenciesPopup {
     private final Parent rootPane;
-    private ListView<Task> listViewDependency;
+    private final ListView<Task> listViewDependency;
 
-    private List<Task> taskDependencies;
+    private final List<Task> taskDependencies;
 
     public DependenciesPopup(Parent rootPane, ListView<Task> listViewDependency, List<Task> taskDependencies) {
         this.rootPane = rootPane;
@@ -62,7 +62,7 @@ public class DependenciesPopup {
 
 
     /**
-     * Method for revoming a dependency from the new task.
+     * Method for removing a dependency from the new task.
      * This happens by selecting the task and pressing the remove button.
      *
      * @param selectedItems

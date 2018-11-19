@@ -16,9 +16,9 @@ public class ParseSequence {
      * Parses a sequence to a single list
      *
      * @param project Takes project as parameter so we can get all the tasks in it and the sequence
-     * @param random - is it a random sequence or not.
-     * @param index - The index of the possible loop this is called in (If no loop, it is 0)
-     * @param rec - a boolean standing for recommended. Used to calculate time.
+     * @param random  - is it a random sequence or not.
+     * @param index   - The index of the possible loop this is called in (If no loop, it is 0)
+     * @param rec     - a boolean standing for recommended. Used to calculate time.
      * @return returns an ordered list from the sequence
      */
     public static List<Task> parseToSingleList(Project project, boolean rec, boolean random, int index) {
@@ -63,8 +63,9 @@ public class ParseSequence {
 
     /**
      * Parses a projects sequence to multiple lists
+     *
      * @param project The project so we can get the sequence
-     * @return a list of lists of tasks that contains the tasks in the correct order, parallels seperated by each list
+     * @return a list of lists of tasks that contains the tasks in the correct order, parallels separated by each list
      */
     public static List<List<Task>> parseToMultipleLists(Project project) {
 
@@ -86,10 +87,7 @@ public class ParseSequence {
                     continue;
                 }
 
-                Task taskToInsert = project.getTasks().stream().filter(task1 -> task1.getId() == taskId).findFirst().
-                        orElse(null);
-                if (taskToInsert != null)
-                    listToInsert.add(taskToInsert);
+                project.getTasks().stream().filter(task1 -> task1.getId() == taskId).findFirst().ifPresent(listToInsert::add);
             }
             returnList.add(listToInsert);
         }
@@ -98,8 +96,9 @@ public class ParseSequence {
 
     /**
      * Parses a list of tasks to a string
-     * @param putInto The stringbuilder to put the list into - Only necessary if unparsing with parallels (Otherwise just new StringBuilder())
-     * @param takeFrom The list of tasks to unparse
+     *
+     * @param putInto   The string builder to put the list into - Only necessary if unparsing with parallels (Otherwise just new StringBuilder())
+     * @param takeFrom  The list of tasks to unparse
      * @param tasksSize The size of the other tasks not unparsed in first try - Only necessary if unparsing with parallels (Otherwise just 0)
      * @return StringBuilder with the unparsed list
      */
@@ -125,6 +124,7 @@ public class ParseSequence {
 
     /**
      * Appends dependencies to the tasks
+     *
      * @param task the task to add dependencies to
      * @return the string with dependencies - i.e. (id, id, id)
      */

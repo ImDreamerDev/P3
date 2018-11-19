@@ -63,9 +63,9 @@ public class DatabaseParser {
     }
 
     /**
-     * Parses Project manager from the resultset set.
+     * Parses Project manager from the result set set.
      *
-     * @param rs - the resultset to parse
+     * @param rs - the result set to parse
      * @return ProjectManagers - a list of project managers.
      */
     public static List<ProjectManager> parseProjectManagersFromResultSet(ResultSet rs) {
@@ -150,21 +150,21 @@ public class DatabaseParser {
      * This method parses the information from the database which turns the probabilities into a string format.
      *
      * @param task - the task to parse.
-     * @return Probability string - the probabilites turned into string format.
+     * @return Probability string - the probabilities turned into string format.
      */
     public static String parseProbabilities(Task task) {
         //Turns the Probabilities into a string in the following format
         //     * '{"(1.1,2.2)","(534.1,3123.2)"}'
         //     * '{"(duration,probability)"}'
-        StringBuilder probsSQL = new StringBuilder("'{");
+        StringBuilder probabilitySQL = new StringBuilder("'{");
         task.getProbabilities().forEach(probabilities -> {
-            probsSQL.append("\"(").append(probabilities.getDuration()).append(",").
+            probabilitySQL.append("\"(").append(probabilities.getDuration()).append(",").
                     append(probabilities.getProbability()).append(")\"");
             if (task.getProbabilities().indexOf(probabilities) != task.getProbabilities().size() - 1) {
-                probsSQL.append(",");
+                probabilitySQL.append(",");
             }
         });
-        probsSQL.append("}'");
-        return probsSQL.toString();
+        probabilitySQL.append("}'");
+        return probabilitySQL.toString();
     }
 }

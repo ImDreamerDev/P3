@@ -204,7 +204,7 @@ public class DatabaseManager {
      * @param task the task to add.
      * @return Whether the operation was successful or not
      */
-    public static boolean addTask(Task task) {
+    public static void addTask(Task task) {
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO tasks (name, estimatedtime," +
@@ -230,7 +230,7 @@ public class DatabaseManager {
             else
                 statement.setInt(6, 0);
 
-            if (statement.execute()) return false;
+            if (statement.execute()) return;
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) task.setId(rs.getInt(1));
             LocalObjStorage.addTask(task);
@@ -238,15 +238,13 @@ public class DatabaseManager {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     /**
      * The getter for the list of project managers
      *
-     * @return ProjectManagers - an arraylist of the project managers.
+     * @return ProjectManagers - an list of the project managers.
      */
     public static List<ProjectManager> getAllProjectManagers() {
         try {
@@ -304,7 +302,7 @@ public class DatabaseManager {
     }
 
     /**
-     * Returns a project with projId from db.
+     * Returns a project with project Id from db.
      *
      * @param projectId the id of the project to get.
      * @return the project or null.
@@ -480,13 +478,13 @@ public class DatabaseManager {
 
                 projectManager.setCurrentProject(LocalObjStorage.getProjectById(projectManager.getCurrentProjectId()));
 
-                for (Integer projId : projectManager.getOldProjectsId()) {
-                    projectManager.addOldProject(LocalObjStorage.getProjectById(projId));
+                for (Integer projectId : projectManager.getOldProjectsId()) {
+                    projectManager.addOldProject(LocalObjStorage.getProjectById(projectId));
                 }
                 updateProgress(5, progressBarParts);
                 return null;
             }
-        };
+        };  
 
     }
 
@@ -529,7 +527,7 @@ public class DatabaseManager {
             if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE tasks SET employees = ?" +
                     ", dependencies = ?, projectid = ?, estimatedtime = ?, priority = ?, starttime = ?," +
-                    " probabilities =" + DatabaseParser.parseProbabilities(task) + "   WHERE id = ?");
+                    " probabilities =" + DatabaseParser.parseProbabilities(task) + " WHERE id = ?");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER",
                     task.getEmployees().stream().map(Employee::getId).toArray()
             ));
@@ -550,7 +548,7 @@ public class DatabaseManager {
         }
     }
 
-    //TODO THIS SHOULD BE FIXED AND NOT EXIST. REALLY BAD FIX TO SOCKETTIMEOUT
+    //TODO THIS SHOULD BE FIXED AND NOT EXIST. REALLY BAD FIX TO SOCKET TIMEOUT
     private static void sendStatementMaxRetryTimes(PreparedStatement statement, int maxRetry, int i) throws SQLException {
         while (i < maxRetry) {
 
@@ -638,10 +636,10 @@ public class DatabaseManager {
             ResultSet rs = statement.executeQuery();
             if (!rs.next()) return null;
 
-            byte[] passwd = rs.getBytes(3);
+            byte[] password = rs.getBytes(3);
             byte[] salt = rs.getBytes(6);
 
-            if (Password.isExpectedPassword(clearTextPassword.toCharArray(), salt, passwd)) {
+            if (Password.isExpectedPassword(clearTextPassword.toCharArray(), salt, password)) {
                 rs.previous();
                 return Objects.requireNonNull(DatabaseParser.parseProjectManagersFromResultSet(rs)).get(0);
             }

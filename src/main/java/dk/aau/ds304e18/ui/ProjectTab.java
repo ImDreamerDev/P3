@@ -24,7 +24,7 @@ public class ProjectTab {
     private TableView<Project> tableView;
     private FilteredList<Project> flProjects;
     private HBox projectToolBar;
-    private TabPane tabPane;
+    private final TabPane tabPane;
 
 
     public ProjectTab(Parent rootPane, ProjectManager projectManager) {
@@ -56,12 +56,12 @@ public class ProjectTab {
 
 
         Button createButton = ((Button) projectToolBar.getChildren().get(2));
-        ((Button) createButton).setTooltip(new Tooltip("Creates a new project with the selected name"));
+        createButton.setTooltip(new Tooltip("Creates a new project with the selected name"));
         createButton.setOnMouseClicked(event ->
                 createProject(((TextField) projectToolBar.getChildrenUnmodifiable().get(1))));
 
         Button archiveButton = ((Button) projectToolBar.getChildren().get(5));
-        ((Button) archiveButton).setTooltip(new Tooltip("Archives the selected project"));
+        archiveButton.setTooltip(new Tooltip("Archives the selected project"));
         archiveButton.setOnMouseClicked(event -> archiveProject());
 
         CheckBox showArchived = ((CheckBox) rootPane.lookup("#showArchivedCheckbox"));
@@ -108,9 +108,9 @@ public class ProjectTab {
     }
 
     /**
-     * Method for searching for projects using the textbox
+     * Method for searching for projects using the text box
      *
-     * @param searchField  - the inputfield for the text.
+     * @param searchField  - the input field for the text.
      * @param showArchived - if the show archived box is toggled or not.
      */
     private void search(TextField searchField, CheckBox showArchived) {

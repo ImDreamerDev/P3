@@ -17,10 +17,10 @@ import javafx.scene.layout.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Login {
-    private Parent rootPane = null;
-    private TextField usernameField;
-    private PasswordField passwordField;
-    private VBox vBoxLogin;
+    private final Parent rootPane;
+    private final TextField usernameField;
+    private final PasswordField passwordField;
+    private final VBox vBoxLogin;
 
     public Login(Image image, Parent rootPane) {
         this.rootPane = rootPane;

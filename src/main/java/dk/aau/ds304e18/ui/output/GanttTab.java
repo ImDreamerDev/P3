@@ -24,9 +24,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class GanttTab {
     public double zoomFactor = 1;
-    private final Parent rootPane;
-    private static final double arrowLength = 8;
-    private static final double arrowWidth = 4;
 
     public GanttTab(Parent rootPane) {
         Project pro = LocalObjStorage.getProjectList().stream().
@@ -35,7 +32,6 @@ public class GanttTab {
         ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output: " +
                 pro.getName() + ":" + JavaFXMain.selectedProjectId);
         AnchorPane pane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
-        this.rootPane = rootPane;
         Label zoomFactorLabel = (Label) rootPane.lookup("#zoomLevelLabel");
         pane.setOnScroll(scrollEvent -> {
             if (scrollEvent.isControlDown()) {
@@ -49,12 +45,8 @@ public class GanttTab {
             }
 
         });
-        rootPane.lookup("#zoomInButton").setOnMouseClicked(mouseEvent -> {
-            zoomIn(pro, pane, zoomFactorLabel);
-        });
-        rootPane.lookup("#zoomOutButton").setOnMouseClicked(mouseEvent -> {
-            zoomOut(pro, pane, zoomFactorLabel);
-        });
+        rootPane.lookup("#zoomInButton").setOnMouseClicked(mouseEvent -> zoomIn(pro, pane, zoomFactorLabel));
+        rootPane.lookup("#zoomOutButton").setOnMouseClicked(mouseEvent -> zoomOut(pro, pane, zoomFactorLabel));
 
         rootPane.lookup("#resetZoomButton").setOnMouseClicked(mouseEvent -> {
             zoomFactor = 1;
@@ -232,7 +224,7 @@ public class GanttTab {
                     double dx = (sx - ex) * factor;
                     double dy = (sy - ey) * factor;
 
-                    // part ortogonal to main line
+                    // part orthogonal to main line
                     double ox = (sx - ex) * factorO;
                     double oy = (sy - ey) * factorO;
                     double triangleP1X = ex + dx - oy, triangleP1Y = ey + dy + ox;

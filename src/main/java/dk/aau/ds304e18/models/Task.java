@@ -37,7 +37,7 @@ public class Task {
     /**
      * Start time of the task, but in a list so we can have more than one
      */
-    private List<Double> startTimeList = new ArrayList<>();
+    private final List<Double> startTimeList = new ArrayList<>();
 
     /**
      * The estimated lambda value for the inverse gaussian

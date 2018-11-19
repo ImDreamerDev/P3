@@ -17,7 +17,7 @@ public class Sequence {
         sequenceTasks(project, false, true);
     }
 
-    public static void sequenceTasks(Project project, boolean findSequenceMontecarlo, boolean fast) {
+    public static void sequenceTasks(Project project, boolean findSequenceMonteCarlo, boolean fast) {
 
         /*
         | indicates where it's supposed to be drawn
@@ -36,7 +36,7 @@ public class Sequence {
         7 has a dependency on 5
          */
 
-        if (findSequenceMontecarlo)
+        if (findSequenceMonteCarlo)
             findFastestSequence(project, fast);
 
         //So we don't change the task list in the project
@@ -80,7 +80,7 @@ public class Sequence {
         project.setSequence(sequencedTasks.toString());
 
         //Find the estimated time
-        if (!findSequenceMontecarlo)
+        if (!findSequenceMonteCarlo)
             MonteCarlo.estimateTime(project);
     }
 
@@ -109,7 +109,7 @@ public class Sequence {
         List<Task> tasksNotSequenced = new ArrayList<>(project.getTasks());
         List<Task> tasksToBeRemoved = new ArrayList<>();
         int amountEmployees = (int) project.getNumberOfEmployees();
-        List<Task> tasksWithoutDeps = new ArrayList<>();
+        List<Task> tasksWithoutDependencies = new ArrayList<>();
         Collections.shuffle(tasksNotSequenced);
 
         //If we're not going fast, just plug all of the tasks in, in a legal way and return that
@@ -141,12 +141,12 @@ public class Sequence {
         //Add all the tasks without dependencies to a list
         for (Task aTasksNotSequenced : tasksNotSequenced) {
             if (aTasksNotSequenced.getDependencies().size() == 0)
-                tasksWithoutDeps.add(aTasksNotSequenced);
+                tasksWithoutDependencies.add(aTasksNotSequenced);
         }
 
         //Check every task to check if they have a task without dependency as a dependency, 
         // in which case we will do that task first to get a higher chance of having a better sequence
-        for (Task tasksWithoutDep : tasksWithoutDeps) {
+        for (Task tasksWithoutDep : tasksWithoutDependencies) {
             for (Task task : tasksNotSequenced)
                 if (task.getDependencies().contains(tasksWithoutDep)) {
                     tasksSequenced.add(tasksWithoutDep);
@@ -156,20 +156,20 @@ public class Sequence {
                 }
         }
 
-        //Remove every task that has been added already from the tasksWithoutDeps list
+        //Remove every task that has been added already from the tasksWithoutDependencies list
         for (Task task : tasksToBeRemoved)
-            tasksWithoutDeps.remove(task);
+            tasksWithoutDependencies.remove(task);
         tasksToBeRemoved = new ArrayList<>();
 
         //Add enough tasks at the start so every employee has something to do, 
         // if there's not enough tasks without dependencies for everyone just add everyone
-        if (amountEmployees >= tasksWithoutDeps.size() + tasksSequenced.size()) {
-            tasksSequenced.addAll(tasksWithoutDeps);
-            tasksNotSequenced.removeAll(tasksWithoutDeps);
+        if (amountEmployees >= tasksWithoutDependencies.size() + tasksSequenced.size()) {
+            tasksSequenced.addAll(tasksWithoutDependencies);
+            tasksNotSequenced.removeAll(tasksWithoutDependencies);
         } else {
             for (int i = 0; i < amountEmployees - tasksSequenced.size(); i++) {
-                tasksSequenced.add(tasksWithoutDeps.get(i));
-                tasksNotSequenced.remove(tasksWithoutDeps.get(i));
+                tasksSequenced.add(tasksWithoutDependencies.get(i));
+                tasksNotSequenced.remove(tasksWithoutDependencies.get(i));
             }
         }
 
@@ -187,9 +187,9 @@ public class Sequence {
 
                 //Skip the tasks without dependencies unless there are no other tasks left 
                 // (This seems to give a better chance at good sequences)
-                if (tasksWithoutDeps.contains(task)) {
+                if (tasksWithoutDependencies.contains(task)) {
                     for (Task task1 : tasksNotSequenced) {
-                        if (!tasksWithoutDeps.contains(task1) && tasksSequenced.containsAll(task1.getDependencies()))
+                        if (!tasksWithoutDependencies.contains(task1) && tasksSequenced.containsAll(task1.getDependencies()))
                             cont = true;
                     }
                 }

@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 
 public class EmployeeTab {
 
-    private TableView<Employee> employeeTableView;
-    private TableView<Employee> employeeProjectTableView;
+    private final TableView<Employee> employeeTableView;
+    private final TableView<Employee> employeeProjectTableView;
 
     public EmployeeTab(Parent rootPane) {
         BorderPane borderPane = (BorderPane) rootPane.lookup("#employeesBorderpane");
@@ -33,11 +33,11 @@ public class EmployeeTab {
         buttonPane.getChildren().get(1).setOnMouseClicked(event -> unassignEmployee());
 
 
-        VBox inputVbox = (VBox) borderPane.getLeft();
-        TextField nameTextField = (TextField) inputVbox.getChildren().get(1);
+        VBox inputVBox = (VBox) borderPane.getLeft();
+        TextField nameTextField = (TextField) inputVBox.getChildren().get(1);
         //Add emp
-        ((Button) inputVbox.getChildren().get(2)).setTooltip(new Tooltip("Adds an employee to the system"));
-        inputVbox.getChildren().get(2).setOnMouseClicked(event -> addEmployee(nameTextField));
+        ((Button) inputVBox.getChildren().get(2)).setTooltip(new Tooltip("Adds an employee to the system"));
+        inputVBox.getChildren().get(2).setOnMouseClicked(event -> addEmployee(nameTextField));
 
 
         TabPane tabPane = (TabPane) borderPane.getCenter();

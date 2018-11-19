@@ -27,7 +27,7 @@ public class InputTab {
     private List<Task> taskDependencies = new ArrayList<>();
     private final Parent rootPane;
     private TableView<Task> tableView;
-    private TabPane tabPane;
+    private final TabPane tabPane;
     private ListView<Task> listViewDependency;
     private DependenciesPopup dependenciesPopup;
     public EmployeeTab employeeTab;
@@ -42,7 +42,7 @@ public class InputTab {
     }
 
     /**
-     * The method that draws the inputTab. If the project is ongoing you can interact with the ui, if it isnt you cannot.
+     * The method that draws the inputTab. If the project is ongoing you can interact with the ui, if it isn't you cannot.
      * Uses the method disableInput - if the project is archived.
      * Uses the method enableInput - if the project is ongoing.
      */
@@ -105,9 +105,9 @@ public class InputTab {
         TextField priority = ((TextField) inputVBox.getChildren().get(3));
         TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(5));
 
-        HBox probsHBox = ((HBox) inputVBox.getChildren().get(7));
-        HBox probsHBox2 = ((HBox) inputVBox.getChildren().get(8));
-        HBox probsHBox3 = ((HBox) inputVBox.getChildren().get(9));
+        HBox probabilityHBox = ((HBox) inputVBox.getChildren().get(7));
+        HBox probabilityHBox2 = ((HBox) inputVBox.getChildren().get(8));
+        HBox probabilityHBox3 = ((HBox) inputVBox.getChildren().get(9));
         listViewDependency = ((ListView<Task>) inputVBox.getChildren().get(11));
         listViewDependency.setOnMouseClicked(event -> {
             if (event.getClickCount() > 1) {
@@ -122,27 +122,27 @@ public class InputTab {
                 validateNumericInput(estimatedTimeTextField, newValue, false));
 
 
-        TextField probs1 = ((TextField) probsHBox.getChildren().get(0));
-        probs1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs1, newValue, false));
-        TextField probs2 = ((TextField) probsHBox.getChildren().get(1));
-        probs2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs2, newValue, false));
+        TextField probability1 = ((TextField) probabilityHBox.getChildren().get(0));
+        probability1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability1, newValue, false));
+        TextField probability2 = ((TextField) probabilityHBox.getChildren().get(1));
+        probability2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability2, newValue, false));
 
-        TextField probs3 = ((TextField) probsHBox2.getChildren().get(0));
-        probs3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs3, newValue, false));
-        TextField probs4 = ((TextField) probsHBox2.getChildren().get(1));
-        probs4.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs4, newValue, false));
+        TextField probability3 = ((TextField) probabilityHBox2.getChildren().get(0));
+        probability3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability3, newValue, false));
+        TextField probability4 = ((TextField) probabilityHBox2.getChildren().get(1));
+        probability4.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability4, newValue, false));
 
-        TextField probs5 = ((TextField) probsHBox3.getChildren().get(0));
-        probs5.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs5, newValue, false));
-        TextField probs6 = ((TextField) probsHBox3.getChildren().get(1));
-        probs6.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs6, newValue, false));
+        TextField probability5 = ((TextField) probabilityHBox3.getChildren().get(0));
+        probability5.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability5, newValue, false));
+        TextField probability6 = ((TextField) probabilityHBox3.getChildren().get(1));
+        probability6.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability6, newValue, false));
 
         ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(new Tooltip("Opens a list of tasks in the project to add as dependencies"));
         buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> dependenciesPopup.openDependenciesPopup());
 
         ((Button) inputVBox.getChildren().get(13)).setTooltip(new Tooltip("Clears all the input fields"));
-        inputVBox.getChildren().get(13).setOnMouseClicked(event -> clearInputFields(listViewDependency, probs1, probs2, probs3,
-                probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority));
+        inputVBox.getChildren().get(13).setOnMouseClicked(event -> clearInputFields(listViewDependency, probability1, probability2, probability3,
+                probability4, probability5, probability6, nameTextField, estimatedTimeTextField, priority));
 
 
         //Middle column
@@ -154,12 +154,12 @@ public class InputTab {
         //Add task
         ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0).setOnMouseClicked(event -> {
             List<Probabilities> probabilities = new ArrayList<>();
-            if (!probs1.getText().isBlank())
-                probabilities.add(new Probabilities(Double.parseDouble(probs1.getText()), Maths.clamp(Double.parseDouble(probs2.getText()), 0.0, 100.0)));
-            if (!probs3.getText().isBlank())
-                probabilities.add(new Probabilities(Double.parseDouble(probs3.getText()), Maths.clamp(Double.parseDouble(probs4.getText()), 0.0, 100.0)));
-            if (!probs5.getText().isBlank())
-                probabilities.add(new Probabilities(Double.parseDouble(probs5.getText()), Maths.clamp(Double.parseDouble(probs6.getText()), 0.0, 100.0)));
+            if (!probability1.getText().isBlank())
+                probabilities.add(new Probabilities(Double.parseDouble(probability1.getText()), Maths.clamp(Double.parseDouble(probability2.getText()), 0.0, 100.0)));
+            if (!probability3.getText().isBlank())
+                probabilities.add(new Probabilities(Double.parseDouble(probability3.getText()), Maths.clamp(Double.parseDouble(probability4.getText()), 0.0, 100.0)));
+            if (!probability5.getText().isBlank())
+                probabilities.add(new Probabilities(Double.parseDouble(probability5.getText()), Maths.clamp(Double.parseDouble(probability6.getText()), 0.0, 100.0)));
             if (probabilities.stream().allMatch(probabilities1 -> probabilities1.getProbability() == 0 && probabilities1.getDuration() == 0))
                 return;
             if (nameTextField.getText().isBlank() || estimatedTimeTextField.getText().isBlank() || priority.getText().isBlank()) {
@@ -169,8 +169,8 @@ public class InputTab {
 
             addTask(nameTextField.getText(), Double.parseDouble(estimatedTimeTextField.getText()),
                     Integer.parseInt(priority.getText()), probabilities);
-            clearInputFields(listViewDependency, probs1, probs2, probs3,
-                    probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority);
+            clearInputFields(listViewDependency, probability1, probability2, probability3,
+                    probability4, probability5, probability6, nameTextField, estimatedTimeTextField, priority);
             numOfEmployees.setText("1");
         });
 
@@ -190,8 +190,8 @@ public class InputTab {
         tableView.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 if (event.getClickCount() == 2) {
-                    editTask(listViewDependency, probs1, probs2, probs3,
-                            probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority);
+                    editTask(listViewDependency, probability1, probability2, probability3,
+                            probability4, probability5, probability6, nameTextField, estimatedTimeTextField, priority);
                 }
             }
         });
@@ -226,12 +226,12 @@ public class InputTab {
     }
 
     /**
-     * This method is used to make sure that the estimated time and all the textboxes that only are supposed to take numeric values,
+     * This method is used to make sure that the estimated time and all the text boxes that only are supposed to take numeric values,
      * actually contain numeric values.
      *
-     * @param intField  - a textbox where only numbers can be entered.
-     * @param textField - the textbox
-     * @param newValue  - the contents of the textbox
+     * @param intField  - a text box where only numbers can be entered.
+     * @param textField - the text box
+     * @param newValue  - the contents of the text box
      */
     private void validateNumericInput(TextField textField, String newValue, boolean intField) {
         if (intField) {
@@ -248,10 +248,10 @@ public class InputTab {
     }
 
     /**
-     * This method clears the whole inputfield for creating a new task. This means all the textboxes and the dependencies table.
+     * This method clears the whole input field for creating a new task. This means all the text boxes and the dependencies table.
      *
      * @param listViewDependency - the list of dependencies
-     * @param textFields         - the specific textbox
+     * @param textFields         - the specific text box
      */
     private void clearInputFields(ListView<Task> listViewDependency, TextField... textFields) {
         for (TextField textField : textFields)
@@ -264,24 +264,24 @@ public class InputTab {
     /**
      * The method for adding a task.
      *
-     * @param name          - The name of the task - filled into the textbox.
-     * @param estimatedTime - filled into the textbox.
-     * @param priority      - filled into textbox.
-     * @param probabilities - filled into textbox.
+     * @param name          - The name of the task - filled into the text box.
+     * @param estimatedTime - filled into the text box.
+     * @param priority      - filled into text box.
+     * @param probabilities - filled into text box.
      */
     private void addTask(String name, double estimatedTime, int priority, List<Probabilities> probabilities) {
         List<Task> tasks = LocalObjStorage.getTaskList().
                 stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList());
         Task t = tasks.stream().filter(task -> task.getName().equals(name)).findFirst().orElse(null);
         if (t != null) {
-            List<Task> deps = new ArrayList<>(taskDependencies);
+            List<Task> dependencies = new ArrayList<>(taskDependencies);
             LocalObjStorage.getTaskList().remove(t);
             t.setEstimatedTime(estimatedTime);
             t.setPriority(priority);
             t.getProbabilities().clear();
             t.getProbabilities().addAll(probabilities);
             t.getDependencies().clear();
-            t.addDependency(new ArrayList<>(deps));
+            t.addDependency(new ArrayList<>(dependencies));
             LocalObjStorage.getTaskList().add(t);
         } else {
             Task ttt = new Task(name, estimatedTime, priority,

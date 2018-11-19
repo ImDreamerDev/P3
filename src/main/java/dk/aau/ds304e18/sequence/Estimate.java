@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Estimate {
 
-    private List<Double> chances;
-    private HashMap<Task, Double> startTimes;
+    private final List<Double> chances;
+    private final HashMap<Task, Double> startTimes;
     private double duration;
 
     public Estimate(List<Double> chances, HashMap<Task, Double> startTimes, double duration) {

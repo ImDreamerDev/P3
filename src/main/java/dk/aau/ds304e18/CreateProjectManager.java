@@ -23,7 +23,6 @@ public class CreateProjectManager extends Application {
     private PasswordField passwordField;
     private PasswordField passwordFieldRepeat;
     private Label errorLabel;
-    private VBox vBoxLogin;
     ListView<String> listView;
 
     @Override
@@ -36,7 +35,7 @@ public class CreateProjectManager extends Application {
             e.printStackTrace();
         }
 
-        vBoxLogin = ((VBox) rootPane.lookup("#loginPane"));
+        VBox vBoxLogin = ((VBox) rootPane.lookup("#loginPane"));
 
         usernameField = (TextField) vBoxLogin.getChildrenUnmodifiable().get(2);
 
@@ -67,6 +66,7 @@ public class CreateProjectManager extends Application {
         loginButton.setOnMouseClicked(event -> CreatePM());
 
         listView = ((ListView) ((VBox) rootPane.lookup("#currentUsers")).getChildren().get(1));
+        assert DatabaseManager.getAllProjectManagers() != null;
         listView.setItems(FXCollections.observableArrayList(DatabaseManager.getAllProjectManagers().stream().
                 map(ProjectManager::getName).collect(Collectors.toList())));
 
@@ -109,6 +109,7 @@ public class CreateProjectManager extends Application {
             errorLabel.setTextFill(Color.BLACK);
             errorLabel.setText("Create the project manager: " + usernameField.getText());
             errorLabel.setVisible(true);
+            assert DatabaseManager.getAllProjectManagers() != null;
             listView.setItems(FXCollections.observableArrayList(DatabaseManager.getAllProjectManagers().stream().
                     map(ProjectManager::getName).collect(Collectors.toList())));
             usernameField.clear();

@@ -7,20 +7,18 @@ import java.util.*;
 import java.util.concurrent.Callable;
 
 public class EstimateTimeCallable implements Callable<Estimate> {
-    private List<Task> taskList;
-    private double amountEmployees;
-    private int numOfThreads;
-    private int numOfMonte;
-    private int index;
-    private Random random = new Random();
-    private InverseGaussian invG = new InverseGaussian();
+    private final List<Task> taskList;
+    private final double amountEmployees;
+    private final int numOfThreads;
+    private final int numOfMonte;
+    private final Random random = new Random();
+    private final InverseGaussian invG = new InverseGaussian();
 
-    public EstimateTimeCallable(List<Task> taskList, double amountEmployees, int numOfThreads, int numOfMonte, int index) {
+    public EstimateTimeCallable(List<Task> taskList, double amountEmployees, int numOfThreads, int numOfMonte) {
         this.taskList = taskList;
         this.amountEmployees = amountEmployees;
         this.numOfThreads = numOfThreads;
         this.numOfMonte = numOfMonte;
-        this.index = index;
     }
 
     public Estimate call() {
@@ -62,10 +60,10 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
                                 temp = true;
 
-                                if(taskStartAt.containsKey(task))
-                                    taskStartAt.put(task, taskStartAt.get(task) + durations.get(j)/numOfMonte);
+                                if (taskStartAt.containsKey(task))
+                                    taskStartAt.put(task, taskStartAt.get(task) + durations.get(j) / numOfMonte);
                                 else
-                                    taskStartAt.put(task, durations.get(j)/numOfMonte);
+                                    taskStartAt.put(task, durations.get(j) / numOfMonte);
 
                                 //Create a random double between 0 and 100
                                 double rand = random.nextDouble() * 100;
@@ -116,11 +114,11 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                     //Create a random double between 0 and 100
                     double rand = random.nextDouble() * 100;
 
-                    //Adds startpoint of task
-                    if(taskStartAt.containsKey(task))
-                        taskStartAt.put(task, taskStartAt.get(task) + currentTime/numOfMonte);
+                    //Adds start point of task
+                    if (taskStartAt.containsKey(task))
+                        taskStartAt.put(task, taskStartAt.get(task) + currentTime / numOfMonte);
                     else
-                        taskStartAt.put(task, currentTime/numOfMonte);
+                        taskStartAt.put(task, currentTime / numOfMonte);
 
                     //Create an inverse gaussian distribution for the task
                     invG.setParams(task.getEstimatedTime(), task.getLambda());
@@ -143,7 +141,6 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
         }
         //Also send the start time of each task back
-        Estimate res = new Estimate(chances, taskStartAt, duration);
-        return res;
+        return new Estimate(chances, taskStartAt, duration);
     }
 }
