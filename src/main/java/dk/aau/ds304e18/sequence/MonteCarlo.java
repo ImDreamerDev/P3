@@ -118,8 +118,8 @@ public class MonteCarlo {
 
         project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(tempI));
         for(Task task : ParseSequence.parseToSingleList(project, true)) {
-            task.setStartTime(task.getStartTimeList().get(tempI)/10000);
-            task.setEndTime(task.getEndTimeList().get(tempI)/10000);
+            task.setStartTime(task.getStartTimeList().get(tempI));
+            task.setEndTime(task.getEndTimeList().get(tempI));
             System.out.println(task.getName() + ": " + task.getStartTime());
             System.out.println(task.getName() + ": " + task.getEndTime());
         }
@@ -219,8 +219,8 @@ public class MonteCarlo {
                 duration = duration + fut.get().getDuration();
                 tempList = fut.get().getChances();
                 for(Task task : project.getTasks()) {
-                    task.getStartTimeList().set(index, task.getStartTimeList().get(index) + fut.get().getStartTimes().get(task));
-                    task.getEndTimeList().set(index, task.getEndTimeList().get(index) + fut.get().getEndTimes().get(task));
+                    task.getStartTimeList().set(index, task.getStartTimeList().get(index) + fut.get().getStartTimes().get(task)/monteCarloRepeats);
+                    task.getEndTimeList().set(index, task.getEndTimeList().get(index) + fut.get().getEndTimes().get(task)/monteCarloRepeats);
                 }
 
                 while (project.getTempPossibleCompletions().get(index).size() < tempList.size())
