@@ -73,7 +73,7 @@
                                                 <Insets top="3.0" />
                                             </HBox.margin>
                                         </Label>
-                                        <TextField />
+                                        <TextField promptText="Project Name:" />
                                         <Button mnemonicParsing="false" text="Add Project" />
                                         <Separator orientation="VERTICAL" prefHeight="200.0">
                                             <HBox.margin>
@@ -128,11 +128,11 @@
                                                                 <VBox alignment="TOP_CENTER" prefHeight="646.0" prefWidth="222.0" spacing="5.0" BorderPane.alignment="CENTER">
                                                                     <children>
                                                                         <Label text="Task name" />
-                                                                        <TextField />
+                                                                        <TextField promptText="Task name:" />
                                                                         <Label text="Task priority" />
-                                                                        <TextField />
+                                                                        <TextField promptText="Task priority:" />
                                                                         <Label text="Estimated time" />
-                                                                        <TextField />
+                                                                        <TextField promptText="Estimated time:" />
                                                                         <HBox prefHeight="29.0" prefWidth="222.0">
                                                                             <children>
                                                                                 <Label text="Certainty" />
@@ -150,20 +150,20 @@
                                                                         </HBox>
                                                                         <HBox prefHeight="31.0" prefWidth="121.0">
                                                                             <children>
-                                                                                <TextField />
-                                                                                <TextField />
+                                                                                <TextField promptText="Duration:" />
+                                                                                <TextField promptText="0 - 100 %" />
                                                                             </children>
                                                                         </HBox>
                                                                         <HBox prefHeight="32.0" prefWidth="121.0">
                                                                             <children>
-                                                                                <TextField />
-                                                                                <TextField />
+                                                                                <TextField promptText="Duration:" />
+                                                                                <TextField promptText="0 - 100 %" />
                                                                             </children>
                                                                         </HBox>
                                                                         <HBox layoutX="10.0" layoutY="196.0" prefHeight="32.0" prefWidth="121.0">
                                                                             <children>
-                                                                                <TextField />
-                                                                                <TextField />
+                                                                                <TextField promptText="Duration:" />
+                                                                                <TextField promptText="0 - 100 %" />
                                                                             </children>
                                                                         </HBox>
                                                                         <Label text="Task dependencies" />
@@ -172,7 +172,7 @@
                                                                             <children>
                                                                                 <Button mnemonicParsing="false" text="Dependencies">
                                                                                     <HBox.margin>
-                                                                                        <Insets left="20.0" />
+                                                                                        <Insets />
                                                                                     </HBox.margin>
                                                                                 </Button>
                                                                             </children>
