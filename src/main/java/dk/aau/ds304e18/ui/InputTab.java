@@ -10,6 +10,7 @@ import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.Sequence;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -82,7 +83,11 @@ public class InputTab {
         dependencies.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dependencies"));
         dependencies.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
-        ((HBox) bar.getItems().get(0)).getChildren().get(0).setOnMouseClicked(event -> addDependency(dependencies.getSelectionModel().getSelectedItems(), listViewDependency));
+        ((HBox) bar.getItems().get(0)).getChildren().get(0).setOnMouseClicked(event -> addDependency(dependencies.getSelectionModel().getSelectedItems()));
+        Button removeDep = (Button) ((HBox) bar.getItems().get(0)).getChildren().get(1);
+        removeDep.setOnMouseClicked(event -> removeDependency(dependencies.getSelectionModel().getSelectedItems()));
+        removeDep.setTooltip(new Tooltip("Removes the selected task from dependencies"));
+
         ((HBox) bar.getItems().get(1)).getChildren().get(0).setOnMouseClicked(event -> closeDependenciesPopup());
     }
 
@@ -154,8 +159,6 @@ public class InputTab {
 
         ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(new Tooltip("Opens a list of tasks in the project to add as dependencies"));
         buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> openDependenciesPopup());
-        ((Button) buttonsForDependencies.getChildren().get(1)).setTooltip(new Tooltip("Removes the selected task from dependencies"));
-        buttonsForDependencies.getChildren().get(1).setOnMouseClicked(event -> removeDependency(listViewDependency));
 
         ((Button) inputVBox.getChildren().get(13)).setTooltip(new Tooltip("Clears all the input fields"));
         inputVBox.getChildren().get(13).setOnMouseClicked(event -> clearInputFields(listViewDependency, probs1, probs2, probs3,
@@ -332,23 +335,23 @@ public class InputTab {
      * Method for revoming a dependency from the new task.
      * This happens by selecting the task and pressing the remove button.
      *
-     * @param listViewDependency - The list of tasks in the dependency box.
+     * @param selectedItems
      */
-    private void removeDependency(ListView<Task> listViewDependency) {
-        Task task = listViewDependency.getSelectionModel().getSelectedItem();
-        if (taskDependencies.contains(task)) {
-            taskDependencies.remove(task);
-            listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
+    private void removeDependency(ObservableList<Task> selectedItems) {
+        for (Task task : selectedItems) {
+            if (taskDependencies.contains(task)) {
+                taskDependencies.remove(task);
+                listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
+            }
         }
     }
 
     /**
      * Method for adding a dependency to a new task.
      *
-     * @param listViewDependency - The list of tasks in the dependency box.
-     * @param tasks              - The list of the tasks in the project.
+     * @param tasks - The list of the tasks in the project.
      */
-    private void addDependency(List<Task> tasks, ListView<Task> listViewDependency) {
+    private void addDependency(List<Task> tasks) {
         if (tasks == null || tasks.size() == 0)
             return;
         for (Task task : tasks) {
