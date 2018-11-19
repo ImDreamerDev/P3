@@ -221,7 +221,7 @@ public class InputTab {
     /**
      * This method calculates and produces the output.
      *
-     * @param pro            - the project to calculate.
+     * @param project        - the project to calculate.
      * @param numOfEmployees - the amount of employees.
      * @param useFast        - Is the useFast toggled or not. (boolean)
      * @param useMonty       - the monte carlo method is used.
