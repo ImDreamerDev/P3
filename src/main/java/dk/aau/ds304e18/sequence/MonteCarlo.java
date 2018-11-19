@@ -1,6 +1,6 @@
 package dk.aau.ds304e18.sequence;
 
-import dk.aau.ds304e18.math.Calc;
+import dk.aau.ds304e18.math.Maths;
 import dk.aau.ds304e18.math.CalculateLambda;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
@@ -67,7 +67,7 @@ public class MonteCarlo {
                 }
 
                 //If there is literally no other possible sequences, skip
-                if (j == Calc.amountMax(project.getTasks().size()))
+                if (j == Maths.amountMax(project.getTasks().size()))
                     break;
 
                 //Find a random sequence and work on it

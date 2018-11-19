@@ -1,6 +1,6 @@
 package dk.aau.ds304e18.math;
 
-public class Calc {
+public class Maths {
 
     public static int amountMax(int amount) {
         if (amount > 12)
