@@ -249,7 +249,7 @@
                                                                 <VBox alignment="TOP_CENTER" prefHeight="627.0" prefWidth="222.0" spacing="5.0" BorderPane.alignment="CENTER">
                                                                     <children>
                                                                         <Label text="Name:" />
-                                                                        <TextField />
+                                                                        <TextField promptText="Insert employee name:" />
                                                                         <Button mnemonicParsing="false" text="Add employee" />
                                                                     </children>
                                                                     <BorderPane.margin>
