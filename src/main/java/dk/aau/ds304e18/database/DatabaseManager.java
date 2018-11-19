@@ -202,7 +202,6 @@ public class DatabaseManager {
      * Adds a single task to the db.
      *
      * @param task the task to add.
-     * @return Whether the operation was successful or not
      */
     public static void addTask(Task task) {
         try {
@@ -484,7 +483,7 @@ public class DatabaseManager {
                 updateProgress(5, progressBarParts);
                 return null;
             }
-        };  
+        };
 
     }
 
