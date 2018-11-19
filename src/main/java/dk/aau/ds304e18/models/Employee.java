@@ -52,6 +52,13 @@ public class Employee {
     }
 
 
+    public Employee(String name, Project project) {
+        this.name = name;
+        this.project = project;
+        DatabaseManager.addEmployees(this);
+    }
+
+
     public Employee(int id, String name, List<Integer> previousTaskIds) {
         this.name = name;
         this.id = id;
@@ -156,13 +163,11 @@ public class Employee {
      */
     public void setProject(Project project) {
 
-        if (project != null) {
-            this.project = project;
-            if (project.getId() != getProjectId())
-                DatabaseManager.updateEmployee(this);
-            if (!project.getEmployees().contains(this)) project.addNewEmployee(this);
-        }
+        this.project = project;
+        DatabaseManager.updateEmployee(this);
+        if (project != null && !project.getEmployees().contains(this)) project.addNewEmployee(this);
     }
+
 
     @Override
     public boolean equals(Object o) {

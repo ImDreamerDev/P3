@@ -1,5 +1,6 @@
 package dk.aau.ds304e18.ui;
 
+import com.sun.javafx.scene.control.EmbeddedTextContextMenuContent;
 import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.models.Project;
@@ -60,10 +61,12 @@ public class ProjectTab {
 
 
         Button createButton = ((Button) projectToolBar.getChildren().get(2));
+        ((Button) createButton).setTooltip(new Tooltip("Creates a new project with the selected name"));
         createButton.setOnMouseClicked(event ->
                 createProject(((TextField) projectToolBar.getChildrenUnmodifiable().get(1))));
 
         Button archiveButton = ((Button) projectToolBar.getChildren().get(5));
+        ((Button) archiveButton).setTooltip(new Tooltip("Archives the selected project"));
         archiveButton.setOnMouseClicked(event -> archiveProject());
 
         CheckBox showArchived = ((CheckBox) rootPane.lookup("#showArchivedCheckbox"));

@@ -4,6 +4,7 @@ import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.Probabilities;
+import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
@@ -29,6 +30,8 @@ public class InputTab {
     private TableView<Task> tableView;
     private TabPane tabPane;
     private ListView<Task> listViewDependency;
+    private TableView<Employee> employeeTableView;
+    private TableView<Employee> employeeProjectTableView;
 
     /**
      * @param rootPane  - This is the parent of all ui elements in the inputTab.
@@ -61,6 +64,7 @@ public class InputTab {
         dependencies.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
                 .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
                 .collect(Collectors.toList())));
+        drawEmployees();
         if (JavaFXMain.selectedProjectId != 0)
             outputTab.drawOutputTab(true);
     }
@@ -90,6 +94,7 @@ public class InputTab {
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren().get(0).setDisable(true);
         inputVBox.setDisable(true);
+        ((TabPane) flowPane.getParent().getParent().getParent()).getTabs().get(1).setDisable(true);
     }
 
     /**
@@ -100,6 +105,7 @@ public class InputTab {
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren().get(0).setDisable(false);
         inputVBox.setDisable(false);
+        ((TabPane) flowPane.getParent().getParent().getParent()).getTabs().get(1).setDisable(false);
     }
 
     /**
@@ -146,10 +152,12 @@ public class InputTab {
         TextField probs6 = ((TextField) probsHBox3.getChildren().get(1));
         probs6.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs6, newValue, false));
 
-
+        ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(new Tooltip("Opens a list of tasks in the project to add as dependencies"));
         buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> openDependenciesPopup());
+        ((Button) buttonsForDependencies.getChildren().get(1)).setTooltip(new Tooltip("Removes the selected task from dependencies"));
         buttonsForDependencies.getChildren().get(1).setOnMouseClicked(event -> removeDependency(listViewDependency));
 
+        ((Button) inputVBox.getChildren().get(13)).setTooltip(new Tooltip("Clears all the input fields"));
         inputVBox.getChildren().get(13).setOnMouseClicked(event -> clearInputFields(listViewDependency, probs1, probs2, probs3,
                 probs4, probs5, probs6, nameTextField, estimatedTimeTextField, priority));
 
@@ -159,6 +167,7 @@ public class InputTab {
         VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(1));
 
+        ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).setTooltip(new Tooltip("Adds the task to the project"));
         ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0).setOnMouseClicked(event -> {
             List<Probabilities> probabilities = new ArrayList<>();
             if (!probs1.getText().equals(""))
@@ -178,10 +187,13 @@ public class InputTab {
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true));
         numOfEmployees.setText("1");
 
+        ((Button) vBoxSplitter.getChildren().get(4)).setTooltip(new Tooltip("Calculates the probability for the length of the project"));
         vBoxSplitter.getChildren().get(4).setOnMouseClicked(event -> calculate(
                 LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
                 ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
                 Double.parseDouble(numOfEmployees.getText()), ((CheckBox) vBoxSplitter.getChildren().get(3)).isSelected()));
+
+        ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1)).setTooltip(new Tooltip("Removes the selected task from the project"));
         ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1).setOnMouseClicked(event -> removeTask());
 
         tableView.setOnMouseClicked(event -> {
@@ -193,7 +205,7 @@ public class InputTab {
             }
         });
         setupDependenciesPopup();
-
+        setupEmployees();
         drawInputTab();
     }
 
@@ -214,10 +226,10 @@ public class InputTab {
      * @param useFast        - Is the useFast toggled or not. (boolean)
      * @param useMonty       - the monte carlo method is used.
      */
-    private void calculate(Project pro, boolean useMonty, double numOfEmployees, boolean useFast) {
-        pro.setNumberOfEmployees(numOfEmployees);
+    private void calculate(Project project, boolean useMonty, double numOfEmployees, boolean useFast) {
+        project.setNumberOfEmployees(numOfEmployees);
         Instant start = Instant.now();
-        Sequence.sequenceTasks(pro, useMonty, useFast);
+        Sequence.sequenceTasks(project, useMonty, useFast);
         Instant end = java.time.Instant.now();
         Duration between = java.time.Duration.between(start, end);
         System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 +
@@ -361,6 +373,99 @@ public class InputTab {
         DatabaseManager.removeTask(taskId);
         LocalObjStorage.getTaskList().remove(LocalObjStorage.getTaskById(taskId));
         drawInputTab();
+    }
+
+    private void setupEmployees() {
+        BorderPane borderPane = (BorderPane) rootPane.lookup("#employeesBorderpane");
+        VBox buttonPane = ((VBox) ((Pane) borderPane.getRight()).getChildren().get(0));
+        //Assign
+        ((Button) buttonPane.getChildren().get(0)).setTooltip(new Tooltip("Assigns an selected employee to the project"));
+        buttonPane.getChildren().get(0).setOnMouseClicked(event -> assignEmployee());
+        buttonPane.getChildren().get(0).setVisible(false);
+        //Unassign
+        ((Button) buttonPane.getChildren().get(1)).setTooltip(new Tooltip("Removes an selected employee from the project"));
+        buttonPane.getChildren().get(1).setOnMouseClicked(event -> unassignEmployee());
+
+
+        VBox inputVbox = (VBox) borderPane.getLeft();
+        TextField nameTextField = (TextField) inputVbox.getChildren().get(1);
+        //Add emp
+        ((Button) inputVbox.getChildren().get(2)).setTooltip(new Tooltip("Adds an employee to the system"));
+        inputVbox.getChildren().get(2).setOnMouseClicked(event -> addEmployee(nameTextField));
+
+
+        TabPane tabPane = (TabPane) borderPane.getCenter();
+        employeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(0).getContent()).getChildren().get(0);
+        employeeTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        employeeTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
+        employeeTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+        employeeTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("currentTask"));
+        tabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue() == 0) {
+                buttonPane.getChildren().get(0).setVisible(false);
+                buttonPane.getChildren().get(1).setVisible(true);
+            } else if (newValue.intValue() == 1) {
+                buttonPane.getChildren().get(0).setVisible(true);
+                buttonPane.getChildren().get(1).setVisible(false);
+            }
+        });
+        employeeProjectTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(1).getContent()).getChildren().get(0);
+        employeeProjectTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
+        employeeProjectTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+        employeeProjectTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("currentTask"));
+        employeeProjectTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+
+    }
+
+    private void assignEmployee() {
+        if (employeeProjectTableView.getSelectionModel().getSelectedItems() == null
+                && employeeProjectTableView.getSelectionModel().getSelectedItems().size() == 0) {
+            return;
+        }
+        LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).addNewEmployee(employeeProjectTableView.getSelectionModel().getSelectedItems());
+        drawEmployees();
+        outputTab.drawOutputTab(false);
+    }
+
+    private void unassignEmployee() {
+        if (employeeTableView.getSelectionModel().getSelectedItems() == null
+                && employeeTableView.getSelectionModel().getSelectedItems().size() == 0) {
+            return;
+        }
+        for (Employee employee : employeeTableView.getSelectionModel().getSelectedItems()) {
+            for (Task task : employee.getCurrentTask()) {
+                task.getEmployees().remove(employee);
+                DatabaseManager.updateTask(task);
+            }
+            LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).removeEmployee(employee);
+
+        }
+
+        drawEmployees();
+        outputTab.drawOutputTab(false);
+    }
+
+    private void drawEmployees() {
+        employeeTableView.getItems().clear();
+        employeeProjectTableView.getItems().clear();
+        employeeTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getEmployeeList().stream().
+                filter(employee -> {
+                    if (employee.getProject() == null) return false;
+                    return employee.getProject().getId()
+                            == JavaFXMain.selectedProjectId;
+                }).collect(Collectors.toList())));
+        employeeProjectTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getEmployeeList().
+                stream().filter(emp -> emp.getProject() == null || emp.getProject().getId()
+                != JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+    }
+
+    private void addEmployee(TextField name) {
+        if (!name.getText().equals("")) {
+            new Employee(name.getText(), LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
+            drawEmployees();
+            name.clear();
+        }
     }
 
     /**

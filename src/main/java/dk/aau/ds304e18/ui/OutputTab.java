@@ -9,6 +9,7 @@ import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
@@ -154,8 +155,12 @@ public class OutputTab {
         employeeTableView.getItems().clear();
         taskTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().
                 stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
-        employeeTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getEmployeeList().
-                stream().filter(emp -> emp.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
+        employeeTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getEmployeeList().stream().
+                filter(employee -> {
+                    if (employee.getProject() == null) return false;
+                    return employee.getProject().getId()
+                            == JavaFXMain.selectedProjectId;
+                }).collect(Collectors.toList())));
 
     }
 
@@ -178,12 +183,13 @@ public class OutputTab {
                 return new SimpleStringProperty("Assigned");
             return new SimpleStringProperty("Not assigned");
         });
-        employeeTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getEmployeeList().
-                stream().filter(emp -> emp.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
 
         BorderPane borderPane = (BorderPane) rootPane.lookup("#employeesBorderPane");
         VBox buttons = ((VBox) borderPane.getRight());
+
+        ((Button) buttons.getChildren().get(0)).setTooltip(new Tooltip("Assigns an selected employee to the selected task"));
         buttons.getChildren().get(0).setOnMouseClicked(event -> assignEmployee());
+        ((Button) buttons.getChildren().get(1)).setTooltip(new Tooltip("Removes an selected employee for their task"));
         buttons.getChildren().get(1).setOnMouseClicked(event -> unassignEmployee());
 
     }

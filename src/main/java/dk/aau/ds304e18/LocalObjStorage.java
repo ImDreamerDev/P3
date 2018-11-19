@@ -61,7 +61,8 @@ public class LocalObjStorage {
      * @param emp employee to add.
      */
     public static void addEmployee(Employee emp) {
-        LocalObjStorage.employeeList.add(emp);
+        if (!employeeList.contains(emp))
+            LocalObjStorage.employeeList.add(emp);
     }
 
     /**

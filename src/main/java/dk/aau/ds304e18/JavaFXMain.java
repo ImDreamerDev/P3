@@ -74,7 +74,7 @@ public class JavaFXMain extends Application {
         });
 
         //Update button
-        ((Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1)).setTooltip(new Tooltip("RE"));
+        ((Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1)).setTooltip(new Tooltip("Updates the program"));
         ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1).setOnMouseClicked(event -> {
             JavaFXMain.selectedProjectId = 0;
             Task<Void> voidTask = DatabaseManager.distributeModels(LocalObjStorage.getProjectManager().get(0));
@@ -92,6 +92,7 @@ public class JavaFXMain extends Application {
             new Thread(voidTask).start();
         });
 
+        ((Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(3)).setTooltip(new Tooltip("Logs out of the program"));
         ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(3).setOnMouseClicked(event -> {
             DatabaseManager.logOut();
             rootPane.getChildrenUnmodifiable().get(2).setVisible(true);

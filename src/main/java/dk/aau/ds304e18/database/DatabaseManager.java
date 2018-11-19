@@ -361,7 +361,7 @@ public class DatabaseManager {
 
         try {
             if (dbConnection == null || dbConnection.isClosed() || dbConnection.isClosed()) connect();
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM employees WHERE projectid = ANY (?)");
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM employees WHERE projectid IS NULL OR projectid = ANY (?) ");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER", employeeIdsToQuery.toArray()));
             ResultSet rs = statement.executeQuery();
             return DatabaseParser.parseEmployeesFromResultSet(rs);
@@ -445,7 +445,8 @@ public class DatabaseManager {
                 updateProgress(3, progressBarParts);
 
                 for (Employee emp : LocalObjStorage.getEmployeeList()) {
-                    emp.setProject(LocalObjStorage.getProjectById(emp.getProjectId()));
+                    if (emp.getProjectId() != 0)
+                        emp.setProject(LocalObjStorage.getProjectById(emp.getProjectId()));
                     if (emp.getProjectId() != 0)
                         LocalObjStorage.getProjectById(emp.getProjectId()).addNewEmployee(emp);
                 }
@@ -508,7 +509,7 @@ public class DatabaseManager {
             if (employee.getProject() != null)
                 statement.setInt(2, employee.getProject().getId());
             else
-                statement.setInt(2, 0);
+                statement.setNull(2, java.sql.Types.INTEGER);
             statement.setInt(3, employee.getId());
             statement.execute();
 

@@ -135,6 +135,14 @@ public class Project {
         }
     }
 
+    public void addNewEmployee(List<Employee> employees) {
+        this.employees.addAll(employees);
+        for (Employee emp : employees) {
+            if (emp.getProjectId() != this.id)
+                emp.setProject(this);
+        }
+    }
+
     /**
      * Removes employee from project.
      *
@@ -142,7 +150,7 @@ public class Project {
      */
     public void removeEmployee(Employee employee) {
         employees.remove(employee);
-        if (employee.getProject().equals(this)) employee.setProject(null);
+        if (employee.getProject().getId() == getId()) employee.setProject(null);
     }
 
     /**
