@@ -71,6 +71,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                                 double rand = random.nextDouble() * 100;
 
                                 //Create an inverse gaussian distribution for the task
+                                //Consider putting the InverseGaussian as an element of each task so we don't have to setParams on each task 10000*200 times
                                 invG.setParams(task.getEstimatedTime(), task.getLambda());
 
                                 //Calculate the duration at the given random value and add that to duration
