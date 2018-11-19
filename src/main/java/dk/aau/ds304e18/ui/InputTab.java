@@ -3,6 +3,7 @@ package dk.aau.ds304e18.ui;
 import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.math.Calc;
 import dk.aau.ds304e18.math.Probabilities;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
@@ -123,7 +124,6 @@ public class InputTab {
         tableView = ((TableView<Task>) flowPane.getChildren().get(1));
         setupTaskTable();
 
-
         //Input view
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         TextField nameTextField = ((TextField) inputVBox.getChildren().get(1));
@@ -174,11 +174,11 @@ public class InputTab {
         ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0).setOnMouseClicked(event -> {
             List<Probabilities> probabilities = new ArrayList<>();
             if (!probs1.getText().equals(""))
-                probabilities.add(new Probabilities(Double.parseDouble(probs1.getText()), Double.parseDouble(probs2.getText())));
+                probabilities.add(new Probabilities(Double.parseDouble(probs1.getText()), Calc.clamp(Double.parseDouble(probs2.getText()), 0.0, 100.0)));
             if (!probs3.getText().equals(""))
-                probabilities.add(new Probabilities(Double.parseDouble(probs3.getText()), Double.parseDouble(probs4.getText())));
+                probabilities.add(new Probabilities(Double.parseDouble(probs3.getText()), Calc.clamp(Double.parseDouble(probs4.getText()), 0.0, 100.0)));
             if (!probs5.getText().equals(""))
-                probabilities.add(new Probabilities(Double.parseDouble(probs5.getText()), Double.parseDouble(probs6.getText())));
+                probabilities.add(new Probabilities(Double.parseDouble(probs5.getText()), Calc.clamp(Double.parseDouble(probs6.getText()), 0.0, 100.0)));
             addTask(nameTextField.getText(), Double.parseDouble(estimatedTimeTextField.getText()),
                     Integer.parseInt(priority.getText()), probabilities);
             clearInputFields(listViewDependency, probs1, probs2, probs3,
