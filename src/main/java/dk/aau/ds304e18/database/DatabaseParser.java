@@ -132,9 +132,11 @@ public class DatabaseParser {
                                 Double.parseDouble(probValues[1])));
                     }
                 }
+                double startTime = -1d;
+                if (rs.getDouble(9) > 0) startTime = rs.getDouble(9);
 
                 Task task = new Task(id, name, estimatedTime, priority, dependenceIds, employeeIds,
-                        projectId, probabilities);
+                        projectId, probabilities, startTime);
                 tasks.add(task);
             }
         } catch (SQLException e) {
@@ -146,6 +148,7 @@ public class DatabaseParser {
 
     /**
      * This method parses the information from the database which turns the probabilities into a string format.
+     *
      * @param task - the task to parse.
      * @return Probability string - the probabilites turned into string format.
      */

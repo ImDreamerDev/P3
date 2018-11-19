@@ -163,7 +163,7 @@ public class DatabaseManager {
      */
     public static void removeTask(int id) {
         Task tempTask = new Task(id, "", 0d, 0,
-                new ArrayList<>(), new ArrayList<>(), 0, new ArrayList<>());
+                new ArrayList<>(), new ArrayList<>(), 0, new ArrayList<>(), -1);
 
         //Removes the task as dependency from other tasks
         LocalObjStorage.getTaskList().forEach(task -> {
