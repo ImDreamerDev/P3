@@ -114,7 +114,7 @@ public class GanttTab {
             xVar.set(task.getStartTime());
 
 
-            taskBox.setLayoutX(xVar.get() * zoomFactor);
+            taskBox.setLayoutX(xVar.get() * zoomFactor + xPadding);
 
             taskBox.setLayoutY(35 * y + paddingY);
             Rectangle ret = new Rectangle(task.getEstimatedTime() * zoomFactor, 20);
