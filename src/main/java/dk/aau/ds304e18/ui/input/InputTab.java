@@ -231,6 +231,7 @@ public class InputTab {
         drawInputTab();
         tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
         outputTab.populateChart();
+        project.getTasks().forEach(DatabaseManager::updateTask);
     }
 
     /**
