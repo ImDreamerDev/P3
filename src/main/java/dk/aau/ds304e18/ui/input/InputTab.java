@@ -9,19 +9,13 @@ import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.Sequence;
-import dk.aau.ds304e18.ui.output.OutputTab;
 import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 
-import javax.swing.*;
-import javax.swing.plaf.BorderUIResource;
-import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -32,20 +26,17 @@ public class InputTab {
 
     private List<Task> taskDependencies = new ArrayList<>();
     private final Parent rootPane;
-    private final OutputTab outputTab;
     private TableView<Task> tableView;
     private TabPane tabPane;
     private ListView<Task> listViewDependency;
     private DependenciesPopup dependenciesPopup;
-    private EmployeeTab employeeTab;
+    public EmployeeTab employeeTab;
 
     /**
-     * @param rootPane  - This is the parent of all ui elements in the inputTab.
-     * @param outputTab - The class outputTab is used.
+     * @param rootPane - This is the parent of all ui elements in the inputTab.
      */
-    public InputTab(Parent rootPane, OutputTab outputTab) {
+    public InputTab(Parent rootPane) {
         this.rootPane = rootPane;
-        this.outputTab = outputTab;
         tabPane = ((TabPane) rootPane.getChildrenUnmodifiable().get(1));
         setupInputTab();
     }
@@ -73,7 +64,7 @@ public class InputTab {
 
         employeeTab.drawEmployees();
         if (JavaFXMain.selectedProjectId != 0)
-            outputTab.drawOutputTab(true);
+            JavaFXMain.outputTab.drawOutputTab(true);
     }
 
     /**
@@ -205,7 +196,7 @@ public class InputTab {
             }
         });
         dependenciesPopup = new DependenciesPopup(rootPane, listViewDependency, taskDependencies);
-        employeeTab = new EmployeeTab(rootPane, outputTab);
+        employeeTab = new EmployeeTab(rootPane);
         drawInputTab();
     }
 
@@ -227,10 +218,10 @@ public class InputTab {
                         "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
                 between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
 
-        outputTab.drawOutputTab(useMonty);
+        JavaFXMain.outputTab.drawOutputTab(useMonty);
         drawInputTab();
         tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
-        outputTab.populateChart();
+        JavaFXMain.outputTab.populateChart();
     }
 
     /**

@@ -62,7 +62,7 @@ public class AssignmentTab {
                     return employee.getProject().getId()
                             == JavaFXMain.selectedProjectId;
                 }).collect(Collectors.toList())));
-
+        JavaFXMain.inputTab.employeeTab.drawEmployees();
     }
 
     private void assignEmployee() {

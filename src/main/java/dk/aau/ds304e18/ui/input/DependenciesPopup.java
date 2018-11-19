@@ -4,14 +4,12 @@ import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.LocalObjStorage;
 import dk.aau.ds304e18.models.Task;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
