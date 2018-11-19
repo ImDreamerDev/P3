@@ -127,15 +127,15 @@
                                                             <left>
                                                                 <VBox alignment="TOP_CENTER" prefHeight="646.0" prefWidth="222.0" spacing="5.0" BorderPane.alignment="CENTER">
                                                                     <children>
-                                                                        <Label text="Task name" />
+                                                                        <Label text="Task name*" />
                                                                         <TextField promptText="Task name:" />
-                                                                        <Label text="Task priority" />
+                                                                        <Label text="Task priority*" />
                                                                         <TextField promptText="Task priority:" />
-                                                                        <Label text="Estimated time" />
+                                                                        <Label text="Estimated time*" />
                                                                         <TextField promptText="Estimated time:" />
                                                                         <HBox prefHeight="29.0" prefWidth="222.0">
                                                                             <children>
-                                                                                <Label text="Certainty" />
+                                                                                <Label text="Certainty**" />
                                                                                 <Label text="Duration">
                                                                                     <HBox.margin>
                                                                                         <Insets left="-45.0" top="20.0" />

@@ -155,25 +155,22 @@ public class InputTab {
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(1));
 
         ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).setTooltip(new Tooltip("Adds the task to the project"));
+        //Add task
         ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0).setOnMouseClicked(event -> {
-
-            Border defaultBorder = probs3.getBorder();
-            if((probs1.getText().equals("") || probs2.getText().equals("")) && (probs3.getText().equals("") || probs4.getText().equals("")) && (probs5.getText().equals("") || probs6.getText().equals(""))){
-                probs1.setStyle("-fx-border-color: #ff3e12");
-                probs2.setStyle("-fx-border-color:  #ff3e12");
+            List<Probabilities> probabilities = new ArrayList<>();
+            if (!probs1.getText().isBlank())
+                probabilities.add(new Probabilities(Double.parseDouble(probs1.getText()), Maths.clamp(Double.parseDouble(probs2.getText()), 0.0, 100.0)));
+            if (!probs3.getText().isBlank())
+                probabilities.add(new Probabilities(Double.parseDouble(probs3.getText()), Maths.clamp(Double.parseDouble(probs4.getText()), 0.0, 100.0)));
+            if (!probs5.getText().isBlank())
+                probabilities.add(new Probabilities(Double.parseDouble(probs5.getText()), Maths.clamp(Double.parseDouble(probs6.getText()), 0.0, 100.0)));
+            if (probabilities.stream().allMatch(probabilities1 -> probabilities1.getProbability() == 0 && probabilities1.getDuration() == 0))
                 return;
-            } else {
-                probs1.setBorder(defaultBorder);
-                probs2.setBorder(defaultBorder);
+            if (nameTextField.getText().isBlank() || estimatedTimeTextField.getText().isBlank() || priority.getText().isBlank()) {
+                return;
             }
 
-            List<Probabilities> probabilities = new ArrayList<>();
-            if (!probs1.getText().equals(""))
-                probabilities.add(new Probabilities(Double.parseDouble(probs1.getText()), Maths.clamp(Double.parseDouble(probs2.getText()), 0.0, 100.0)));
-            if (!probs3.getText().equals(""))
-                probabilities.add(new Probabilities(Double.parseDouble(probs3.getText()), Maths.clamp(Double.parseDouble(probs4.getText()), 0.0, 100.0)));
-            if (!probs5.getText().equals(""))
-                probabilities.add(new Probabilities(Double.parseDouble(probs5.getText()), Maths.clamp(Double.parseDouble(probs6.getText()), 0.0, 100.0)));
+
             addTask(nameTextField.getText(), Double.parseDouble(estimatedTimeTextField.getText()),
                     Integer.parseInt(priority.getText()), probabilities);
             clearInputFields(listViewDependency, probs1, probs2, probs3,
@@ -240,12 +237,17 @@ public class InputTab {
      * @param newValue  - the contents of the textbox
      */
     private void validateNumericInput(TextField textField, String newValue, boolean intField) {
-        if (intField)
+        if (intField) {
             if (!newValue.matches("\\d*")) {
                 textField.setText(newValue.replaceAll("[[\\D]]", ""));
-            } else if (!newValue.matches("\\d*\\.")) {
-                textField.setText(newValue.replaceAll("[[^\\d^\\.]]", ""));
             }
+        } else if (!newValue.matches("\\d*\\.")) {
+            textField.setText(newValue.replaceAll("[[^\\d^\\.]]", ""));
+        }
+        if (newValue.equals(""))
+            textField.setStyle("-fx-border-color: red");
+        else
+            textField.setStyle("-fx-border-color: white");
     }
 
     /**
