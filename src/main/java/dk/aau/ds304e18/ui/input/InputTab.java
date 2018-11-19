@@ -25,6 +25,7 @@ import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -98,6 +99,8 @@ public class InputTab {
         ((TabPane) flowPane.getParent().getParent().getParent()).getTabs().get(1).setDisable(false);
     }
 
+    List<TextField> textFields = new ArrayList<>();
+
     /**
      * The method that sets up the contents of the whole input tab.
      */
@@ -111,6 +114,14 @@ public class InputTab {
         //Input view
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         TextField nameTextField = ((TextField) inputVBox.getChildren().get(1));
+        nameTextField.textProperty().addListener((observableValue, s, t1) -> {
+            if (t1.isBlank()) {
+                nameTextField.setStyle("-fx-border-color: #ff0000");
+            } else {
+                nameTextField.setStyle("");
+            }
+        });
+
         TextField priority = ((TextField) inputVBox.getChildren().get(3));
         TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(5));
 
@@ -121,26 +132,26 @@ public class InputTab {
         HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
 
 
-        priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true));
+        priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true, false));
         estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) ->
-                validateNumericInput(estimatedTimeTextField, newValue, false));
+                validateNumericInput(estimatedTimeTextField, newValue, false, false));
 
 
         TextField probs1 = ((TextField) probsHBox.getChildren().get(0));
-        probs1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs1, newValue, false));
+        probs1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs1, newValue, false, true));
         TextField probs2 = ((TextField) probsHBox.getChildren().get(1));
-        probs2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs2, newValue, false));
+        probs2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs2, newValue, false, true));
 
         TextField probs3 = ((TextField) probsHBox2.getChildren().get(0));
-        probs3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs3, newValue, false));
+        probs3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs3, newValue, false, true));
         TextField probs4 = ((TextField) probsHBox2.getChildren().get(1));
-        probs4.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs4, newValue, false));
+        probs4.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs4, newValue, false, true));
 
         TextField probs5 = ((TextField) probsHBox3.getChildren().get(0));
-        probs5.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs5, newValue, false));
+        probs5.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs5, newValue, false, true));
         TextField probs6 = ((TextField) probsHBox3.getChildren().get(1));
-        probs6.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs6, newValue, false));
-
+        probs6.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probs6, newValue, false, true));
+        
         ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(new Tooltip("Opens a list of tasks in the project to add as dependencies"));
         buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> dependenciesPopup.openDependenciesPopup());
 
@@ -179,7 +190,7 @@ public class InputTab {
         });
 
 
-        numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true));
+        numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true, false));
         numOfEmployees.setText("1");
 
         ((Button) vBoxSplitter.getChildren().get(4)).setTooltip(new Tooltip("Calculates the probability for the length of the project"));
@@ -236,7 +247,7 @@ public class InputTab {
      * @param textField - the textbox
      * @param newValue  - the contents of the textbox
      */
-    private void validateNumericInput(TextField textField, String newValue, boolean intField) {
+    private void validateNumericInput(TextField textField, String newValue, boolean intField, boolean probability) {
         if (intField) {
             if (!newValue.matches("\\d*")) {
                 textField.setText(newValue.replaceAll("[[\\D]]", ""));
@@ -244,10 +255,13 @@ public class InputTab {
         } else if (!newValue.matches("\\d*\\.")) {
             textField.setText(newValue.replaceAll("[[^\\d^\\.]]", ""));
         }
+        if (probability) {
+            return;
+        }
         if (newValue.equals(""))
             textField.setStyle("-fx-border-color: red");
         else
-            textField.setStyle("-fx-border-color: white");
+            textField.setStyle("");
     }
 
     /**
