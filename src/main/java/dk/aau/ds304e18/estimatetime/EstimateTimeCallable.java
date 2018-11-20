@@ -33,10 +33,15 @@ public class EstimateTimeCallable implements Callable<Estimate> {
         //Repeat repeats time
         for (int i = 0; i < repeats; i++) {
             if (amountEmployees > 1) {
+                //This can probably be made into an array, we know it's taskList.size() big
                 List<Task> tasksDone = new ArrayList<>();
+
+                //This can probably be made into an array, we know how big it is (The biggest of amountEmployees and taskList.size())
                 List<Double> durations = new ArrayList<>();
+
                 HashMap<Task, Double> taskDoneAt = new HashMap<>();
 
+                //If durations get made into an array, this is unnecessary
                 for (int j = 0; j < amountEmployees; j++) {
                     if (j >= taskList.size()) break;
                     durations.add(0d);
@@ -69,10 +74,6 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                                     taskStartAt.put(task, taskStartAt.get(task) + durations.get(j));
                                 else
                                     taskStartAt.put(task, durations.get(j));
-
-                                //Create an inverse gaussian distribution for the task
-                                //Consider putting the InverseGaussian as an element of each task so we don't have to setParams on each task 10000*200 times
-                                //invG.setParams(task.getEstimatedTime(), task.getLambda());
 
                                 //Calculate the duration at the given random value and add that to duration
                                 durations.set(j, durations.get(j) + invG.get(task).getDuration(random.nextDouble() * 100));
@@ -113,21 +114,14 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
                 //For each task in the taskList
                 for (Task task : taskList) {
-
-                    //Create a random double between 0 and 100
-                    double rand = random.nextDouble() * 100;
-
                     //Adds startpoint of task
                     if(taskStartAt.containsKey(task))
                         taskStartAt.put(task, taskStartAt.get(task) + currentTime);
                     else
                         taskStartAt.put(task, currentTime);
 
-                    //Create an inverse gaussian distribution for the task
-                    //invG.setParams(task.getEstimatedTime(), task.getLambda());
-
                     //Calculate the duration at the given random value and add that to duration
-                    double temp = invG.get(task).getDuration(rand);
+                    double temp = invG.get(task).getDuration(random.nextDouble() * 100);
                     duration += temp;
                     currentTime += temp;
                 }
