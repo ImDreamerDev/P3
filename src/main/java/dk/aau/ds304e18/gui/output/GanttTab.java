@@ -25,16 +25,26 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class GanttTab {
-    public double zoomFactor = 1;
+    private double zoomFactor = 1;
+    private Project project;
+    private AnchorPane pane;
+    private Label zoomFactorLabel;
 
     public GanttTab(Parent rootPane) {
-        Project pro = LocalObjStorage.getProjectList().stream().
-                filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
-        assert pro != null;
+        //Sets the current project.
+        project = LocalObjStorage.getProjectList().stream().
+                filter(pro -> pro.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
+        assert project != null;
+        //Sets the title of the output tab to include the name of the project and id.
         ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output: " +
-                pro.getName() + ":" + JavaFXMain.selectedProjectId);
-        AnchorPane pane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
-        Label zoomFactorLabel = (Label) rootPane.lookup("#zoomLevelLabel");
+                project.getName() + ":" + JavaFXMain.selectedProjectId);
+
+        //Get the anchor pane used from the GUI.
+        pane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
+
+        //Get the zoom level label to display the current zoom level. 
+        zoomFactorLabel = (Label) rootPane.lookup("#zoomLevelLabel");
+        
         pane.setOnScroll(scrollEvent -> {
             if (scrollEvent.isControlDown()) {
                 zoomFactor += scrollEvent.getDeltaY() * 0.05;
@@ -43,26 +53,26 @@ public class GanttTab {
 
                 zoomFactorLabel.setText("Zoom level: " + (int) (zoomFactor * 100d) + "%");
                 pane.getChildren().clear();
-                drawTasks(pro, pane);
+                drawTasks();
             }
 
         });
-        rootPane.lookup("#zoomInButton").setOnMouseClicked(mouseEvent -> zoomIn(pro, pane, zoomFactorLabel));
-        rootPane.lookup("#zoomOutButton").setOnMouseClicked(mouseEvent -> zoomOut(pro, pane, zoomFactorLabel));
+        rootPane.lookup("#zoomInButton").setOnMouseClicked(mouseEvent -> zoomIn());
+        rootPane.lookup("#zoomOutButton").setOnMouseClicked(mouseEvent -> zoomOut());
 
         rootPane.lookup("#resetZoomButton").setOnMouseClicked(mouseEvent -> {
             zoomFactor = 1;
             zoomFactorLabel.setText("Zoom level: 100%");
             pane.getChildren().clear();
-            drawTasks(pro, pane);
+            drawTasks();
         });
 
         rootPane.setOnKeyReleased(keyEvent -> {
             if (keyEvent.isControlDown()) {
                 if (keyEvent.getText().equals("-")) {
-                    zoomOut(pro, pane, zoomFactorLabel);
+                    zoomOut();
                 } else if (keyEvent.getText().equals("+")) {
-                    zoomIn(pro, pane, zoomFactorLabel);
+                    zoomIn();
                 }
                 keyEvent.consume();
 
@@ -70,33 +80,33 @@ public class GanttTab {
         });
     }
 
-    private void zoomOut(Project pro, AnchorPane pane, Label zoomFactorLabel) {
+    private void zoomOut() {
         if (zoomFactor > 0.5) {
             zoomFactor -= 0.1;
             if (zoomFactor < 0.5) zoomFactor = 0.5;
             zoomFactorLabel.setText("Zoom level: " + (int) (zoomFactor * 100d) + "%");
             pane.getChildren().clear();
-            drawTasks(pro, pane);
+            drawTasks();
         }
     }
 
-    private void zoomIn(Project pro, AnchorPane pane, Label zoomFactorLabel) {
+    private void zoomIn() {
         if (zoomFactor <= 4d) {
             zoomFactor += 0.1;
             if (zoomFactor > 4) zoomFactor = 4;
             zoomFactorLabel.setText("Zoom level: " + (int) (zoomFactor * 100d) + "%");
             pane.getChildren().clear();
-            drawTasks(pro, pane);
+            drawTasks();
         }
     }
 
-    public void drawTasks(Project pro, AnchorPane pane) {
+    public void drawTasks() {
         List<AnchorPane> anchorPanes = new ArrayList<>();
-        List<List<Task>> taskListOfTasks = ParseSequence.parseToMultipleLists(pro);
+        List<List<Task>> taskListOfTasks = ParseSequence.parseToMultipleLists(project);
         List<Shape> shapeList = new ArrayList<>();
         HashMap<Task, AnchorPane> taskToAP = new HashMap<>();
         int paddingY = 55, xPadding = 50;
-        List<Task> sortedTask = pro.getTasks();
+        List<Task> sortedTask = project.getTasks();
         sortedTask.sort((o1, o2) -> (int) (o1.getStartTime() - o2.getStartTime()));
 
         int y = 0;

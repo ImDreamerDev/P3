@@ -114,7 +114,7 @@ public class DependenciesPopup {
      * Method for removing a dependency from the new task.
      * This happens by selecting the task and pressing the remove button.
      *
-     * @param selectedItems
+     * @param selectedItems The current selected items.
      */
     private void removeDependency(List<Task> selectedItems) {
         for (Task task : selectedItems) {
