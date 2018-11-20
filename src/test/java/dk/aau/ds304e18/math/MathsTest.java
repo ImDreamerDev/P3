@@ -1,6 +1,5 @@
-package ds304e18.math;
+package dk.aau.ds304e18.math;
 
-import dk.aau.ds304e18.math.Maths;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,9 +8,14 @@ public class MathsTest {
 
     @Test
     void calcAmountMaxTest01() {
-        int amount = Maths.amountMax(4);
-        assertEquals(24, amount);
+        assertEquals(24, Maths.amountMax(4));
     }
+
+    @Test
+    void calcAmountMaxTest02() {
+        assertEquals(Integer.MAX_VALUE, Maths.amountMax(20));
+    }
+
 
     @Test
     void clapMaxIntTest01() {

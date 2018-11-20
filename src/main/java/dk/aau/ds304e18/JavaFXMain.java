@@ -65,9 +65,7 @@ public class JavaFXMain extends Application {
                 outputTab = new OutputTab(rootPane);
                 inputTab = new InputTab(rootPane);
                 projectTab = new ProjectTab(rootPane, LocalObjStorage.getProjectManager().get(0));
-
-
-
+                
                 ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getSelectionModel().select(0);
                 ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(1).setDisable(true);
                 ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setDisable(true);

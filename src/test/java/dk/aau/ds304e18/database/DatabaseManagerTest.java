@@ -1,6 +1,5 @@
-package ds304e18.database;
+package dk.aau.ds304e18.database;
 
-import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.Probabilities;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;

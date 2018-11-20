@@ -1,11 +1,9 @@
-package ds304e18.sequence;
+package dk.aau.ds304e18.sequence;
 
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.Task;
-import dk.aau.ds304e18.sequence.ParseSequence;
-import dk.aau.ds304e18.sequence.Sequence;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

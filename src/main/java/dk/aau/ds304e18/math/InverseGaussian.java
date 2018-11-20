@@ -16,11 +16,7 @@ public class InverseGaussian {
 
     //Calculate the density at a given x-coordinate from the Inverse Gaussian Distribution PDF
     private static double density(double mu, double lambda, double x) {
-        if (mu <= 0.0D) {
-            throw new IllegalArgumentException("mu <= 0");
-        } else if (lambda <= 0.0D) {
-            throw new IllegalArgumentException("lambda <= 0");
-        } else if (x <= 0.0D) {
+        if (x <= 0.0D) {
             return 0.0D;
         } else {
             double sqrtX = Math.sqrt(x);
@@ -31,17 +27,13 @@ public class InverseGaussian {
     /**
      * Calculate the y-value given an x value, i.e. the probability of a task completing at a certain time (y : probability, x : time) using the CDF
      *
-     * @param mu - the mean.
+     * @param mu     - the mean.
      * @param lambda - shape parameter.
-     * @param x - completion time of a given task.
+     * @param x      - completion time of a given task.
      * @return The probability of the task being completed at x time.
      */
     private static double cdf(double mu, double lambda, double x) {
-        if (mu <= 0.0D) {
-            throw new IllegalArgumentException("mu <= 0");
-        } else if (lambda <= 0.0D) {
-            throw new IllegalArgumentException("lambda <= 0");
-        } else if (x <= 0.0D) {
+        if (x <= 0.0D) {
             return 0.0D;
         } else {
             double temp = Math.sqrt(lambda / x);
@@ -69,10 +61,10 @@ public class InverseGaussian {
             if (x < 0.0D) {
                 x = -x;
                 t = (x - 3.75D) / (x + 3.75D);
-                r = 1.0D - 0.5D * Math.exp(-x * x) * evalCheby(NORMAL2_A, 24, t);
+                r = 1.0D - 0.5D * Math.exp(-x * x) * evalCheby(t);
             } else {
                 t = (x - 3.75D) / (x + 3.75D);
-                r = 0.5D * Math.exp(-x * x) * evalCheby(NORMAL2_A, 24, t);
+                r = 0.5D * Math.exp(-x * x) * evalCheby(t);
             }
 
             return r;
@@ -82,12 +74,10 @@ public class InverseGaussian {
     /**
      * Used to calculate the CDF of the normal distribution
      *
-     * @param a - coefficients of the polynomials
-     * @param n -largest degree of polynomials.
      * @param x -the parameter of the Tj functions.
      * @return the value of a series of Chebyshev polynomials Tj..
      */
-    private static double evalCheby(double[] a, int n, double x) {
+    private static double evalCheby(double x) {
         if (Math.abs(x) > 1.0D) {
             System.err.println("Chebychev polynomial evaluated at x outside [-1, 1]");
         }
@@ -97,10 +87,10 @@ public class InverseGaussian {
         double b1 = 0.0D;
         double b2 = 0.0D;
 
-        for (int j = n; j >= 0; --j) {
+        for (int j = 24; j >= 0; --j) {
             b2 = b1;
             b1 = b0;
-            b0 = xx * b0 - b2 + a[j];
+            b0 = xx * b0 - b2 + InverseGaussian.NORMAL2_A[j];
         }
 
         return (b0 - b2) / 2.0D;
@@ -109,7 +99,7 @@ public class InverseGaussian {
     /**
      * Sets the parameters for the Inverse Gaussian Distribution, if mu or lambda is less than or equal to 0, throw exception
      *
-     * @param mu - the mean.
+     * @param mu     - the mean.
      * @param lambda - the shape parameter.
      */
     public void setParams(double mu, double lambda) {
@@ -174,7 +164,7 @@ public class InverseGaussian {
         double endX = -1;
 
         //While we're not within a margin from the probability
-        while(getProbability(x) < (y-1) || getProbability(x) > (y+1)) {
+        while (getProbability(x) < (y - 1) || getProbability(x) > (y + 1)) {
 
             double tempProb = getProbability(x);
 

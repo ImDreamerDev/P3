@@ -283,7 +283,7 @@
                         <ListView VBox.vgrow="ALWAYS" />
                     </VBox>
                     <TabPane prefHeight="660.0" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
-                        <Tab text="Probability">
+                        <Tab id="ProbavilityTab" text="Probability">
                             <AnchorPane prefWidth="1200.0">
                                 <BarChart id="tasksDiagram" alternativeColumnFillVisible="true" barGap="1.0" categoryGap="1.0" prefHeight="631.0" prefWidth="1123.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="72.0" AnchorPane.topAnchor="0.0">
                                     <xAxis>
