@@ -12,7 +12,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
     private final int numOfThreads;
     private final int numOfMonte;
     private final Random random = new Random();
-    //private HashMap<Task, InverseGaussian> invG = new HashMap<>();
+    private HashMap<Task, InverseGaussian> invG = new HashMap<>();
     //private final InverseGaussian invG = new InverseGaussian();
 
     public EstimateTimeCallable(List<Task> taskList, double amountEmployees, int numOfThreads, int numOfMonte) {
@@ -26,8 +26,8 @@ public class EstimateTimeCallable implements Callable<Estimate> {
         List<Double> chances = new ArrayList<>();
         HashMap<Task, Double> taskStartAt = new HashMap<>();
         HashMap<Task, Double> taskEndAt = new HashMap<>();
-        /*for(Task task : taskList)
-            invG.put(task, task.getInvG());*/
+        for(Task task : taskList)
+            invG.put(task, task.getInvG());
 
         double duration = 0.0;
         int repeats = numOfMonte / numOfThreads;
@@ -78,7 +78,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                                 //invG.setParams(task.getEstimatedTime(), task.getLambda());
 
                                 //Calculate the duration at the given random value and add that to duration
-                                durations.set(j, durations.get(j) + task.getInvG().getDuration(rand));
+                                durations.set(j, durations.get(j) + invG.get(task).getDuration(rand));
 
                                 if(taskEndAt.containsKey(task)) {
                                     taskEndAt.put(task, taskEndAt.get(task) + durations.get(j));
@@ -136,7 +136,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                     //invG.setParams(task.getEstimatedTime(), task.getLambda());
 
                     //Calculate the duration at the given random value and add that to duration
-                    double temp = task.getInvG().getDuration(rand);
+                    double temp = invG.get(task).getDuration(rand);
                     duration += temp;
                     currentTime += temp;
 
