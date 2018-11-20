@@ -64,16 +64,6 @@ public class JavaFXMain extends Application {
         outputTabPane.getTabs().get(1).setTooltip(new Tooltip("The page with some Gantt?"));
         outputTabPane.getTabs().get(2).setTooltip(new Tooltip("The page to assign employees to the task on the selected project"));
 
-
- //       outputTab.setTooltip(new Tooltip("The page with the result of the selected project"));
-
-  //      Node tasksTab =  rootPane.lookup("#TasksTab");
-   //     System.out.println(tasksTab.getProperties());
-   //     Tooltip.install(tasksTab,new Tooltip("The page with the tasks in the selected project"));
-
- //       Node employeeTap = rootPane.lookup("#EmployeesTab");
- //       Tooltip.install(employeeTap, new Tooltip("The page with the employees assigned to the selected project and the available employees"));
-
         //Update button
         ((Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1)).setTooltip(new Tooltip("Updates the program"));
         ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1).setOnMouseClicked(event -> {
