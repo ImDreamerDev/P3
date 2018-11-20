@@ -55,27 +55,13 @@ public class DatabaseManager {
             url = "jdbc:postgresql://molae.duckdns.org/P3";
         Properties props = new Properties();
         props.setProperty("user", "projectplanner");
-        props.setProperty("password", loadPassword());
+        props.setProperty("password", "");
         props.setProperty("tcpKeepAlive", "true");
 
         try {
             dbConnection = DriverManager.getConnection(url, props);
         } catch (SQLException e) {
             // e.printStackTrace();
-        }
-    }
-
-    /**
-     * Loads the password from a file on disk.
-     *
-     * @return Returns the password for the database.
-     */
-    private static String loadPassword() {
-        try {
-            return Files.readString(Paths.get("pass.txt"));
-        } catch (IOException e) {
-            System.err.println("Pass file not found");
-            return "";
         }
     }
 
@@ -392,8 +378,97 @@ public class DatabaseManager {
      * @return null if the distributeModels is cancelled, or if the ProjectManager is null. (new javafx.concurrent.task)
      */
     public static javafx.concurrent.Task<Void> distributeModels(ProjectManager projectManager) {
-        return null;
+        return new javafx.concurrent.Task<>() {
+            @Override
+            public Void call() {
 
+                if (isCancelled()) {
+                    return null;
+                }
+
+                int progressBarParts = 5;
+                updateProgress(0, progressBarParts);
+                LocalObjStorage.getEmployeeList().clear();
+                LocalObjStorage.getProjectList().clear();
+                LocalObjStorage.getTaskList().clear();
+
+                List<Project> projectManagerProjects = getPMProjects(projectManager);
+
+                //We need the employees to add them to new projects and tasks so we get them no matter what
+                List<Employee> employees = getAvailableEmployees(projectManager);
+                if (employees == null) return null;
+                employees.forEach(LocalObjStorage::addEmployee);
+
+                updateProgress(1, progressBarParts);
+
+                if (projectManagerProjects != null) {
+                    projectManagerProjects.forEach(LocalObjStorage::addProject);
+                } else return null;
+
+                updateProgress(2, progressBarParts);
+
+                if (projectManager.getCurrentProjectId() != 0) {
+                    Project project = LocalObjStorage.getProjectById(projectManager.getCurrentProjectId());
+                    project.setCreator(projectManager);
+                    if (project.getState() != ProjectState.ONGOING)
+                        project.setState(ProjectState.ONGOING);
+                }
+
+                List<Integer> projectIds = new ArrayList<>(projectManager.getOldProjectsId());
+
+                for (Integer projectId : projectIds) {
+                    Project oldProject = LocalObjStorage.getProjectById(projectId);
+                    oldProject.setCreator(projectManager);
+                    if (oldProject.getState() != ProjectState.ARCHIVED)
+                        oldProject.setState(ProjectState.ARCHIVED);
+
+                }
+                LocalObjStorage.addProjectManager(projectManager);
+                updateProgress(3, progressBarParts);
+
+                for (Employee emp : LocalObjStorage.getEmployeeList()) {
+                    if (emp.getProjectId() != 0)
+                        emp.setProject(LocalObjStorage.getProjectById(emp.getProjectId()));
+                    if (emp.getProjectId() != 0)
+                        LocalObjStorage.getProjectById(emp.getProjectId()).addNewEmployee(emp);
+                }
+
+                updateProgress(4, progressBarParts);
+
+                if (getTasksForProjectManager(projectManager) != null)
+                    LocalObjStorage.getTaskList().addAll(Objects.requireNonNull(getTasksForProjectManager(projectManager)));
+
+                for (Task task : LocalObjStorage.getTaskList()) {
+                    Project project = LocalObjStorage.getProjectById(task.getProjectId());
+
+                    if (project != null)
+                        project.addNewTask(task);
+
+                    for (Integer employeeId : task.getEmployeeIds()) {
+                        Employee emp = LocalObjStorage.getEmployeeById(employeeId);
+
+                        if (emp != null) {
+                            task.addEmployee(emp);
+                            emp.distributeAddTask(task);
+                        } else {
+                            //TODO We don't get employees from previous projects from DB
+                            task.addEmployee(new Employee(0, "John Doe", new ArrayList<>()));
+                        }
+                    }
+                    for (Integer dependencyId : task.getDependencyIds()) {
+                        task.distributeAddDependency(LocalObjStorage.getTaskById(dependencyId));
+                    }
+                }
+
+                projectManager.setCurrentProject(LocalObjStorage.getProjectById(projectManager.getCurrentProjectId()));
+
+                for (Integer projectId : projectManager.getOldProjectsId()) {
+                    projectManager.addOldProject(LocalObjStorage.getProjectById(projectId));
+                }
+                updateProgress(5, progressBarParts);
+                return null;
+            }
+        };
     }
 
     /**
