@@ -54,8 +54,8 @@ class InverseGaussianTest {
 
     @Test
     void InverseGaussian08() {
-        InverseGaussian invG = new InverseGaussian(10, 10);
-        assertEquals(Double.POSITIVE_INFINITY, invG.getDuration(100000000));
+        InverseGaussian invG = new InverseGaussian(100, 350);
+        assertEquals(87.5, invG.getDuration(50));
     }
 
     @Test
