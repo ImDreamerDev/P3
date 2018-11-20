@@ -21,19 +21,19 @@ public class EstimateTest {
 
     @Test
     void estimateTest() {
-        Estimate estimate = new Estimate(Arrays.asList(2.0, 5.2, 1.5, 0.5, 2.5), null, null, 20);
+        Estimate estimate = new Estimate(Arrays.asList(2.0, 5.2, 1.5, 0.5, 2.5), null, 20);
         assertNotNull(estimate);
     }
 
     @Test
     void getDurationTest() {
-        Estimate estimate = new Estimate(null, null, null, 20);
+        Estimate estimate = new Estimate(null, null, 20);
         assertEquals(estimate.getDuration(), 20);
     }
 
     @Test
     void setDurationTest() {
-        Estimate estimate = new Estimate(null, null, null, 20);
+        Estimate estimate = new Estimate(null, null, 20);
         assertEquals(estimate.getDuration(), 20);
         estimate.setDuration(30);
         assertEquals(estimate.getDuration(), 30);
@@ -41,7 +41,7 @@ public class EstimateTest {
 
     @Test
     void getChancesTest() {
-        Estimate estimate = new Estimate(Arrays.asList(2.0, 5.2, 1.5, 0.5, 2.5), null, null, 20);
+        Estimate estimate = new Estimate(Arrays.asList(2.0, 5.2, 1.5, 0.5, 2.5), null, 20);
         assertEquals(estimate.getChances(), Arrays.asList(2.0, 5.2, 1.5, 0.5, 2.5));
     }
 
@@ -50,17 +50,8 @@ public class EstimateTest {
         HashMap<Task, Double> startTimes = new HashMap<>();
         startTimes.put(new Task(-1, "Test Task", 40, 10, new ArrayList<>(), new ArrayList<>()
                 , -1, new ArrayList<>(), 20), 30.0);
-        Estimate estimate = new Estimate(Arrays.asList(2.0, 5.2, 1.5, 0.5, 2.5), startTimes, null, 20);
+        Estimate estimate = new Estimate(Arrays.asList(2.0, 5.2, 1.5, 0.5, 2.5), startTimes, 20);
         assertEquals(estimate.getStartTimes(), startTimes);
 
-    }
-
-    @Test
-    void getEndTimesTest() {
-        HashMap<Task, Double> endTimes = new HashMap<>();
-        endTimes.put(new Task(-1, "Test Task", 40, 10, new ArrayList<>(), new ArrayList<>()
-                , -1, new ArrayList<>(), 20), 50.0);
-        Estimate estimate = new Estimate(Arrays.asList(2.0, 5.2, 1.5, 0.5, 2.5), null, endTimes, 20);
-        assertEquals(estimate.getEndTimes(), endTimes);
     }
 }
