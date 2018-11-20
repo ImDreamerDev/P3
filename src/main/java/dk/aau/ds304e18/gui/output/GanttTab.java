@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class GanttTab {
     private double zoomFactor = 1;
@@ -44,7 +43,8 @@ public class GanttTab {
 
         //Get the zoom level label to display the current zoom level. 
         zoomFactorLabel = (Label) rootPane.lookup("#zoomLevelLabel");
-        
+
+        //The event for zooming when scrolling while holding ctrl down.
         pane.setOnScroll(scrollEvent -> {
             if (scrollEvent.isControlDown()) {
                 zoomFactor += scrollEvent.getDeltaY() * 0.05;
@@ -57,9 +57,14 @@ public class GanttTab {
             }
 
         });
+
+        //Zooms in when zoom in button is pressed
         rootPane.lookup("#zoomInButton").setOnMouseClicked(mouseEvent -> zoomIn());
+
+        //Zooms out when the zoom out button is pressed
         rootPane.lookup("#zoomOutButton").setOnMouseClicked(mouseEvent -> zoomOut());
 
+        //Resets the zoom to 1 when the 1:1 button is pressed.
         rootPane.lookup("#resetZoomButton").setOnMouseClicked(mouseEvent -> {
             zoomFactor = 1;
             zoomFactorLabel.setText("Zoom level: 100%");
@@ -67,6 +72,7 @@ public class GanttTab {
             drawTasks();
         });
 
+        //Zooms in or out if the button pressed is either - or + while control is down
         rootPane.setOnKeyReleased(keyEvent -> {
             if (keyEvent.isControlDown()) {
                 if (keyEvent.getText().equals("-")) {
@@ -80,6 +86,9 @@ public class GanttTab {
         });
     }
 
+    /**
+     * The function for zooming out.
+     */
     private void zoomOut() {
         if (zoomFactor > 0.5) {
             zoomFactor -= 0.1;
@@ -90,6 +99,10 @@ public class GanttTab {
         }
     }
 
+
+    /**
+     * The function for zooming in
+     */
     private void zoomIn() {
         if (zoomFactor <= 4d) {
             zoomFactor += 0.1;
@@ -100,6 +113,10 @@ public class GanttTab {
         }
     }
 
+
+    /**
+     * The function for drawing the tasks and arrows
+     */
     public void drawTasks() {
         List<AnchorPane> anchorPanes = new ArrayList<>();
         List<List<Task>> taskListOfTasks = ParseSequence.parseToMultipleLists(project);
@@ -117,106 +134,129 @@ public class GanttTab {
 
 
             AnchorPane taskBox = new AnchorPane();
-            AtomicReference<Double> xVar = new AtomicReference<>((double) 0);
 
-            xVar.set(task.getStartTime());
+            //Sets the AnchorPane's start x value. Upper left corner is start
+            taskBox.setLayoutX(task.getStartTime() * zoomFactor + xPadding);
 
-
-            taskBox.setLayoutX(xVar.get() * zoomFactor + xPadding);
-
+            //Sets the AnchorPane's start y
             taskBox.setLayoutY(35 * y + paddingY);
+
+            //Makes a rectangle to represent the task with height 20 and length as the tasks estimated time
             Rectangle ret = new Rectangle(task.getEstimatedTime() * zoomFactor, 20);
+
+            //Set stroke color and fill
             ret.setStroke(Color.BLACK);
             ret.setFill(Color.web("#ff9c00"));
+
+            //Shows tasks name in tooltip
             Tooltip tooltip = new Tooltip(task.getName());
             tooltip.setShowDelay(Duration.millis(100));
             Tooltip.install(ret, tooltip);
 
+            //Adds the rectangle to the AnchorPane
             taskBox.getChildren().addAll(ret);
+            //Adds AnchorPane to all AnchorPanes
             anchorPanes.add(taskBox);
-            y++;
+
+            //Inserts into hashmap
             taskToAP.put(task, taskBox);
+
+            y++;
         }
 
         double maxX = 0;
-        for (
-                AnchorPane ap : anchorPanes) {
+
+        //Keeps tract of the maximum x value for drawing scale on top of page.
+        for (AnchorPane ap : anchorPanes) {
             double thisXMax = ap.getLayoutX() + ((Rectangle) ap.getChildrenUnmodifiable().get(0)).getWidth();
             if (thisXMax > maxX) maxX = thisXMax;
         }
 
+        //For some reason this gets fucked up idk so i need to divide
         maxX /= zoomFactor;
 
-        int pixelsBetweenText = 20;
-        if (zoomFactor <= 0.7) pixelsBetweenText = 40;
-        else if (zoomFactor < 1) pixelsBetweenText = 30;
-        else if (zoomFactor > 1.3 && zoomFactor <= 1.6) pixelsBetweenText = 15;
-        else if (zoomFactor > 1.6) pixelsBetweenText = 10;
+        int distanceBetweenText = 20;
+        //Determines distance between text being drawn
+        if (zoomFactor <= 0.7) distanceBetweenText = 40;
+        else if (zoomFactor < 1) distanceBetweenText = 30;
+        else if (zoomFactor > 1.3 && zoomFactor <= 1.6) distanceBetweenText = 15;
+        else if (zoomFactor > 1.6) distanceBetweenText = 10;
 
-        for (
-                int i = 0;
-                i < maxX; i = i + pixelsBetweenText) {
-
+        //Adds duration text
+        for (int i = 0; i < maxX; i = i + distanceBetweenText) {
             Text text = new Text((i * zoomFactor) + xPadding, 25, "" + i);
             text.setRotate(90);
-
             pane.getChildren().add(text);
-            pane.getChildren().add(new Line((i * zoomFactor) + xPadding, 15, (i * zoomFactor) + xPadding, 20));
+            //And line between
+            pane.getChildren().add(new Line((i * zoomFactor) + xPadding,
+                    15, (i * zoomFactor) + xPadding, 20));
         }
 
+        //Keeps track of how many tasks are dependant of the current task, not the amount of dependencies.
         HashMap<Task, AtomicInteger> numberOfTasksDependingOnTask = new HashMap<>();
+
+        //Keeps track of how many lines have been drawn from this task to determine where to draw line from.
         HashMap<Task, AtomicInteger> numberOfTimesLineHasBeenDrawnForTask = new HashMap<>();
 
-        taskListOfTasks.forEach(lTask -> lTask.forEach(task ->
-
-        {
+        //Maps this task to an integer representing the values described.
+        taskListOfTasks.forEach(taskList -> taskList.forEach(task -> {
             numberOfTasksDependingOnTask.put(task, new AtomicInteger(0));
             numberOfTimesLineHasBeenDrawnForTask.put(task, new AtomicInteger(0));
         }));
-        taskListOfTasks.forEach(lTask -> lTask.forEach(task ->
 
-        {
+        //Determines the amount of tasks depending on task.
+        taskListOfTasks.forEach(taskList -> taskList.forEach(task -> {
             task.getDependencies().forEach(dep -> numberOfTasksDependingOnTask.get(dep).incrementAndGet());
         }));
 
-
+        //Now to drawing arrows.....
         for (Task task : taskToAP.keySet()) {
             List<Task> dependencies = task.getDependencies();
+
+            //Only draw arrows if this task has dependencies
             if (dependencies != null && dependencies.size() != 0) {
-                AtomicInteger depNum = new AtomicInteger(0);
+                AtomicInteger dependencyNumber = new AtomicInteger(0);
+
                 dependencies.forEach(depTask -> {
-                    int numDependantOfTHisTask = numberOfTasksDependingOnTask.get(depTask).get()
+                    int numberOfDepenceanciLineToDraw = numberOfTasksDependingOnTask.get(depTask).get()
                             - numberOfTimesLineHasBeenDrawnForTask.get(depTask).incrementAndGet();
 
+                    //Start and end AnchorPane
                     AnchorPane startAncPane = taskToAP.get(depTask);
                     AnchorPane endAncPane = taskToAP.get(task);
 
-
                     double sx, sy, ex, ey;
+                    //Sets start point
                     sx = startAncPane.getLayoutX() + ((Rectangle) startAncPane.getChildrenUnmodifiable().get(0)).getWidth();
                     sy = startAncPane.getLayoutY() + ((Rectangle) startAncPane.getChildrenUnmodifiable().get(0)).getHeight() / 2;
 
+                    //Number of units between lines drawn
                     int pixelsBetweenLines = 3;
                     int pixelsBetweenVerticalLines = 4;
 
                     //To kinda ensure EVERYTHING isn't drawn on top of each other
-                    if (sy - (numDependantOfTHisTask * pixelsBetweenLines) <
+                    //We first draw above middle of task, then below middle
+                    //So if we have above 8 tasks dependant on the task it start to draw below task lel.
+                    if (sy - (numberOfDepenceanciLineToDraw * pixelsBetweenLines) <
                             (sy - ((Rectangle) startAncPane.getChildrenUnmodifiable().get(0)).getHeight() / 2))
-                        sy = startAncPane.getLayoutY() + (numDependantOfTHisTask * pixelsBetweenLines);
+                        sy = startAncPane.getLayoutY() + (numberOfDepenceanciLineToDraw * pixelsBetweenLines);
                     else
-                        sy -= (numDependantOfTHisTask * pixelsBetweenLines);
+                        sy -= (numberOfDepenceanciLineToDraw * pixelsBetweenLines);
 
+                    //Sets endpoint
                     ex = endAncPane.getLayoutX();
                     ey = endAncPane.getLayoutY() + ((Rectangle) endAncPane.getChildrenUnmodifiable().get(0)).getHeight();
 
                     int pixelsRightOfPaneStartToPoint = 5;
+
+                    //Checks if there is place for the arrowhead.
                     if (((Rectangle) endAncPane.getChildrenUnmodifiable().get(0)).getWidth() / 2 >
-                            pixelsRightOfPaneStartToPoint + (pixelsBetweenVerticalLines * depNum.get()))
-                        ex += pixelsRightOfPaneStartToPoint + (pixelsBetweenVerticalLines * depNum.get());
+                            pixelsRightOfPaneStartToPoint + (pixelsBetweenVerticalLines * dependencyNumber.get()))
+                        ex += pixelsRightOfPaneStartToPoint + (pixelsBetweenVerticalLines * dependencyNumber.get());
 
                     if (sy < ey) ey -= ((Rectangle) endAncPane.getChildrenUnmodifiable().get(0)).getHeight();
 
-
+                    //Makes the lines and sets start and end
                     Line horizontalLine = new Line();
                     horizontalLine.setStartX(sx);
                     horizontalLine.setStartY(sy);
@@ -232,46 +272,36 @@ public class GanttTab {
                     shapeList.add(verticalLine);
 
 
-                    /*
-                    sx = ex;
-                    double factor = arrowLength / Math.hypot(sx - ex, sy - ey);
-                    double factorO = arrowWidth / Math.hypot(sx - ex, sy - ey);
-
-                    // part in direction of main line
-                    double dx = (sx - ex) * factor;
-                    double dy = (sy - ey) * factor;
-
-                    // part orthogonal to main line
-                    double ox = (sx - ex) * factorO;
-                    double oy = (sy - ey) * factorO;
-                    double triangleP1X = ex + dx - oy, triangleP1Y = ey + dy + ox;
-                    double triangleP2X = ex + dx + oy, triangleP2Y = ey + dy - ox;*/
-
                     double triangleP1X, triangleP1Y, triangleP2X, triangleP2Y;
+
+                    //Determines if arrow should point up or down.
                     if (ey > sy) {
+                        //Down
                         triangleP1X = ex - 4;
                         triangleP1Y = ey - 4;
                         triangleP2X = ex + 4;
                         triangleP2Y = ey - 4;
                     } else {
+                        //Up
                         triangleP1X = ex - 4;
                         triangleP1Y = ey + 4;
                         triangleP2X = ex + 4;
                         triangleP2Y = ey + 4;
                     }
 
+                    //Drawn arrowhead polygon.
                     Polygon triangle = new Polygon(ex, ey, triangleP1X, triangleP1Y, triangleP2X, triangleP2Y);
+
+                    //Adds to lists
                     shapeList.add(triangle);
-                    depNum.incrementAndGet();
+                    dependencyNumber.incrementAndGet();
                 });
 
             }
         }
-        pane.getChildren().
 
-                addAll(anchorPanes);
-        pane.getChildren().
-
-                addAll(shapeList);
+        //Adds AnchorPanes and shapes to the pane.
+        pane.getChildren().addAll(anchorPanes);
+        pane.getChildren().addAll(shapeList);
     }
 }
