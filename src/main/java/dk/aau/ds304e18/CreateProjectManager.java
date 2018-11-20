@@ -23,7 +23,7 @@ public class CreateProjectManager extends Application {
     private PasswordField passwordField;
     private PasswordField passwordFieldRepeat;
     private Label errorLabel;
-    ListView<String> listView;
+    private ListView<String> listView;
 
     @Override
     public void start(Stage stage) {
