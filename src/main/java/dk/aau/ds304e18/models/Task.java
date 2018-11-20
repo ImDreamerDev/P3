@@ -1,6 +1,7 @@
 package dk.aau.ds304e18.models;
 
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.math.InverseGaussian;
 import dk.aau.ds304e18.math.Probabilities;
 
 import java.util.ArrayList;
@@ -79,6 +80,11 @@ public class Task {
      * The project which the task is a part of.
      */
     private Project project;
+
+    /**
+     * The inverse gaussian distribution for this task
+     */
+    private InverseGaussian invG = new InverseGaussian();
 
     /**
      * The Constructor of the task.
@@ -366,5 +372,9 @@ public class Task {
      */
     public List<Double> getEndTimeList() {
         return endTimeList;
+    }
+
+    public InverseGaussian getInvG() {
+        return invG;
     }
 }

@@ -12,7 +12,8 @@ public class EstimateTimeCallable implements Callable<Estimate> {
     private final int numOfThreads;
     private final int numOfMonte;
     private final Random random = new Random();
-    private final InverseGaussian invG = new InverseGaussian();
+    //private HashMap<Task, InverseGaussian> invG = new HashMap<>();
+    //private final InverseGaussian invG = new InverseGaussian();
 
     public EstimateTimeCallable(List<Task> taskList, double amountEmployees, int numOfThreads, int numOfMonte) {
         this.taskList = taskList;
@@ -25,6 +26,8 @@ public class EstimateTimeCallable implements Callable<Estimate> {
         List<Double> chances = new ArrayList<>();
         HashMap<Task, Double> taskStartAt = new HashMap<>();
         HashMap<Task, Double> taskEndAt = new HashMap<>();
+        /*for(Task task : taskList)
+            invG.put(task, task.getInvG());*/
 
         double duration = 0.0;
         int repeats = numOfMonte / numOfThreads;
@@ -72,10 +75,10 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
                                 //Create an inverse gaussian distribution for the task
                                 //Consider putting the InverseGaussian as an element of each task so we don't have to setParams on each task 10000*200 times
-                                invG.setParams(task.getEstimatedTime(), task.getLambda());
+                                //invG.setParams(task.getEstimatedTime(), task.getLambda());
 
                                 //Calculate the duration at the given random value and add that to duration
-                                durations.set(j, durations.get(j) + invG.getDuration(rand));
+                                durations.set(j, durations.get(j) + task.getInvG().getDuration(rand));
 
                                 if(taskEndAt.containsKey(task)) {
                                     taskEndAt.put(task, taskEndAt.get(task) + durations.get(j));
@@ -130,10 +133,10 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                         taskStartAt.put(task, currentTime);
 
                     //Create an inverse gaussian distribution for the task
-                    invG.setParams(task.getEstimatedTime(), task.getLambda());
+                    //invG.setParams(task.getEstimatedTime(), task.getLambda());
 
                     //Calculate the duration at the given random value and add that to duration
-                    double temp = invG.getDuration(rand);
+                    double temp = task.getInvG().getDuration(rand);
                     duration += temp;
                     currentTime += temp;
 

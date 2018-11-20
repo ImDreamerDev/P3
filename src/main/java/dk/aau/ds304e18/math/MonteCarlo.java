@@ -138,7 +138,7 @@ public class MonteCarlo {
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
 
-        //Print out
+        //SOUT
         System.out.println("Worst Path: " + worstSequence);
         System.out.println("Worst Time: " + worstTime);
         System.out.println("Best Path: " + bestSequence);
@@ -192,8 +192,7 @@ public class MonteCarlo {
             if (task.getLambda() == -1) {
                 //Calculate the lambda and optimize the mu value
                 List<Double> temp = CalculateLambda.calculateLambda(task.getEstimatedTime(), task.getProbabilities());
-                task.setEstimatedTime(temp.get(0));
-                task.setLambda(temp.get(1));
+                task.getInvG().setParams(temp.get(0), temp.get(1));
             }
         }
 
