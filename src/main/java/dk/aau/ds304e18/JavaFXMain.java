@@ -47,7 +47,7 @@ public class JavaFXMain extends Application {
 
         loginScreen = new Login(image, rootPane);
 
-        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).setTooltip(new Tooltip("The page with all the projects"));
+        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(0).setTooltip(new Tooltip("The page with all the projects"));
         ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(1).setTooltip(new Tooltip("The page to input tasks and employees to the selected project"));
         ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setTooltip(new Tooltip("The page with the result of the selected project"));
 
