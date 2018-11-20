@@ -34,6 +34,7 @@ public class OutputTab {
 
         barChart.getData().clear();
         assignmentTab = new AssignmentTab(borderPane);
+
     }
 
     public void drawOutputTab(boolean useMonty) {

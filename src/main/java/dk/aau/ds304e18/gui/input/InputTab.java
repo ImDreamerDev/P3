@@ -10,6 +10,7 @@ import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.Sequence;
 import javafx.collections.FXCollections;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -156,6 +157,8 @@ public class InputTab {
 
         //Middle column
         Pane paneSplitter = ((Pane) flowPane.getChildren().get(2));
+
+
         VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(1));
 
@@ -198,6 +201,7 @@ public class InputTab {
         });
         dependenciesPopup = new DependenciesPopup(rootPane, listViewDependency, taskDependencies);
         employeeTab = new EmployeeTab(rootPane);
+
         drawInputTab();
     }
 
