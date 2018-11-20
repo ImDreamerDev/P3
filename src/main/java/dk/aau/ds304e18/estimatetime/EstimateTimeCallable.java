@@ -25,7 +25,6 @@ public class EstimateTimeCallable implements Callable<Estimate> {
     public Estimate call() {
         List<Double> chances = new ArrayList<>();
         HashMap<Task, Double> taskStartAt = new HashMap<>();
-        HashMap<Task, Double> taskEndAt = new HashMap<>();
         for(Task task : taskList)
             invG.put(task, task.getInvG());
 
@@ -55,8 +54,10 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                                 boolean skip = false;
 
                                 for (Task dependency : task.getDependencies()) {
-                                    if (taskDoneAt.get(dependency) > durations.get(j))
+                                    if (taskDoneAt.get(dependency) > durations.get(j)) {
                                         skip = true;
+                                        break;
+                                    }
                                 }
 
                                 if (skip)
@@ -64,27 +65,17 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
                                 temp = true;
 
-                                if(taskStartAt.containsKey(task)) {
+                                if(taskStartAt.containsKey(task))
                                     taskStartAt.put(task, taskStartAt.get(task) + durations.get(j));
-                                } else {
+                                else
                                     taskStartAt.put(task, durations.get(j));
-                                }
-
-                                //Create a random double between 0 and 100
-                                double rand = random.nextDouble() * 100;
 
                                 //Create an inverse gaussian distribution for the task
                                 //Consider putting the InverseGaussian as an element of each task so we don't have to setParams on each task 10000*200 times
                                 //invG.setParams(task.getEstimatedTime(), task.getLambda());
 
                                 //Calculate the duration at the given random value and add that to duration
-                                durations.set(j, durations.get(j) + invG.get(task).getDuration(rand));
-
-                                if(taskEndAt.containsKey(task)) {
-                                    taskEndAt.put(task, taskEndAt.get(task) + durations.get(j));
-                                } else {
-                                    taskEndAt.put(task, durations.get(j));
-                                }
+                                durations.set(j, durations.get(j) + invG.get(task).getDuration(random.nextDouble() * 100));
 
                                 taskDoneAt.put(task, durations.get(j));
                                 tasksDone.add(task);
@@ -139,12 +130,6 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                     double temp = invG.get(task).getDuration(rand);
                     duration += temp;
                     currentTime += temp;
-
-                    if(taskEndAt.containsKey(task)) {
-                        taskEndAt.put(task, taskEndAt.get(task) + currentTime);
-                    } else {
-                        taskEndAt.put(task, currentTime);
-                    }
                 }
             }
 
@@ -159,7 +144,6 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
         }
         //Also send the start time of each task back
-        final Estimate estimate = new Estimate(chances, taskStartAt, taskEndAt, duration);
-        return estimate;
+        return new Estimate(chances, taskStartAt, duration);
     }
 }

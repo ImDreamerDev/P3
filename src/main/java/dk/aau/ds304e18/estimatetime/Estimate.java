@@ -10,13 +10,11 @@ public class Estimate {
 
     private List<Double> chances;
     private HashMap<Task, Double> startTimes;
-    private HashMap<Task, Double> endTimes;
     private double duration;
 
-    public Estimate(List<Double> chances, HashMap<Task, Double> startTimes, HashMap<Task, Double> endTimes, double duration) {
+    public Estimate(List<Double> chances, HashMap<Task, Double> startTimes, double duration) {
         this.chances = chances;
         this.startTimes = startTimes;
-        this.endTimes = endTimes;
         this.duration = duration;
     }
 
@@ -34,9 +32,5 @@ public class Estimate {
 
     public HashMap<Task, Double> getStartTimes() {
         return startTimes;
-    }
-
-    public HashMap<Task, Double> getEndTimes() {
-        return endTimes;
     }
 }

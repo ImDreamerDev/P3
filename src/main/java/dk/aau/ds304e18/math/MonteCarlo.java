@@ -123,9 +123,7 @@ public class MonteCarlo {
         project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(tempI));
         for(Task task : ParseSequence.parseToSingleList(project, true)) {
             task.setStartTime(task.getStartTimeList().get(tempI));
-            task.setEndTime(task.getEndTimeList().get(tempI));
             System.out.println(task.getName() + ": " + task.getStartTime());
-            System.out.println(task.getName() + ": " + task.getEndTime());
         }
 
         //Set the variables to correct stuff
@@ -180,10 +178,8 @@ public class MonteCarlo {
     public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index) {
         //Adds a list to the index of the possibleCompletions list on the project
         project.getTempPossibleCompletions().add(index, new ArrayList<>());
-        for(Task task : project.getTasks()) {
+        for(Task task : project.getTasks())
             task.getStartTimeList().add(index, 0d);
-            task.getEndTimeList().add(index, 0d);
-        }
         //Gets the task list from the project
         List<Task> taskList = ParseSequence.parseToSingleList(project, false, random, index);
         //For each task in taskList
@@ -221,10 +217,8 @@ public class MonteCarlo {
                 // because Future.get() waits for task to get completed
                 duration = duration + fut.get().getDuration();
                 tempList = fut.get().getChances();
-                for(Task task : project.getTasks()) {
+                for(Task task : project.getTasks())
                     task.getStartTimeList().set(index, task.getStartTimeList().get(index) + fut.get().getStartTimes().get(task)/monteCarloRepeats);
-                    task.getEndTimeList().set(index, task.getEndTimeList().get(index) + fut.get().getEndTimes().get(task)/monteCarloRepeats);
-                }
 
                 while (project.getTempPossibleCompletions().get(index).size() < tempList.size())
                     project.getTempPossibleCompletions().get(index).add(0d);
