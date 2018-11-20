@@ -52,7 +52,7 @@ public class OutputTab {
         if (pro.getSequence() != null) {
 
 
-            ganttTab.drawTasks(pro, pane);
+            ganttTab.drawTasks();
             if (useMonty) {
                 ((ListView<Task>) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
                         .setItems(FXCollections.observableArrayList(ParseSequence.parseToSingleList(pro, true)));

@@ -17,9 +17,24 @@ import javafx.scene.layout.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Login {
+    /**
+     * The root pane of the GUI.
+     */
     private final Parent rootPane;
+
+    /**
+     * The username field.
+     */
     private final TextField usernameField;
+
+    /**
+     * The password field.
+     */
     private final PasswordField passwordField;
+
+    /**
+     * The box containing the login components.
+     */
     private final VBox vBoxLogin;
 
     public Login(Image image, Parent rootPane) {
@@ -56,11 +71,18 @@ public class Login {
         usernameField.requestFocus();
     }
 
+    /**
+     * Try to log the user in.
+     */
     private void logIn() {
+        //Get the username and password from their fields.
         String username = usernameField.getText();
         String password = passwordField.getText();
+        
+        //Try to login with the username and password.
         AtomicReference<ProjectManager> pm = new AtomicReference<>(DatabaseManager.logIn(username, password));
 
+        //If it returns null no user exists or the password is wrong.
         if (pm.get() == null) {
             Label error = ((Label) vBoxLogin.getChildren().get(2));
             error.setText("Error: Username and Password does not match any user");
@@ -90,14 +112,26 @@ public class Login {
         }
     }
 
+    /**
+     * Logs the user out of the program and resets tabs.
+     */
     public void logOut() {
+        //Close the connection.
         DatabaseManager.logOut();
+
+        //Set the login pane visible.
         rootPane.getChildrenUnmodifiable().get(2).setVisible(true);
+        //Clear the input fields.
         usernameField.clear();
         passwordField.clear();
+
+        //Get the main tab pane.
         TabPane tabPane = (TabPane) rootPane.getChildrenUnmodifiable().get(1);
+
+        //Select the first tab.
         tabPane.getSelectionModel().select(0);
 
+        //Disables the others tabs.
         tabPane.getTabs().get(1).setDisable(true);
         tabPane.getTabs().get(2).setDisable(true);
     }
