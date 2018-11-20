@@ -333,13 +333,21 @@ public class InputTab {
      * and then if the button(cancel task) is pressed the task is removed.
      */
     private void removeTask() {
+        //Get the selected task id.
         int taskId = (int) ((TableColumn) tableView.getColumns().get(0))
                 .getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
+        //Get the current project.
         Project project = LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId);
+        //Remove the selected task from the project.
         project.getTasks().remove(LocalObjStorage.getTaskById(taskId));
+        //Reset the sequence.
         project.setSequence("");
+        //Remove the task from the database.
         DatabaseManager.removeTask(taskId);
+        //And removed it from the local storage.
         LocalObjStorage.getTaskList().remove(LocalObjStorage.getTaskById(taskId));
+
+        //Update the GUI to reflect this change.
         drawInputTab();
     }
 
@@ -347,15 +355,20 @@ public class InputTab {
      * The method that sets up the task table.
      */
     private void setupTaskTable() {
+        //Set the table view items to all the tasks on the current project.
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
                 .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
                 .collect(Collectors.toList())));
+
+        //Sets the columns of the table view to display the different fields of the task.
         tableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         tableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
         tableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("estimatedTime"));
         tableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("priority"));
         tableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("probabilities"));
         tableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dependencies"));
+
+        //Set the sorting order of the table to sort after id.
         tableView.getSortOrder().add(tableView.getColumns().get(0));
     }
 }
