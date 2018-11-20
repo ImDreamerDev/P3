@@ -542,4 +542,60 @@ class TaskTest {
         DatabaseManager.removeTask(newTask.getId());
     }
 
+    @Test
+    void TestTaskSetStartTime() {
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
+        Task newTask = new Task("Test Task", 1, 1, newProject);
+        newTask.setStartTime(50);
+
+        assertEquals(newTask.getStartTime(), 50);
+    }
+
+    @Test
+    void TestTaskGetStartTimeList() {
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
+        Task newTask = new Task("Test Task", 1, 1, newProject);
+        assertEquals(newTask.getStartTimeList().size(), 0);
+    }
+
+    @Test
+    void TestTaskGetEndTime() {
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
+        Task newTask = new Task("Test Task", 1, 1, newProject);
+        assertEquals(newTask.getEndTime(), 0);
+    }
+
+
+    @Test
+    void TestTaskSetEndTime() {
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
+        Task newTask = new Task("Test Task", 1, 1, newProject);
+        newTask.setEndTime(newTask.getEstimatedTime() + 50);
+
+        assertEquals(newTask.getEndTime(), 51);
+    }
+
+    @Test
+    void TestTaskGetEndTimeList() {
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
+        Task newTask = new Task("Test Task", 1, 1, newProject);
+
+        assertEquals(newTask.getEndTimeList().size(), 0);
+
+    }
+
+    @Test
+    void TestTaskGetProjectId() {
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
+        Task newTask = new Task("Test Task", 1, 1, newProject);
+
+        assertEquals(newProject.getId(), newTask.getProjectId());
+    }
+
 }

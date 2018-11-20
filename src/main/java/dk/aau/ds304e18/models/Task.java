@@ -95,6 +95,7 @@ public class Task {
         this.project = project;
         DatabaseManager.addTask(this);
         this.project.addNewTask(this);
+        this.projectId = project.getId();
         this.startTime = -1d;
     }
 
@@ -161,7 +162,7 @@ public class Task {
     public List<Task> getDependencies() {
         return dependencies;
     }
-    
+
     /**
      * The getter for the priority
      *
@@ -201,7 +202,7 @@ public class Task {
     public void setEstimatedTime(double estimatedTime) {
         this.estimatedTime = estimatedTime;
     }
-    
+
     /**
      * The setter for the priority of the task.
      *
@@ -280,7 +281,7 @@ public class Task {
     public List<Integer> getDependencyIds() {
         return dependencyIds;
     }
-    
+
     /**
      * the getter for the list of probabilities.
      *
@@ -315,6 +316,7 @@ public class Task {
 
     /**
      * The getter for startTime
+     *
      * @return startTime
      */
     public double getStartTime() {
@@ -323,6 +325,7 @@ public class Task {
 
     /**
      * The setter for startTime
+     *
      * @param startTime - the time where the task starts
      */
     public void setStartTime(double startTime) {
@@ -331,6 +334,7 @@ public class Task {
 
     /**
      * The getter for the startTimeList
+     *
      * @return startTimeList
      */
     public List<Double> getStartTimeList() {
@@ -339,6 +343,7 @@ public class Task {
 
     /**
      * The getter for endTime
+     *
      * @return endTime
      */
     public double getEndTime() {
@@ -347,6 +352,7 @@ public class Task {
 
     /**
      * The setter for the endTime
+     *
      * @param endTime - the time where the task ends
      */
     public void setEndTime(double endTime) {
@@ -355,6 +361,7 @@ public class Task {
 
     /**
      * The getter for the endTimeList
+     *
      * @return endTimeList
      */
     public List<Double> getEndTimeList() {

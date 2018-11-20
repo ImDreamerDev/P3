@@ -1,10 +1,18 @@
 package dk.aau.ds304e18.math;
 
+import dk.aau.ds304e18.database.DatabaseManager;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MathsTest {
+
+    @BeforeAll
+    static void init() {
+        DatabaseManager.isTests = true;
+    }
+
 
     @Test
     void calcAmountMaxTest01() {

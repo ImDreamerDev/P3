@@ -54,6 +54,16 @@ class EmployeeTest {
         assertEquals(previousTasks, newEmployee.getPreviousTaskIds());
     }
 
+    @Test
+    void TestEmployeeConstructor05() {
+        Project project = new Project(-1, "Test Project",
+                ProjectState.ONGOING, "", 55.0, "", 5, new ArrayList<>());
+        Employee newEmployee = new Employee("Tom", project);
+
+        assertEquals(project, newEmployee.getProject());
+    }
+
+
     /**
      * Tests that adding a task to the employee works.
      */
@@ -271,5 +281,17 @@ class EmployeeTest {
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeTask(newTask.getId());
         DatabaseManager.removeProjectManager(projectManager.getId());
+    }
+
+    @Test
+    void TestToString() {
+        assertEquals(new Employee("Lars").toString(), "Lars");
+    }
+
+    @Test
+    void TestSetProjectId() {
+        Employee lars = new Employee("Lars");
+        lars.setProjectId(1);
+        assertEquals(lars.getProjectId(), 1);
     }
 }

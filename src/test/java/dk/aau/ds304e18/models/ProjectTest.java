@@ -5,11 +5,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ProjectTest {
     @BeforeAll
@@ -29,7 +28,7 @@ class ProjectTest {
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeProjectManager(projectManager.getId());
     }
-    
+
     /**
      * Tests adding a new task to the project.
      */
@@ -215,7 +214,7 @@ class ProjectTest {
      * Tests setting the project state of the project to ongoing
      */
     @Test
-    void TestProjectSetState01 () {
+    void TestProjectSetState01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
 
@@ -237,7 +236,7 @@ class ProjectTest {
 
         newProject.setState(ProjectState.ARCHIVED);
 
-        assertEquals(ProjectState.ARCHIVED,newProject.getState());
+        assertEquals(ProjectState.ARCHIVED, newProject.getState());
 
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
         DatabaseManager.removeProjectManager(projectManager.getId());
@@ -247,7 +246,7 @@ class ProjectTest {
      * Tests equals for the project
      */
     @Test
-    void TestProjectEquals01(){
+    void TestProjectEquals01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         ProjectManager projectManager2 = new ProjectManager("Project Manager", "Password");
         Project project1 = new Project("Project1", projectManager);
@@ -261,14 +260,14 @@ class ProjectTest {
         project1.setId(1);
         project2.setId(1);
 
-        assertEquals(project1,project2);
+        assertEquals(project1, project2);
     }
 
     /**
      * Tests equals for the project
      */
     @Test
-    void TestProjectEquals02(){
+    void TestProjectEquals02() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         ProjectManager projectManager2 = new ProjectManager("Project Manager", "Password");
         Project project1 = new Project("Project1", projectManager);
@@ -282,7 +281,7 @@ class ProjectTest {
         project1.setId(1);
         project2.setId(2);
 
-        assertNotEquals(project1,project2);
+        assertNotEquals(project1, project2);
     }
 
     /**
@@ -394,7 +393,7 @@ class ProjectTest {
      */
     @Test
     void TestProjectSetRecommendedPath01() {
-        Project newProject = new Project(1,"Test Project", ProjectState.ONGOING, "", 4.4, "",1, null);
+        Project newProject = new Project(1, "Test Project", ProjectState.ONGOING, "", 4.4, "", 1, null);
 
         newProject.setRecommendedPath("Right then Left");
 
@@ -408,12 +407,60 @@ class ProjectTest {
      */
     @Test
     void TestProjectSetNumberOfEmployees01() {
-        Project newProject = new Project(1,"Rasmus Test Project", ProjectState.ONGOING, "", 34, "",2, null);
+        Project newProject = new Project(1, "Rasmus Test Project", ProjectState.ONGOING, "", 34, "", 2, null);
 
         newProject.setNumberOfEmployees(2.5);
 
-        assertEquals(2.5,newProject.getNumberOfEmployees());
+        assertEquals(2.5, newProject.getNumberOfEmployees());
 
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
+    }
+
+    @Test
+    void TestProjectAddNewEmployee() {
+        Project newProject = new Project(1, "Rasmus Test Project", ProjectState.ONGOING, "", 34, "", 2, null);
+        newProject.addNewEmployee(Arrays.asList(new Employee("Tom The Fish")));
+        assertEquals(newProject.getEmployees().get(0).getName(), "Tom The Fish");
+    }
+
+    @Test
+    void TestProjectSetSequence() {
+        Project newProject = new Project(1, "Rasmus Test Project", ProjectState.ONGOING, "", 34, "", 2, null);
+        newProject.setSequence("This is a dumb sequence");
+        assertEquals(newProject.getSequence(), "This is a dumb sequence");
+    }
+
+    @Test
+    void TestProjectSetPossibleCompletions() {
+        Project newProject = new Project(1, "Rasmus Test Project", ProjectState.ONGOING, "", 34, "", 2, null);
+        newProject.setPossibleCompletions(Arrays.asList(30.3, 54.5, 132.5));
+        assertEquals(newProject.getPossibleCompletions(), Arrays.asList(30.3, 54.5, 132.5));
+    }
+
+    @Test
+    void TestProjectGetPossibleSequences() {
+        Project newProject = new Project(1, "Rasmus Test Project", ProjectState.ONGOING, "", 34, "", 2, null);
+        assertNull(newProject.getPossibleSequences());
+    }
+
+    @Test
+    void TestProjectSetPossibleSequences() {
+        Project newProject = new Project(1, "Rasmus Test Project", ProjectState.ONGOING, "", 34, "", 2, null);
+        newProject.setPossibleSequences(new String[]{"2,2"});
+        assertEquals(newProject.getPossibleSequences()[0], "2,2");
+    }
+
+    @Test
+    void TestProjectGetTempPossibleCompletions() {
+        Project newProject = new Project(1, "Rasmus Test Project", ProjectState.ONGOING, "", 34, "", 2, null);
+        assertEquals(newProject.getTempPossibleCompletions().size(), 0);
+
+    }
+
+    @Test
+    void TestProjectSetTempPossibleCompletions() {
+        Project newProject = new Project(1, "Rasmus Test Project", ProjectState.ONGOING, "", 34, "", 2, null);
+        newProject.setTempPossibleCompletions(Arrays.asList(Arrays.asList(2.3, 3.2), Arrays.asList(2.5, 4.5)));
+        assertEquals(newProject.getTempPossibleCompletions(), Arrays.asList(Arrays.asList(2.3, 3.2), Arrays.asList(2.5, 4.5)));
     }
 }

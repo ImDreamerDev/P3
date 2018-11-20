@@ -5,6 +5,7 @@ import dk.aau.ds304e18.models.Task;
 import java.util.HashMap;
 import java.util.List;
 
+
 public class Estimate {
 
     private List<Double> chances;
