@@ -10,7 +10,6 @@ import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.Sequence;
 import javafx.collections.FXCollections;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -32,6 +31,16 @@ public class InputTab {
     private ListView<Task> listViewDependency;
     private DependenciesPopup dependenciesPopup;
     public EmployeeTab employeeTab;
+
+
+    private TextField duration1;
+    private TextField probability1;
+
+    private TextField duration2;
+    private TextField probability2;
+
+    private TextField duration3;
+    private TextField probability3;
 
     /**
      * @param rootPane - This is the parent of all gui elements in the inputTab.
@@ -90,6 +99,16 @@ public class InputTab {
         ((TabPane) flowPane.getParent().getParent().getParent()).getTabs().get(1).setDisable(false);
     }
 
+
+    private void setupDependencies() {
+        BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
+        VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
+        HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
+        ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(new Tooltip("Opens a list of tasks in the project to add as dependencies"));
+        buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> dependenciesPopup.openDependenciesPopup());
+    }
+
+
     /**
      * The method that sets up the contents of the whole input tab.
      */
@@ -110,70 +129,38 @@ public class InputTab {
                 nameTextField.setStyle("");
             }
         });
-
         TextField priority = ((TextField) inputVBox.getChildren().get(3));
-        TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(5));
-
-        HBox probabilityHBox = ((HBox) inputVBox.getChildren().get(7));
-        HBox probabilityHBox2 = ((HBox) inputVBox.getChildren().get(8));
-        HBox probabilityHBox3 = ((HBox) inputVBox.getChildren().get(9));
-        listViewDependency = ((ListView<Task>) inputVBox.getChildren().get(11));
-        listViewDependency.setOnMouseClicked(event -> {
-            if (event.getClickCount() > 1) {
-                dependenciesPopup.openDependenciesPopup();
-            }
-        });
-        HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
-
-
         priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true));
+
+        TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(5));
         estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) ->
                 validateNumericInput(estimatedTimeTextField, newValue, false));
 
+        setUpProbabilitiesFields();
+        setupDependencies();
+        dependenciesPopup = new DependenciesPopup(rootPane, listViewDependency, taskDependencies);
 
-        TextField duration1 = ((TextField) probabilityHBox.getChildren().get(0));
-        duration1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration1, newValue, false));
-        TextField probability1 = ((TextField) probabilityHBox.getChildren().get(1));
-        probability1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability1, newValue, false));
-
-        TextField duration2 = ((TextField) probabilityHBox2.getChildren().get(0));
-        duration2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration2, newValue, false));
-        TextField probability2 = ((TextField) probabilityHBox2.getChildren().get(1));
-        probability2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability2, newValue, false));
-
-        TextField duration3 = ((TextField) probabilityHBox3.getChildren().get(0));
-        duration3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration3, newValue, false));
-        TextField probability3 = ((TextField) probabilityHBox3.getChildren().get(1));
-        probability3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability3, newValue, false));
-
-        ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(new Tooltip("Opens a list of tasks in the project to add as dependencies"));
-        buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> dependenciesPopup.openDependenciesPopup());
-
-        ((Button) inputVBox.getChildren().get(13)).setTooltip(new Tooltip("Clears all the input fields"));
-        inputVBox.getChildren().get(13).setOnMouseClicked(event -> clearInputFields(listViewDependency, duration1,
+        Button clearInputButton = ((Button) inputVBox.getChildren().get(13));
+        clearInputButton.setTooltip(new Tooltip("Clears all the input fields"));
+        clearInputButton.setOnMouseClicked(event -> clearInputFields(listViewDependency, duration1,
                 probability1, duration2, probability2, duration3, probability3,
                 nameTextField, estimatedTimeTextField, priority));
 
+        //Input view end
 
-        //Middle column
+        //Right side input
         Pane paneSplitter = ((Pane) flowPane.getChildren().get(2));
-
-
         VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(1));
 
         ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).setTooltip(new Tooltip("Adds the task to the project"));
         //Add task
         ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0).setOnMouseClicked(event -> {
-            List<Probabilities> probabilities = new ArrayList<>();
-            if (!probability1.getText().isBlank())
-                probabilities.add(new Probabilities(Double.parseDouble(probability1.getText()), Maths.clamp(Double.parseDouble(probability1.getText()), 0.0, 100.0)));
-            if (!probability2.getText().isBlank())
-                probabilities.add(new Probabilities(Double.parseDouble(probability3.getText()), Maths.clamp(Double.parseDouble(duration2.getText()), 0.0, 100.0)));
-            if (!probability3.getText().isBlank())
-                probabilities.add(new Probabilities(Double.parseDouble(probability3.getText()), Maths.clamp(Double.parseDouble(duration3.getText()), 0.0, 100.0)));
+            List<Probabilities> probabilities = convertToProbabilities();
+
             if (validate(estimatedTimeTextField, priority, nameTextField) != 0)
                 return;
+
             addTask(nameTextField.getText(), Double.parseDouble(estimatedTimeTextField.getText()),
                     Integer.parseInt(priority.getText()), probabilities);
             clearInputFields(listViewDependency, duration1, probability1, duration2, probability2, duration3, probability3,
@@ -190,6 +177,8 @@ public class InputTab {
 
         ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1)).setTooltip(new Tooltip("Removes the selected task from the project"));
         ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1).setOnMouseClicked(event -> removeTask());
+        //End right side input
+
 
         tableView.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
@@ -199,10 +188,42 @@ public class InputTab {
                 }
             }
         });
-        dependenciesPopup = new DependenciesPopup(rootPane, listViewDependency, taskDependencies);
-        employeeTab = new EmployeeTab(rootPane);
 
+        employeeTab = new EmployeeTab(rootPane);
         drawInputTab();
+    }
+
+    private List<Probabilities> convertToProbabilities() {
+        List<Probabilities> probabilities = new ArrayList<>();
+        if (!probability1.getText().isBlank())
+            probabilities.add(new Probabilities(Double.parseDouble(probability1.getText()), Maths.clamp(Double.parseDouble(probability1.getText()), 0.0, 100.0)));
+        if (!probability2.getText().isBlank())
+            probabilities.add(new Probabilities(Double.parseDouble(probability3.getText()), Maths.clamp(Double.parseDouble(duration2.getText()), 0.0, 100.0)));
+        if (!probability3.getText().isBlank())
+            probabilities.add(new Probabilities(Double.parseDouble(probability3.getText()), Maths.clamp(Double.parseDouble(duration3.getText()), 0.0, 100.0)));
+        return probabilities;
+    }
+
+    private void setUpProbabilitiesFields() {
+        BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
+        VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
+        HBox probabilityHBox = ((HBox) inputVBox.getChildren().get(7));
+        HBox probabilityHBox2 = ((HBox) inputVBox.getChildren().get(8));
+        HBox probabilityHBox3 = ((HBox) inputVBox.getChildren().get(9));
+        duration1 = ((TextField) probabilityHBox.getChildren().get(0));
+        probability1 = ((TextField) probabilityHBox.getChildren().get(1));
+        duration1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration1, newValue, false));
+        probability1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability1, newValue, false));
+
+        duration2 = ((TextField) probabilityHBox2.getChildren().get(0));
+        probability2 = ((TextField) probabilityHBox2.getChildren().get(1));
+        duration2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration2, newValue, false));
+        probability2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability2, newValue, false));
+
+        duration3 = ((TextField) probabilityHBox3.getChildren().get(0));
+        probability3 = ((TextField) probabilityHBox3.getChildren().get(1));
+        duration3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration3, newValue, false));
+        probability3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability3, newValue, false));
     }
 
     private int validate(TextField... textFields) {
