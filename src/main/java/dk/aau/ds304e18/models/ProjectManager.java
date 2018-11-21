@@ -24,12 +24,12 @@ public class ProjectManager {
     /**
      * The current project that the project manager is working on
      */
-    private List<Project> currentProject;
+    private List<Project> currentProject = new ArrayList<>();
 
     /**
      * The id of the project that the manager is assigned to
      */
-    private List<Integer> currentProjectIds;
+    private List<Integer> currentProjectIds = new ArrayList<>();
 
     /**
      * A list of projects that the project manager has previously worked on.

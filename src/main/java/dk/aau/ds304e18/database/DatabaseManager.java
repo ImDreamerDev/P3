@@ -585,6 +585,7 @@ public class DatabaseManager {
      */
     public static void updateProjectManager(ProjectManager manager) {
         List<Integer> currentProjArray = new ArrayList<>();
+
         manager.getCurrentProjects().forEach(project -> currentProjArray.add(project.getId()));
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
