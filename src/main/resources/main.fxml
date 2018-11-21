@@ -60,7 +60,7 @@
     <TabPane id="tapPane" layoutX="7.0" layoutY="24.0" prefHeight="376.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
         <Tab id="tabProjects" text="Projects">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                <HBox id="projectToolbar" layoutX="403.0" layoutY="-2.0" prefHeight="43.0" prefWidth="1270.0" spacing="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                <HBox id="projectToolbar" layoutX="403.0" layoutY="-2.0" prefHeight="43.0" prefWidth="870.0" spacing="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="405.0" AnchorPane.topAnchor="5.0">
                     <Label prefHeight="17.0" prefWidth="82.0" text="Project Name: ">
                         <HBox.margin>
                             <Insets top="3.0" />
@@ -79,7 +79,7 @@
                         </HBox.margin>
                     </Label>
                 </HBox>
-            <HBox id="projectToolbar2" alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="1280.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+            <HBox id="projectToolbar2" alignment="TOP_RIGHT" layoutX="825.0" prefHeight="40.0" prefWidth="450.0" AnchorPane.leftAnchor="825.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                <children>
                        <Button mnemonicParsing="false" text="Archive Project">
                            <HBox.margin>

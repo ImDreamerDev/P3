@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 
+import javax.xml.crypto.Data;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -57,11 +58,13 @@ public class InputTab {
      * Uses the method enableInput - if the project is ongoing.
      */
     public void drawInputTab() {
+        //If the selected project is archived disable the input. Otherwise enable the input.
         if (JavaFXMain.selectedProjectId != 0 && LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getState()
                 == ProjectState.ARCHIVED)
             disableInput();
         else
             enableInput();
+        //Clear the table view of tasks.
         tableView.getItems().clear();
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task ->
                 task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
@@ -72,6 +75,11 @@ public class InputTab {
                 .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
                 .collect(Collectors.toList())));
 
+        BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
+        Pane paneSplitter = ((Pane) flowPane.getChildren().get(2));
+        VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
+        if (JavaFXMain.selectedProjectId == 0 && LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId) != null)
+            ((TextField) vBoxSplitter.getChildren().get(1)).setText(LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getNumberOfEmployees() + "");
         employeeTab.drawEmployees();
         if (JavaFXMain.selectedProjectId != 0)
             JavaFXMain.outputTab.drawOutputTab(true);
@@ -257,19 +265,28 @@ public class InputTab {
      * @param useMonty       - the monte carlo method is used.
      */
     private void calculate(Project project, boolean useMonty, double numOfEmployees, boolean useFast) {
+        //Set the number of employees of the project.
         project.setNumberOfEmployees(numOfEmployees);
+        //Start time taking.
         Instant start = Instant.now();
+        //Sequence the tasks.
         Sequence.sequenceTasks(project, useMonty, useFast);
+        //Stop the time taking.
         Instant end = java.time.Instant.now();
+        //Calculate the time between start and end.
         Duration between = java.time.Duration.between(start, end);
+        //Print the result out.
         System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 +
                         "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
                 between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
 
+        //Update the output tab.
         JavaFXMain.outputTab.drawOutputTab(useMonty);
+        //Update the input tab.
         drawInputTab();
+        //Go to the output tab.
         tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
-        JavaFXMain.outputTab.populateChart();
+        //Update all the tasks.
         project.getTasks().forEach(DatabaseManager::updateTask);
     }
 
@@ -282,11 +299,13 @@ public class InputTab {
      * @param newValue  - the contents of the text box
      */
     private void validateNumericInput(TextField textField, String newValue, boolean intField) {
+        //If it's a int field. Only allow numeric values.
         if (intField) {
             if (!newValue.matches("\\d*")) {
                 textField.setText(newValue.replaceAll("[[\\D]]", ""));
             }
         } else if (!newValue.matches("\\d*\\.")) {
+            //Otherwise allow the dot(.) separator.
             textField.setText(newValue.replaceAll("[[^\\d^\\.]]", ""));
         }
     }
@@ -298,10 +317,14 @@ public class InputTab {
      * @param textFields         - the specific text box
      */
     private void clearInputFields(ListView<Task> listViewDependency, TextField... textFields) {
+        //Clear all the text fields.
         for (TextField textField : textFields)
             textField.clear();
+        //Clear the dependencies.
         taskDependencies.clear();
+        //Clear the GUI dependencies.
         listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
+        //Update the GUI.
         drawInputTab();
     }
 
@@ -314,20 +337,30 @@ public class InputTab {
      * @param probabilities - filled into text box.
      */
     private void addTask(String name, double estimatedTime, int priority, List<Probabilities> probabilities) {
+        //Get all the tasks on this project.
         List<Task> tasks = LocalObjStorage.getTaskList().
                 stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList());
+        //Get the task with the same name otherwise returns null to signify no task with that name exists.
         Task t = tasks.stream().filter(task -> task.getName().equals(name)).findFirst().orElse(null);
+        //If we found a task.
         if (t != null) {
+            //Get the dependencies currently selected.
             List<Task> dependencies = new ArrayList<>(taskDependencies);
+            //Remove the task from local object storage.
             LocalObjStorage.getTaskList().remove(t);
+            //Set the fields of the task.
             t.setEstimatedTime(estimatedTime);
             t.setPriority(priority);
             t.getProbabilities().clear();
             t.getProbabilities().addAll(probabilities);
             t.getDependencies().clear();
             t.addDependency(new ArrayList<>(dependencies));
+            //Re add the task to the local object storage.
             LocalObjStorage.getTaskList().add(t);
+            //And update the database with the changed task.
+            DatabaseManager.updateTask(t);
         } else {
+            //Otherwise create a new task.
             Task ttt = new Task(name, estimatedTime, priority,
                     LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
             ttt.getProbabilities().addAll(probabilities);
@@ -337,11 +370,16 @@ public class InputTab {
     }
 
     private void editTask(ListView<Task> listViewDependency, TextField... textFields) {
+        //If no task is selected just return.
         if (tableView.getSelectionModel().getSelectedIndex() == -1)
             return;
+        //Get the task id from the selected row.
         int taskId = (int) ((TableColumn) tableView.getColumns().get(0)).
                 getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
+        //Get the actual task from the id.
         Task task = LocalObjStorage.getTaskById(taskId);
+
+        //Check if task probabilities exists in task, and then fill them out. 
         if (task.getProbabilities().size() > 0) {
             textFields[0].setText(task.getProbabilities().get(0).getDuration() + "");
             textFields[1].setText(task.getProbabilities().get(0).getProbability() + "");
@@ -354,11 +392,17 @@ public class InputTab {
             textFields[4].setText(task.getProbabilities().get(2).getDuration() + "");
             textFields[5].setText(task.getProbabilities().get(2).getProbability() + "");
         }
+        //Fill out the name of the task.
         textFields[6].setText(task.getName());
+        //Fill out the estimated time of the task.
         textFields[7].setText(task.getEstimatedTime() + "");
+        //Fill out the priority of the task.
         textFields[8].setText(task.getPriority() + "");
+
+        //Fill out the task dependencies.
         taskDependencies = new ArrayList<>(task.getDependencies());
         listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
+        //Update the input tab to reflect the change.
         drawInputTab();
     }
 
