@@ -3,9 +3,6 @@ package dk.aau.ds304e18.database;
 import dk.aau.ds304e18.models.*;
 import org.postgresql.util.PSQLException;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -309,8 +306,8 @@ public class DatabaseManager {
             if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projects WHERE id = ANY(?)");
             List<Integer> queryList = new ArrayList<>();
-            if (projectManager.getCurrentProjectId() != 0) {
-                queryList.add(projectManager.getCurrentProjectId());
+            if (projectManager.getCurrentProjectIds().size() != 0) {
+                queryList.addAll(projectManager.getCurrentProjectIds());
             }
 
             if (projectManager.getOldProjectsId() != null) {
@@ -339,7 +336,7 @@ public class DatabaseManager {
         //We want unassigned employees
         employeeIdsToQuery.add(0);
         //We want employees from the current project
-        employeeIdsToQuery.add(projectManager.getCurrentProjectId());
+        employeeIdsToQuery.addAll(projectManager.getCurrentProjectIds());
 
         try {
             if (dbConnection == null || dbConnection.isClosed() || dbConnection.isClosed()) connect();
@@ -355,7 +352,7 @@ public class DatabaseManager {
 
     private static List<Task> getTasksForProjectManager(ProjectManager projectManager) {
         List<Integer> queryArray = new ArrayList<>();
-        queryArray.add(projectManager.getCurrentProjectId());
+        queryArray.addAll(projectManager.getCurrentProjectIds());
         queryArray.addAll(projectManager.getOldProjectsId());
 
         try {
@@ -407,11 +404,14 @@ public class DatabaseManager {
 
                 updateProgress(2, progressBarParts);
 
-                if (projectManager.getCurrentProjectId() != 0) {
-                    Project project = LocalObjStorage.getProjectById(projectManager.getCurrentProjectId());
-                    project.setCreator(projectManager);
-                    if (project.getState() != ProjectState.ONGOING)
-                        project.setState(ProjectState.ONGOING);
+                if (projectManager.getCurrentProjectIds().size() != 0) {
+                    projectManager.getCurrentProjectIds().forEach(projId -> {
+                        Project project = LocalObjStorage.getProjectById(projId);
+                        project.setCreator(projectManager);
+                        if (project.getState() != ProjectState.ONGOING)
+                            project.setState(ProjectState.ONGOING);
+                    });
+
                 }
 
                 List<Integer> projectIds = new ArrayList<>(projectManager.getOldProjectsId());
@@ -460,7 +460,9 @@ public class DatabaseManager {
                     }
                 }
 
-                projectManager.setCurrentProject(LocalObjStorage.getProjectById(projectManager.getCurrentProjectId()));
+                for (Integer currentProjectId : projectManager.getCurrentProjectIds()) {
+                    projectManager.distributeAddCurrentProject(LocalObjStorage.getProjectById(currentProjectId));
+                }
 
                 for (Integer projectId : projectManager.getOldProjectsId()) {
                     projectManager.addOldProject(LocalObjStorage.getProjectById(projectId));
@@ -582,12 +584,14 @@ public class DatabaseManager {
      * @param manager - the ProjectManager to update.
      */
     public static void updateProjectManager(ProjectManager manager) {
+        List<Integer> currentProjArray = new ArrayList<>();
+        manager.getCurrentProjects().forEach(project -> currentProjArray.add(project.getId()));
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE projectmanagers SET currentproject " +
                     "= ?, oldprojects = ? WHERE id = ? ");
-            if (manager.getCurrentProject() != null)
-                statement.setInt(1, manager.getCurrentProject().getId());
+            if (manager.getCurrentProjects() != null && manager.getCurrentProjects().size() != 0)
+                statement.setArray(1, dbConnection.createArrayOf("INTEGER", currentProjArray.toArray()));
             else
                 statement.setNull(1, Types.INTEGER);
             statement.setArray(2, dbConnection.createArrayOf("INTEGER",
@@ -611,7 +615,7 @@ public class DatabaseManager {
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
             if (dbConnection == null)
-                return new ProjectManager(-1, "Connection error", -1, null);
+                return new ProjectManager(-1, "Connection error", null, null);
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE LOWER(username) = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);

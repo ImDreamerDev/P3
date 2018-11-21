@@ -80,11 +80,8 @@ public class Project {
         this.name = name;
         this.state = ProjectState.ONGOING;
         this.Creator = creator;
-        if (creator.getCurrentProject() != null) {
-            creator.addOldProject(creator.getCurrentProject());
-        }
         DatabaseManager.addProject(this);
-        creator.setCurrentProject(LocalObjStorage.getProjectById(getId()));
+        creator.addCurrentProject(LocalObjStorage.getProjectById(getId()));
     }
 
     public Project(int id, String name, ProjectState projectState, String sequence,

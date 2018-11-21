@@ -71,16 +71,19 @@ public class DatabaseParser {
     public static List<ProjectManager> parseProjectManagersFromResultSet(ResultSet rs) {
 
         List<ProjectManager> projectManagers = new ArrayList<>();
+
         try {
             if (rs == null) return null;
             while (rs.next()) {
+                List<Integer> currentProjects = new ArrayList<>();
+                if (rs.getArray(4) != null) currentProjects = Arrays.asList((Integer[]) rs.getArray(4).getArray());
                 ProjectManager projectManager;
                 if (rs.getArray(5) != null)
                     projectManager = new ProjectManager(rs.getInt(1), rs.getString(2),
-                            rs.getInt(4), Arrays.asList((Integer[]) rs.getArray(5).getArray()));
+                            currentProjects, Arrays.asList((Integer[]) rs.getArray(5).getArray()));
                 else {
                     projectManager = new ProjectManager(rs.getInt(1), rs.getString(2),
-                            rs.getInt(4), null);
+                            currentProjects, null);
                 }
                 projectManagers.add(projectManager);
             }

@@ -24,12 +24,12 @@ public class ProjectManager {
     /**
      * The current project that the project manager is working on
      */
-    private Project currentProject;
+    private List<Project> currentProject;
 
     /**
      * The id of the project that the manager is assigned to
      */
-    private int currentProjectId;
+    private List<Integer> currentProjectIds;
 
     /**
      * A list of projects that the project manager has previously worked on.
@@ -44,7 +44,7 @@ public class ProjectManager {
     /**
      * The constructor of the ProjectManager class.
      *
-     * @param name - The name of the manager.
+     * @param name     - The name of the manager.
      * @param password - the password of the manager.
      */
     public ProjectManager(String name, String password) {
@@ -55,15 +55,15 @@ public class ProjectManager {
     /**
      * 2nd Constructor for the ProjectManager class.
      *
-     * @param id               - the unique id of the project manager.
-     * @param name             - the name of the project manager.
-     * @param currentProjectId - the id of the project the project manager is currently working on.
-     * @param oldProjects      - A list of projects that the project manager has previously worked on.
+     * @param id                - the unique id of the project manager.
+     * @param name              - the name of the project manager.
+     * @param currentProjectIds - the id of the project the project manager is currently working on.
+     * @param oldProjects       - A list of projects that the project manager has previously worked on.
      */
-    public ProjectManager(int id, String name, int currentProjectId, List<Integer> oldProjects) {
+    public ProjectManager(int id, String name, List<Integer> currentProjectIds, List<Integer> oldProjects) {
         this.id = id;
         this.name = name;
-        this.currentProjectId = currentProjectId;
+        this.currentProjectIds = currentProjectIds;
         if (oldProjects != null)
             oldProjectsId.addAll(oldProjects);
     }
@@ -91,7 +91,7 @@ public class ProjectManager {
      *
      * @return currentProject - the project that the program manager is currently working on.
      */
-    public Project getCurrentProject() {
+    public List<Project> getCurrentProjects() {
         return currentProject;
     }
 
@@ -111,7 +111,7 @@ public class ProjectManager {
      */
     public void addOldProject(Project project) {
         boolean isLoadingFromDB = false;
-        if(oldProjects.contains(project)) return;
+        if (oldProjects.contains(project)) return;
 
         if (project != null) {
             if (oldProjectsId.contains(project.getId())) {
@@ -136,10 +136,16 @@ public class ProjectManager {
      *
      * @param currentProject - the project which the program manager is working on.
      */
-    public void setCurrentProject(Project currentProject) {
+    public void addCurrentProject(Project currentProject) {
         if (currentProject != null) {
-            this.currentProject = currentProject;
+            this.currentProject.add(currentProject);
             DatabaseManager.updateProjectManager(this);
+        }
+    }
+
+    public void distributeAddCurrentProject(Project project) {
+        if (currentProject != null) {
+            this.currentProject.add(project);
         }
     }
 
@@ -162,13 +168,14 @@ public class ProjectManager {
     }
 
     /**
-     * The getter for the currentProjectId.
+     * The getter for the currentProjectIds.
      *
-     * @return currentProjectId - the id of the project that is currently being worked on by the manager.
+     * @return currentProjectIds - the id of the project that is currently being worked on by the manager.
      */
-    public int getCurrentProjectId() {
-        return currentProjectId;
+    public List<Integer> getCurrentProjectIds() {
+        return currentProjectIds;
     }
+
 
     /**
      * To string method.

@@ -165,7 +165,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#currentProjectId">currentProjectId</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#currentProjectIds">currentProjectIds</a></span></code></th>
 <td class="colLast">
 <div class="block">The id of the project that the manager is assigned to</div>
 </td>
@@ -218,7 +218,7 @@ extends java.lang.Object</pre>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String,int,java.util.List)">ProjectManager</a></span>&#8203;(int&nbsp;id,
               java.lang.String&nbsp;name,
-              int&nbsp;currentProjectId,
+              int&nbsp;currentProjectIds,
               java.util.List&lt;java.lang.Integer&gt;&nbsp;oldProjects)</code></th>
 <td class="colLast">
 <div class="block">2nd Constructor for the ProjectManager class.</div>
@@ -267,7 +267,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentProjectId()">getCurrentProjectId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The getter for the currentProjectId.</div>
+<div class="block">The getter for the currentProjectIds.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -373,13 +373,13 @@ extends java.lang.Object</pre>
 <div class="block">The current project that the project manager is working on</div>
 </li>
 </ul>
-<a id="currentProjectId">
+<a id="currentProjectIds">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>currentProjectId</h4>
-<pre>private&nbsp;int currentProjectId</pre>
+<h4>currentProjectIds</h4>
+<pre>private&nbsp;int currentProjectIds</pre>
 <div class="block">The id of the project that the manager is assigned to</div>
 </li>
 </ul>
@@ -437,14 +437,14 @@ extends java.lang.Object</pre>
 <h4>ProjectManager</h4>
 <pre>public&nbsp;ProjectManager&#8203;(int&nbsp;id,
                       java.lang.String&nbsp;name,
-                      int&nbsp;currentProjectId,
+                      int&nbsp;currentProjectIds,
                       java.util.List&lt;java.lang.Integer&gt;&nbsp;oldProjects)</pre>
 <div class="block">2nd Constructor for the ProjectManager class.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - - the unique id of the project manager.</dd>
 <dd><code>name</code> - - the name of the project manager.</dd>
-<dd><code>currentProjectId</code> - - the id of the project the project manager is currently working on.</dd>
+<dd><code>currentProjectIds</code> - - the id of the project the project manager is currently working on.</dd>
 <dd><code>oldProjects</code> - - A list of projects that the project manager has previously worked on.</dd>
 </dl>
 </li>
@@ -578,10 +578,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getCurrentProjectId</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;getCurrentProjectId()</pre>
-<div class="block">The getter for the currentProjectId.</div>
+<div class="block">The getter for the currentProjectIds.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>currentProjectId - the id of the project that is currently being worked on by the manager.</dd>
+<dd>currentProjectIds - the id of the project that is currently being worked on by the manager.</dd>
 </dl>
 </li>
 </ul>

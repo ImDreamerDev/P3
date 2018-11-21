@@ -33,7 +33,7 @@ class ProjectManagerTest {
      */
     @Test
     void TestProjectManagerConstructor2() {
-        ProjectManager newProjectManager = new ProjectManager(1, "Peter", 1, null);
+        ProjectManager newProjectManager = new ProjectManager(1, "Peter", null, null);
         assertEquals("Peter", newProjectManager.getName());
         DatabaseManager.removeProjectManager(newProjectManager.getId());
     }
@@ -44,7 +44,7 @@ class ProjectManagerTest {
      */
     @Test
     void TestProjectManagerConstructor3() {
-        ProjectManager newProjectManager = new ProjectManager(1, "Peter", 1, Arrays.asList(1, 3, 4));
+        ProjectManager newProjectManager = new ProjectManager(1, "Peter", null, Arrays.asList(1, 3, 4));
         assertEquals("Peter", newProjectManager.getName());
         DatabaseManager.removeProjectManager(newProjectManager.getId());
     }
@@ -87,8 +87,8 @@ class ProjectManagerTest {
     void TestProjectManagerGetCurrentProject() {
         ProjectManager newProjectManager = new ProjectManager("Adam", "test");
         Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
-        newProjectManager.setCurrentProject(newProject);
-        assertEquals(newProject, newProjectManager.getCurrentProject());
+        newProjectManager.addCurrentProject(newProject);
+        assertEquals(newProject, newProjectManager.getCurrentProjects());
         DatabaseManager.removeProjectManager(newProjectManager.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
     }
@@ -100,8 +100,8 @@ class ProjectManagerTest {
     void TestProjectManagerGetCurrentProjectId() {
         ProjectManager newProjectManager = new ProjectManager("Adam", "test");
         Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
-        newProjectManager.setCurrentProject(newProject);
-        assertEquals(0, newProjectManager.getCurrentProjectId());
+        newProjectManager.addCurrentProject(newProject);
+        assertEquals(0, newProjectManager.getCurrentProjectIds());
         DatabaseManager.removeProjectManager(newProjectManager.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
     }
@@ -114,7 +114,7 @@ class ProjectManagerTest {
     void TestProjectManagerGetOldProjects() {
         ProjectManager newProjectManager = new ProjectManager("Adam", "test");
         Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
-        newProjectManager.setCurrentProject(newProject);
+        newProjectManager.addCurrentProject(newProject);
         newProjectManager.addOldProject(newProject);
         assertEquals(newProjectManager.getOldProjects().size(), 1);
         DatabaseManager.removeProjectManager(newProjectManager.getId());
@@ -129,9 +129,9 @@ class ProjectManagerTest {
     void TestProjectManagerGetOldProjects2() {
         ProjectManager newProjectManager = new ProjectManager("Adam", "test");
         Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
-        newProjectManager.setCurrentProject(newProject);
+        newProjectManager.addCurrentProject(newProject);
         newProjectManager.addOldProject(newProject);
-        assertNull(newProjectManager.getCurrentProject());
+        assertNull(newProjectManager.getCurrentProjects());
         DatabaseManager.removeProjectManager(newProjectManager.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
     }
@@ -144,7 +144,7 @@ class ProjectManagerTest {
     void TestProjectManagerGetOldProjects3() {
         ProjectManager newProjectManager = new ProjectManager("Adam", "test");
         Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
-        newProjectManager.setCurrentProject(newProject);
+        newProjectManager.addCurrentProject(newProject);
         newProjectManager.addOldProject(newProject);
         assertEquals(newProjectManager.getOldProjects().get(0).getState(), ProjectState.ARCHIVED);
         DatabaseManager.removeProjectManager(newProjectManager.getId());
@@ -158,7 +158,7 @@ class ProjectManagerTest {
     void TestProjectManagerGetOldProjectsId() {
         ProjectManager newProjectManager = new ProjectManager("Adam", "test");
         Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
-        newProjectManager.setCurrentProject(newProject);
+        newProjectManager.addCurrentProject(newProject);
         newProjectManager.addOldProject(newProject);
         assertEquals(1, newProjectManager.getOldProjectsId().get(0).intValue());
         DatabaseManager.removeProjectManager(newProjectManager.getId());
@@ -174,7 +174,7 @@ class ProjectManagerTest {
     void TestProjectManagerAddOldProject() {
         ProjectManager newProjectManager = new ProjectManager("Adam", "test");
         Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
-        newProjectManager.setCurrentProject(newProject);
+        newProjectManager.addCurrentProject(newProject);
         newProjectManager.addOldProject(newProject);
         newProjectManager.addOldProject(newProject);
         assertEquals(1, newProjectManager.getOldProjects().size());
@@ -187,7 +187,7 @@ class ProjectManagerTest {
     void TestProjectManagerAddOldProject02() {
         ProjectManager newProjectManager = new ProjectManager("Adam", "test");
         Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
-        newProjectManager.setCurrentProject(newProject);
+        newProjectManager.addCurrentProject(newProject);
         newProjectManager.getOldProjectsId().add(newProject.getId());
         newProjectManager.addOldProject(newProject);
         newProjectManager.addOldProject(newProject);
