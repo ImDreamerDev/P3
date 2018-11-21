@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -134,6 +134,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">DependenciesPopup</span>
 extends java.lang.Object</pre>
+<div class="block">The DependenciesPopup for tasks</div>
 </li>
 </ul>
 </div>
@@ -157,17 +158,23 @@ extends java.lang.Object</pre>
 <tr class="altColor">
 <td class="colFirst"><code>private javafx.scene.control.ListView&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#listViewDependency">listViewDependency</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The list view of the current task's dependencies.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private javafx.scene.Parent</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rootPane">rootPane</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The root pane of the GUI.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private java.util.List&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#taskDependencies">taskDependencies</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The actual list of the task's dependencies.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -187,10 +194,11 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(javafx.scene.Parent,javafx.scene.control.ListView,java.util.List)">DependenciesPopup</a></span>&#8203;(javafx.scene.Parent&nbsp;rootPane,
-                 javafx.scene.control.ListView&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
-                 java.util.List&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;taskDependencies)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(javafx.scene.Parent,javafx.scene.control.ListView)">DependenciesPopup</a></span>&#8203;(javafx.scene.Parent&nbsp;rootPane,
+                 javafx.scene.control.ListView&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency)</code></th>
+<td class="colLast">
+<div class="block">Creates and sets up the DependenciesPopup</div>
+</td>
 </tr>
 </table>
 </li>
@@ -220,14 +228,23 @@ extends java.lang.Object</pre>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#closeDependenciesPopup()">closeDependenciesPopup</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Closes the dependencies popup</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openDependenciesPopup()">openDependenciesPopup</a></span>()</code></th>
+<td class="colFirst"><code>java.util.List&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTaskDependencies()">getTaskDependencies</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openDependenciesPopup()">openDependenciesPopup</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Opens the dependencies popup</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDependency(java.util.List)">removeDependency</a></span>&#8203;(java.util.List&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;selectedItems)</code></th>
 <td class="colLast">
@@ -265,6 +282,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>rootPane</h4>
 <pre>private final&nbsp;javafx.scene.Parent rootPane</pre>
+<div class="block">The root pane of the GUI.</div>
 </li>
 </ul>
 <a id="listViewDependency">
@@ -274,6 +292,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>listViewDependency</h4>
 <pre>private final&nbsp;javafx.scene.control.ListView&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt; listViewDependency</pre>
+<div class="block">The list view of the current task's dependencies.</div>
 </li>
 </ul>
 <a id="taskDependencies">
@@ -283,6 +302,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>taskDependencies</h4>
 <pre>private final&nbsp;java.util.List&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt; taskDependencies</pre>
+<div class="block">The actual list of the task's dependencies.</div>
 </li>
 </ul>
 </li>
@@ -295,15 +315,20 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(javafx.scene.Parent,javafx.scene.control.ListView,java.util.List)">
+<a id="&lt;init&gt;(javafx.scene.Parent,javafx.scene.control.ListView)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DependenciesPopup</h4>
 <pre>public&nbsp;DependenciesPopup&#8203;(javafx.scene.Parent&nbsp;rootPane,
-                         javafx.scene.control.ListView&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
-                         java.util.List&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;taskDependencies)</pre>
+                         javafx.scene.control.ListView&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency)</pre>
+<div class="block">Creates and sets up the DependenciesPopup</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>rootPane</code> - The root pane of the GUI</dd>
+<dd><code>listViewDependency</code> - The list view where the current dependencies are shown to the user.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -323,6 +348,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>openDependenciesPopup</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;openDependenciesPopup()</pre>
+<div class="block">Opens the dependencies popup</div>
 </li>
 </ul>
 <a id="closeDependenciesPopup()">
@@ -332,6 +358,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>closeDependenciesPopup</h4>
 <pre class="methodSignature">private&nbsp;void&nbsp;closeDependenciesPopup()</pre>
+<div class="block">Closes the dependencies popup</div>
 </li>
 </ul>
 <a id="removeDependency(java.util.List)">
@@ -345,14 +372,14 @@ extends java.lang.Object</pre>
  This happens by selecting the task and pressing the remove button.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>selectedItems</code> - </dd>
+<dd><code>selectedItems</code> - The current selected items.</dd>
 </dl>
 </li>
 </ul>
 <a id="addDependency(java.util.List)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>addDependency</h4>
 <pre class="methodSignature">private&nbsp;void&nbsp;addDependency&#8203;(java.util.List&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasks)</pre>
@@ -361,6 +388,15 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>tasks</code> - - The list of the tasks in the project.</dd>
 </dl>
+</li>
+</ul>
+<a id="getTaskDependencies()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getTaskDependencies</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;getTaskDependencies()</pre>
 </li>
 </ul>
 </li>

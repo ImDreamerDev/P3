@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -157,14 +157,14 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>private <a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a></code></td>
+<td class="colFirst"><code>private java.util.List&lt;<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#currentProject">currentProject</a></span></code></th>
 <td class="colLast">
 <div class="block">The current project that the project manager is working on</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>private int</code></td>
+<td class="colFirst"><code>private java.util.List&lt;java.lang.Integer&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#currentProjectIds">currentProjectIds</a></span></code></th>
 <td class="colLast">
 <div class="block">The id of the project that the manager is assigned to</div>
@@ -216,9 +216,9 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String,int,java.util.List)">ProjectManager</a></span>&#8203;(int&nbsp;id,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String,java.util.List,java.util.List)">ProjectManager</a></span>&#8203;(int&nbsp;id,
               java.lang.String&nbsp;name,
-              int&nbsp;currentProjectIds,
+              java.util.List&lt;java.lang.Integer&gt;&nbsp;currentProjectIds,
               java.util.List&lt;java.lang.Integer&gt;&nbsp;oldProjects)</code></th>
 <td class="colLast">
 <div class="block">2nd Constructor for the ProjectManager class.</div>
@@ -251,68 +251,73 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addCurrentProject(dk.aau.ds304e18.models.Project)">addCurrentProject</a></span>&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;currentProject)</code></th>
+<td class="colLast">
+<div class="block">The setter for the current project.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addOldProject(dk.aau.ds304e18.models.Project)">addOldProject</a></span>&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">
 <div class="block">This function adds a project to the old projects list.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentProject()">getCurrentProject</a></span>()</code></th>
-<td class="colLast">
-<div class="block">The getter for the current project</div>
-</td>
-</tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentProjectId()">getCurrentProjectId</a></span>()</code></th>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#distributeAddCurrentProject(dk.aau.ds304e18.models.Project)">distributeAddCurrentProject</a></span>&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>java.util.List&lt;java.lang.Integer&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentProjectIds()">getCurrentProjectIds</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the currentProjectIds.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentProjects()">getCurrentProjects</a></span>()</code></th>
+<td class="colLast">
+<div class="block">The getter for the current project</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getId()">getId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the id.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the name of the project manager.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOldProjects()">getOldProjects</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the old projects list.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.Integer&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOldProjectsId()">getOldProjectsId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the oldProjects id.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCurrentProject(dk.aau.ds304e18.models.Project)">setCurrentProject</a></span>&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;currentProject)</code></th>
-<td class="colLast">
-<div class="block">The setter for the current project.</div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(int)">setId</a></span>&#8203;(int&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">The setter for the unique id.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">
@@ -369,7 +374,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>currentProject</h4>
-<pre>private&nbsp;<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a> currentProject</pre>
+<pre>private&nbsp;java.util.List&lt;<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt; currentProject</pre>
 <div class="block">The current project that the project manager is working on</div>
 </li>
 </ul>
@@ -379,7 +384,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>currentProjectIds</h4>
-<pre>private&nbsp;int currentProjectIds</pre>
+<pre>private&nbsp;java.util.List&lt;java.lang.Integer&gt; currentProjectIds</pre>
 <div class="block">The id of the project that the manager is assigned to</div>
 </li>
 </ul>
@@ -429,7 +434,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(int,java.lang.String,int,java.util.List)">
+<a id="&lt;init&gt;(int,java.lang.String,java.util.List,java.util.List)">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -437,7 +442,7 @@ extends java.lang.Object</pre>
 <h4>ProjectManager</h4>
 <pre>public&nbsp;ProjectManager&#8203;(int&nbsp;id,
                       java.lang.String&nbsp;name,
-                      int&nbsp;currentProjectIds,
+                      java.util.List&lt;java.lang.Integer&gt;&nbsp;currentProjectIds,
                       java.util.List&lt;java.lang.Integer&gt;&nbsp;oldProjects)</pre>
 <div class="block">2nd Constructor for the ProjectManager class.</div>
 <dl>
@@ -487,13 +492,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getCurrentProject()">
+<a id="getCurrentProjects()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getCurrentProject</h4>
-<pre class="methodSignature">public&nbsp;<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;getCurrentProject()</pre>
+<h4>getCurrentProjects</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;&nbsp;getCurrentProjects()</pre>
 <div class="block">The getter for the current project</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -529,18 +534,27 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="setCurrentProject(dk.aau.ds304e18.models.Project)">
+<a id="addCurrentProject(dk.aau.ds304e18.models.Project)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>setCurrentProject</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setCurrentProject&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;currentProject)</pre>
+<h4>addCurrentProject</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addCurrentProject&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;currentProject)</pre>
 <div class="block">The setter for the current project.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>currentProject</code> - - the project which the program manager is working on.</dd>
 </dl>
+</li>
+</ul>
+<a id="distributeAddCurrentProject(dk.aau.ds304e18.models.Project)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>distributeAddCurrentProject</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;distributeAddCurrentProject&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</pre>
 </li>
 </ul>
 <a id="setId(int)">
@@ -571,13 +585,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getCurrentProjectId()">
+<a id="getCurrentProjectIds()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getCurrentProjectId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;getCurrentProjectId()</pre>
+<h4>getCurrentProjectIds</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Integer&gt;&nbsp;getCurrentProjectIds()</pre>
 <div class="block">The getter for the currentProjectIds.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>

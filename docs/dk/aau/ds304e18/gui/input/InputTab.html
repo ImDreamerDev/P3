@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -160,13 +160,43 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>private javafx.scene.control.TextField</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#duration1">duration1</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private javafx.scene.control.TextField</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#duration2">duration2</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private javafx.scene.control.TextField</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#duration3">duration3</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="EmployeeTab.html" title="class in dk.aau.ds304e18.gui.input">EmployeeTab</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#employeeTab">employeeTab</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private javafx.scene.control.ListView&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#listViewDependency">listViewDependency</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private javafx.scene.control.TextField</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#probability1">probability1</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private javafx.scene.control.TextField</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#probability2">probability2</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private javafx.scene.control.TextField</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#probability3">probability3</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -182,11 +212,6 @@ extends java.lang.Object</pre>
 <tr class="rowColor">
 <td class="colFirst"><code>private javafx.scene.control.TabPane</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tabPane">tabPane</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>private java.util.List&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#taskDependencies">taskDependencies</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -250,64 +275,78 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>private void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearInputFields(javafx.scene.control.ListView,javafx.scene.control.TextField...)">clearInputFields</a></span>&#8203;(javafx.scene.control.ListView&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
-                javafx.scene.control.TextField...&nbsp;textFields)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearInputFields(javafx.scene.control.TextField...)">clearInputFields</a></span>&#8203;(javafx.scene.control.TextField...&nbsp;textFields)</code></th>
 <td class="colLast">
 <div class="block">This method clears the whole input field for creating a new task.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>private java.util.List&lt;<a href="../../math/Probabilities.html" title="class in dk.aau.ds304e18.math">Probabilities</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convertToProbabilities()">convertToProbabilities</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#disableInput()">disableInput</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Method that disables the interaction with the gui on the inputTab.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawInputTab()">drawInputTab</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The method that draws the inputTab.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#editTask(javafx.scene.control.ListView,javafx.scene.control.TextField...)">editTask</a></span>&#8203;(javafx.scene.control.ListView&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
         javafx.scene.control.TextField...&nbsp;textFields)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#enableInput()">enableInput</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTask()">removeTask</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Method for removing a task.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupDependencies()">setupDependencies</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupInputTab()">setupInputTab</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The method that sets up the contents of the whole input tab.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUpProbabilitiesFields()">setUpProbabilitiesFields</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupTaskTable()">setupTaskTable</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The method that sets up the task table.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>private int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validate(javafx.scene.control.TextField...)">validate</a></span>&#8203;(javafx.scene.control.TextField...&nbsp;textFields)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validateNumericInput(javafx.scene.control.TextField,java.lang.String,boolean)">validateNumericInput</a></span>&#8203;(javafx.scene.control.TextField&nbsp;textField,
                     java.lang.String&nbsp;newValue,
@@ -341,15 +380,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a id="taskDependencies">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>taskDependencies</h4>
-<pre>private&nbsp;java.util.List&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt; taskDependencies</pre>
-</li>
-</ul>
 <a id="rootPane">
 <!--   -->
 </a>
@@ -398,10 +428,64 @@ extends java.lang.Object</pre>
 <a id="employeeTab">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>employeeTab</h4>
 <pre>public&nbsp;<a href="EmployeeTab.html" title="class in dk.aau.ds304e18.gui.input">EmployeeTab</a> employeeTab</pre>
+</li>
+</ul>
+<a id="duration1">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>duration1</h4>
+<pre>private&nbsp;javafx.scene.control.TextField duration1</pre>
+</li>
+</ul>
+<a id="probability1">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>probability1</h4>
+<pre>private&nbsp;javafx.scene.control.TextField probability1</pre>
+</li>
+</ul>
+<a id="duration2">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>duration2</h4>
+<pre>private&nbsp;javafx.scene.control.TextField duration2</pre>
+</li>
+</ul>
+<a id="probability2">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>probability2</h4>
+<pre>private&nbsp;javafx.scene.control.TextField probability2</pre>
+</li>
+</ul>
+<a id="duration3">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>duration3</h4>
+<pre>private&nbsp;javafx.scene.control.TextField duration3</pre>
+</li>
+</ul>
+<a id="probability3">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>probability3</h4>
+<pre>private&nbsp;javafx.scene.control.TextField probability3</pre>
 </li>
 </ul>
 </li>
@@ -468,6 +552,15 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">private&nbsp;void&nbsp;enableInput()</pre>
 </li>
 </ul>
+<a id="setupDependencies()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setupDependencies</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;setupDependencies()</pre>
+</li>
+</ul>
 <a id="setupInputTab()">
 <!--   -->
 </a>
@@ -476,6 +569,24 @@ extends java.lang.Object</pre>
 <h4>setupInputTab</h4>
 <pre class="methodSignature">private&nbsp;void&nbsp;setupInputTab()</pre>
 <div class="block">The method that sets up the contents of the whole input tab.</div>
+</li>
+</ul>
+<a id="convertToProbabilities()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>convertToProbabilities</h4>
+<pre class="methodSignature">private&nbsp;java.util.List&lt;<a href="../../math/Probabilities.html" title="class in dk.aau.ds304e18.math">Probabilities</a>&gt;&nbsp;convertToProbabilities()</pre>
+</li>
+</ul>
+<a id="setUpProbabilitiesFields()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setUpProbabilitiesFields</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;setUpProbabilitiesFields()</pre>
 </li>
 </ul>
 <a id="validate(javafx.scene.control.TextField...)">
@@ -526,18 +637,16 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="clearInputFields(javafx.scene.control.ListView,javafx.scene.control.TextField...)">
+<a id="clearInputFields(javafx.scene.control.TextField...)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>clearInputFields</h4>
-<pre class="methodSignature">private&nbsp;void&nbsp;clearInputFields&#8203;(javafx.scene.control.ListView&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
-                              javafx.scene.control.TextField...&nbsp;textFields)</pre>
+<pre class="methodSignature">private&nbsp;void&nbsp;clearInputFields&#8203;(javafx.scene.control.TextField...&nbsp;textFields)</pre>
 <div class="block">This method clears the whole input field for creating a new task. This means all the text boxes and the dependencies table.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>listViewDependency</code> - - the list of dependencies</dd>
 <dd><code>textFields</code> - - the specific text box</dd>
 </dl>
 </li>

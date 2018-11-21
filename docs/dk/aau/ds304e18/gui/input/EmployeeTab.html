@@ -134,6 +134,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">EmployeeTab</span>
 extends java.lang.Object</pre>
+<div class="block">The tab where employee(s) can be created or assigned/unassigned.</div>
 </li>
 </ul>
 </div>
@@ -156,13 +157,17 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private javafx.scene.control.TableView&lt;<a href="../../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#employeeProjectTableView">employeeProjectTableView</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#freeEmployeeTableView">freeEmployeeTableView</a></span></code></th>
+<td class="colLast">
+<div class="block">The table view of all the free employees.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private javafx.scene.control.TableView&lt;<a href="../../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#employeeTableView">employeeTableView</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#projectEmployeeTableView">projectEmployeeTableView</a></span></code></th>
+<td class="colLast">
+<div class="block">The table view of all the employees assigned to the project.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -183,7 +188,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(javafx.scene.Parent)">EmployeeTab</a></span>&#8203;(javafx.scene.Parent&nbsp;rootPane)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Create and sets up the Employee tab.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -206,22 +213,30 @@ extends java.lang.Object</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEmployee(javafx.scene.control.TextField)">addEmployee</a></span>&#8203;(javafx.scene.control.TextField&nbsp;name)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Adds a new employee to the system.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#assignEmployee()">assignEmployee</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Assigns the selected employee(s) to the current project.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawEmployees()">drawEmployees</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Draws/updates the table views.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unassignEmployee()">unassignEmployee</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Removes the selected employee(s) from the current project.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -247,22 +262,24 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a id="employeeTableView">
+<a id="projectEmployeeTableView">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>employeeTableView</h4>
-<pre>private final&nbsp;javafx.scene.control.TableView&lt;<a href="../../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt; employeeTableView</pre>
+<h4>projectEmployeeTableView</h4>
+<pre>private final&nbsp;javafx.scene.control.TableView&lt;<a href="../../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt; projectEmployeeTableView</pre>
+<div class="block">The table view of all the employees assigned to the project.</div>
 </li>
 </ul>
-<a id="employeeProjectTableView">
+<a id="freeEmployeeTableView">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>employeeProjectTableView</h4>
-<pre>private final&nbsp;javafx.scene.control.TableView&lt;<a href="../../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt; employeeProjectTableView</pre>
+<h4>freeEmployeeTableView</h4>
+<pre>private final&nbsp;javafx.scene.control.TableView&lt;<a href="../../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt; freeEmployeeTableView</pre>
+<div class="block">The table view of all the free employees.</div>
 </li>
 </ul>
 </li>
@@ -282,6 +299,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>EmployeeTab</h4>
 <pre>public&nbsp;EmployeeTab&#8203;(javafx.scene.Parent&nbsp;rootPane)</pre>
+<div class="block">Create and sets up the Employee tab.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>rootPane</code> - The root pane of the GUI.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -301,6 +323,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>assignEmployee</h4>
 <pre class="methodSignature">private&nbsp;void&nbsp;assignEmployee()</pre>
+<div class="block">Assigns the selected employee(s) to the current project.</div>
 </li>
 </ul>
 <a id="unassignEmployee()">
@@ -310,6 +333,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>unassignEmployee</h4>
 <pre class="methodSignature">private&nbsp;void&nbsp;unassignEmployee()</pre>
+<div class="block">Removes the selected employee(s) from the current project.</div>
 </li>
 </ul>
 <a id="drawEmployees()">
@@ -319,6 +343,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>drawEmployees</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;drawEmployees()</pre>
+<div class="block">Draws/updates the table views.</div>
 </li>
 </ul>
 <a id="addEmployee(javafx.scene.control.TextField)">
@@ -328,6 +353,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>addEmployee</h4>
 <pre class="methodSignature">private&nbsp;void&nbsp;addEmployee&#8203;(javafx.scene.control.TextField&nbsp;name)</pre>
+<div class="block">Adds a new employee to the system.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - The name of the employee.</dd>
+</dl>
 </li>
 </ul>
 </li>

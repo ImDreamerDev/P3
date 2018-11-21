@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -181,20 +181,6 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private double</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#endTime">endTime</a></span></code></th>
-<td class="colLast">
-<div class="block">End time of the task</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>private java.util.List&lt;java.lang.Double&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#endTimeList">endTimeList</a></span></code></th>
-<td class="colLast">
-<div class="block">End time of the task, but in a list so we can have more than one</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>private double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimatedTime">estimatedTime</a></span></code></th>
 <td class="colLast">
 <div class="block">The estimated completion time of the task - This is used as mu in the inverse gaussian</div>
@@ -208,51 +194,58 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>private <a href="../math/InverseGaussian.html" title="class in dk.aau.ds304e18.math">InverseGaussian</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#invG">invG</a></span></code></th>
+<td class="colLast">
+<div class="block">The inverse gaussian distribution for this task</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>private double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lambda">lambda</a></span></code></th>
 <td class="colLast">
 <div class="block">The estimated lambda value for the inverse gaussian</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name">name</a></span></code></th>
 <td class="colLast">
 <div class="block">The name of the task.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#priority">priority</a></span></code></th>
 <td class="colLast">
 <div class="block">The level of priority that the task has compared to other tasks.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private java.util.List&lt;<a href="../math/Probabilities.html" title="class in dk.aau.ds304e18.math">Probabilities</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#probabilities">probabilities</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private <a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#project">project</a></span></code></th>
 <td class="colLast">
 <div class="block">The project which the task is a part of.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#projectId">projectId</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startTime">startTime</a></span></code></th>
 <td class="colLast">
 <div class="block">Start time of the task</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private java.util.List&lt;java.lang.Double&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startTimeList">startTimeList</a></span></code></th>
 <td class="colLast">
@@ -369,141 +362,127 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>double</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEndTime()">getEndTime</a></span>()</code></th>
-<td class="colLast">
-<div class="block">The getter for endTime</div>
-</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;java.lang.Double&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEndTimeList()">getEndTimeList</a></span>()</code></th>
-<td class="colLast">
-<div class="block">The getter for the endTimeList</div>
-</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEstimatedTime()">getEstimatedTime</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the estimated completion time</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getId()">getId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the id.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i10" class="altColor">
+<td class="colFirst"><code><a href="../math/InverseGaussian.html" title="class in dk.aau.ds304e18.math">InverseGaussian</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInvG()">getInvG</a></span>()</code></th>
+<td class="colLast">
+<div class="block">The getter for the tasks inverse gaussian distribution</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLambda()">getLambda</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the lambda value.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the name.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPriority()">getPriority</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the priority</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../math/Probabilities.html" title="class in dk.aau.ds304e18.math">Probabilities</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProbabilities()">getProbabilities</a></span>()</code></th>
 <td class="colLast">
 <div class="block">the getter for the list of probabilities.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProject()">getProject</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the project.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProjectId()">getProjectId</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStartTime()">getStartTime</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for startTime</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.Double&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStartTimeList()">getStartTimeList</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the startTimeList</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The hashcode for the task</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEndTime(double)">setEndTime</a></span>&#8203;(double&nbsp;endTime)</code></th>
-<td class="colLast">
-<div class="block">The setter for the endTime</div>
-</td>
-</tr>
-<tr id="i22" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEstimatedTime(double)">setEstimatedTime</a></span>&#8203;(double&nbsp;estimatedTime)</code></th>
 <td class="colLast">
 <div class="block">the setter for the Estimated time</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(int)">setId</a></span>&#8203;(int&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">The setter for the id</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLambda(double)">setLambda</a></span>&#8203;(double&nbsp;lambda)</code></th>
 <td class="colLast">
 <div class="block">The setter for lambda.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPriority(int)">setPriority</a></span>&#8203;(int&nbsp;priority)</code></th>
 <td class="colLast">
 <div class="block">The setter for the priority of the task.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProject(dk.aau.ds304e18.models.Project)">setProject</a></span>&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setStartTime(double)">setStartTime</a></span>&#8203;(double&nbsp;startTime)</code></th>
 <td class="colLast">
 <div class="block">The setter for startTime</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -591,26 +570,6 @@ extends java.lang.Object</pre>
 <div class="block">Start time of the task, but in a list so we can have more than one</div>
 </li>
 </ul>
-<a id="endTime">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>endTime</h4>
-<pre>private&nbsp;double endTime</pre>
-<div class="block">End time of the task</div>
-</li>
-</ul>
-<a id="endTimeList">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>endTimeList</h4>
-<pre>private&nbsp;java.util.List&lt;java.lang.Double&gt; endTimeList</pre>
-<div class="block">End time of the task, but in a list so we can have more than one</div>
-</li>
-</ul>
 <a id="lambda">
 <!--   -->
 </a>
@@ -681,11 +640,21 @@ extends java.lang.Object</pre>
 <a id="project">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>project</h4>
 <pre>private&nbsp;<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a> project</pre>
 <div class="block">The project which the task is a part of.</div>
+</li>
+</ul>
+<a id="invG">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>invG</h4>
+<pre>private&nbsp;<a href="../math/InverseGaussian.html" title="class in dk.aau.ds304e18.math">InverseGaussian</a> invG</pre>
+<div class="block">The inverse gaussian distribution for this task</div>
 </li>
 </ul>
 </li>
@@ -1094,45 +1063,17 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getEndTime()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getEndTime</h4>
-<pre class="methodSignature">public&nbsp;double&nbsp;getEndTime()</pre>
-<div class="block">The getter for endTime</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>endTime</dd>
-</dl>
-</li>
-</ul>
-<a id="setEndTime(double)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setEndTime</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setEndTime&#8203;(double&nbsp;endTime)</pre>
-<div class="block">The setter for the endTime</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>endTime</code> - - the time where the task ends</dd>
-</dl>
-</li>
-</ul>
-<a id="getEndTimeList()">
+<a id="getInvG()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getEndTimeList</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Double&gt;&nbsp;getEndTimeList()</pre>
-<div class="block">The getter for the endTimeList</div>
+<h4>getInvG</h4>
+<pre class="methodSignature">public&nbsp;<a href="../math/InverseGaussian.html" title="class in dk.aau.ds304e18.math">InverseGaussian</a>&nbsp;getInvG()</pre>
+<div class="block">The getter for the tasks inverse gaussian distribution</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>endTimeList</dd>
+<dd>the inverse gaussian distribution of the task</dd>
 </dl>
 </li>
 </ul>

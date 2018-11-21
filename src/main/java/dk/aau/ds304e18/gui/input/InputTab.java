@@ -199,11 +199,9 @@ public class InputTab {
 
 
         tableView.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                if (event.getClickCount() == 2) {
-                    editTask(listViewDependency, duration1, probability1, duration2, probability2, duration3,
-                            probability3, nameTextField, estimatedTimeTextField, priority);
-                }
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                editTask(listViewDependency, duration1, probability1, duration2, probability2, duration3,
+                        probability3, nameTextField, estimatedTimeTextField, priority);
             }
         });
 
@@ -295,7 +293,6 @@ public class InputTab {
         tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
         //Update all the tasks.
         project.getTasks().forEach(DatabaseManager::updateTask);
-
     }
 
     /**
