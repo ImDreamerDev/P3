@@ -155,8 +155,23 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>double</code></td>
+<td class="colFirst"><code>private javafx.scene.layout.AnchorPane</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pane">pane</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private <a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#project">project</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zoomFactor">zoomFactor</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private javafx.scene.control.Label</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zoomFactorLabel">zoomFactorLabel</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -200,23 +215,24 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawTasks(dk.aau.ds304e18.models.Project,javafx.scene.layout.AnchorPane)">drawTasks</a></span>&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;pro,
-         javafx.scene.layout.AnchorPane&nbsp;pane)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawTasks()">drawTasks</a></span>()</code></th>
+<td class="colLast">
+<div class="block">The function for drawing the tasks and arrows</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>private void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zoomIn(dk.aau.ds304e18.models.Project,javafx.scene.layout.AnchorPane,javafx.scene.control.Label)">zoomIn</a></span>&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;pro,
-      javafx.scene.layout.AnchorPane&nbsp;pane,
-      javafx.scene.control.Label&nbsp;zoomFactorLabel)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zoomIn()">zoomIn</a></span>()</code></th>
+<td class="colLast">
+<div class="block">The function for zooming in</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>private void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zoomOut(dk.aau.ds304e18.models.Project,javafx.scene.layout.AnchorPane,javafx.scene.control.Label)">zoomOut</a></span>&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;pro,
-       javafx.scene.layout.AnchorPane&nbsp;pane,
-       javafx.scene.control.Label&nbsp;zoomFactorLabel)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zoomOut()">zoomOut</a></span>()</code></th>
+<td class="colLast">
+<div class="block">The function for zooming out.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -245,10 +261,37 @@ extends java.lang.Object</pre>
 <a id="zoomFactor">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>zoomFactor</h4>
-<pre>public&nbsp;double zoomFactor</pre>
+<pre>private&nbsp;double zoomFactor</pre>
+</li>
+</ul>
+<a id="project">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>project</h4>
+<pre>private&nbsp;<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a> project</pre>
+</li>
+</ul>
+<a id="pane">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>pane</h4>
+<pre>private&nbsp;javafx.scene.layout.AnchorPane pane</pre>
+</li>
+</ul>
+<a id="zoomFactorLabel">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>zoomFactorLabel</h4>
+<pre>private&nbsp;javafx.scene.control.Label zoomFactorLabel</pre>
 </li>
 </ul>
 </li>
@@ -280,36 +323,34 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="zoomOut(dk.aau.ds304e18.models.Project,javafx.scene.layout.AnchorPane,javafx.scene.control.Label)">
+<a id="zoomOut()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>zoomOut</h4>
-<pre class="methodSignature">private&nbsp;void&nbsp;zoomOut&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;pro,
-                     javafx.scene.layout.AnchorPane&nbsp;pane,
-                     javafx.scene.control.Label&nbsp;zoomFactorLabel)</pre>
+<pre class="methodSignature">private&nbsp;void&nbsp;zoomOut()</pre>
+<div class="block">The function for zooming out.</div>
 </li>
 </ul>
-<a id="zoomIn(dk.aau.ds304e18.models.Project,javafx.scene.layout.AnchorPane,javafx.scene.control.Label)">
+<a id="zoomIn()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>zoomIn</h4>
-<pre class="methodSignature">private&nbsp;void&nbsp;zoomIn&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;pro,
-                    javafx.scene.layout.AnchorPane&nbsp;pane,
-                    javafx.scene.control.Label&nbsp;zoomFactorLabel)</pre>
+<pre class="methodSignature">private&nbsp;void&nbsp;zoomIn()</pre>
+<div class="block">The function for zooming in</div>
 </li>
 </ul>
-<a id="drawTasks(dk.aau.ds304e18.models.Project,javafx.scene.layout.AnchorPane)">
+<a id="drawTasks()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>drawTasks</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;drawTasks&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;pro,
-                      javafx.scene.layout.AnchorPane&nbsp;pane)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;drawTasks()</pre>
+<div class="block">The function for drawing the tasks and arrows</div>
 </li>
 </ul>
 </li>

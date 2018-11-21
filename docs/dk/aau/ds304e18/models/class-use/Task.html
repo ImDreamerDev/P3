@@ -264,8 +264,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>private java.util.HashMap&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>,&#8203;java.lang.Double&gt;</code></td>
-<th class="colSecond" scope="row"><span class="typeNameLabel">Estimate.</span><code><span class="memberNameLink"><a href="../../estimatetime/Estimate.html#endTimes">endTimes</a></span></code></th>
+<td class="colFirst"><code>private java.util.HashMap&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>,&#8203;<a href="../../math/InverseGaussian.html" title="class in dk.aau.ds304e18.math">InverseGaussian</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">EstimateTimeCallable.</span><code><span class="memberNameLink"><a href="../../estimatetime/EstimateTimeCallable.html#invG">invG</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -290,11 +290,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>java.util.HashMap&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>,&#8203;java.lang.Double&gt;</code></td>
-<th class="colSecond" scope="row"><span class="typeNameLabel">Estimate.</span><code><span class="memberNameLink"><a href="../../estimatetime/Estimate.html#getEndTimes()">getEndTimes</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>java.util.HashMap&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>,&#8203;java.lang.Double&gt;</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">Estimate.</span><code><span class="memberNameLink"><a href="../../estimatetime/Estimate.html#getStartTimes()">getStartTimes</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -308,9 +303,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../estimatetime/Estimate.html#%3Cinit%3E(java.util.List,java.util.HashMap,java.util.HashMap,double)">Estimate</a></span>&#8203;(java.util.List&lt;java.lang.Double&gt;&nbsp;chances,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../estimatetime/Estimate.html#%3Cinit%3E(java.util.List,java.util.HashMap,double)">Estimate</a></span>&#8203;(java.util.List&lt;java.lang.Double&gt;&nbsp;chances,
         java.util.HashMap&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>,&#8203;java.lang.Double&gt;&nbsp;startTimes,
-        java.util.HashMap&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>,&#8203;java.lang.Double&gt;&nbsp;endTimes,
         double&nbsp;duration)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -341,7 +335,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr class="altColor">
 <td class="colFirst"><code>private javafx.scene.control.ListView&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">DependenciesPopup.</span><code><span class="memberNameLink"><a href="../../gui/input/DependenciesPopup.html#listViewDependency">listViewDependency</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The list view of the current task's dependencies.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private javafx.scene.control.ListView&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
@@ -356,11 +352,23 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr class="rowColor">
 <td class="colFirst"><code>private java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">DependenciesPopup.</span><code><span class="memberNameLink"><a href="../../gui/input/DependenciesPopup.html#taskDependencies">taskDependencies</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The actual list of the task's dependencies.</div>
+</td>
 </tr>
+</tbody>
+</table>
+<table class="useSummary">
+<caption><span>Methods in <a href="../../gui/input/package-summary.html">dk.aau.ds304e18.gui.input</a> that return types with arguments of type <a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
 <tr class="altColor">
-<td class="colFirst"><code>private java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
-<th class="colSecond" scope="row"><span class="typeNameLabel">InputTab.</span><code><span class="memberNameLink"><a href="../../gui/input/InputTab.html#taskDependencies">taskDependencies</a></span></code></th>
+<td class="colFirst"><code>java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
+<th class="colSecond" scope="row"><span class="typeNameLabel">DependenciesPopup.</span><code><span class="memberNameLink"><a href="../../gui/input/DependenciesPopup.html#getTaskDependencies()">getTaskDependencies</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
@@ -382,19 +390,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private void</code></td>
-<th class="colSecond" scope="row"><span class="typeNameLabel">InputTab.</span><code><span class="memberNameLink"><a href="../../gui/input/InputTab.html#clearInputFields(javafx.scene.control.ListView,javafx.scene.control.TextField...)">clearInputFields</a></span>&#8203;(javafx.scene.control.ListView&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
-                javafx.scene.control.TextField...&nbsp;textFields)</code></th>
-<td class="colLast">
-<div class="block">This method clears the whole input field for creating a new task.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">InputTab.</span><code><span class="memberNameLink"><a href="../../gui/input/InputTab.html#editTask(javafx.scene.control.ListView,javafx.scene.control.TextField...)">editTask</a></span>&#8203;(javafx.scene.control.ListView&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
         javafx.scene.control.TextField...&nbsp;textFields)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">DependenciesPopup.</span><code><span class="memberNameLink"><a href="../../gui/input/DependenciesPopup.html#removeDependency(java.util.List)">removeDependency</a></span>&#8203;(java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;selectedItems)</code></th>
 <td class="colLast">
@@ -411,16 +411,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../gui/input/DependenciesPopup.html#%3Cinit%3E(javafx.scene.Parent,javafx.scene.control.ListView,java.util.List)">DependenciesPopup</a></span>&#8203;(javafx.scene.Parent&nbsp;rootPane,
-                 javafx.scene.control.ListView&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
-                 java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;taskDependencies)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../gui/input/DependenciesPopup.html#%3Cinit%3E(javafx.scene.Parent,javafx.scene.control.ListView,java.util.List)">DependenciesPopup</a></span>&#8203;(javafx.scene.Parent&nbsp;rootPane,
-                 javafx.scene.control.ListView&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
-                 java.util.List&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;taskDependencies)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../gui/input/DependenciesPopup.html#%3Cinit%3E(javafx.scene.Parent,javafx.scene.control.ListView)">DependenciesPopup</a></span>&#8203;(javafx.scene.Parent&nbsp;rootPane,
+                 javafx.scene.control.ListView&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency)</code></th>
+<td class="colLast">
+<div class="block">Creates and sets up the DependenciesPopup</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -442,7 +437,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr class="altColor">
 <td class="colFirst"><code>private javafx.scene.control.TableView&lt;<a href="../Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><span class="typeNameLabel">AssignmentTab.</span><code><span class="memberNameLink"><a href="../../gui/output/AssignmentTab.html#taskTableView">taskTableView</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The table view of the task(s) on the project.</div>
+</td>
 </tr>
 </tbody>
 </table>

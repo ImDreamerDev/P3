@@ -134,6 +134,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">ProjectTab</span>
 extends java.lang.Object</pre>
+<div class="block">The main tab of the program.
+ Displaying all the projects owned by the user.</div>
 </li>
 </ul>
 </div>
@@ -157,37 +159,51 @@ extends java.lang.Object</pre>
 <tr class="altColor">
 <td class="colFirst"><code>private javafx.collections.transformation.FilteredList&lt;<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#flProjects">flProjects</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The filter list of projects.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private <a href="../models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#projectManager">projectManager</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The logged in project manager.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private javafx.scene.layout.HBox</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#projectToolBar">projectToolBar</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The project toolbar.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private javafx.scene.Parent</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rootPane">rootPane</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The root pane of the GUI.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private javafx.collections.transformation.SortedList&lt;<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sortedList">sortedList</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The sorted list of projects.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>private javafx.scene.control.TableView&lt;<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tableView">tableView</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The project table view.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>private javafx.scene.control.TabPane</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tabPane">tabPane</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The main tab pane.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -261,7 +277,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#onTableElementSelected()">onTableElementSelected</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Method for selecting a project.</div>
+<div class="block">Called when a element in the table view is selected.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -286,7 +302,9 @@ extends java.lang.Object</pre>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>private javafx.collections.transformation.SortedList&lt;<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateProjects()">updateProjects</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Update the project list</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -319,6 +337,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>rootPane</h4>
 <pre>private final&nbsp;javafx.scene.Parent rootPane</pre>
+<div class="block">The root pane of the GUI.</div>
 </li>
 </ul>
 <a id="sortedList">
@@ -328,6 +347,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>sortedList</h4>
 <pre>private&nbsp;javafx.collections.transformation.SortedList&lt;<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt; sortedList</pre>
+<div class="block">The sorted list of projects.</div>
 </li>
 </ul>
 <a id="projectManager">
@@ -337,6 +357,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>projectManager</h4>
 <pre>private final&nbsp;<a href="../models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a> projectManager</pre>
+<div class="block">The logged in project manager.</div>
 </li>
 </ul>
 <a id="tableView">
@@ -346,6 +367,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>tableView</h4>
 <pre>private&nbsp;javafx.scene.control.TableView&lt;<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt; tableView</pre>
+<div class="block">The project table view.</div>
 </li>
 </ul>
 <a id="flProjects">
@@ -355,6 +377,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>flProjects</h4>
 <pre>private&nbsp;javafx.collections.transformation.FilteredList&lt;<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt; flProjects</pre>
+<div class="block">The filter list of projects.</div>
 </li>
 </ul>
 <a id="projectToolBar">
@@ -364,6 +387,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>projectToolBar</h4>
 <pre>private&nbsp;javafx.scene.layout.HBox projectToolBar</pre>
+<div class="block">The project toolbar.</div>
 </li>
 </ul>
 <a id="tabPane">
@@ -373,6 +397,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>tabPane</h4>
 <pre>private final&nbsp;javafx.scene.control.TabPane tabPane</pre>
+<div class="block">The main tab pane.</div>
 </li>
 </ul>
 </li>
@@ -412,6 +437,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>updateProjects</h4>
 <pre class="methodSignature">private&nbsp;javafx.collections.transformation.SortedList&lt;<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&gt;&nbsp;updateProjects()</pre>
+<div class="block">Update the project list</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Returns a sorted list of all the projects in the local object storage.</dd>
+</dl>
 </li>
 </ul>
 <a id="setupProjectTab()">
@@ -500,7 +530,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>onTableElementSelected</h4>
 <pre class="methodSignature">private&nbsp;void&nbsp;onTableElementSelected()</pre>
-<div class="block">Method for selecting a project.</div>
+<div class="block">Called when a element in the table view is selected.</div>
 </li>
 </ul>
 <a id="archiveProject()">
