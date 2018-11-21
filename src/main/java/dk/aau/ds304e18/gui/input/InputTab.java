@@ -151,13 +151,12 @@ public class InputTab {
         priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true));
 
         TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(5));
-        estimatedTimeTextField.setTooltip(new Tooltip("The average time of the task, measured in hours" + System.lineSeparator() + "Can be a decimal number separated by point"));
+        estimatedTimeTextField.setTooltip(new Tooltip("The average time of the task" + System.lineSeparator() + "Can be a decimal number separated by point"));
         estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) ->
                 validateNumericInput(estimatedTimeTextField, newValue, false));
 
         setUpProbabilitiesFields();
         setupDependencies();
-
 
         Button clearInputButton = ((Button) inputVBox.getChildren().get(13));
         clearInputButton.setTooltip(new Tooltip("Clears all the input fields"));

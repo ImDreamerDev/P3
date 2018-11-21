@@ -87,7 +87,7 @@ public class JavaFXMain extends Application {
         TabPane outputTabPane = (TabPane) ((HBox) ((AnchorPane) outputTab.getContent()).getChildren().get(0)).getChildren().get(1);
         //The output pane tabs tooltips.
         outputTabPane.getTabs().get(0).setTooltip(new Tooltip("The page with the probabilities for the project"));
-        outputTabPane.getTabs().get(1).setTooltip(new Tooltip("The page with some Gantt?"));
+        outputTabPane.getTabs().get(1).setTooltip(new Tooltip("The page with visual depiction of the projects tasks?"));
         outputTabPane.getTabs().get(2).setTooltip(new Tooltip("The page to assign employees to the task on the selected project"));
 
         //Get the update button from the GUI.
