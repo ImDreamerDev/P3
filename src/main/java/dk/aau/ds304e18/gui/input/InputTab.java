@@ -114,6 +114,12 @@ public class InputTab {
         HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
         ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(new Tooltip("Opens a list of tasks in the project to add as dependencies"));
         buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> dependenciesPopup.openDependenciesPopup());
+        listViewDependency = ((ListView<Task>) inputVBox.getChildren().get(11));
+        listViewDependency.setOnMouseClicked(event -> {
+            if (event.getClickCount() > 1) {
+                dependenciesPopup.openDependenciesPopup();
+            }
+        });
     }
 
 
