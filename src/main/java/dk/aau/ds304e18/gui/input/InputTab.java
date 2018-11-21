@@ -66,9 +66,11 @@ public class InputTab {
             enableInput();
         //Clear the table view of tasks.
         tableView.getItems().clear();
+        //Set the items of the table view to all the tasks on the project.
         tableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList().stream().filter(task ->
                 task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
 
+        //Get the dependencies from the GUI.
         TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
         dependencies.getItems().clear();
         dependencies.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
@@ -215,7 +217,7 @@ public class InputTab {
         if (!probability1.getText().isBlank())
             probabilities.add(new Probabilities(Double.parseDouble(probability1.getText()), Maths.clamp(Double.parseDouble(probability1.getText()), 0.0, 100.0)));
         if (!probability2.getText().isBlank())
-            probabilities.add(new Probabilities(Double.parseDouble(probability3.getText()), Maths.clamp(Double.parseDouble(duration2.getText()), 0.0, 100.0)));
+            probabilities.add(new Probabilities(Double.parseDouble(probability2.getText()), Maths.clamp(Double.parseDouble(duration2.getText()), 0.0, 100.0)));
         if (!probability3.getText().isBlank())
             probabilities.add(new Probabilities(Double.parseDouble(probability3.getText()), Maths.clamp(Double.parseDouble(duration3.getText()), 0.0, 100.0)));
         return probabilities;
