@@ -18,6 +18,9 @@ import javafx.util.Duration;
 
 import java.util.List;
 
+/**
+ * The outputTab of the GUI.
+ */
 public class OutputTab {
     private final Parent rootPane;
     private final BarChart<String, Number> barChart;
@@ -50,12 +53,18 @@ public class OutputTab {
 
     }
 
+    /**
+     * The method for drawing the whole outputTab.
+     * @param useMonty - Boolean for using or not using monte carlo.
+     */
     public void drawOutputTab(boolean useMonty) {
         if (JavaFXMain.selectedProjectId == 0) {
 
             return;
         }
+        // adds the ganttTab putton to the tabpane.
         GanttTab ganttTab = new GanttTab(rootPane);
+
         Project pro = LocalObjStorage.getProjectList().stream().
                 filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
         assert pro != null;
@@ -65,7 +74,7 @@ public class OutputTab {
         pane.getChildren().clear();
         if (pro.getSequence() != null) {
 
-
+            // The part of the method that draws the ganttTab.
             ganttTab.drawTasks();
             if (useMonty) {
                 ((ListView<Task>) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
@@ -85,6 +94,9 @@ public class OutputTab {
 
     }
 
+    /**
+     * This method fills the chart with the data from the monte carlo.
+     */
     public void populateChart() {
         //Get the current selected project.
         Project project = LocalObjStorage.getProjectList().stream()
@@ -115,8 +127,9 @@ public class OutputTab {
         //Add the series to the chart.
         barChart.getData().add(series);
 
-        //Set the axis names.
+        // Sets the x axis label to "Working hours".
         series.getChart().getXAxis().setLabel("Working hours");
+        // Sets the y axis label to "chance of completion"
         series.getChart().getYAxis().setLabel("Chance of completion");
         //Create a tooltip for every dataset in the chart.
         for (XYChart.Data<String, Number> entry : series.getData()) {
