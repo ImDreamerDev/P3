@@ -378,9 +378,14 @@ public class InputTab {
     }
 
     private void editTask(ListView<Task> listViewDependency, TextField... textFields) {
+        for (TextField textField : textFields)
+            textField.clear();
+
         //If no task is selected just return.
         if (tableView.getSelectionModel().getSelectedIndex() == -1)
             return;
+
+
         //Get the task id from the selected row.
         int taskId = (int) ((TableColumn) tableView.getColumns().get(0)).
                 getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
