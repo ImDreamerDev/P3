@@ -90,14 +90,19 @@ public class JavaFXMain extends Application {
         outputTabPane.getTabs().get(1).setTooltip(new Tooltip("The page with some Gantt?"));
         outputTabPane.getTabs().get(2).setTooltip(new Tooltip("The page to assign employees to the task on the selected project"));
 
-        //Update button
-        ((Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1)).setTooltip(new Tooltip("Updates the program"));
-        ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1).setOnMouseClicked(event -> {
-           update();
-        });
+        //Get the update button from the GUI.
+        Button updateButton = (Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1);
+        //Set the tooltip of the update button.
+        updateButton.setTooltip(new Tooltip("Updates the program"));
+        //Makes the update button update the local stored objects.
+        updateButton.setOnMouseClicked(event -> update());
 
-        ((Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(3)).setTooltip(new Tooltip("Logs out of the program"));
-        ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(3).setOnMouseClicked(event -> {
+        //Get the log out button from the GUI.
+        Button logoutButton = (Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(3);
+        //Set the tooltip of the log out button.
+        logoutButton.setTooltip(new Tooltip("Logs out of the program"));
+        //Makes the logout button log the user out.
+        logoutButton.setOnMouseClicked(event -> {
             loginScreen.logOut();
             JavaFXMain.outputTab = null;
             inputTab = null;
