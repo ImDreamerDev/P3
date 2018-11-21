@@ -161,7 +161,7 @@ public class InputTab {
 
         Button clearInputButton = ((Button) inputVBox.getChildren().get(13));
         clearInputButton.setTooltip(new Tooltip("Clears all the input fields"));
-        clearInputButton.setOnMouseClicked(event -> clearInputFields(listViewDependency, duration1,
+        clearInputButton.setOnMouseClicked(event -> clearInputFields(duration1,
                 probability1, duration2, probability2, duration3, probability3,
                 nameTextField, estimatedTimeTextField, priority));
 
@@ -182,7 +182,7 @@ public class InputTab {
 
             addTask(nameTextField.getText(), Double.parseDouble(estimatedTimeTextField.getText()),
                     Integer.parseInt(priority.getText()), probabilities);
-            clearInputFields(listViewDependency, duration1, probability1, duration2, probability2, duration3, probability3,
+            clearInputFields(duration1, probability1, duration2, probability2, duration3, probability3,
                     nameTextField, estimatedTimeTextField, priority);
         });
 
@@ -321,10 +321,9 @@ public class InputTab {
     /**
      * This method clears the whole input field for creating a new task. This means all the text boxes and the dependencies table.
      *
-     * @param listViewDependency - the list of dependencies
-     * @param textFields         - the specific text box
+     * @param textFields - the specific text box
      */
-    private void clearInputFields(ListView<Task> listViewDependency, TextField... textFields) {
+    private void clearInputFields(TextField... textFields) {
         //Clear all the text fields.
         for (TextField textField : textFields)
             textField.clear();
@@ -378,8 +377,7 @@ public class InputTab {
     }
 
     private void editTask(ListView<Task> listViewDependency, TextField... textFields) {
-        for (TextField textField : textFields)
-            textField.clear();
+        clearInputFields(textFields);
 
         //If no task is selected just return.
         if (tableView.getSelectionModel().getSelectedIndex() == -1)
