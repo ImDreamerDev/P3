@@ -20,7 +20,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>dk.aau.dk.aau.ds304e18.JavaFXMain</mainClass>
+                            <mainClass>dk.aau.ds304e18.JavaFXMain</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
