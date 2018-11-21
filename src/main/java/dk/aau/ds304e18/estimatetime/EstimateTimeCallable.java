@@ -29,8 +29,8 @@ public class EstimateTimeCallable implements Callable<Estimate> {
         for(Task task : taskList)
             invG.put(task, task.getInvG());
 
-        if(amountEmployees-1 < taskList.size())
-            tempBig = (int) amountEmployees-1;
+        if(amountEmployees < taskList.size())
+            tempBig = (int) amountEmployees;
         else
             tempBig = taskList.size();
 
