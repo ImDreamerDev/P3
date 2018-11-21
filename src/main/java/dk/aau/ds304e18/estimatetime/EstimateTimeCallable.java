@@ -25,25 +25,29 @@ public class EstimateTimeCallable implements Callable<Estimate> {
     public Estimate call() {
         List<Double> chances = new ArrayList<>();
         HashMap<Task, Double> taskStartAt = new HashMap<>();
+        final int tempBig;
         for(Task task : taskList)
             invG.put(task, task.getInvG());
+
+        if(amountEmployees-1 < taskList.size())
+            tempBig = (int) amountEmployees-1;
+        else
+            tempBig = taskList.size();
 
         double duration = 0.0;
         int repeats = numOfMonte / numOfThreads;
         //Repeat repeats time
         for (int i = 0; i < repeats; i++) {
             if (amountEmployees > 1) {
-                //This can probably be made into an array, we know it's taskList.size() big
-                List<Task> tasksDone = new ArrayList<>();
+                //Initialize the List with an initial capacity so it doesn't have to resize
+                List<Task> tasksDone = new ArrayList<>(taskList.size());
 
-                //This can probably be made into an array, we know how big it is (The biggest of amountEmployees and taskList.size())
-                List<Double> durations = new ArrayList<>();
+                //Initialize the list with an initial capacity so it doesn't have to resize
+                List<Double> durations = new ArrayList<>(tempBig);
 
                 HashMap<Task, Double> taskDoneAt = new HashMap<>();
 
-                //If durations get made into an array, this is unnecessary
-                for (int j = 0; j < amountEmployees; j++) {
-                    if (j >= taskList.size()) break;
+                for (int j = 0; j < tempBig; j++) {
                     durations.add(0d);
                 }
 

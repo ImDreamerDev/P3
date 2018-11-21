@@ -111,7 +111,7 @@ public class OutputTab {
         //Set the series name.
         series.setName("Probabilities");
         //Disable animations to stop it from looking weird. 
-        // barChart.setAnimated(false);
+        barChart.setAnimated(false);
         // Get the possible completions from the project. 
         List<Double> possibleCompletions = project.getPossibleCompletions();
         //The total sum of all the values in the list.
