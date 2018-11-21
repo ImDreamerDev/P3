@@ -55,6 +55,7 @@ public class OutputTab {
 
     /**
      * The method for drawing the whole outputTab.
+     *
      * @param useMonty - Boolean for using or not using monte carlo.
      */
     public void drawOutputTab(boolean useMonty) {
@@ -110,7 +111,7 @@ public class OutputTab {
         //Set the series name.
         series.setName("Probabilities");
         //Disable animations to stop it from looking weird. 
-        barChart.setAnimated(false);
+        // barChart.setAnimated(false);
         // Get the possible completions from the project. 
         List<Double> possibleCompletions = project.getPossibleCompletions();
         //The total sum of all the values in the list.
@@ -121,7 +122,7 @@ public class OutputTab {
             double percent = sum / total * 100;
             sum += possibleCompletions.get(i);
             //If percent is less than 1 or is greater than 99 don't insert "bars"
-            if (percent > 1 && sum / percent < 99)
+            if (percent > 1 && percent < 99)
                 series.getData().add(new XYChart.Data<>(i + "", percent));
         }
         //Add the series to the chart.
