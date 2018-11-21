@@ -60,7 +60,6 @@ public class OutputTab {
      */
     public void drawOutputTab(boolean useMonty) {
         if (JavaFXMain.selectedProjectId == 0) {
-
             return;
         }
         // adds the ganttTab button to the tab pane.

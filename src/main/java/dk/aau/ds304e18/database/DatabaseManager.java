@@ -654,7 +654,7 @@ public class DatabaseManager {
         LocalObjStorage.getTaskList().clear();
         LocalObjStorage.getProjectList().clear();
         LocalObjStorage.getTaskList().clear();
-        LocalObjStorage.getProjectManager().clear();
+        LocalObjStorage.getProjectManagers().clear();
 
     }
 }
