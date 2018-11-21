@@ -192,7 +192,7 @@ public class EmployeeTab {
             new Employee(name.getText(), LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
             drawEmployees();
             name.clear();
-            drawEmployees();
+            JavaFXMain.outputTab.drawOutputTab(false);
         }
     }
 }
