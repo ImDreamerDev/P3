@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 
 public class InputTab {
 
-    private List<Task> taskDependencies = new ArrayList<>();
     private final Parent rootPane;
     private TableView<Task> tableView;
     private final TabPane tabPane;
@@ -122,6 +121,7 @@ public class InputTab {
                 dependenciesPopup.openDependenciesPopup();
             }
         });
+        dependenciesPopup = new DependenciesPopup(rootPane, listViewDependency);
     }
 
 
@@ -157,7 +157,7 @@ public class InputTab {
 
         setUpProbabilitiesFields();
         setupDependencies();
-        dependenciesPopup = new DependenciesPopup(rootPane, listViewDependency, taskDependencies);
+
 
         Button clearInputButton = ((Button) inputVBox.getChildren().get(13));
         clearInputButton.setTooltip(new Tooltip("Clears all the input fields"));
@@ -215,11 +215,11 @@ public class InputTab {
     private List<Probabilities> convertToProbabilities() {
         List<Probabilities> probabilities = new ArrayList<>();
         if (!probability1.getText().isBlank())
-            probabilities.add(new Probabilities(Double.parseDouble(probability1.getText()), Maths.clamp(Double.parseDouble(probability1.getText()), 0.0, 100.0)));
+            probabilities.add(new Probabilities(Double.parseDouble(duration1.getText()), Maths.clamp(Double.parseDouble(probability1.getText()), 0.0, 100.0)));
         if (!probability2.getText().isBlank())
-            probabilities.add(new Probabilities(Double.parseDouble(probability2.getText()), Maths.clamp(Double.parseDouble(duration2.getText()), 0.0, 100.0)));
+            probabilities.add(new Probabilities(Double.parseDouble(duration2.getText()), Maths.clamp(Double.parseDouble(probability2.getText()), 0.0, 100.0)));
         if (!probability3.getText().isBlank())
-            probabilities.add(new Probabilities(Double.parseDouble(probability3.getText()), Maths.clamp(Double.parseDouble(duration3.getText()), 0.0, 100.0)));
+            probabilities.add(new Probabilities(Double.parseDouble(duration3.getText()), Maths.clamp(Double.parseDouble(probability3.getText()), 0.0, 100.0)));
         return probabilities;
     }
 
@@ -329,9 +329,9 @@ public class InputTab {
         for (TextField textField : textFields)
             textField.clear();
         //Clear the dependencies.
-        taskDependencies.clear();
+        dependenciesPopup.getTaskDependencies().clear();
         //Clear the GUI dependencies.
-        listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
+        listViewDependency.setItems(FXCollections.observableArrayList(dependenciesPopup.getTaskDependencies()));
         //Update the GUI.
         drawInputTab();
     }
@@ -353,7 +353,7 @@ public class InputTab {
         //If we found a task.
         if (t != null) {
             //Get the dependencies currently selected.
-            List<Task> dependencies = new ArrayList<>(taskDependencies);
+            List<Task> dependencies = new ArrayList<>(dependenciesPopup.getTaskDependencies());
             //Remove the task from local object storage.
             LocalObjStorage.getTaskList().remove(t);
             //Set the fields of the task.
@@ -372,7 +372,7 @@ public class InputTab {
             Task ttt = new Task(name, estimatedTime, priority,
                     LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
             ttt.getProbabilities().addAll(probabilities);
-            ttt.addDependency(taskDependencies);
+            ttt.addDependency(dependenciesPopup.getTaskDependencies());
 
         }
     }
@@ -408,8 +408,9 @@ public class InputTab {
         textFields[8].setText(task.getPriority() + "");
 
         //Fill out the task dependencies.
-        taskDependencies = new ArrayList<>(task.getDependencies());
-        listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
+        dependenciesPopup.getTaskDependencies().clear();
+        dependenciesPopup.getTaskDependencies().addAll(new ArrayList<>(task.getDependencies()));
+        listViewDependency.setItems(FXCollections.observableArrayList(dependenciesPopup.getTaskDependencies()));
         //Update the input tab to reflect the change.
         drawInputTab();
     }

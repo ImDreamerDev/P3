@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +30,7 @@ public class DependenciesPopup {
      */
     private final ListView<Task> listViewDependency;
 
+
     /**
      * The actual list of the task's dependencies.
      */
@@ -40,14 +42,13 @@ public class DependenciesPopup {
      *
      * @param rootPane           The root pane of the GUI
      * @param listViewDependency The list view where the current dependencies are shown to the user.
-     * @param taskDependencies   A list where to store the dependencies.
      */
-    public DependenciesPopup(Parent rootPane, ListView<Task> listViewDependency, List<Task> taskDependencies) {
+    public DependenciesPopup(Parent rootPane, ListView<Task> listViewDependency) {
 
         //Init fields
         this.rootPane = rootPane;
         this.listViewDependency = listViewDependency;
-        this.taskDependencies = taskDependencies;
+        this.taskDependencies = new ArrayList<>();
 
         //Get the table view from the root pane
         TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
@@ -140,4 +141,9 @@ public class DependenciesPopup {
             }
         }
     }
+
+    public List<Task> getTaskDependencies() {
+        return taskDependencies;
+    }
+
 }
