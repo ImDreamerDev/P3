@@ -42,7 +42,7 @@ public class LocalObjStorage {
     }
 
 
-    public static ArrayList<ProjectManager> getProjectManager() {
+    public static ArrayList<ProjectManager> getProjectManagers() {
         return projectManagers;
     }
 
