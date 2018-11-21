@@ -377,7 +377,6 @@ public class InputTab {
     }
 
     private void editTask(ListView<Task> listViewDependency, TextField... textFields) {
-        clearInputFields(textFields);
 
         //If no task is selected just return.
         if (tableView.getSelectionModel().getSelectedIndex() == -1)
@@ -394,14 +393,23 @@ public class InputTab {
         if (task.getProbabilities().size() > 0) {
             textFields[0].setText(task.getProbabilities().get(0).getDuration() + "");
             textFields[1].setText(task.getProbabilities().get(0).getProbability() + "");
+        } else {
+            textFields[0].setText("");
+            textFields[1].setText("");
         }
         if (task.getProbabilities().size() > 1) {
             textFields[2].setText(task.getProbabilities().get(1).getDuration() + "");
             textFields[3].setText(task.getProbabilities().get(1).getProbability() + "");
+        } else {
+            textFields[2].setText("");
+            textFields[3].setText("");
         }
         if (task.getProbabilities().size() > 2) {
             textFields[4].setText(task.getProbabilities().get(2).getDuration() + "");
             textFields[5].setText(task.getProbabilities().get(2).getProbability() + "");
+        } else {
+            textFields[4].setText("");
+            textFields[5].setText("");
         }
         //Fill out the name of the task.
         textFields[6].setText(task.getName());
