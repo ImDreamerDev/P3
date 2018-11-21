@@ -7,6 +7,7 @@ import dk.aau.ds304e18.gui.ProjectTab;
 import dk.aau.ds304e18.gui.input.InputTab;
 import dk.aau.ds304e18.gui.output.OutputTab;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -119,6 +120,19 @@ public class JavaFXMain extends Application {
         stage.show();
         //Focus the username field.
         loginScreen.focusUsername();
+
+        if (getParameters().getNamed().size() == 4) {
+            Task<Void> voidTask = loginScreen.logIn(getParameters().getNamed().get("username"), getParameters().getNamed().get("password"));
+            voidTask.setOnSucceeded(observable -> {
+                JavaFXMain.outputTab = new OutputTab(rootPane);
+                JavaFXMain.inputTab = new InputTab(rootPane);
+                JavaFXMain.projectTab = new ProjectTab(rootPane, LocalObjStorage.getProjectManagerList().get(0));
+                inputTab.calculate(LocalObjStorage.getProjectById(Integer.parseInt(getParameters().getNamed().get("projectId"))),
+                        true, Double.parseDouble(getParameters().getNamed().get("numOfEmps")), true);
+                Platform.exit();
+            });
+            new Thread(voidTask).start();
+        }
     }
 
     private void update() {
@@ -155,6 +169,6 @@ public class JavaFXMain extends Application {
 
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 }

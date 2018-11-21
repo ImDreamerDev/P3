@@ -276,7 +276,7 @@ public class InputTab {
      * @param useFast        - Is the useFast toggled or not. (boolean)
      * @param useMonty       - the monte carlo method is used.
      */
-    private void calculate(Project project, boolean useMonty, double numOfEmployees, boolean useFast) {
+    public void calculate(Project project, boolean useMonty, double numOfEmployees, boolean useFast) {
         //Set the number of employees of the project.
         project.setNumberOfEmployees(numOfEmployees);
         //Start time taking.

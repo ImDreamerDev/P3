@@ -98,10 +98,8 @@ public class Login {
     /**
      * Try to log the user in.
      */
-    private void logIn() {
+    public Task<Void> logIn(String username, String password) {
         //Get the username and password from their fields.
-        String username = usernameField.getText();
-        String password = passwordField.getText();
 
         //Try to login with the username and password.
         AtomicReference<ProjectManager> pm = new AtomicReference<>(DatabaseManager.logIn(username, password));
@@ -143,8 +141,13 @@ public class Login {
             //When the task fails set the progressbar red.
             voidTask.setOnFailed(observable -> bar.setStyle("-fx-progress-color: red"));
             //Start the task.
-            new Thread(voidTask).start();
+            return voidTask;
         }
+        return null;
+    }
+
+    private void logIn() {
+        new Thread(logIn(usernameField.getText(), passwordField.getText())).start();
     }
 
     /**
