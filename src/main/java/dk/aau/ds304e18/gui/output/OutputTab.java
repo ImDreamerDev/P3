@@ -63,7 +63,7 @@ public class OutputTab {
 
             return;
         }
-        // adds the ganttTab putton to the tabpane.
+        // adds the ganttTab button to the tab pane.
         GanttTab ganttTab = new GanttTab(rootPane);
 
         Project pro = LocalObjStorage.getProjectList().stream().
