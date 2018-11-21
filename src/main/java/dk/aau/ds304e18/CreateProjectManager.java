@@ -108,7 +108,7 @@ public class CreateProjectManager extends Application {
         } else {
             new ProjectManager(usernameField.getText(), passwordField.getText());
             errorLabel.setTextFill(Color.BLACK);
-            errorLabel.setText("Create the project manager: " + usernameField.getText());
+            errorLabel.setText("Created project manager: " + usernameField.getText());
             errorLabel.setVisible(true);
             assert DatabaseManager.getAllProjectManagers() != null;
             listView.setItems(FXCollections.observableArrayList(DatabaseManager.getAllProjectManagers().stream().
