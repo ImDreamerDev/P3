@@ -67,8 +67,9 @@ public class CreateProjectManager extends Application {
 
         listView = ((ListView) ((VBox) rootPane.lookup("#currentUsers")).getChildren().get(1));
         assert DatabaseManager.getAllProjectManagers() != null;
-        listView.setItems(FXCollections.observableArrayList(DatabaseManager.getAllProjectManagers().stream().
-                map(ProjectManager::getName).collect(Collectors.toList())));
+        if (DatabaseManager.getAllProjectManagers() != null)
+            listView.setItems(FXCollections.observableArrayList(DatabaseManager.getAllProjectManagers().stream().
+                    map(ProjectManager::getName).collect(Collectors.toList())));
 
         Scene scene = new Scene(rootPane, 1280, 720);
         stage.setTitle("Planexus");
@@ -107,7 +108,7 @@ public class CreateProjectManager extends Application {
         } else {
             new ProjectManager(usernameField.getText(), passwordField.getText());
             errorLabel.setTextFill(Color.BLACK);
-            errorLabel.setText("Create the project manager: " + usernameField.getText());
+            errorLabel.setText("Created project manager: " + usernameField.getText());
             errorLabel.setVisible(true);
             assert DatabaseManager.getAllProjectManagers() != null;
             listView.setItems(FXCollections.observableArrayList(DatabaseManager.getAllProjectManagers().stream().
