@@ -100,7 +100,7 @@ class ProjectManagerTest {
     void TestProjectManagerGetCurrentProjectId() {
         ProjectManager newProjectManager = new ProjectManager("Adam", "test");
         Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
-        newProjectManager.addCurrentProject(newProject);
+        newProjectManager.getCurrentProjectIds().add(newProject.getId());
         assertTrue(newProjectManager.getCurrentProjectIds().contains(1));
         DatabaseManager.removeProjectManager(newProjectManager.getId());
         DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
