@@ -296,6 +296,7 @@ public class InputTab {
         tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
         //Update all the tasks.
         project.getTasks().forEach(DatabaseManager::updateTask);
+
     }
 
     /**
