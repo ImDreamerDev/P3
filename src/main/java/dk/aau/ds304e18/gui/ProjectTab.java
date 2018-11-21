@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.skin.ButtonBarSkin;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 
 import java.util.stream.Collectors;
@@ -91,7 +92,7 @@ public class ProjectTab {
         //If a table element is click more than once, open the input tab for that project.
         tableView.setOnMouseClicked(event -> {
             onTableElementSelected();
-            if (event.getClickCount() > 1) {
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() > 1) {
                 if (JavaFXMain.selectedProjectId != 0)
                     tabPane.getSelectionModel().select(tabPane.getTabs().get(1));
             }
