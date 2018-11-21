@@ -24,7 +24,7 @@ public class ProjectManager {
     /**
      * The current project that the project manager is working on
      */
-    private List<Project> currentProject = new ArrayList<>();
+    private List<Project> currentProjects = new ArrayList<>();
 
     /**
      * The id of the project that the manager is assigned to
@@ -89,10 +89,10 @@ public class ProjectManager {
     /**
      * The getter for the current project
      *
-     * @return currentProject - the project that the program manager is currently working on.
+     * @return currentProjects - the project that the program manager is currently working on.
      */
     public List<Project> getCurrentProjects() {
-        return currentProject;
+        return currentProjects;
     }
 
     /**
@@ -124,8 +124,8 @@ public class ProjectManager {
             if (!isLoadingFromDB) oldProjectsId.add(project.getId());
             project.setState(ProjectState.ARCHIVED);
 
-            if (currentProject == project)
-                currentProject = null;
+            if (currentProjects == project)
+                currentProjects = null;
 
             if (!isLoadingFromDB) DatabaseManager.updateProjectManager(this);
         }
@@ -138,14 +138,14 @@ public class ProjectManager {
      */
     public void addCurrentProject(Project currentProject) {
         if (currentProject != null) {
-            this.currentProject.add(currentProject);
+            this.currentProjects.add(currentProject);
             DatabaseManager.updateProjectManager(this);
         }
     }
 
     public void distributeAddCurrentProject(Project project) {
-        if (currentProject != null) {
-            this.currentProject.add(project);
+        if (currentProjects != null) {
+            this.currentProjects.add(project);
         }
     }
 

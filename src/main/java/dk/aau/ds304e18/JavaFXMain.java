@@ -87,7 +87,7 @@ public class JavaFXMain extends Application {
         TabPane outputTabPane = (TabPane) ((HBox) ((AnchorPane) outputTab.getContent()).getChildren().get(0)).getChildren().get(1);
         //The output pane tabs tooltips.
         outputTabPane.getTabs().get(0).setTooltip(new Tooltip("The page with the probabilities for the project"));
-        outputTabPane.getTabs().get(1).setTooltip(new Tooltip("The page with some Gantt?"));
+        outputTabPane.getTabs().get(1).setTooltip(new Tooltip("The page with visual depiction of the projects tasks?"));
         outputTabPane.getTabs().get(2).setTooltip(new Tooltip("The page to assign employees to the task on the selected project"));
 
         //Get the update button from the GUI.
@@ -125,7 +125,7 @@ public class JavaFXMain extends Application {
         //Set the selected id to 0.
         JavaFXMain.selectedProjectId = 0;
         //Make a new task
-        Task<Void> voidTask = DatabaseManager.distributeModels(LocalObjStorage.getProjectManagers().get(0));
+        Task<Void> voidTask = DatabaseManager.distributeModels(LocalObjStorage.getProjectManagerList().get(0));
         //Create and add a progressbar showing the progress of the task.
         ProgressBar bar = new ProgressBar();
         bar.progressProperty().bind(voidTask.progressProperty());
@@ -137,7 +137,7 @@ public class JavaFXMain extends Application {
             //Create a new set of tabs.
             JavaFXMain.outputTab = new OutputTab(rootPane);
             inputTab = new InputTab(rootPane);
-            projectTab = new ProjectTab(rootPane, LocalObjStorage.getProjectManagers().get(0));
+            projectTab = new ProjectTab(rootPane, LocalObjStorage.getProjectManagerList().get(0));
 
             //Select the first element.
             ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getSelectionModel().select(0);

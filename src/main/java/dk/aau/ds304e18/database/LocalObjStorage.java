@@ -30,7 +30,7 @@ public class LocalObjStorage {
     private static final ArrayList<Task> taskList = new ArrayList<>();
 
 
-    private static final ArrayList<ProjectManager> projectManagers = new ArrayList<>();
+    private static final ArrayList<ProjectManager> projectManagerList = new ArrayList<>();
 
     /**
      * Gets list of employees.
@@ -42,16 +42,16 @@ public class LocalObjStorage {
     }
 
 
-    public static ArrayList<ProjectManager> getProjectManagers() {
-        return projectManagers;
+    public static ArrayList<ProjectManager> getProjectManagerList() {
+        return projectManagerList;
     }
 
     public static void addProjectManager(ProjectManager projectManager) {
-        LocalObjStorage.projectManagers.add(projectManager);
+        LocalObjStorage.projectManagerList.add(projectManager);
     }
 
     public static ProjectManager getProjectManagerById(int id) {
-        return LocalObjStorage.projectManagers.stream().filter(pm -> pm.getId() == id)
+        return LocalObjStorage.projectManagerList.stream().filter(pm -> pm.getId() == id)
                 .findFirst().orElse(null);
     }
 

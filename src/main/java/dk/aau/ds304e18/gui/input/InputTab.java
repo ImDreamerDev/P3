@@ -10,6 +10,7 @@ import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.Sequence;
 import javafx.collections.FXCollections;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -151,13 +152,12 @@ public class InputTab {
         priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true));
 
         TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(5));
-        estimatedTimeTextField.setTooltip(new Tooltip("The average time of the task, measured in hours" + System.lineSeparator() + "Can be a decimal number separated by point"));
+        estimatedTimeTextField.setTooltip(new Tooltip("The average time of the task" + System.lineSeparator() + "Can be a decimal number separated by point"));
         estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) ->
                 validateNumericInput(estimatedTimeTextField, newValue, false));
 
         setUpProbabilitiesFields();
         setupDependencies();
-
 
         Button clearInputButton = ((Button) inputVBox.getChildren().get(13));
         clearInputButton.setTooltip(new Tooltip("Clears all the input fields"));
@@ -171,6 +171,7 @@ public class InputTab {
         Pane paneSplitter = ((Pane) flowPane.getChildren().get(2));
         VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(1));
+        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked in parallel" + System.lineSeparator() + "Input must be an integer"));
 
         ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).setTooltip(new Tooltip("Adds the task to the project"));
         //Add task
@@ -189,10 +190,15 @@ public class InputTab {
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true));
 
         ((Button) vBoxSplitter.getChildren().get(4)).setTooltip(new Tooltip("Calculates the probability for the length of the project"));
+
+        Tooltip.install(((Node) vBoxSplitter.getChildren().get(2)), new Tooltip("If checked the program will try to give the most optimal path for tasks"));
+        Tooltip.install(((Node) vBoxSplitter.getChildren().get(3)), new Tooltip("If checked the program will try to find more relevant sequences, which will make it less accurate but faster"));
+
         vBoxSplitter.getChildren().get(4).setOnMouseClicked(event -> calculate(
                 LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
                 ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
-                Double.parseDouble(numOfEmployees.getText()), ((CheckBox) vBoxSplitter.getChildren().get(3)).isSelected()));
+                Double.parseDouble(numOfEmployees.getText()),
+                ((CheckBox) vBoxSplitter.getChildren().get(3)).isSelected()));
 
         ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1)).setTooltip(new Tooltip("Removes the selected task from the project"));
         ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1).setOnMouseClicked(event -> removeTask());
