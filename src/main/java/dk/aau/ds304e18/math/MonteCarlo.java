@@ -121,10 +121,6 @@ public class MonteCarlo {
         System.out.println(project.getTempPossibleCompletions().get(tempI));
 
         project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(tempI));
-        for(Task task : ParseSequence.parseToSingleList(project, true)) {
-            task.setStartTime(task.getStartTimeList().get(tempI));
-            System.out.println(task.getName() + ": " + task.getStartTime());
-        }
 
         //Set the variables to correct stuff
         bestTime = Collections.min(time);
@@ -134,6 +130,10 @@ public class MonteCarlo {
 
         //Set the projects values to correct stuff
         project.setRecommendedPath(bestSequence);
+        for(Task task : ParseSequence.parseToSingleList(project, true)) {
+            task.setStartTime(task.getStartTimeList().get(tempI));
+            System.out.println(task.getName() + ": " + task.getStartTime());
+        }
         project.setDuration(bestTime);
 
         //SOUT
