@@ -7,13 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LocalObjStorageTest {
-    ProjectManager projectManager = new ProjectManager(1, "Jens", null, null);
     Employee employee = new Employee("Jens", null);
-    Project project = new Project(1, "Proejct", ProjectState.ONGOING, null, 20d,
-            null, 1, null);
-
-    Task task = new Task(1, "task", 20, 5,
-            null, null, 1, null, 1);
 
 
     @BeforeAll
@@ -39,6 +33,9 @@ public class LocalObjStorageTest {
 
     @Test
     void testGetProjectById() {
+        Project project = new Project(1, "Proejct", ProjectState.ONGOING, null, 20d,
+                null, 1, null);
+
         assertNotNull(project);
         LocalObjStorage.addProject(project);
 
@@ -47,6 +44,7 @@ public class LocalObjStorageTest {
 
     @Test
     void testGetProjectManagerById() {
+        ProjectManager projectManager = new ProjectManager(1, "Jens", null, null);
         assertNotNull(projectManager);
         LocalObjStorage.addProjectManager(projectManager);
 
@@ -55,6 +53,9 @@ public class LocalObjStorageTest {
 
     @Test
     void testGetTaskById() {
+        Task task = new Task(1, "task", 20, 5,
+                null, null, 1, null, 1);
+
         assertNotNull(task);
         LocalObjStorage.addTask(task);
 
