@@ -133,24 +133,36 @@ public class MonteCarlo {
         project.setDuration(bestTime);
         List<Task> tempRecList = ParseSequence.parseToSingleList(project, true);
         for (int k = 0; k < tempRecList.size(); k++) {
-            int smallL = -1;
-            tempRecList.get(k).setStartTime(tempRecList.get(k).getStartTimeList().get(tempI));
 
-            if (k > project.getNumberOfEmployees() - 1) {
-                for (int l = 1; l < project.getNumberOfEmployees(); l++)
-                    if (smallL == -1)
-                        smallL = l;
-                    else if (tempRecList.get(k - l).getStartTime() < tempRecList.get(k - smallL).getStartTime())
-                        smallL = l;
+            tempRecList.get(k).setStartTime(0d);
 
-                if (tempRecList.get(k).getStartTime() > tempRecList.get(k - smallL).getStartTime() + tempRecList.get(k - smallL).getEstimatedTime()) {
-                    tempRecList.get(k).setStartTime(tempRecList.get(k - smallL).getStartTime() + tempRecList.get(k - smallL).getEstimatedTime());
-                }
-            }
+            int count = 0;
+            int bigL = -1;
+            int secondBiggestL = -1;
 
-            for (Task dependency : tempRecList.get(k).getDependencies()) {
+            //First check if every dependency is before it
+            for (Task dependency : tempRecList.get(k).getDependencies())
                 if (tempRecList.get(k).getStartTime() < dependency.getStartTime() + dependency.getEstimatedTime())
                     tempRecList.get(k).setStartTime(dependency.getStartTime() + dependency.getEstimatedTime());
+
+            for (int l = 0; l < k; l++) {
+                if (tempRecList.get(k).getStartTime() < tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime()) {
+                    count++;
+                    if(bigL == -1 || tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime() > tempRecList.get(bigL).getStartTime() + tempRecList.get(bigL).getEstimatedTime()){
+                        secondBiggestL = bigL;
+                        bigL = l;
+                    } else if (secondBiggestL == -1 || tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime() > tempRecList.get(secondBiggestL).getStartTime() + tempRecList.get(secondBiggestL).getEstimatedTime())
+                        secondBiggestL = l;
+                }
+                if (count >= project.getNumberOfEmployees()) {
+                    if(secondBiggestL == -1)
+                        secondBiggestL = bigL;
+                    tempRecList.get(k).setStartTime(tempRecList.get(secondBiggestL).getStartTime() + tempRecList.get(secondBiggestL).getEstimatedTime());
+                    l = -1;
+                    bigL = -1;
+                    //secondBiggestL = -1;
+                    count = 0;
+                }
             }
 
             System.out.println(tempRecList.get(k).getName() + ": " + tempRecList.get(k).getStartTime());
