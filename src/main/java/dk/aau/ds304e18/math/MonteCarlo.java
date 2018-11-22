@@ -120,7 +120,7 @@ public class MonteCarlo {
         //Set temporary index to the index of the minimum
         int tempI = time.indexOf(Collections.min(time));
 
-        System.out.println(project.getTempPossibleCompletions().get(tempI));
+        //System.out.println(project.getTempPossibleCompletions().get(tempI));
 
         project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(tempI));
 
@@ -174,7 +174,7 @@ public class MonteCarlo {
                 }
             }*/
 
-            System.out.println(task.getName() + ": " + task.getStartTime());
+            //System.out.println(task.getName() + ": " + task.getStartTime());
         }
 
         //Set the start times so it actually looks fine in output
