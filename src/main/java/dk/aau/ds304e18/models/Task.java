@@ -103,10 +103,10 @@ public class Task {
         this.id = id;
         this.estimatedTime = estimatedTime;
         this.priority = priority;
-        this.dependencyIds.addAll(dependencyIds);
-        this.employeeIds.addAll(employeeIds);
+        if (dependencyIds != null) this.dependencyIds.addAll(dependencyIds);
+        if (employeeIds != null) this.employeeIds.addAll(employeeIds);
         this.projectId = projectId;
-        this.probabilities.addAll(probabilities);
+        if (probabilities != null) this.probabilities.addAll(probabilities);
         this.startTime = startTime;
     }
 
@@ -339,6 +339,7 @@ public class Task {
 
     /**
      * The getter for the tasks inverse gaussian distribution
+     *
      * @return the inverse gaussian distribution of the task
      */
     public InverseGaussian getInvG() {
