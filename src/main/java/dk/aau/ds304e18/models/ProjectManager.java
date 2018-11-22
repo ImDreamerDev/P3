@@ -124,8 +124,7 @@ public class ProjectManager {
             if (!isLoadingFromDB) oldProjectsId.add(project.getId());
             project.setState(ProjectState.ARCHIVED);
 
-            if (currentProjects == project)
-                currentProjects = null;
+            currentProjects.remove(project);
 
             if (!isLoadingFromDB) DatabaseManager.updateProjectManager(this);
         }
