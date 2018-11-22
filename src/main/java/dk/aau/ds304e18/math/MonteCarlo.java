@@ -134,51 +134,39 @@ public class MonteCarlo {
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
         List<Task> tempRecList = ParseSequence.parseToSingleList(project, true);
-        for (Task task : tempRecList) {
+        for (Task task : tempRecList)
+            task.setStartTime(-1);
+        for (int count = 0; count < tempRecList.size(); )
+            for (Task task : tempRecList) {
 
-            task.setStartTime(0d);
+                if (task.getStartTime() != -1)
+                    continue;
 
-            /*int count = 0;
-            int bigL = -1;
-            int secondBiggestL = -1;*/
-            
-            if(startTimes.size() < project.getNumberOfEmployees())
-                startTimes.add(task.getStartTime() + task.getEstimatedTime());
-            else {
-                int temp = startTimes.indexOf(Collections.min(startTimes));
-                task.setStartTime(startTimes.get(temp));
-                startTimes.set(temp, task.getStartTime() + task.getEstimatedTime());
-            }
+                if (check(task))
+                    continue;
 
-            for (Task dependency : task.getDependencies())
-                if (task.getStartTime() < dependency.getStartTime() + dependency.getEstimatedTime())
-                    task.setStartTime(dependency.getStartTime() + dependency.getEstimatedTime());
+                task.setStartTime(0d);
 
-            /*for (int l = 0; l < k; l++) {
-                if (tempRecList.get(k).getStartTime() < tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime()) {
+                if (startTimes.size() < project.getNumberOfEmployees()) {
+                    if (check(task))
+                        continue;
+                    startTimes.add(task.getStartTime() + task.getEstimatedTime());
+                } else {
+                    if (check(task))
+                        continue;
+                    int temp = startTimes.indexOf(Collections.min(startTimes));
+                    task.setStartTime(startTimes.get(temp));
+                    startTimes.set(temp, task.getStartTime() + task.getEstimatedTime());
+                }
+
+                for (Task dependency : task.getDependencies())
+                    if (task.getStartTime() < dependency.getStartTime() + dependency.getEstimatedTime())
+                        task.setStartTime(dependency.getStartTime() + dependency.getEstimatedTime());
+
                     count++;
-                    if(bigL == -1 || tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime() > tempRecList.get(bigL).getStartTime() + tempRecList.get(bigL).getEstimatedTime()){
-                        secondBiggestL = bigL;
-                        bigL = l;
-                    } else if (secondBiggestL == -1 || tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime() > tempRecList.get(secondBiggestL).getStartTime() + tempRecList.get(secondBiggestL).getEstimatedTime())
-                        secondBiggestL = l;
-                }
-                if (count >= project.getNumberOfEmployees()) {
-                    if(secondBiggestL == -1)
-                        secondBiggestL = bigL;
-                    tempRecList.get(k).setStartTime(tempRecList.get(secondBiggestL).getStartTime() + tempRecList.get(secondBiggestL).getEstimatedTime());
-                    l = -1;
-                    bigL = -1;
-                    //secondBiggestL = -1;
-                    count = 0;
-                }
-            }*/
 
-            //System.out.println(task.getName() + ": " + task.getStartTime());
-        }
-
-        //Set the start times so it actually looks fine in output
-
+                //System.out.println(task.getName() + ": " + task.getStartTime());
+            }
 
         //SOUT
         System.out.println("Worst Path: " + worstSequence);
@@ -186,6 +174,14 @@ public class MonteCarlo {
         System.out.println("Best Path: " + bestSequence);
         System.out.println("Best Time: " + bestTime);
 
+    }
+
+    private static boolean check(Task task) {
+        for (Task dependency : task.getDependencies())
+            if (task.getStartTime() < dependency.getStartTime() + dependency.getEstimatedTime()) {
+                return true;
+            }
+        return false;
     }
 
     /**
