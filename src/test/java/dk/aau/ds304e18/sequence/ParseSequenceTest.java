@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ParseSequenceTest {
 
@@ -46,7 +47,31 @@ class ParseSequenceTest {
         assertedList.add(list2);
 
         assertEquals(assertedList, ParseSequence.parseToMultipleLists(project));
+        for (Task task : project.getTasks()) {
+            DatabaseManager.removeTask(task.getId());
+        }
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + project.getId());
+        DatabaseManager.query("DELETE FROM projectmanagers WHERE id = " + projectManager.getId());
+    }
 
+    @Test
+    void TestParseToSingleList() {
+        ProjectManager tom = new ProjectManager("Tom", "Hello");
+        Project project = new Project("Ree", tom);
+        Task task1 = new Task("Test1", 1.0, 1, project);
+        Task task2 = new Task("Test2", 2.0, 1, project);
+        Task task3 = new Task("Test3", 5.0, 1, project);
+        Task task4 = new Task("Test4", 2.0, 1, project);
+
+        task3.addDependency(Arrays.asList(task1));
+
+        Sequence.sequenceTasks(project);
+        assertNotNull(ParseSequence.parseToSingleList(project, false));
+        for (Task task : project.getTasks()) {
+            DatabaseManager.removeTask(task.getId());
+        }
+        DatabaseManager.query("DELETE FROM projects WHERE id = " + project.getId());
+        DatabaseManager.query("DELETE FROM projectmanagers WHERE id = " + tom.getId());
     }
 
 }
