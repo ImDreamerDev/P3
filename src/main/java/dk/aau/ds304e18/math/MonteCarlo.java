@@ -130,11 +130,34 @@ public class MonteCarlo {
 
         //Set the projects values to correct stuff
         project.setRecommendedPath(bestSequence);
-        for(Task task : ParseSequence.parseToSingleList(project, true)) {
-            task.setStartTime(task.getStartTimeList().get(tempI));
-            System.out.println(task.getName() + ": " + task.getStartTime());
-        }
         project.setDuration(bestTime);
+        List<Task> tempRecList = ParseSequence.parseToSingleList(project, true);
+        for (int k = 0; k < tempRecList.size(); k++) {
+            int smallL = -1;
+            tempRecList.get(k).setStartTime(tempRecList.get(k).getStartTimeList().get(tempI));
+
+            if (k > project.getNumberOfEmployees() - 1) {
+                for (int l = 1; l < project.getNumberOfEmployees(); l++)
+                    if (smallL == -1)
+                        smallL = l;
+                    else if (tempRecList.get(k - l).getStartTime() < tempRecList.get(k - smallL).getStartTime())
+                        smallL = l;
+
+                if (tempRecList.get(k).getStartTime() > tempRecList.get(k - smallL).getStartTime() + tempRecList.get(k - smallL).getEstimatedTime()) {
+                    tempRecList.get(k).setStartTime(tempRecList.get(k - smallL).getStartTime() + tempRecList.get(k - smallL).getEstimatedTime());
+                }
+            }
+
+            for (Task dependency : tempRecList.get(k).getDependencies()) {
+                if (tempRecList.get(k).getStartTime() < dependency.getStartTime() + dependency.getEstimatedTime())
+                    tempRecList.get(k).setStartTime(dependency.getStartTime() + dependency.getEstimatedTime());
+            }
+
+            System.out.println(tempRecList.get(k).getName() + ": " + tempRecList.get(k).getStartTime());
+        }
+
+        //Set the start times so it actually looks fine in output
+
 
         //SOUT
         System.out.println("Worst Path: " + worstSequence);
@@ -178,7 +201,7 @@ public class MonteCarlo {
     public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index) {
         //Adds a list to the index of the possibleCompletions list on the project
         project.getTempPossibleCompletions().add(index, new ArrayList<>());
-        for(Task task : project.getTasks())
+        for (Task task : project.getTasks())
             task.getStartTimeList().add(index, 0d);
         //Gets the task list from the project
         List<Task> taskList = ParseSequence.parseToSingleList(project, false, random, index);
@@ -217,8 +240,8 @@ public class MonteCarlo {
                 // because Future.get() waits for task to get completed
                 duration = duration + fut.get().getDuration();
                 tempList = fut.get().getChances();
-                for(Task task : project.getTasks())
-                    task.getStartTimeList().set(index, task.getStartTimeList().get(index) + fut.get().getStartTimes().get(task)/monteCarloRepeats);
+                for (Task task : project.getTasks())
+                    task.getStartTimeList().set(index, task.getStartTimeList().get(index) + fut.get().getStartTimes().get(task) / monteCarloRepeats);
 
                 while (project.getTempPossibleCompletions().get(index).size() < tempList.size())
                     project.getTempPossibleCompletions().get(index).add(0d);
