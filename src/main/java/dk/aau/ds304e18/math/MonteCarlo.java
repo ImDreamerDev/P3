@@ -46,6 +46,8 @@ public class MonteCarlo {
         double bestTime;
         double worstTime; //May be used in the future
 
+        List<Double> startTimes = new ArrayList<>();
+
         project.setPossibleSequences(new String[monteCarloRepeats]);
 
         //Initialize an array of strings, we use array because array is faster than list
@@ -118,7 +120,7 @@ public class MonteCarlo {
         //Set temporary index to the index of the minimum
         int tempI = time.indexOf(Collections.min(time));
 
-        System.out.println(project.getTempPossibleCompletions().get(tempI));
+        //System.out.println(project.getTempPossibleCompletions().get(tempI));
 
         project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(tempI));
 
@@ -132,20 +134,27 @@ public class MonteCarlo {
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
         List<Task> tempRecList = ParseSequence.parseToSingleList(project, true);
-        for (int k = 0; k < tempRecList.size(); k++) {
+        for (Task task : tempRecList) {
 
-            tempRecList.get(k).setStartTime(0d);
+            task.setStartTime(0d);
 
-            int count = 0;
+            /*int count = 0;
             int bigL = -1;
-            int secondBiggestL = -1;
+            int secondBiggestL = -1;*/
+            
+            if(startTimes.size() < project.getNumberOfEmployees())
+                startTimes.add(task.getStartTime() + task.getEstimatedTime());
+            else {
+                int temp = startTimes.indexOf(Collections.min(startTimes));
+                task.setStartTime(startTimes.get(temp));
+                startTimes.set(temp, task.getStartTime() + task.getEstimatedTime());
+            }
 
-            //First check if every dependency is before it
-            for (Task dependency : tempRecList.get(k).getDependencies())
-                if (tempRecList.get(k).getStartTime() < dependency.getStartTime() + dependency.getEstimatedTime())
-                    tempRecList.get(k).setStartTime(dependency.getStartTime() + dependency.getEstimatedTime());
+            for (Task dependency : task.getDependencies())
+                if (task.getStartTime() < dependency.getStartTime() + dependency.getEstimatedTime())
+                    task.setStartTime(dependency.getStartTime() + dependency.getEstimatedTime());
 
-            for (int l = 0; l < k; l++) {
+            /*for (int l = 0; l < k; l++) {
                 if (tempRecList.get(k).getStartTime() < tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime()) {
                     count++;
                     if(bigL == -1 || tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime() > tempRecList.get(bigL).getStartTime() + tempRecList.get(bigL).getEstimatedTime()){
@@ -163,9 +172,9 @@ public class MonteCarlo {
                     //secondBiggestL = -1;
                     count = 0;
                 }
-            }
+            }*/
 
-            System.out.println(tempRecList.get(k).getName() + ": " + tempRecList.get(k).getStartTime());
+            //System.out.println(task.getName() + ": " + task.getStartTime());
         }
 
         //Set the start times so it actually looks fine in output
