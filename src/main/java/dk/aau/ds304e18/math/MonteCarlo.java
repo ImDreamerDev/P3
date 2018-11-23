@@ -202,7 +202,7 @@ public class MonteCarlo {
 
                 count++;
 
-                System.out.println(task.getName() + ": " + task.getStartTime());
+                //System.out.println(task.getName() + ": " + task.getStartTime());
 
                 break;
             }
