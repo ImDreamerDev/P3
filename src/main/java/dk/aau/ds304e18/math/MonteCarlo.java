@@ -2,12 +2,12 @@ package dk.aau.ds304e18.math;
 
 import dk.aau.ds304e18.estimatetime.Estimate;
 import dk.aau.ds304e18.estimatetime.EstimateTimeCallable;
-import dk.aau.ds304e18.math.Maths;
-import dk.aau.ds304e18.math.CalculateLambda;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
 import dk.aau.ds304e18.sequence.Sequence;
+import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.ReadOnlyDoubleWrapper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +15,16 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class MonteCarlo {
+
+    private static final ReadOnlyDoubleWrapper progress = new ReadOnlyDoubleWrapper();
+
+    public double getProgress() {
+        return progressProperty().get();
+    }
+
+    public static ReadOnlyDoubleProperty progressProperty() {
+        return progress;
+    }
 
     public static void findFastestSequence(Project project) {
 
@@ -99,9 +109,20 @@ public class MonteCarlo {
                 if (j == monteCarloRepeats)
                     System.out.println(j);
 
+
             }
         } else {
             randomSequences[0] = Sequence.findRandomSequence(project, fast);
+        }
+
+        //For each task in taskList
+        for (Task task : project.getTasks()) {
+            //If the task does not have a lambda yet
+            if (task.getLambda() == -1) {
+                //Calculate the lambda and optimize the mu value
+                List<Double> temp = CalculateLambda.calculateLambda(task.getEstimatedTime(), task.getProbabilities());
+                task.getInvG().setParams(temp.get(0), temp.get(1));
+            }
         }
 
         //Go through all the sequences made
@@ -115,6 +136,7 @@ public class MonteCarlo {
             time.add(estimateTime(project, true, i));
 
             i++;
+            progress.set((double) i / monteCarloRepeats);
         }
 
         //Set temporary index to the index of the minimum
@@ -134,51 +156,63 @@ public class MonteCarlo {
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
         List<Task> tempRecList = ParseSequence.parseToSingleList(project, true);
-        for (Task task : tempRecList) {
+        List<Task> alreadyStarted = new ArrayList<>();
+        List<Task> withoutDeps = new ArrayList<>();
+        boolean stuffChanged;
+        for (Task task : tempRecList)
+            if (task.getDependencies().size() == 0)
+                withoutDeps.add(task);
+        for (Task task : tempRecList)
+            task.setStartTime(-1);
+        for (int count = 0; count < tempRecList.size(); ) {
+            stuffChanged = false;
+            for (Task task : tempRecList) {
 
-            task.setStartTime(0d);
+                if (task.getStartTime() != -1)
+                    continue;
 
-            /*int count = 0;
-            int bigL = -1;
-            int secondBiggestL = -1;*/
-            
-            if(startTimes.size() < project.getNumberOfEmployees())
-                startTimes.add(task.getStartTime() + task.getEstimatedTime());
-            else {
-                int temp = startTimes.indexOf(Collections.min(startTimes));
-                task.setStartTime(startTimes.get(temp));
-                startTimes.set(temp, task.getStartTime() + task.getEstimatedTime());
+                if (check(task, alreadyStarted))
+                    continue;
+
+                if (startTimes.size() < project.getNumberOfEmployees() && startTimes.size() < withoutDeps.size()) {
+                    if (check(task, alreadyStarted))
+                        continue;
+                    if (task.getStartTime() == -1)
+                        task.setStartTime(0d);
+                    startTimes.add(task.getStartTime() + task.getEstimatedTime());
+                    alreadyStarted.add(task);
+                    stuffChanged = true;
+                } else if (startTimes.size() < project.getNumberOfEmployees() && startTimes.size() >= withoutDeps.size()) {
+                    while(startTimes.size() < project.getNumberOfEmployees())
+                        startTimes.add(0d);
+                    continue;
+                } else{
+                    if (check(task, alreadyStarted))
+                        continue;
+                    int temp = findSmallestPossible(task, startTimes);
+                    if (temp == -1)
+                        continue;
+                    if (task.getStartTime() == -1)
+                        task.setStartTime(0d);
+                    task.setStartTime(startTimes.get(temp));
+                    startTimes.set(temp, task.getStartTime() + task.getEstimatedTime());
+                    alreadyStarted.add(task);
+                    stuffChanged = true;
+                }
+
+                count++;
+
+                System.out.println(task.getName() + ": " + task.getStartTime());
+
+                break;
             }
 
-            for (Task dependency : task.getDependencies())
-                if (task.getStartTime() < dependency.getStartTime() + dependency.getEstimatedTime())
-                    task.setStartTime(dependency.getStartTime() + dependency.getEstimatedTime());
+            if (!stuffChanged) {
 
-            /*for (int l = 0; l < k; l++) {
-                if (tempRecList.get(k).getStartTime() < tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime()) {
-                    count++;
-                    if(bigL == -1 || tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime() > tempRecList.get(bigL).getStartTime() + tempRecList.get(bigL).getEstimatedTime()){
-                        secondBiggestL = bigL;
-                        bigL = l;
-                    } else if (secondBiggestL == -1 || tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime() > tempRecList.get(secondBiggestL).getStartTime() + tempRecList.get(secondBiggestL).getEstimatedTime())
-                        secondBiggestL = l;
-                }
-                if (count >= project.getNumberOfEmployees()) {
-                    if(secondBiggestL == -1)
-                        secondBiggestL = bigL;
-                    tempRecList.get(k).setStartTime(tempRecList.get(secondBiggestL).getStartTime() + tempRecList.get(secondBiggestL).getEstimatedTime());
-                    l = -1;
-                    bigL = -1;
-                    //secondBiggestL = -1;
-                    count = 0;
-                }
-            }*/
+                allLowestToNextLowest(startTimes);
 
-            //System.out.println(task.getName() + ": " + task.getStartTime());
+            }
         }
-
-        //Set the start times so it actually looks fine in output
-
 
         //SOUT
         System.out.println("Worst Path: " + worstSequence);
@@ -186,6 +220,44 @@ public class MonteCarlo {
         System.out.println("Best Path: " + bestSequence);
         System.out.println("Best Time: " + bestTime);
 
+    }
+
+    public static void allLowestToNextLowest(List<Double> startTimes) {
+        int index = 0;
+
+        Collections.sort(startTimes);
+
+        for (Double tempStartTime : startTimes) {
+            if (tempStartTime > startTimes.get(0)) {
+                index = startTimes.indexOf(tempStartTime);
+                break;
+            }
+        }
+
+        double minUpper = startTimes.get(index);
+
+        for (int k = 0; k < index; k++)
+            startTimes.set(k, minUpper);
+    }
+
+    private static boolean check(Task task, List<Task> alreadyStarted) {
+        return !alreadyStarted.containsAll(task.getDependencies());
+    }
+
+    private static int findSmallestPossible(Task task, List<Double> startTimes) {
+        List<Double> temp = new ArrayList<>(startTimes);
+
+        if (task.getDependencies().size() == 0)
+            return temp.indexOf(Collections.min(temp));
+
+        for (Task dependency : task.getDependencies()) {
+            //if(bestCase) {
+            if (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(temp))
+                return -1;
+
+        }
+
+        return temp.indexOf(Collections.min(temp));
     }
 
     /**
@@ -210,6 +282,9 @@ public class MonteCarlo {
         return estimateTime(project, 10000, random, index);
     }
 
+    //Find number of threads
+    private static int numOfThreads = Runtime.getRuntime().availableProcessors();
+
     /**
      * The main estimateTime function used to estimate the time of a project
      *
@@ -222,32 +297,18 @@ public class MonteCarlo {
     public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index) {
         //Adds a list to the index of the possibleCompletions list on the project
         project.getTempPossibleCompletions().add(index, new ArrayList<>());
-        for (Task task : project.getTasks())
-            task.getStartTimeList().add(index, 0d);
         //Gets the task list from the project
         List<Task> taskList = ParseSequence.parseToSingleList(project, false, random, index);
-        //For each task in taskList
-        for (Task task : taskList) {
-            //If the task does not have a lambda yet
-            if (task.getLambda() == -1) {
-                //Calculate the lambda and optimize the mu value
-                List<Double> temp = CalculateLambda.calculateLambda(task.getEstimatedTime(), task.getProbabilities());
-                task.getInvG().setParams(temp.get(0), temp.get(1));
-            }
-        }
-
-        //Find number of threads
-        int numOfThreads = Runtime.getRuntime().availableProcessors();
 
         double duration = 0.0;
 
-        ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
+        ExecutorService executor = MonteCarloExecutorService.getExecutor();
         //create a list to hold the Future object associated with Callable
         List<Future<Estimate>> list = new ArrayList<>();
         //Create MyCallable instance
         for (int i = 0; i < numOfThreads; i++) {
             Callable<Estimate> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(),
-                    numOfThreads, monteCarloRepeats);
+                    monteCarloRepeats / numOfThreads);
             //submit Callable tasks to be executed by thread pool
             Future<Estimate> future = executor.submit(callable);
             //add Future to the list, we can get return value using Future
@@ -261,24 +322,20 @@ public class MonteCarlo {
                 // because Future.get() waits for task to get completed
                 duration = duration + fut.get().getDuration();
                 tempList = fut.get().getChances();
-                for (Task task : project.getTasks())
-                    task.getStartTimeList().set(index, task.getStartTimeList().get(index) + fut.get().getStartTimes().get(task) / monteCarloRepeats);
 
-                while (project.getTempPossibleCompletions().get(index).size() < tempList.size())
-                    project.getTempPossibleCompletions().get(index).add(0d);
+                List<Double> workingList = project.getTempPossibleCompletions().get(index);
+                while (workingList.size() < tempList.size())
+                    workingList.add(0d);
 
                 //Add all the values to the index of the possibleCompletions
                 for (int i = 0; i < tempList.size(); i++) {
-                    project.getTempPossibleCompletions().get(index).set(i,
-                            project.getTempPossibleCompletions().get(index).get(i) + tempList.get(i));
+                    workingList.set(i,
+                            workingList.get(i) + tempList.get(i));
                 }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         }
-
-        //shut down the executor service now
-        executor.shutdown();
         return duration / monteCarloRepeats;
     }
 }

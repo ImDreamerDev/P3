@@ -1,6 +1,7 @@
 package dk.aau.ds304e18.estimatetime;
 
 import dk.aau.ds304e18.math.InverseGaussian;
+import dk.aau.ds304e18.math.MonteCarlo;
 import dk.aau.ds304e18.models.Task;
 
 import java.util.*;
@@ -9,33 +10,29 @@ import java.util.concurrent.Callable;
 public class EstimateTimeCallable implements Callable<Estimate> {
     private final List<Task> taskList;
     private final double amountEmployees;
-    private final int numOfThreads;
-    private final int numOfMonte;
     private final Random random = new Random();
     private HashMap<Task, InverseGaussian> invG = new HashMap<>();
-    //private final InverseGaussian invG = new InverseGaussian();
-
-    public EstimateTimeCallable(List<Task> taskList, double amountEmployees, int numOfThreads, int numOfMonte) {
-        this.taskList = taskList;
+    private final int repeats;
+    
+    public EstimateTimeCallable(List<Task> taskList, double amountEmployees, int repeats) {
+        this.taskList = new ArrayList<>(taskList);
         this.amountEmployees = amountEmployees;
-        this.numOfThreads = numOfThreads;
-        this.numOfMonte = numOfMonte;
+        this.repeats = repeats;
     }
 
     public Estimate call() {
         List<Double> chances = new ArrayList<>();
-        HashMap<Task, Double> taskStartAt = new HashMap<>();
         final int tempBig;
-        for(Task task : taskList)
+        for (Task task : taskList)
             invG.put(task, task.getInvG());
 
-        if(amountEmployees < taskList.size())
+        if (amountEmployees < taskList.size())
             tempBig = (int) amountEmployees;
         else
             tempBig = taskList.size();
 
         double duration = 0.0;
-        int repeats = numOfMonte / numOfThreads;
+
         //Repeat repeats time
         for (int i = 0; i < repeats; i++) {
             if (amountEmployees > 1) {
@@ -74,11 +71,6 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
                                 temp = true;
 
-                                if(taskStartAt.containsKey(task))
-                                    taskStartAt.put(task, taskStartAt.get(task) + durations.get(j));
-                                else
-                                    taskStartAt.put(task, durations.get(j));
-
                                 //Calculate the duration at the given random value and add that to duration
                                 durations.set(j, durations.get(j) + invG.get(task).getDuration(random.nextDouble() * 100));
 
@@ -91,21 +83,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                         }
 
                         if (!temp) {
-                            int index = 0;
-
-                            Collections.sort(durations);
-
-                            for (Double tempDur : durations) {
-                                if (tempDur > durations.get(0)) {
-                                    index = durations.indexOf(tempDur);
-                                    break;
-                                }
-                            }
-
-                            double minUpper = durations.get(index);
-
-                            for (int k = 0; k < index; k++)
-                                durations.set(k, minUpper);
+                            MonteCarlo.allLowestToNextLowest(durations);
                         }
                     }
                 }
@@ -118,11 +96,6 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
                 //For each task in the taskList
                 for (Task task : taskList) {
-                    //Adds startpoint of task
-                    if(taskStartAt.containsKey(task))
-                        taskStartAt.put(task, taskStartAt.get(task) + currentTime);
-                    else
-                        taskStartAt.put(task, currentTime);
 
                     //Calculate the duration at the given random value and add that to duration
                     double temp = invG.get(task).getDuration(random.nextDouble() * 100);
@@ -142,6 +115,6 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
         }
         //Also send the start time of each task back
-        return new Estimate(chances, taskStartAt, duration);
+        return new Estimate(chances, duration);
     }
 }

@@ -6,6 +6,7 @@ import dk.aau.ds304e18.gui.Login;
 import dk.aau.ds304e18.gui.ProjectTab;
 import dk.aau.ds304e18.gui.input.InputTab;
 import dk.aau.ds304e18.gui.output.OutputTab;
+import dk.aau.ds304e18.math.MonteCarloExecutorService;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -16,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -127,9 +129,16 @@ public class JavaFXMain extends Application {
                 JavaFXMain.outputTab = new OutputTab(rootPane);
                 JavaFXMain.inputTab = new InputTab(rootPane);
                 JavaFXMain.projectTab = new ProjectTab(rootPane, LocalObjStorage.getProjectManagerList().get(0));
-                inputTab.calculate(LocalObjStorage.getProjectById(Integer.parseInt(getParameters().getNamed().get("projectId"))),
+                Task<Void> calcTask = inputTab.calculate(LocalObjStorage.getProjectById(Integer.parseInt(getParameters().getNamed().get("projectId"))),
                         true, Double.parseDouble(getParameters().getNamed().get("numOfEmps")), true);
-                Platform.exit();
+                calcTask.setOnSucceeded(event1 -> {
+                    MonteCarloExecutorService.shutdownExecutor();
+                    Platform.exit();
+                });
+                Thread thread = new Thread(calcTask);
+                thread.setPriority(9);
+                thread.setName("Calculate");
+                thread.start();
             });
             new Thread(voidTask).start();
         }
@@ -162,7 +171,7 @@ public class JavaFXMain extends Application {
         });
         //If the task fails set the progress bar red.
         voidTask.setOnFailed(observable -> bar.setStyle("-fx-progress-color: red"));
-        
+
         //Start the task
         new Thread(voidTask).start();
     }
