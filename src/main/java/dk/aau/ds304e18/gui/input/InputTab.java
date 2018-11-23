@@ -198,6 +198,7 @@ public class InputTab {
 
         vBoxSplitter.getChildren().get(4).setOnMouseClicked(event -> {
             disableInput();
+            rootPane.lookup("#projectView").setDisable(true);
             javafx.concurrent.Task<Void> calcTask = calculate(
                     LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
                     ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
@@ -213,6 +214,7 @@ public class InputTab {
                 tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
                 ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().remove(bar);
                 enableInput();
+                rootPane.lookup("#projectView").setDisable(false);
                 MonteCarloExecutorService.shutdownExecutor();
             });
 
