@@ -5,6 +5,7 @@ import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.Maths;
 import dk.aau.ds304e18.math.MonteCarlo;
+import dk.aau.ds304e18.math.MonteCarloExecutorService;
 import dk.aau.ds304e18.math.Probabilities;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
@@ -212,10 +213,11 @@ public class InputTab {
                 tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
                 ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().remove(bar);
                 enableInput();
+                MonteCarloExecutorService.shutdownExecutor();
             });
 
             Thread thread = new Thread(calcTask);
-            thread.setPriority(10);
+            thread.setPriority(9);
             thread.setName("Calculate");
             thread.start();
         });

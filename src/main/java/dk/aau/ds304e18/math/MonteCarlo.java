@@ -255,7 +255,8 @@ public class MonteCarlo {
 
         double duration = 0.0;
 
-        ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
+        ExecutorService executor = MonteCarloExecutorService.getExecutor();
+
         //create a list to hold the Future object associated with Callable
         List<Future<Estimate>> list = new ArrayList<>();
         //Create MyCallable instance
@@ -290,9 +291,6 @@ public class MonteCarlo {
                 e.printStackTrace();
             }
         }
-
-        //shut down the executor service now
-        executor.shutdown();
         return duration / monteCarloRepeats;
     }
 }
