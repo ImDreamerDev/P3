@@ -194,11 +194,23 @@ public class InputTab {
         Tooltip.install(((Node) vBoxSplitter.getChildren().get(2)), new Tooltip("If checked the program will try to give the most optimal path for tasks"));
         Tooltip.install(((Node) vBoxSplitter.getChildren().get(3)), new Tooltip("If checked the program will try to find more relevant sequences, which will make it less accurate but faster"));
 
-        vBoxSplitter.getChildren().get(4).setOnMouseClicked(event -> calculate(
-                LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
-                ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
-                Double.parseDouble(numOfEmployees.getText()),
-                ((CheckBox) vBoxSplitter.getChildren().get(3)).isSelected()));
+        vBoxSplitter.getChildren().get(4).setOnMouseClicked(event -> {
+
+            javafx.concurrent.Task<Void> calcTask = calculate(
+                    LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
+                    ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
+                    Double.parseDouble(numOfEmployees.getText()),
+                    ((CheckBox) vBoxSplitter.getChildren().get(3)).isSelected());
+            calcTask.setOnSucceeded(event1 -> {
+                JavaFXMain.outputTab.drawOutputTab(true);
+                tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
+
+                });
+           Thread thread = new Thread(calcTask);
+            thread.setPriority(10);
+            thread.setName("Calculate");
+            thread.start();
+        });
 
         ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1)).setTooltip(new Tooltip("Removes the selected task from the project"));
         ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1).setOnMouseClicked(event -> removeTask());
@@ -276,30 +288,30 @@ public class InputTab {
      * @param useFast        - Is the useFast toggled or not. (boolean)
      * @param useMonty       - the monte carlo method is used.
      */
-    private void calculate(Project project, boolean useMonty, double numOfEmployees, boolean useFast) {
-        //Set the number of employees of the project.
-        project.setNumberOfEmployees(numOfEmployees);
-        //Start time taking.
-        Instant start = Instant.now();
-        //Sequence the tasks.
-        Sequence.sequenceTasks(project, useMonty, useFast);
-        //Stop the time taking.
-        Instant end = java.time.Instant.now();
-        //Calculate the time between start and end.
-        Duration between = java.time.Duration.between(start, end);
-        //Print the result out.
-        System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 +
-                        "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
-                between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
+    public javafx.concurrent.Task<Void> calculate(Project project, boolean useMonty, double numOfEmployees, boolean useFast) {
 
-        //Update the output tab.
-        JavaFXMain.outputTab.drawOutputTab(useMonty);
-        //Update the input tab.
-        drawInputTab();
-        //Go to the output tab.
-        tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
-        //Update all the tasks.
-        project.getTasks().forEach(DatabaseManager::updateTask);
+        return new javafx.concurrent.Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                //Set the number of employees of the project.
+                project.setNumberOfEmployees(numOfEmployees);
+                //Start time taking.
+                Instant start = Instant.now();
+                //Sequence the tasks.
+                Sequence.sequenceTasks(project, useMonty, useFast);
+                //Stop the time taking.
+                Instant end = java.time.Instant.now();
+                //Calculate the time between start and end.
+                Duration between = java.time.Duration.between(start, end);
+                //Print the result out.
+                System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 +
+                                "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
+                        between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
+                //Update all the tasks.
+                project.getTasks().forEach(DatabaseManager::updateTask);
+                return null;
+            }
+        };
     }
 
     /**
