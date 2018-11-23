@@ -262,7 +262,7 @@ public class MonteCarlo {
         //Create MyCallable instance
         for (int i = 0; i < numOfThreads; i++) {
             Callable<Estimate> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(),
-                    numOfThreads, monteCarloRepeats);
+                    monteCarloRepeats / numOfThreads);
             //submit Callable tasks to be executed by thread pool
             Future<Estimate> future = executor.submit(callable);
             //add Future to the list, we can get return value using Future
@@ -279,13 +279,15 @@ public class MonteCarlo {
                 for (Task task : project.getTasks())
                     task.getStartTimeList().set(index, task.getStartTimeList().get(index) + fut.get().getStartTimes().get(task) / monteCarloRepeats);
 
-                while (project.getTempPossibleCompletions().get(index).size() < tempList.size())
-                    project.getTempPossibleCompletions().get(index).add(0d);
+                List<Double> workingList = project.getTempPossibleCompletions().get(index);
+                while (workingList.size() < tempList.size())
+                    workingList.add(0d);
+
 
                 //Add all the values to the index of the possibleCompletions
                 for (int i = 0; i < tempList.size(); i++) {
-                    project.getTempPossibleCompletions().get(index).set(i,
-                            project.getTempPossibleCompletions().get(index).get(i) + tempList.get(i));
+                    workingList.set(i,
+                            workingList.get(i) + tempList.get(i));
                 }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
