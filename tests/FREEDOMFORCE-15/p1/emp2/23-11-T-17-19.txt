@@ -1,0 +1,17 @@
+200
+Task 7: 0.0
+Task 1: 0.0
+Task 0: 15.0
+Task 8: 25.0
+Task 3: 25.0
+Task 9: 75.0
+Task 5: 110.0
+Task 2: 130.0
+Task 6: 145.0
+Task 4: 155.0
+Worst Path: 1,8,2,10(8),6(2),3(1),4(2),9(2),7(4,6),5
+Worst Time: 338.213828125
+Best Path: 8,2,1,9(2),4(2),10(8),6(2),3(1),7(4,6),5
+Best Time: 310.23115625
+[31mNote: total in that unit!
+[39mHours: 00 Minutes: 00 Seconds: 07 Milliseconds: 7204 
