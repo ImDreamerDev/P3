@@ -2,8 +2,6 @@ package dk.aau.ds304e18.math;
 
 import dk.aau.ds304e18.estimatetime.Estimate;
 import dk.aau.ds304e18.estimatetime.EstimateTimeCallable;
-import dk.aau.ds304e18.math.Maths;
-import dk.aau.ds304e18.math.CalculateLambda;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
@@ -134,39 +132,58 @@ public class MonteCarlo {
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
         List<Task> tempRecList = ParseSequence.parseToSingleList(project, true);
+        List<Task> alreadyStarted = new ArrayList<>();
+        boolean stuffChanged;
         for (Task task : tempRecList)
             task.setStartTime(-1);
-        for (int count = 0; count < tempRecList.size(); )
+        for (int count = 0; count < tempRecList.size(); ) {
+            stuffChanged = false;
+            Task lastTask = tempRecList.get(0);
             for (Task task : tempRecList) {
 
                 if (task.getStartTime() != -1)
                     continue;
 
-                if (check(task))
+                if (check(task, alreadyStarted))
                     continue;
 
-                task.setStartTime(0d);
-
                 if (startTimes.size() < project.getNumberOfEmployees()) {
-                    if (check(task))
+                    if (check(task, alreadyStarted))
                         continue;
+                    if (task.getStartTime() == -1)
+                        task.setStartTime(0d);
                     startTimes.add(task.getStartTime() + task.getEstimatedTime());
+                    alreadyStarted.add(task);
+                    stuffChanged = true;
                 } else {
-                    if (check(task))
+                    if (check(task, alreadyStarted))
                         continue;
-                    int temp = startTimes.indexOf(Collections.min(startTimes));
+                    int temp = findSmallestPossible(task, startTimes);
+                    if (temp == -1)
+                        continue;
+                    if (task.getStartTime() == -1)
+                        task.setStartTime(0d);
                     task.setStartTime(startTimes.get(temp));
                     startTimes.set(temp, task.getStartTime() + task.getEstimatedTime());
+                    alreadyStarted.add(task);
+                    stuffChanged = true;
                 }
 
-                for (Task dependency : task.getDependencies())
-                    if (task.getStartTime() < dependency.getStartTime() + dependency.getEstimatedTime())
-                        task.setStartTime(dependency.getStartTime() + dependency.getEstimatedTime());
+                count++;
 
-                    count++;
+                System.out.println(task.getName() + ": " + task.getStartTime());
 
-                //System.out.println(task.getName() + ": " + task.getStartTime());
+                lastTask = task;
+
+                break;
             }
+
+            if(stuffChanged && lastTask == tempRecList.get(tempRecList.size()-1)) {
+
+                allLowestToNextLowest(startTimes);
+
+            }
+        }
 
         //SOUT
         System.out.println("Worst Path: " + worstSequence);
@@ -176,12 +193,46 @@ public class MonteCarlo {
 
     }
 
-    private static boolean check(Task task) {
-        for (Task dependency : task.getDependencies())
-            if (task.getStartTime() < dependency.getStartTime() + dependency.getEstimatedTime()) {
-                return true;
+    public static void allLowestToNextLowest(List<Double> startTimes) {
+        int index = 0;
+
+        Collections.sort(startTimes);
+
+        for (Double tempStartTime : startTimes) {
+            if (tempStartTime > startTimes.get(0)) {
+                index = startTimes.indexOf(tempStartTime);
+                break;
             }
-        return false;
+        }
+
+        double minUpper = startTimes.get(index);
+
+        for (int k = 0; k < index; k++)
+            startTimes.set(k, minUpper);
+    }
+
+    private static boolean check(Task task, List<Task> alreadyStarted) {
+        return !alreadyStarted.containsAll(task.getDependencies());
+    }
+
+    private static int findSmallestPossible(Task task, List<Double> startTimes) {
+        List<Double> temp = new ArrayList<>(startTimes);
+
+        if(task.getDependencies().size() == 0)
+            return temp.indexOf(Collections.min(temp));
+
+        for(Task dependency : task.getDependencies()) {
+            //if(bestCase) {
+                if (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(temp))
+                    return -1;
+            /*} else {
+                while (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(temp))
+                    temp.set(temp.indexOf(Collections.min(temp)), Double.MAX_VALUE);
+            }*/
+
+        }
+
+        return temp.indexOf(Collections.min(temp));
     }
 
     /**

@@ -1,6 +1,7 @@
 package dk.aau.ds304e18.estimatetime;
 
 import dk.aau.ds304e18.math.InverseGaussian;
+import dk.aau.ds304e18.math.MonteCarlo;
 import dk.aau.ds304e18.models.Task;
 
 import java.util.*;
@@ -91,21 +92,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                         }
 
                         if (!temp) {
-                            int index = 0;
-
-                            Collections.sort(durations);
-
-                            for (Double tempDur : durations) {
-                                if (tempDur > durations.get(0)) {
-                                    index = durations.indexOf(tempDur);
-                                    break;
-                                }
-                            }
-
-                            double minUpper = durations.get(index);
-
-                            for (int k = 0; k < index; k++)
-                                durations.set(k, minUpper);
+                            MonteCarlo.allLowestToNextLowest(durations);
                         }
                     }
                 }
