@@ -133,7 +133,11 @@ public class MonteCarlo {
         project.setDuration(bestTime);
         List<Task> tempRecList = ParseSequence.parseToSingleList(project, true);
         List<Task> alreadyStarted = new ArrayList<>();
+        List<Task> withoutDeps = new ArrayList<>();
         boolean stuffChanged;
+        for (Task task : tempRecList)
+            if (task.getDependencies().size() == 0)
+                withoutDeps.add(task);
         for (Task task : tempRecList)
             task.setStartTime(-1);
         for (int count = 0; count < tempRecList.size(); ) {
@@ -146,7 +150,7 @@ public class MonteCarlo {
                 if (check(task, alreadyStarted))
                     continue;
 
-                if (startTimes.size() < project.getNumberOfEmployees()) {
+                if (startTimes.size() < project.getNumberOfEmployees() && startTimes.size() < withoutDeps.size()) {
                     if (check(task, alreadyStarted))
                         continue;
                     if (task.getStartTime() == -1)
@@ -154,7 +158,11 @@ public class MonteCarlo {
                     startTimes.add(task.getStartTime() + task.getEstimatedTime());
                     alreadyStarted.add(task);
                     stuffChanged = true;
-                } else {
+                } else if (startTimes.size() < project.getNumberOfEmployees() && startTimes.size() >= withoutDeps.size()) {
+                    while(startTimes.size() < project.getNumberOfEmployees())
+                        startTimes.add(0d);
+                    continue;
+                } else{
                     if (check(task, alreadyStarted))
                         continue;
                     int temp = findSmallestPossible(task, startTimes);
@@ -175,7 +183,7 @@ public class MonteCarlo {
                 break;
             }
 
-            if(!stuffChanged) {
+            if (!stuffChanged) {
 
                 allLowestToNextLowest(startTimes);
 
@@ -215,13 +223,13 @@ public class MonteCarlo {
     private static int findSmallestPossible(Task task, List<Double> startTimes) {
         List<Double> temp = new ArrayList<>(startTimes);
 
-        if(task.getDependencies().size() == 0)
+        if (task.getDependencies().size() == 0)
             return temp.indexOf(Collections.min(temp));
 
-        for(Task dependency : task.getDependencies()) {
+        for (Task dependency : task.getDependencies()) {
             //if(bestCase) {
-                if (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(temp))
-                    return -1;
+            if (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(temp))
+                return -1;
             /*} else {
                 while (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(temp))
                     temp.set(temp.indexOf(Collections.min(temp)), Double.MAX_VALUE);
