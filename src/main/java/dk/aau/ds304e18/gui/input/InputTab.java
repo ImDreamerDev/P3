@@ -196,7 +196,7 @@ public class InputTab {
         Tooltip.install(((Node) vBoxSplitter.getChildren().get(3)), new Tooltip("If checked the program will try to find more relevant sequences, which will make it less accurate but faster"));
 
         vBoxSplitter.getChildren().get(4).setOnMouseClicked(event -> {
-
+            disableInput();
             javafx.concurrent.Task<Void> calcTask = calculate(
                     LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
                     ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
@@ -204,12 +204,16 @@ public class InputTab {
                     ((CheckBox) vBoxSplitter.getChildren().get(3)).isSelected());
             ProgressBar bar = new ProgressBar();
             bar.progressProperty().bind(calcTask.progressProperty());
+            bar.setDisable(false);
             ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().add(bar);
+
             calcTask.setOnSucceeded(event1 -> {
                 JavaFXMain.outputTab.drawOutputTab(true);
                 tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
                 ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().remove(bar);
+                enableInput();
             });
+
             Thread thread = new Thread(calcTask);
             thread.setPriority(10);
             thread.setName("Calculate");
