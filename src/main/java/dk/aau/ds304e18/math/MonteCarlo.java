@@ -2,8 +2,6 @@ package dk.aau.ds304e18.math;
 
 import dk.aau.ds304e18.estimatetime.Estimate;
 import dk.aau.ds304e18.estimatetime.EstimateTimeCallable;
-import dk.aau.ds304e18.math.Maths;
-import dk.aau.ds304e18.math.CalculateLambda;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
@@ -148,51 +146,55 @@ public class MonteCarlo {
         project.setRecommendedPath(bestSequence);
         project.setDuration(bestTime);
         List<Task> tempRecList = ParseSequence.parseToSingleList(project, true);
-        for (Task task : tempRecList) {
+        List<Task> alreadyStarted = new ArrayList<>();
+        boolean stuffChanged;
+        for (Task task : tempRecList)
+            task.setStartTime(-1);
+        for (int count = 0; count < tempRecList.size(); ) {
+            stuffChanged = false;
+            for (Task task : tempRecList) {
 
-            task.setStartTime(0d);
+                if (task.getStartTime() != -1)
+                    continue;
 
-            /*int count = 0;
-            int bigL = -1;
-            int secondBiggestL = -1;*/
+                if (check(task, alreadyStarted))
+                    continue;
 
-            if (startTimes.size() < project.getNumberOfEmployees())
-                startTimes.add(task.getStartTime() + task.getEstimatedTime());
-            else {
-                int temp = startTimes.indexOf(Collections.min(startTimes));
-                task.setStartTime(startTimes.get(temp));
-                startTimes.set(temp, task.getStartTime() + task.getEstimatedTime());
+                if (startTimes.size() < project.getNumberOfEmployees()) {
+                    if (check(task, alreadyStarted))
+                        continue;
+                    if (task.getStartTime() == -1)
+                        task.setStartTime(0d);
+                    startTimes.add(task.getStartTime() + task.getEstimatedTime());
+                    alreadyStarted.add(task);
+                    stuffChanged = true;
+                } else {
+                    if (check(task, alreadyStarted))
+                        continue;
+                    int temp = findSmallestPossible(task, startTimes);
+                    if (temp == -1)
+                        continue;
+                    if (task.getStartTime() == -1)
+                        task.setStartTime(0d);
+                    task.setStartTime(startTimes.get(temp));
+                    startTimes.set(temp, task.getStartTime() + task.getEstimatedTime());
+                    alreadyStarted.add(task);
+                    stuffChanged = true;
+                }
+
+                count++;
+
+                System.out.println(task.getName() + ": " + task.getStartTime());
+
+                break;
             }
 
-            for (Task dependency : task.getDependencies())
-                if (task.getStartTime() < dependency.getStartTime() + dependency.getEstimatedTime())
-                    task.setStartTime(dependency.getStartTime() + dependency.getEstimatedTime());
+            if(!stuffChanged) {
 
-            /*for (int l = 0; l < k; l++) {
-                if (tempRecList.get(k).getStartTime() < tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime()) {
-                    count++;
-                    if(bigL == -1 || tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime() > tempRecList.get(bigL).getStartTime() + tempRecList.get(bigL).getEstimatedTime()){
-                        secondBiggestL = bigL;
-                        bigL = l;
-                    } else if (secondBiggestL == -1 || tempRecList.get(l).getStartTime() + tempRecList.get(l).getEstimatedTime() > tempRecList.get(secondBiggestL).getStartTime() + tempRecList.get(secondBiggestL).getEstimatedTime())
-                        secondBiggestL = l;
-                }
-                if (count >= project.getNumberOfEmployees()) {
-                    if(secondBiggestL == -1)
-                        secondBiggestL = bigL;
-                    tempRecList.get(k).setStartTime(tempRecList.get(secondBiggestL).getStartTime() + tempRecList.get(secondBiggestL).getEstimatedTime());
-                    l = -1;
-                    bigL = -1;
-                    //secondBiggestL = -1;
-                    count = 0;
-                }
-            }*/
+                allLowestToNextLowest(startTimes);
 
-            //System.out.println(task.getName() + ": " + task.getStartTime());
+            }
         }
-
-        //Set the start times so it actually looks fine in output
-
 
         //SOUT
         System.out.println("Worst Path: " + worstSequence);
@@ -200,6 +202,48 @@ public class MonteCarlo {
         System.out.println("Best Path: " + bestSequence);
         System.out.println("Best Time: " + bestTime);
 
+    }
+
+    public static void allLowestToNextLowest(List<Double> startTimes) {
+        int index = 0;
+
+        Collections.sort(startTimes);
+
+        for (Double tempStartTime : startTimes) {
+            if (tempStartTime > startTimes.get(0)) {
+                index = startTimes.indexOf(tempStartTime);
+                break;
+            }
+        }
+
+        double minUpper = startTimes.get(index);
+
+        for (int k = 0; k < index; k++)
+            startTimes.set(k, minUpper);
+    }
+
+    private static boolean check(Task task, List<Task> alreadyStarted) {
+        return !alreadyStarted.containsAll(task.getDependencies());
+    }
+
+    private static int findSmallestPossible(Task task, List<Double> startTimes) {
+        List<Double> temp = new ArrayList<>(startTimes);
+
+        if(task.getDependencies().size() == 0)
+            return temp.indexOf(Collections.min(temp));
+
+        for(Task dependency : task.getDependencies()) {
+            //if(bestCase) {
+                if (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(temp))
+                    return -1;
+            /*} else {
+                while (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(temp))
+                    temp.set(temp.indexOf(Collections.min(temp)), Double.MAX_VALUE);
+            }*/
+
+        }
+
+        return temp.indexOf(Collections.min(temp));
     }
 
     /**
