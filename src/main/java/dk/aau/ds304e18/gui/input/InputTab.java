@@ -133,7 +133,6 @@ public class InputTab {
      */
     private void setupInputTab() {
         BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
-
         //Table view
         tableView = ((TableView<Task>) flowPane.getChildren().get(1));
         setupTaskTable();
@@ -193,8 +192,8 @@ public class InputTab {
 
         ((Button) vBoxSplitter.getChildren().get(4)).setTooltip(new Tooltip("Calculates the probability for the length of the project"));
 
-        Tooltip.install(((Node) vBoxSplitter.getChildren().get(2)), new Tooltip("If checked the program will try to give the most optimal path for tasks"));
-        Tooltip.install(((Node) vBoxSplitter.getChildren().get(3)), new Tooltip("If checked the program will try to find more relevant sequences, which will make it less accurate but faster"));
+        Tooltip.install(vBoxSplitter.getChildren().get(2), new Tooltip("If checked the program will try to give the most optimal path for tasks"));
+        Tooltip.install(vBoxSplitter.getChildren().get(3), new Tooltip("If checked the program will try to find more relevant sequences, which will make it less accurate but faster"));
 
         vBoxSplitter.getChildren().get(4).setOnMouseClicked(event -> {
             disableInput();
@@ -207,12 +206,15 @@ public class InputTab {
             ProgressBar bar = new ProgressBar();
             bar.progressProperty().bind(calcTask.progressProperty());
             bar.setDisable(false);
-            ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().add(bar);
 
+            ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1)).getChildren().add(bar);
+            bar.setTooltip(new Tooltip());
+            calcTask.progressProperty().addListener((observable, oldValue, newValue) ->
+                    bar.getTooltip().setText("Progress: " + Math.round(calcTask.getWorkDone() * 100) + "%"));
             calcTask.setOnSucceeded(event1 -> {
                 JavaFXMain.outputTab.drawOutputTab(true);
                 tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
-                ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().remove(bar);
+                ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1)).getChildren().remove(bar);
                 enableInput();
                 rootPane.lookup("#projectView").setDisable(false);
                 MonteCarloExecutorService.shutdownExecutor();
@@ -301,16 +303,16 @@ public class InputTab {
      * @param useMonty       - the monte carlo method is used.
      */
     public javafx.concurrent.Task<Void> calculate(Project project, boolean useMonty, double numOfEmployees, boolean useFast) {
-
-        return new javafx.concurrent.Task<Void>() {
+        return new javafx.concurrent.Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 //Set the number of employees of the project.
                 project.setNumberOfEmployees(numOfEmployees);
                 //Start time taking.
                 Instant start = Instant.now();
                 //Sequence the tasks.
-                MonteCarlo.progressProperty().addListener((obs, oldProgress, newProgress) -> updateProgress(newProgress.doubleValue(), 1));
+                MonteCarlo.progressProperty().addListener((obs, oldProgress, newProgress) ->
+                        updateProgress(newProgress.doubleValue(), 1));
 
                 Sequence.sequenceTasks(project, useMonty, useFast);
                 //Stop the time taking.

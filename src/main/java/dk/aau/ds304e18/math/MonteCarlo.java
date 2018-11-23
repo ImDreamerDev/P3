@@ -126,7 +126,7 @@ public class MonteCarlo {
             time.add(estimateTime(project, true, i));
 
             i++;
-            progress.set((double)i/monteCarloRepeats);
+            progress.set((double) i / monteCarloRepeats);
         }
 
         //Set temporary index to the index of the minimum
@@ -189,7 +189,7 @@ public class MonteCarlo {
                 break;
             }
 
-            if(!stuffChanged) {
+            if (!stuffChanged) {
 
                 allLowestToNextLowest(startTimes);
 
@@ -229,13 +229,13 @@ public class MonteCarlo {
     private static int findSmallestPossible(Task task, List<Double> startTimes) {
         List<Double> temp = new ArrayList<>(startTimes);
 
-        if(task.getDependencies().size() == 0)
+        if (task.getDependencies().size() == 0)
             return temp.indexOf(Collections.min(temp));
 
-        for(Task dependency : task.getDependencies()) {
+        for (Task dependency : task.getDependencies()) {
             //if(bestCase) {
-                if (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(temp))
-                    return -1;
+            if (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(temp))
+                return -1;
             /*} else {
                 while (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(temp))
                     temp.set(temp.indexOf(Collections.min(temp)), Double.MAX_VALUE);
@@ -300,7 +300,6 @@ public class MonteCarlo {
         double duration = 0.0;
 
         ExecutorService executor = MonteCarloExecutorService.getExecutor();
-
         //create a list to hold the Future object associated with Callable
         List<Future<Estimate>> list = new ArrayList<>();
         //Create MyCallable instance
