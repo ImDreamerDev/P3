@@ -208,7 +208,7 @@ public class InputTab {
             calcTask.setOnSucceeded(event1 -> {
                 JavaFXMain.outputTab.drawOutputTab(true);
                 tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
-
+                ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().remove(bar);
             });
             Thread thread = new Thread(calcTask);
             thread.setPriority(10);

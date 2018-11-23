@@ -73,7 +73,6 @@ public class MonteCarlo {
 
         //TODO: Really needs some optimizing - Actually maybe not, it's fast apparently
         if (project.getNumberOfEmployees() > 1) {
-            progress.set(0);
             while (j < monteCarloRepeats) {
 
                 //If this is true skip
