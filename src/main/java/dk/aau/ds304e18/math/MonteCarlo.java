@@ -8,6 +8,8 @@ import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
 import dk.aau.ds304e18.sequence.Sequence;
+import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.ReadOnlyDoubleWrapper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +17,16 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class MonteCarlo {
+
+    private static final ReadOnlyDoubleWrapper progress = new ReadOnlyDoubleWrapper();
+
+    public double getProgress() {
+        return progressProperty().get();
+    }
+
+    public static ReadOnlyDoubleProperty progressProperty() {
+        return progress;
+    }
 
     public static void findFastestSequence(Project project) {
 
@@ -61,6 +73,7 @@ public class MonteCarlo {
 
         //TODO: Really needs some optimizing - Actually maybe not, it's fast apparently
         if (project.getNumberOfEmployees() > 1) {
+            progress.set(0);
             while (j < monteCarloRepeats) {
 
                 //If this is true skip
@@ -99,6 +112,7 @@ public class MonteCarlo {
                 if (j == monteCarloRepeats)
                     System.out.println(j);
 
+
             }
         } else {
             randomSequences[0] = Sequence.findRandomSequence(project, fast);
@@ -115,6 +129,7 @@ public class MonteCarlo {
             time.add(estimateTime(project, true, i));
 
             i++;
+            progress.set((double)i/monteCarloRepeats);
         }
 
         //Set temporary index to the index of the minimum
@@ -141,8 +156,8 @@ public class MonteCarlo {
             /*int count = 0;
             int bigL = -1;
             int secondBiggestL = -1;*/
-            
-            if(startTimes.size() < project.getNumberOfEmployees())
+
+            if (startTimes.size() < project.getNumberOfEmployees())
                 startTimes.add(task.getStartTime() + task.getEstimatedTime());
             else {
                 int temp = startTimes.indexOf(Collections.min(startTimes));

@@ -4,6 +4,7 @@ import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.Maths;
+import dk.aau.ds304e18.math.MonteCarlo;
 import dk.aau.ds304e18.math.Probabilities;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
@@ -201,12 +202,15 @@ public class InputTab {
                     ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
                     Double.parseDouble(numOfEmployees.getText()),
                     ((CheckBox) vBoxSplitter.getChildren().get(3)).isSelected());
+            ProgressBar bar = new ProgressBar();
+            bar.progressProperty().bind(calcTask.progressProperty());
+            ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().add(bar);
             calcTask.setOnSucceeded(event1 -> {
                 JavaFXMain.outputTab.drawOutputTab(true);
                 tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
 
-                });
-           Thread thread = new Thread(calcTask);
+            });
+            Thread thread = new Thread(calcTask);
             thread.setPriority(10);
             thread.setName("Calculate");
             thread.start();
@@ -298,6 +302,8 @@ public class InputTab {
                 //Start time taking.
                 Instant start = Instant.now();
                 //Sequence the tasks.
+                MonteCarlo.progressProperty().addListener((obs, oldProgress, newProgress) -> updateProgress(newProgress.doubleValue(), 1));
+
                 Sequence.sequenceTasks(project, useMonty, useFast);
                 //Stop the time taking.
                 Instant end = java.time.Instant.now();
