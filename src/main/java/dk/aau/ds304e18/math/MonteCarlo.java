@@ -138,7 +138,6 @@ public class MonteCarlo {
             task.setStartTime(-1);
         for (int count = 0; count < tempRecList.size(); ) {
             stuffChanged = false;
-            Task lastTask = tempRecList.get(0);
             for (Task task : tempRecList) {
 
                 if (task.getStartTime() != -1)
@@ -173,12 +172,10 @@ public class MonteCarlo {
 
                 System.out.println(task.getName() + ": " + task.getStartTime());
 
-                lastTask = task;
-
                 break;
             }
 
-            if(stuffChanged && lastTask == tempRecList.get(tempRecList.size()-1)) {
+            if(!stuffChanged) {
 
                 allLowestToNextLowest(startTimes);
 
