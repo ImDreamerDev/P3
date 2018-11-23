@@ -22,7 +22,6 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
     public Estimate call() {
         List<Double> chances = new ArrayList<>();
-        HashMap<Task, Double> taskStartAt = new HashMap<>();
         final int tempBig;
         for (Task task : taskList)
             invG.put(task, task.getInvG());
@@ -72,11 +71,6 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
                                 temp = true;
 
-                                if (taskStartAt.containsKey(task))
-                                    taskStartAt.put(task, taskStartAt.get(task) + durations.get(j));
-                                else
-                                    taskStartAt.put(task, durations.get(j));
-
                                 //Calculate the duration at the given random value and add that to duration
                                 durations.set(j, durations.get(j) + invG.get(task).getDuration(random.nextDouble() * 100));
 
@@ -102,11 +96,6 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
                 //For each task in the taskList
                 for (Task task : taskList) {
-                    //Adds startpoint of task
-                    if (taskStartAt.containsKey(task))
-                        taskStartAt.put(task, taskStartAt.get(task) + currentTime);
-                    else
-                        taskStartAt.put(task, currentTime);
 
                     //Calculate the duration at the given random value and add that to duration
                     double temp = invG.get(task).getDuration(random.nextDouble() * 100);
@@ -126,6 +115,6 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
         }
         //Also send the start time of each task back
-        return new Estimate(chances, taskStartAt, duration);
+        return new Estimate(chances, duration);
     }
 }
