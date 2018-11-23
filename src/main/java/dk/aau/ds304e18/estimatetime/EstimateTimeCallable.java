@@ -9,33 +9,30 @@ import java.util.concurrent.Callable;
 public class EstimateTimeCallable implements Callable<Estimate> {
     private final List<Task> taskList;
     private final double amountEmployees;
-    private final int numOfThreads;
-    private final int numOfMonte;
     private final Random random = new Random();
     private HashMap<Task, InverseGaussian> invG = new HashMap<>();
-    //private final InverseGaussian invG = new InverseGaussian();
-
-    public EstimateTimeCallable(List<Task> taskList, double amountEmployees, int numOfThreads, int numOfMonte) {
-        this.taskList = taskList;
+    private final int repeats;
+    
+    public EstimateTimeCallable(List<Task> taskList, double amountEmployees, int repeats) {
+        this.taskList = new ArrayList<>(taskList);
         this.amountEmployees = amountEmployees;
-        this.numOfThreads = numOfThreads;
-        this.numOfMonte = numOfMonte;
+        this.repeats = repeats;
     }
 
     public Estimate call() {
         List<Double> chances = new ArrayList<>();
         HashMap<Task, Double> taskStartAt = new HashMap<>();
         final int tempBig;
-        for(Task task : taskList)
+        for (Task task : taskList)
             invG.put(task, task.getInvG());
 
-        if(amountEmployees < taskList.size())
+        if (amountEmployees < taskList.size())
             tempBig = (int) amountEmployees;
         else
             tempBig = taskList.size();
 
         double duration = 0.0;
-        int repeats = numOfMonte / numOfThreads;
+
         //Repeat repeats time
         for (int i = 0; i < repeats; i++) {
             if (amountEmployees > 1) {
@@ -74,7 +71,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
 
                                 temp = true;
 
-                                if(taskStartAt.containsKey(task))
+                                if (taskStartAt.containsKey(task))
                                     taskStartAt.put(task, taskStartAt.get(task) + durations.get(j));
                                 else
                                     taskStartAt.put(task, durations.get(j));
@@ -119,7 +116,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                 //For each task in the taskList
                 for (Task task : taskList) {
                     //Adds startpoint of task
-                    if(taskStartAt.containsKey(task))
+                    if (taskStartAt.containsKey(task))
                         taskStartAt.put(task, taskStartAt.get(task) + currentTime);
                     else
                         taskStartAt.put(task, currentTime);
