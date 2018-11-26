@@ -183,10 +183,10 @@ public class MonteCarlo {
                     alreadyStarted.add(task);
                     stuffChanged = true;
                 } else if (startTimes.size() < project.getNumberOfEmployees() && startTimes.size() >= withoutDeps.size()) {
-                    while(startTimes.size() < project.getNumberOfEmployees())
+                    while (startTimes.size() < project.getNumberOfEmployees())
                         startTimes.add(0d);
                     continue;
-                } else{
+                } else {
                     if (check(task, alreadyStarted))
                         continue;
                     int temp = findSmallestPossible(task, startTimes);
@@ -219,33 +219,37 @@ public class MonteCarlo {
         RecommendedEmployees tempRecEmp = new RecommendedEmployees();
 
         //Initialize lower and upperBound and make sure no funny business happens
-        int lowerBound = (int)(tempNumOfEmps*0.5);
-        if(lowerBound == (int)tempNumOfEmps)
-            lowerBound = (int)(tempNumOfEmps-1);
-        if(lowerBound < 1)
+        int lowerBound = (int) (tempNumOfEmps * 0.5);
+        if (lowerBound == (int) tempNumOfEmps)
+            lowerBound = (int) (tempNumOfEmps - 1);
+        if (lowerBound < 1)
             lowerBound = 1;
 
-        int upperBound = (int)(tempNumOfEmps*1.5);
-        if(upperBound == (int)tempNumOfEmps)
-            upperBound = (int)(tempNumOfEmps + 1);
+        int upperBound = (int) (tempNumOfEmps * 1.5);
+        if (upperBound == (int) tempNumOfEmps)
+            upperBound = (int) (tempNumOfEmps + 1);
 
         //Calculate the estimated time with the different amount of employee groups
-        for(int k = lowerBound; k <= upperBound; k++) {
+        for (int k = lowerBound; k <= upperBound; k++) {
+            if (k == tempNumOfEmps) continue;
             //Set the amount of employees to the set number of employees just to check them
             project.setNumberOfEmployees(k);
             //Calculate the estimated time with the current sequence
             //We just want to give a guess, not give an extremely accurate estimate at different employee group numbers
             double tempEst = estimateTime(project, true);
             //If it's within a margin add it to the list
-            if(tempEst < project.getDuration()*0.95 && k > tempNumOfEmps || tempEst < project.getDuration()*1.05 && k < tempNumOfEmps) {
+            if (tempEst < project.getDuration() * 0.95 && k > tempNumOfEmps || tempEst < project.getDuration() * 1.05 && k < tempNumOfEmps) {
                 //Add it to the recommended amount list
                 tempRecEmp.add(k, tempEst);
                 System.out.println(k + " amount of employees has time " + tempEst);
+                if (k > tempNumOfEmps)
+                    break;
+                k = (int) tempNumOfEmps;
             }
         }
 
         //Set the amount of employee groups recommended
-        project.setAmountEmpsRecommended(tempRecEmp);
+        project.setRecommendedEmployees(tempRecEmp);
 
         //Set amount of employeees back to what it was
         project.setNumberOfEmployees(tempNumOfEmps);

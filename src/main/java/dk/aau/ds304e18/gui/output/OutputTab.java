@@ -101,9 +101,6 @@ public class OutputTab {
         Project project = LocalObjStorage.getProjectList().stream()
                 .filter(pro -> pro.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
         assert project != null;
-        if (((AnchorPane) barChart.getParent()).getChildren().size() > 1)
-            ((AnchorPane) barChart.getParent()).getChildren().remove(1);
-        ((AnchorPane) barChart.getParent()).getChildren().add(new Text(70, 25, "Estimated Time: " + project.getDuration()));
         //Make sure the chart is clear.
         barChart.getData().clear();
 
