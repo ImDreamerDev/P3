@@ -1,8 +1,8 @@
 package dk.aau.ds304e18.gui.input;
 
 import dk.aau.ds304e18.JavaFXMain;
-import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.math.Maths;
 import dk.aau.ds304e18.math.MonteCarlo;
 import dk.aau.ds304e18.math.MonteCarloExecutorService;
@@ -209,12 +209,25 @@ public class InputTab {
                     ((CheckBox) vBoxSplitter.getChildren().get(3)).isSelected());
             ProgressBar bar = new ProgressBar();
             bar.progressProperty().bind(calcTask.progressProperty());
-            bar.setDisable(false);
+            ((Button) vBoxSplitter.getChildren().get(4)).setText("Stop");
+            vBoxSplitter.getChildren().get(4).setOnMouseClicked(event1 -> {
+                calcTask.cancel();
+                ((Button) vBoxSplitter.getChildren().get(4)).setText("Calculate");
+                setupInputTab();
+            });
+
 
             ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1)).getChildren().add(bar);
-            bar.setTooltip(new Tooltip());
+            bar.setTooltip(new Tooltip("Current progress."));
             calcTask.progressProperty().addListener((observable, oldValue, newValue) ->
                     bar.getTooltip().setText("Progress: " + Math.round(calcTask.getWorkDone() * 100) + "%"));
+
+            //Remove bar if cancelled.
+            calcTask.setOnCancelled(event1 -> {
+                ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1)).getChildren().remove(bar);
+                rootPane.lookup("#projectView").setDisable(false);
+            });
+
             calcTask.setOnSucceeded(event1 -> {
                 JavaFXMain.outputTab.drawOutputTab(true);
                 tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
@@ -222,8 +235,10 @@ public class InputTab {
                 enableInput();
                 rootPane.lookup("#projectView").setDisable(false);
                 MonteCarloExecutorService.shutdownExecutor();
+                ((Button) vBoxSplitter.getChildren().get(4)).setText("Calculate");
             });
 
+            MonteCarloExecutorService.init();
             Thread thread = new Thread(calcTask);
             thread.setPriority(9);
             thread.setName("Calculate");
@@ -307,6 +322,12 @@ public class InputTab {
      */
     public javafx.concurrent.Task<Void> calculate(Project project, boolean useMonty, double numOfEmployees, boolean useFast) {
         return new javafx.concurrent.Task<>() {
+
+            @Override
+            protected void cancelled() {
+                MonteCarloExecutorService.shutdownNow();
+            }
+
             @Override
             protected Void call() {
                 //Set the number of employees of the project.
