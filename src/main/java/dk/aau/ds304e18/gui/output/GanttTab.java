@@ -44,7 +44,7 @@ public class GanttTab {
         this.scrollViewPane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
 
         //Get the zoom level label to display the current zoom level. 
-        zoomFactorLabel = (Label) scrollViewPane.lookup("#zoomLevelLabel");
+        zoomFactorLabel = (Label) rootPane.lookup("#zoomLevelLabel");
         this.rootPane = rootPane;
         //The event for zooming when scrolling while holding ctrl down.
         this.scrollViewPane.setOnScroll(scrollEvent -> {
