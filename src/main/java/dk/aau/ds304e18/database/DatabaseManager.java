@@ -416,10 +416,10 @@ public class DatabaseManager {
                     });
 
                 }
-                // a list of the oldPorjects
+                // a list of the oldProjects.
                 List<Integer> projectIds = new ArrayList<>(projectManager.getOldProjectsId());
 
-                // Gets all oldProjectIds and creates oldProject objects, and sets the creator as the projcetmanager.
+                // Gets all oldProjectIds and creates oldProject objects, and sets the creator as the projectManager.
                 for (Integer projectId : projectIds) {
                     Project oldProject = LocalObjStorage.getProjectById(projectId);
                     oldProject.setCreator(projectManager);
@@ -427,11 +427,11 @@ public class DatabaseManager {
                         oldProject.setState(ProjectState.ARCHIVED);
 
                 }
-                // adds the projectmanager to the localobjectstorage.
+                // adds the projectManager to the localobjectstorage.
                 LocalObjStorage.addProjectManager(projectManager);
                 updateProgress(3, progressBarParts);
 
-                // for each employee in the localobjstorage assigns the employee to the project.
+                // for each employee in the localobjectstorage assigns the employee to the project.
                 for (Employee emp : LocalObjStorage.getEmployeeList()) {
                     if (emp.getProjectId() != 0){
                         emp.setProject(LocalObjStorage.getProjectById(emp.getProjectId()));
