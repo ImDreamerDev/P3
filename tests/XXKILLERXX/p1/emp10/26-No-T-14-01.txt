@@ -1,0 +1,7 @@
+200
+Worst Path: 8,2,1,5,10(8),4(2),3(1),6(2),9(2),7(4,6)
+Worst Time: 281.8070625
+Best Path: 8,2,1,5,9(2),10(8),3(1),6(2),4(2),7(4,6)
+Best Time: 268.005765625
+[31mNote: total in that unit!
+[39mHours: 00 Minutes: 00 Seconds: 39 Milliseconds: 39820 
