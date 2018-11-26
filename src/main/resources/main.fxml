@@ -162,7 +162,7 @@
                                                 </HBox.margin>
                                             </Button>
                                         </HBox>
-                                        <Button alignment="TOP_LEFT" mnemonicParsing="false" text="Clear">
+                                        <Button alignment="TOP_LEFT" mnemonicParsing="false" text="Clear Text Fields">
                                             <VBox.margin>
                                                 <Insets top="40.0" />
                                             </VBox.margin>
@@ -189,6 +189,7 @@
                                                     <Insets left="10.0" right="10.0" top="5.0" />
                                                 </padding>
                                                 <Button mnemonicParsing="false" text="Add task" />
+                                    <Button mnemonicParsing="false" text="Edit task" />
                                                 <Button mnemonicParsing="false" text="Delete Task" />
                                             </VBox>
                                             <VBox alignment="BOTTOM_CENTER" prefHeight="329.0" prefWidth="124.0" spacing="20.0">
