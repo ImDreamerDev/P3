@@ -149,7 +149,7 @@ public class GanttTab {
             ret.setFill(Color.web("#ff9c00"));
 
             //Shows tasks name in tooltip
-            Tooltip tooltip = new Tooltip(task.getName());
+            Tooltip tooltip = new Tooltip(task.getName() + "\nStart: " + task.getStartTime() + "\nEnd: " + (task.getStartTime() + task.getEstimatedTime()));
             tooltip.setShowDelay(Duration.millis(100));
             Tooltip.install(ret, tooltip);
 
