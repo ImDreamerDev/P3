@@ -43,6 +43,8 @@ public class InputTab {
     private TextField duration3;
     private TextField probability3;
 
+    private BorderPane flowPane;
+
     /**
      * @param rootPane - This is the parent of all gui elements in the inputTab.
      */
@@ -77,7 +79,7 @@ public class InputTab {
                 .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
                 .collect(Collectors.toList())));
 
-        BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
+        flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
         Pane paneSplitter = ((Pane) flowPane.getChildren().get(2));
         VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
         if (JavaFXMain.selectedProjectId == 0 && LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId) != null)
@@ -85,13 +87,14 @@ public class InputTab {
         employeeTab.drawEmployees();
         if (JavaFXMain.selectedProjectId != 0)
             JavaFXMain.outputTab.drawOutputTab(true);
+
+        tableView.getSortOrder().add(tableView.getColumns().get(0));
     }
 
     /**
      * Method that disables the interaction with the gui on the inputTab.
      */
     private void disableInput() {
-        BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren().get(0).setDisable(true);
         inputVBox.setDisable(true);
@@ -102,7 +105,6 @@ public class InputTab {
      *
      */
     private void enableInput() {
-        BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren().get(0).setDisable(false);
         inputVBox.setDisable(false);
@@ -111,7 +113,6 @@ public class InputTab {
 
 
     private void setupDependencies() {
-        BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
         ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(new Tooltip("Opens a list of tasks in the project to add as dependencies"));
@@ -130,7 +131,7 @@ public class InputTab {
      * The method that sets up the contents of the whole input tab.
      */
     private void setupInputTab() {
-        BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
+        flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
 
         //Table view
         tableView = ((TableView<Task>) flowPane.getChildren().get(1));
@@ -189,7 +190,7 @@ public class InputTab {
 
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true));
         numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" + System.lineSeparator() + "Input must be an integer"));
-      
+
         ((Button) vBoxSplitter.getChildren().get(4)).setTooltip(new Tooltip("Calculates the probability for the length of the project"));
 
         Tooltip.install(vBoxSplitter.getChildren().get(2), new Tooltip("If checked the program will try to give the most optimal path for tasks"));
@@ -229,7 +230,6 @@ public class InputTab {
     }
 
     private void setUpProbabilitiesFields() {
-        BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         HBox probabilityHBox = ((HBox) inputVBox.getChildren().get(7));
         HBox probabilityHBox2 = ((HBox) inputVBox.getChildren().get(8));
@@ -336,6 +336,9 @@ public class InputTab {
         dependenciesPopup.getTaskDependencies().clear();
         //Clear the GUI dependencies.
         listViewDependency.setItems(FXCollections.observableArrayList(dependenciesPopup.getTaskDependencies()));
+        ((Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
+                .get(0)).getChildren().get(0))
+                .setText("Add Task");
         //Update the GUI.
         drawInputTab();
     }
@@ -371,6 +374,9 @@ public class InputTab {
             LocalObjStorage.getTaskList().add(t);
             //And update the database with the changed task.
             DatabaseManager.updateTask(t);
+            ((Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
+                    .get(0)).getChildren().get(0))
+                    .setText("Add Task");
         } else {
             //Otherwise create a new task.
             Task ttt = new Task(name, estimatedTime, priority,
@@ -382,7 +388,9 @@ public class InputTab {
     }
 
     private void editTask(ListView<Task> listViewDependency, TextField... textFields) {
-
+        ((Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
+                .get(0)).getChildren().get(0))
+                .setText("Update Task");
         //If no task is selected just return.
         if (tableView.getSelectionModel().getSelectedIndex() == -1)
             return;
@@ -428,7 +436,15 @@ public class InputTab {
         dependenciesPopup.getTaskDependencies().addAll(new ArrayList<>(task.getDependencies()));
         listViewDependency.setItems(FXCollections.observableArrayList(dependenciesPopup.getTaskDependencies()));
         //Update the input tab to reflect the change.
+        TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
+        //Set the items of the table view, equal to the all the tasks on this project.
+
+        List<Task> tasks = LocalObjStorage.getTaskList()
+                .stream().filter(task2 -> task2.getProject().getId() == JavaFXMain.selectedProjectId && task2.getId() != task.getId())
+                .collect(Collectors.toList());
         drawInputTab();
+        dependencies.getItems().clear();
+        dependencies.setItems(FXCollections.observableArrayList(tasks));
     }
 
 
