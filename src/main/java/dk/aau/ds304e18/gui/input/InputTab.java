@@ -188,7 +188,8 @@ public class InputTab {
         });
 
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true));
-
+        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" + System.lineSeparator() + "Input must be an integer"));
+      
         ((Button) vBoxSplitter.getChildren().get(4)).setTooltip(new Tooltip("Calculates the probability for the length of the project"));
 
         Tooltip.install(((Node) vBoxSplitter.getChildren().get(2)), new Tooltip("If checked the program will try to give the most optimal path for tasks"));
