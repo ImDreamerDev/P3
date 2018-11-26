@@ -97,7 +97,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                     //Calculate the duration at the given random value and add that to duration
                     double temp = invG.get(task).getDuration(random.nextDouble() * 100);
                     duration += temp;
-                    
+
                 }
             }
 
