@@ -238,6 +238,10 @@ public class Task {
         DatabaseManager.updateTask(this);
     }
 
+    /**
+     * This method is used in the distributeModels method to add dependencies.
+     * @param task - the task to add the dependency to.
+     */
     public void distributeAddDependency(Task task) {
         this.dependencies.add(task);
     }
