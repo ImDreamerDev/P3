@@ -44,7 +44,6 @@ public class InputTab {
     private TextField probability3;
 
     private BorderPane flowPane;
-    private String taskName;
     private boolean isEditMode;
 
     /**
@@ -150,12 +149,36 @@ public class InputTab {
                 nameTextField.setStyle("");
             }
         });
+
         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            boolean taskNameIsThere = LocalObjStorage.getTaskList().stream().anyMatch(task -> task.getName().equals(newValue));
-            if (taskNameIsThere && !isEditMode) {
+            TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
+            Task task = LocalObjStorage.getTaskList().stream().filter(t -> t.getName().equals(newValue)).findFirst().orElse(null);
+
+            if (task != null && !isEditMode) {
                 nameTextField.setStyle("-fx-border-color: #ff9c00");
-            } else
-                nameTextField.setStyle("");
+            }
+
+            isEditMode = false;
+
+            if (task != null) {
+                ((Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
+                        .get(0)).getChildren().get(0))
+                        .setText("Update Task");
+                List<Task> tasks = LocalObjStorage.getTaskList()
+                        .stream().filter(task2 -> task2.getProject().getId() == JavaFXMain.selectedProjectId && task2.getId() != task.getId())
+                        .collect(Collectors.toList());
+                dependencies.getItems().clear();
+                dependencies.setItems(FXCollections.observableArrayList(tasks));
+            } else {
+                ((Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
+                        .get(0)).getChildren().get(0))
+                        .setText("Add Task");
+                List<Task> tasks = LocalObjStorage.getTaskList()
+                        .stream().filter(task2 -> task2.getProject().getId() == JavaFXMain.selectedProjectId)
+                        .collect(Collectors.toList());
+                dependencies.getItems().clear();
+                dependencies.setItems(FXCollections.observableArrayList(tasks));
+            }
         });
         TextField priority = ((TextField) inputVBox.getChildren().get(3));
         priority.setTooltip(new Tooltip("The priority of the task, the bigger the more important" + System.lineSeparator() + "This value is measured in integers"));
@@ -334,7 +357,8 @@ public class InputTab {
      * @param useFast        - Is the useFast toggled or not. (boolean)
      * @param useMonty       - the monte carlo method is used.
      */
-    public javafx.concurrent.Task<Void> calculate(Project project, boolean useMonty, double numOfEmployees, boolean useFast) {
+    public javafx.concurrent.Task<Void> calculate(Project project, boolean useMonty, double numOfEmployees,
+                                                  boolean useFast) {
         return new javafx.concurrent.Task<>() {
 
             @Override
@@ -418,7 +442,6 @@ public class InputTab {
      * @param probabilities - filled into text box.
      */
     private void addTask(String name, double estimatedTime, int priority, List<Probabilities> probabilities) {
-
         //Get all the tasks on this project.
         List<Task> tasks = LocalObjStorage.getTaskList().
                 stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList());
@@ -457,7 +480,7 @@ public class InputTab {
 
 
     private void editTask(TextField... textFields) {
-        isEditMode = true;
+
         ((Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
                 .get(0)).getChildren().get(0))
                 .setText("Update Task");
@@ -471,7 +494,7 @@ public class InputTab {
                 getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
         //Get the actual task from the id.
         Task task = LocalObjStorage.getTaskById(taskId);
-        taskName = task.getName();
+        isEditMode = true;
         //Check if task probabilities exists in task, and then fill them out. 
         if (task.getProbabilities().size() > 0) {
             textFields[0].setText(task.getProbabilities().get(0).getDuration() + "");
@@ -495,30 +518,8 @@ public class InputTab {
             textFields[5].setText("");
         }
         //Fill out the name of the task.
-        textFields[6].textProperty().addListener((observable, oldValue, newValue) -> {
-            TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
-            if (newValue.equals(taskName)) {
-
-                ((Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
-                        .get(0)).getChildren().get(0))
-                        .setText("Update Task");
-                List<Task> tasks = LocalObjStorage.getTaskList()
-                        .stream().filter(task2 -> task2.getProject().getId() == JavaFXMain.selectedProjectId && task2.getId() != task.getId())
-                        .collect(Collectors.toList());
-                dependencies.getItems().clear();
-                dependencies.setItems(FXCollections.observableArrayList(tasks));
-            } else {
-                ((Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
-                        .get(0)).getChildren().get(0))
-                        .setText("Add Task");
-                List<Task> tasks = LocalObjStorage.getTaskList()
-                        .stream().filter(task2 -> task2.getProject().getId() == JavaFXMain.selectedProjectId)
-                        .collect(Collectors.toList());
-                dependencies.getItems().clear();
-                dependencies.setItems(FXCollections.observableArrayList(tasks));
-            }
-        });
         textFields[6].setText(task.getName());
+        textFields[6].setStyle("");
         //Fill out the estimated time of the task.
         textFields[7].setText(task.getEstimatedTime() + "");
         //Fill out the priority of the task.
