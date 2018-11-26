@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,7 +30,7 @@ class ParseSequenceTest {
         Task task3 = new Task("Test3", 5.0, 1, project);
         Task task4 = new Task("Test4", 2.0, 1, project);
 
-        task3.addDependency(Arrays.asList(task1));
+        task3.addDependency(Collections.singletonList(task1));
 
         Sequence.sequenceTasks(project);
 
@@ -59,11 +59,11 @@ class ParseSequenceTest {
         ProjectManager tom = new ProjectManager("Tom", "Hello");
         Project project = new Project("Ree", tom);
         Task task1 = new Task("Test1", 1.0, 1, project);
-        Task task2 = new Task("Test2", 2.0, 1, project);
+        new Task("Test2", 2.0, 1, project);
         Task task3 = new Task("Test3", 5.0, 1, project);
-        Task task4 = new Task("Test4", 2.0, 1, project);
+        new Task("Test4", 2.0, 1, project);
 
-        task3.addDependency(Arrays.asList(task1));
+        task3.addDependency(Collections.singletonList(task1));
 
         Sequence.sequenceTasks(project);
         assertNotNull(ParseSequence.parseToSingleList(project, false));

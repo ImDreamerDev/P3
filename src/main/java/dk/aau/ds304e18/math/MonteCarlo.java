@@ -13,19 +13,9 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class MonteCarlo {
-
-    public static void findFastestSequence(Project project) {
-
-        //Calls the function with the default value 200 - Might up this default value when/if we optimize estimateTime
-        //This might be enough if we find a better way of finding random sequences
-        findFastestSequence(project, 200, true);
-
-    }
-
+    
     public static void findFastestSequence(Project project, boolean fast) {
-
         findFastestSequence(project, 200, fast);
-
     }
 
     public static void findFastestSequence(Project project, int monteCarloRepeats, boolean fast) {
@@ -292,8 +282,8 @@ public class MonteCarlo {
      * @param project The project you want estimated
      * @return The estimated time
      */
-    public static double estimateTime(Project project) {
-        return estimateTime(project, 10000, false, 0);
+    public static void estimateTime(Project project) {
+        estimateTime(project, 10000, false, 0);
     }
 
     public static double estimateTime(Project project, boolean rec) {
@@ -313,7 +303,7 @@ public class MonteCarlo {
     }
 
     //Find number of threads
-    private static int numOfThreads = Runtime.getRuntime().availableProcessors();
+    private static final int numOfThreads = Runtime.getRuntime().availableProcessors();
 
     public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index) {
         return estimateTime(project, monteCarloRepeats, random, index, false);

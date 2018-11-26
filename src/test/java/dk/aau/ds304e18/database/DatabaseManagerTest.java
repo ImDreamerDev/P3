@@ -125,7 +125,7 @@ class DatabaseManagerTest {
         }
         LocalObjStorage.addProjectManager(projectManager);
 
-
+        assertNotNull(projectManager);
         Project testProj = new Project("TestProj", projectManager);
         Task testTask = new Task("TestTask", 10, 1, testProj);
 

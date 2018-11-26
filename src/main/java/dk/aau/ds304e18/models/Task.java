@@ -18,7 +18,7 @@ public class Task {
      */
     private int id;
 
-    private int projectId;
+    private final int projectId;
 
     /**
      * The name of the task.
@@ -74,7 +74,7 @@ public class Task {
     /**
      * The inverse gaussian distribution for this task
      */
-    private InverseGaussian invG = new InverseGaussian();
+    private final InverseGaussian invG = new InverseGaussian();
 
     /**
      * The Constructor of the task.

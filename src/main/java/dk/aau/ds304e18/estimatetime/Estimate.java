@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Estimate {
 
-    private List<Double> chances;
+    private final List<Double> chances;
     private double duration;
 
     public Estimate(List<Double> chances, double duration) {

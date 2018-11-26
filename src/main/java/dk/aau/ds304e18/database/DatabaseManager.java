@@ -339,7 +339,7 @@ public class DatabaseManager {
         employeeIdsToQuery.addAll(projectManager.getCurrentProjectIds());
 
         try {
-            if (dbConnection == null || dbConnection.isClosed() || dbConnection.isClosed()) connect();
+            if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM employees WHERE projectid IS NULL OR projectid = ANY (?) ");
             statement.setArray(1, dbConnection.createArrayOf("INTEGER", employeeIdsToQuery.toArray()));
             ResultSet rs = statement.executeQuery();

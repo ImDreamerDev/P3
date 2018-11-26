@@ -12,7 +12,6 @@ import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +36,7 @@ public class DependenciesPopup {
      */
     private final List<Task> taskDependencies;
 
-    private TableView<Task> dependencies;
+    private final TableView<Task> dependencies;
 
 
     /**
