@@ -41,6 +41,7 @@ public class MonteCarlo {
     public static void findFastestSequence(Project project, int monteCarloRepeats, boolean fast) {
         //Resets the possible completions every time so it's accurate
         project.getPossibleCompletions().clear();
+        double numOfWorkGroups = project.getNumberOfEmployees();
 
         //2 index integers
         int i = 0;
@@ -68,7 +69,7 @@ public class MonteCarlo {
         int counter = 0;
 
         //TODO: Really needs some optimizing - Actually maybe not, it's fast apparently
-        if (project.getNumberOfEmployees() > 1) {
+        if (numOfWorkGroups > 1) {
             while (j < monteCarloRepeats) {
 
                 //If this is true skip
@@ -146,9 +147,9 @@ public class MonteCarlo {
 
         //Set the variables to correct stuff
         bestTime = Collections.min(time);
-        bestSequence = randomSequences[time.indexOf(Collections.min(time))];
+        bestSequence = randomSequences[time.indexOf(bestTime)];
         worstTime = Collections.max(time);
-        worstSequence = randomSequences[time.indexOf(Collections.max(time))];
+        worstSequence = randomSequences[time.indexOf(worstTime)];
 
         //Set the projects values to correct stuff
         project.setRecommendedPath(bestSequence);
@@ -172,7 +173,7 @@ public class MonteCarlo {
                 if (check(task, alreadyStarted))
                     continue;
 
-                if (startTimes.size() < project.getNumberOfEmployees() && startTimes.size() < withoutDeps.size()) {
+                if (startTimes.size() < numOfWorkGroups && startTimes.size() < withoutDeps.size()) {
                     if (check(task, alreadyStarted))
                         continue;
                     if (task.getStartTime() == -1)
@@ -180,8 +181,8 @@ public class MonteCarlo {
                     startTimes.add(task.getStartTime() + task.getEstimatedTime());
                     alreadyStarted.add(task);
                     stuffChanged = true;
-                } else if (startTimes.size() < project.getNumberOfEmployees() && startTimes.size() >= withoutDeps.size()) {
-                    while (startTimes.size() < project.getNumberOfEmployees())
+                } else if (startTimes.size() < numOfWorkGroups && startTimes.size() >= withoutDeps.size()) {
+                    while (startTimes.size() < numOfWorkGroups)
                         startTimes.add(0d);
                     continue;
                 } else {
@@ -213,36 +214,35 @@ public class MonteCarlo {
         }
 
         //Initialize the temp amount of employee groups and the temp recommended employees
-        double tempNumOfEmps = project.getNumberOfEmployees();
         RecommendedEmployees tempRecEmp = new RecommendedEmployees();
 
         //Initialize lower and upperBound and make sure no funny business happens
-        int lowerBound = (int) (tempNumOfEmps * 0.5);
-        if (lowerBound == (int) tempNumOfEmps)
-            lowerBound = (int) (tempNumOfEmps - 1);
+        int lowerBound = (int) (numOfWorkGroups * 0.5);
+        if (lowerBound == (int) numOfWorkGroups)
+            lowerBound = (int) (numOfWorkGroups - 1);
         if (lowerBound < 1)
             lowerBound = 1;
 
-        int upperBound = (int) (tempNumOfEmps * 1.5);
-        if (upperBound == (int) tempNumOfEmps)
-            upperBound = (int) (tempNumOfEmps + 1);
+        int upperBound = (int) (numOfWorkGroups * 1.5);
+        if (upperBound == (int) numOfWorkGroups)
+            upperBound = (int) (numOfWorkGroups + 1);
 
         //Calculate the estimated time with the different amount of employee groups
         for (int k = lowerBound; k <= upperBound; k++) {
-            if (k == tempNumOfEmps) continue;
+            if (k == numOfWorkGroups) continue;
             //Set the amount of employees to the set number of employees just to check them
             project.setNumberOfEmployees(k);
             //Calculate the estimated time with the current sequence
             //We just want to give a guess, not give an extremely accurate estimate at different employee group numbers
             double tempEst = estimateTime(project, true);
             //If it's within a margin add it to the list
-            if (tempEst < project.getDuration() * 0.95 && k > tempNumOfEmps || tempEst < project.getDuration() * 1.05 && k < tempNumOfEmps) {
+            if (tempEst < project.getDuration() * 0.95 && k > numOfWorkGroups || tempEst < project.getDuration() * 1.05 && k < numOfWorkGroups) {
                 //Add it to the recommended amount list
                 tempRecEmp.add(k, tempEst);
                 System.out.println(k + " amount of employees has time " + tempEst);
-                if (k > tempNumOfEmps)
+                if (k > numOfWorkGroups)
                     break;
-                k = (int) tempNumOfEmps;
+                k = (int) numOfWorkGroups;
             }
         }
 
@@ -250,7 +250,7 @@ public class MonteCarlo {
         project.setRecommendedEmployees(tempRecEmp);
 
         //Set amount of employeees back to what it was
-        project.setNumberOfEmployees(tempNumOfEmps);
+        project.setNumberOfEmployees(numOfWorkGroups);
 
         //SOUT
         System.out.println("Worst Path: " + worstSequence);
