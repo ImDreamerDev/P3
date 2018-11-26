@@ -86,7 +86,6 @@ public class OutputTab {
                 ((ListView) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
                         .getItems().clear();
 
-            pane.getChildren().add(new Text(10, 10, "Estimated Time: " + pro.getDuration()));
             assignmentTab.drawEmployees();
         }
 
@@ -102,6 +101,7 @@ public class OutputTab {
         Project project = LocalObjStorage.getProjectList().stream()
                 .filter(pro -> pro.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
         assert project != null;
+        ((AnchorPane) barChart.getParent()).getChildren().add(new Text(70, 25, "Estimated Time: " + project.getDuration()));
         //Make sure the chart is clear.
         barChart.getData().clear();
 
