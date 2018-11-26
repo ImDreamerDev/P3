@@ -36,6 +36,8 @@ public class DependenciesPopup {
      */
     private final List<Task> taskDependencies;
 
+    private final TableView<Task> dependencies;
+
 
     /**
      * Creates and sets up the DependenciesPopup
@@ -51,7 +53,7 @@ public class DependenciesPopup {
         this.taskDependencies = new ArrayList<>();
 
         //Get the table view from the root pane
-        TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
+        dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
 
         //Set the items of the table view, equal to the all the tasks on this project.
         dependencies.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
@@ -100,6 +102,8 @@ public class DependenciesPopup {
      * Opens the dependencies popup
      */
     public void openDependenciesPopup() {
+
+        dependencies.getSortOrder().add(dependencies.getColumns().get(0));
         rootPane.getChildrenUnmodifiable().get(3).setVisible(true);
     }
 

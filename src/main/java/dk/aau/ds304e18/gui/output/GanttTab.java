@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
@@ -25,9 +26,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GanttTab {
     private double zoomFactor = 1;
-    private Project project;
-    private AnchorPane pane;
+    private final Project project;
+    private AnchorPane scrollViewPane;
     private Label zoomFactorLabel;
+    private Parent rootPane;
 
     public GanttTab(Parent rootPane) {
         //Sets the current project.
@@ -38,21 +40,21 @@ public class GanttTab {
         ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output: " +
                 project.getName() + ":" + JavaFXMain.selectedProjectId);
 
-        //Get the anchor pane used from the GUI.
-        pane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
+        //Get the anchor scrollViewPane used from the GUI.
+        this.scrollViewPane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
 
         //Get the zoom level label to display the current zoom level. 
-        zoomFactorLabel = (Label) rootPane.lookup("#zoomLevelLabel");
-
+        zoomFactorLabel = (Label) scrollViewPane.lookup("#zoomLevelLabel");
+        this.rootPane = rootPane;
         //The event for zooming when scrolling while holding ctrl down.
-        pane.setOnScroll(scrollEvent -> {
+        this.scrollViewPane.setOnScroll(scrollEvent -> {
             if (scrollEvent.isControlDown()) {
                 zoomFactor += scrollEvent.getDeltaY() * 0.05;
                 if (zoomFactor < 0.5) zoomFactor = 0.5;
                 else if (zoomFactor > 4) zoomFactor = 4;
 
                 zoomFactorLabel.setText("Zoom level: " + (int) (zoomFactor * 100d) + "%");
-                pane.getChildren().clear();
+                this.scrollViewPane.getChildren().clear();
                 drawTasks();
             }
 
@@ -68,12 +70,12 @@ public class GanttTab {
         rootPane.lookup("#resetZoomButton").setOnMouseClicked(mouseEvent -> {
             zoomFactor = 1;
             zoomFactorLabel.setText("Zoom level: 100%");
-            pane.getChildren().clear();
+            this.scrollViewPane.getChildren().clear();
             drawTasks();
         });
 
         //Zooms in or out if the button pressed is either - or + while control is down
-        rootPane.setOnKeyReleased(keyEvent -> {
+        scrollViewPane.setOnKeyReleased(keyEvent -> {
             if (keyEvent.isControlDown()) {
                 if (keyEvent.getText().equals("-")) {
                     zoomOut();
@@ -94,7 +96,7 @@ public class GanttTab {
             zoomFactor -= 0.1;
             if (zoomFactor < 0.5) zoomFactor = 0.5;
             zoomFactorLabel.setText("Zoom level: " + (int) (zoomFactor * 100d) + "%");
-            pane.getChildren().clear();
+            scrollViewPane.getChildren().clear();
             drawTasks();
         }
     }
@@ -108,7 +110,7 @@ public class GanttTab {
             zoomFactor += 0.1;
             if (zoomFactor > 4) zoomFactor = 4;
             zoomFactorLabel.setText("Zoom level: " + (int) (zoomFactor * 100d) + "%");
-            pane.getChildren().clear();
+            scrollViewPane.getChildren().clear();
             drawTasks();
         }
     }
@@ -118,6 +120,7 @@ public class GanttTab {
      * The function for drawing the tasks and arrows
      */
     public void drawTasks() {
+        recommend();
         List<AnchorPane> anchorPanes = new ArrayList<>();
         List<List<Task>> taskListOfTasks = ParseSequence.parseToMultipleLists(project);
         List<Shape> shapeList = new ArrayList<>();
@@ -149,7 +152,8 @@ public class GanttTab {
             ret.setFill(Color.web("#ff9c00"));
 
             //Shows tasks name in tooltip
-            Tooltip tooltip = new Tooltip(task.getName());
+            Tooltip tooltip = new Tooltip(task.getName() + "\nStart: " + task.getStartTime() + "\nEnd: "
+                    + (task.getStartTime() + task.getEstimatedTime()) + "\nDuration:" + task.getEstimatedTime());
             tooltip.setShowDelay(Duration.millis(100));
             Tooltip.install(ret, tooltip);
 
@@ -186,9 +190,9 @@ public class GanttTab {
         for (int i = 0; i < maxX; i = i + distanceBetweenText) {
             Text text = new Text((i * zoomFactor) + xPadding, 25, "" + i);
             text.setRotate(90);
-            pane.getChildren().add(text);
+            scrollViewPane.getChildren().add(text);
             //And line between
-            pane.getChildren().add(new Line((i * zoomFactor) + xPadding,
+            scrollViewPane.getChildren().add(new Line((i * zoomFactor) + xPadding,
                     15, (i * zoomFactor) + xPadding, 20));
         }
 
@@ -300,8 +304,35 @@ public class GanttTab {
             }
         }
 
-        //Adds AnchorPanes and shapes to the pane.
-        pane.getChildren().addAll(anchorPanes);
-        pane.getChildren().addAll(shapeList);
+        //Adds AnchorPanes and shapes to the scrollViewPane.
+        scrollViewPane.getChildren().addAll(anchorPanes);
+        scrollViewPane.getChildren().addAll(shapeList);
+    }
+
+    private void recommend() {
+        VBox optGroup0 = (VBox) rootPane.lookup("#OptGroup0");
+        ((Label) optGroup0.getChildren().get(0)).setText(Math.round(project.getNumberOfEmployees()) + "");
+        ((Label) optGroup0.getChildren().get(1)).setText(Math.round((project.getDuration())) + "");
+
+        VBox optGroup1 = (VBox) rootPane.lookup("#OptGroup1");
+        VBox optGroup2 = (VBox) rootPane.lookup("#OptGroup2");
+        if (project.getRecommendedEmployees() == null || project.getRecommendedEmployees().getAmountEmployees().size() == 0) {
+            clearText(optGroup1);
+            clearText(optGroup2);
+            return;
+        }
+        ((Label) optGroup1.getChildren().get(0)).setText(project.getRecommendedEmployees().getAmountEmployees().get(0) + " Work groups");
+        ((Label) optGroup1.getChildren().get(1)).setText(Math.round(project.getRecommendedEmployees().getEstimatedTime().get(0)) + "");
+        if (project.getRecommendedEmployees().getAmountEmployees().size() == 1) {
+            clearText(optGroup2);
+            return;
+        }
+        ((Label) optGroup2.getChildren().get(0)).setText(project.getRecommendedEmployees().getAmountEmployees().get(1) + " Work groups");
+        ((Label) optGroup2.getChildren().get(1)).setText(Math.round(project.getRecommendedEmployees().getEstimatedTime().get(1)) + "");
+    }
+
+    private void clearText(VBox optGroup) {
+        ((Label) optGroup.getChildren().get(0)).setText("");
+        ((Label) optGroup.getChildren().get(1)).setText("");
     }
 }

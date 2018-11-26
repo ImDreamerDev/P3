@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -419,7 +420,7 @@ class ProjectTest {
     @Test
     void TestProjectAddNewEmployee() {
         Project newProject = new Project(1, "Rasmus Test Project", ProjectState.ONGOING, "", 34, "", 2, null);
-        newProject.addNewEmployee(Arrays.asList(new Employee("Tom The Fish")));
+        newProject.addNewEmployee(Collections.singletonList(new Employee("Tom The Fish")));
         assertEquals(newProject.getEmployees().get(0).getName(), "Tom The Fish");
     }
 

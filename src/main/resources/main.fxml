@@ -79,25 +79,25 @@
                         </HBox.margin>
                     </Label>
                 </HBox>
-            <HBox id="projectToolbar2" alignment="TOP_RIGHT" layoutX="825.0" prefHeight="40.0" prefWidth="450.0" AnchorPane.leftAnchor="825.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-               <children>
-                       <Button mnemonicParsing="false" text="Archive Project">
-                           <HBox.margin>
-                               <Insets left="40.0" />
-                           </HBox.margin>
-                       </Button>
-                       <Label prefHeight="24.0" prefWidth="43.0" text="Search:">
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin></Label>
-                       <TextField prefHeight="10.0" prefWidth="141.0" />
-                       <CheckBox id="showArchivedCheckbox" mnemonicParsing="false" text="Show Archived">
-                           <HBox.margin>
-                               <Insets left="10.0" top="4.0" />
-                           </HBox.margin>
-                       </CheckBox>
-               </children>
-            </HBox>
+                <HBox id="projectToolbar2" alignment="TOP_RIGHT" layoutX="825.0" prefHeight="40.0" prefWidth="450.0"
+                      AnchorPane.leftAnchor="825.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                    <Button mnemonicParsing="false" text="Archive Project">
+                        <HBox.margin>
+                            <Insets left="40.0"/>
+                        </HBox.margin>
+                    </Button>
+                    <Label prefHeight="24.0" prefWidth="43.0" text="Search:">
+                        <HBox.margin>
+                            <Insets left="5.0"/>
+                        </HBox.margin>
+                    </Label>
+                    <TextField prefHeight="10.0" prefWidth="141.0"/>
+                    <CheckBox id="showArchivedCheckbox" mnemonicParsing="false" text="Show Archived">
+                        <HBox.margin>
+                            <Insets left="10.0" top="4.0"/>
+                        </HBox.margin>
+                    </CheckBox>
+                </HBox>
                 <TableView fx:id="projectView" layoutY="39.0" prefHeight="304.0" prefWidth="1191.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                     <columns>
                         <TableColumn id="idCol" prefWidth="39.0" text="Id" />
@@ -162,7 +162,7 @@
                                                 </HBox.margin>
                                             </Button>
                                         </HBox>
-                                        <Button alignment="TOP_LEFT" mnemonicParsing="false" text="Clear">
+                                        <Button alignment="TOP_LEFT" mnemonicParsing="false" text="Clear Text Fields">
                                             <VBox.margin>
                                                 <Insets top="40.0" />
                                             </VBox.margin>
@@ -189,6 +189,7 @@
                                                     <Insets left="10.0" right="10.0" top="5.0" />
                                                 </padding>
                                                 <Button mnemonicParsing="false" text="Add task" />
+                                    <Button mnemonicParsing="false" text="Edit task" />
                                                 <Button mnemonicParsing="false" text="Delete Task" />
                                             </VBox>
                                             <VBox alignment="BOTTOM_CENTER" prefHeight="329.0" prefWidth="124.0" spacing="20.0">
@@ -297,11 +298,39 @@
                         </Tab>
                         <Tab text="Gantt">
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                <ToolBar prefHeight="40.0">
+                                <ToolBar maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="40.0" prefWidth="8000.0">
                                     <Button id="zoomInButton" mnemonicParsing="false" text="+" />
                                     <Button id="resetZoomButton" mnemonicParsing="false" text="1:1" />
                                     <Button id="zoomOutButton" mnemonicParsing="false" text="-" />
                                     <Label id="zoomLevelLabel" text="Zoom level: 100%" />
+                           <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="19.0" />
+                                    <VBox prefHeight="0.0">
+                                        <Label text="Current Work groups: "/>
+                                        <Label text="Estimated time: "/>
+                                    </VBox>
+                                    <VBox id="OptGroup0">
+                                        <Label text="2">
+                                            <padding>
+                                                <Insets left="13.0"/>
+                                            </padding>
+                                        </Label>
+                                        <Label text="310"/>
+                                    </VBox>
+                           <Separator orientation="VERTICAL" prefWidth="20.0" />
+                                    <VBox prefHeight="0.0" prefWidth="120.0">
+                                        <Label id="OptGroup4" text="Other Possibilities: "/>
+                                        <Label text="Duration:"/>
+                                    </VBox>
+                                    <VBox id="OptGroup1" layoutX="198.0" layoutY="8.0" prefHeight="0.0"
+                                          prefWidth="100.0">
+                                        <Label text="2 work groups"/>
+                                        <Label text="350"/>
+                                    </VBox>
+                                    <VBox id="OptGroup2" layoutX="302.0" layoutY="8.0" maxWidth="1.7976931348623157E308"
+                                          prefHeight="0.0">
+                                        <Label text="3 work groups"/>
+                                        <Label text="320"/>
+                                    </VBox>
                                 </ToolBar>
                                 <ScrollPane layoutY="39.0" prefHeight="599.0" prefWidth="1077.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.0">
                                     <AnchorPane id="outputScrollView" />

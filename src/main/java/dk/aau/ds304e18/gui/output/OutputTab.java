@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.util.List;
@@ -86,7 +85,6 @@ public class OutputTab {
                 ((ListView) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
                         .getItems().clear();
 
-            pane.getChildren().add(new Text(10, 10, "Time: " + pro.getDuration()));
             assignmentTab.drawEmployees();
         }
 
@@ -128,7 +126,7 @@ public class OutputTab {
         barChart.getData().add(series);
 
         // Sets the x axis label to "Working hours".
-        series.getChart().getXAxis().setLabel("Working hours");
+        series.getChart().getXAxis().setLabel("Duration");
         // Sets the y axis label to "chance of completion"
         series.getChart().getYAxis().setLabel("Chance of completion");
         //Create a tooltip for every dataset in the chart.

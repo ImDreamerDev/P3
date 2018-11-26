@@ -11,7 +11,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
     private final List<Task> taskList;
     private final double amountEmployees;
     private final Random random = new Random();
-    private HashMap<Task, InverseGaussian> invG = new HashMap<>();
+    private final HashMap<Task, InverseGaussian> invG = new HashMap<>();
     private final int repeats;
     
     public EstimateTimeCallable(List<Task> taskList, double amountEmployees, int repeats) {

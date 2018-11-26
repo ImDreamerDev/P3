@@ -2,11 +2,9 @@ package dk.aau.ds304e18.models;
 
 import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.math.RecommendedEmployees;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * The class representing of a project
@@ -69,6 +67,15 @@ public class Project {
      * Used to find the quickest one to put into the above one
      */
     private List<List<Double>> tempPossibleCompletions = new ArrayList<>();
+
+    /**
+     * Used to give possible other solutions with an amount of employees
+     * The Integer is the amount of employees
+     * The Double is the estimated time of the project with that amount of employees
+     * It is worth noting that it is possible the project can find a better solution with another amount of employees
+     * Which will give a lower time, consider finding a way to write this into the GUI
+     */
+    private RecommendedEmployees recommendedEmployees;
 
     /**
      * Constructor for project.
@@ -294,5 +301,13 @@ public class Project {
 
     public void setTempPossibleCompletions(List<List<Double>> tempPossibleCompletions) {
         this.tempPossibleCompletions = tempPossibleCompletions;
+    }
+
+    public RecommendedEmployees getRecommendedEmployees() {
+        return recommendedEmployees;
+    }
+
+    public void setRecommendedEmployees(RecommendedEmployees recommendedEmployees) {
+        this.recommendedEmployees = recommendedEmployees;
     }
 }
