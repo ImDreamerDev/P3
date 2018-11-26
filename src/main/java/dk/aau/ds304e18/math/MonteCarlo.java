@@ -235,7 +235,7 @@ public class MonteCarlo {
         }
 
         //Set the amount of employee groups recommended
-        project.setAmountEmpsRecommended(tempRecEmp);
+        project.setRecommendedEmployees(tempRecEmp);
 
         //Set amount of employeees back to what it was
         project.setNumberOfEmployees(tempNumOfEmps);

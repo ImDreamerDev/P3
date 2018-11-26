@@ -75,7 +75,7 @@ public class Project {
      * It is worth noting that it is possible the project can find a better solution with another amount of employees
      * Which will give a lower time, consider finding a way to write this into the GUI
      */
-    private RecommendedEmployees amountEmpsRecommended;
+    private RecommendedEmployees recommendedEmployees;
 
     /**
      * Constructor for project.
@@ -303,11 +303,11 @@ public class Project {
         this.tempPossibleCompletions = tempPossibleCompletions;
     }
 
-    public RecommendedEmployees getAmountEmpsRecommended() {
-        return amountEmpsRecommended;
+    public RecommendedEmployees getRecommendedEmployees() {
+        return recommendedEmployees;
     }
 
-    public void setAmountEmpsRecommended(RecommendedEmployees amountEmpsRecommended) {
-        this.amountEmpsRecommended = amountEmpsRecommended;
+    public void setRecommendedEmployees(RecommendedEmployees recommendedEmployees) {
+        this.recommendedEmployees = recommendedEmployees;
     }
 }

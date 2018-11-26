@@ -5,24 +5,19 @@ import java.util.List;
 
 public class RecommendedEmployees {
 
-    private List<Integer> amountEmps;
-    private List<Double> estTime;
+    private List<Integer> amountEmployees = new ArrayList<>();
+    private List<Double> estimatedTime = new ArrayList<>();
 
-    public RecommendedEmployees() {
-        this.amountEmps = new ArrayList<>();
-        this.estTime = new ArrayList<>();
+    public List<Integer> getAmountEmployees() {
+        return amountEmployees;
     }
 
-    public List<Integer> getAmountEmps() {
-        return amountEmps;
-    }
-
-    public List<Double> getEstTime() {
-        return estTime;
+    public List<Double> getEstimatedTime() {
+        return estimatedTime;
     }
 
     public void add(int emp, double est) {
-        amountEmps.add(emp);
-        estTime.add(est);
+        amountEmployees.add(emp);
+        estimatedTime.add(est);
     }
 }
