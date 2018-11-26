@@ -136,7 +136,7 @@ public class DatabaseParser {
                     }
                 }
                 double startTime = -1d;
-                if (rs.getDouble(9) > 0) startTime = rs.getDouble(9);
+                if (rs.getDouble(9) > -1) startTime = rs.getDouble(9);
 
                 Task task = new Task(id, name, estimatedTime, priority, dependenceIds, employeeIds,
                         projectId, probabilities, startTime);
