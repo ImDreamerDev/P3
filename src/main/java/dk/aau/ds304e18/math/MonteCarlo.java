@@ -214,6 +214,42 @@ public class MonteCarlo {
             }
         }
 
+        //Initialize the temp amount of employee groups and the temp recommended employees
+        double tempNumOfEmps = project.getNumberOfEmployees();
+        RecommendedEmployees tempRecEmp = new RecommendedEmployees();
+
+        //Initialize lower and upperBound and make sure no funny business happens
+        int lowerBound = (int)(tempNumOfEmps*0.5);
+        if(lowerBound == (int)tempNumOfEmps)
+            lowerBound = (int)(tempNumOfEmps-1);
+        if(lowerBound < 1)
+            lowerBound = 1;
+
+        int upperBound = (int)(tempNumOfEmps*1.5);
+        if(upperBound == (int)tempNumOfEmps)
+            upperBound = (int)(tempNumOfEmps + 1);
+
+        //Calculate the estimated time with the different amount of employee groups
+        for(int k = lowerBound; k <= upperBound; k++) {
+            //Set the amount of employees to the set number of employees just to check them
+            project.setNumberOfEmployees(k);
+            //Calculate the estimated time with the current sequence
+            //We just want to give a guess, not give an extremely accurate estimate at different employee group numbers
+            double tempEst = estimateTime(project, true);
+            //If it's within a margin add it to the list
+            if(tempEst < project.getDuration()*0.95 && k > tempNumOfEmps || tempEst < project.getDuration()*1.05 && k < tempNumOfEmps) {
+                //Add it to the recommended amount list
+                tempRecEmp.add(k, tempEst);
+                System.out.println(k + " amount of employees has time " + tempEst);
+            }
+        }
+
+        //Set the amount of employee groups recommended
+        project.setAmountEmpsRecommended(tempRecEmp);
+
+        //Set amount of employeees back to what it was
+        project.setNumberOfEmployees(tempNumOfEmps);
+
         //SOUT
         System.out.println("Worst Path: " + worstSequence);
         System.out.println("Worst Time: " + worstTime);
@@ -270,6 +306,10 @@ public class MonteCarlo {
         return estimateTime(project, 10000, false, 0);
     }
 
+    public static double estimateTime(Project project, boolean rec) {
+        return estimateTime(project, 10000, false, 0, rec);
+    }
+
     /**
      * If you have a project you want to estimate the time in with random sequences
      *
@@ -285,6 +325,10 @@ public class MonteCarlo {
     //Find number of threads
     private static int numOfThreads = Runtime.getRuntime().availableProcessors();
 
+    public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index) {
+        return estimateTime(project, monteCarloRepeats, random, index, false);
+    }
+
     /**
      * The main estimateTime function used to estimate the time of a project
      *
@@ -294,11 +338,11 @@ public class MonteCarlo {
      * @param random            Is it a random sequence or not.
      * @return Returns the estimated time of the project
      */
-    public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index) {
+    public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index, boolean rec) {
         //Adds a list to the index of the possibleCompletions list on the project
         project.getTempPossibleCompletions().add(index, new ArrayList<>());
         //Gets the task list from the project
-        List<Task> taskList = ParseSequence.parseToSingleList(project, false, random, index);
+        List<Task> taskList = ParseSequence.parseToSingleList(project, rec, random, index);
 
         double duration = 0.0;
 
