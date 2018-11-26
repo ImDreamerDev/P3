@@ -24,7 +24,7 @@ public class ProjectManager {
     /**
      * The current project that the project manager is working on
      */
-    private List<Project> currentProjects = new ArrayList<>();
+    private final List<Project> currentProjects = new ArrayList<>();
 
     /**
      * The id of the project that the manager is assigned to
@@ -143,9 +143,7 @@ public class ProjectManager {
     }
 
     public void distributeAddCurrentProject(Project project) {
-        if (currentProjects != null) {
-            this.currentProjects.add(project);
-        }
+        this.currentProjects.add(project);
     }
 
     /**

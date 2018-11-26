@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GanttTab {
     private double zoomFactor = 1;
-    private Project project;
+    private final Project project;
     private AnchorPane scrollViewPane;
     private Label zoomFactorLabel;
     private Parent rootPane;

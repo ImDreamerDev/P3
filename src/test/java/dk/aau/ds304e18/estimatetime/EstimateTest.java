@@ -1,13 +1,10 @@
 package dk.aau.ds304e18.estimatetime;
 
 import dk.aau.ds304e18.database.DatabaseManager;
-import dk.aau.ds304e18.models.Task;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

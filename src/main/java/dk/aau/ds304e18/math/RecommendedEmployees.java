@@ -5,8 +5,8 @@ import java.util.List;
 
 public class RecommendedEmployees {
 
-    private List<Integer> amountEmployees = new ArrayList<>();
-    private List<Double> estimatedTime = new ArrayList<>();
+    private final List<Integer> amountEmployees = new ArrayList<>();
+    private final List<Double> estimatedTime = new ArrayList<>();
 
     public List<Integer> getAmountEmployees() {
         return amountEmployees;
