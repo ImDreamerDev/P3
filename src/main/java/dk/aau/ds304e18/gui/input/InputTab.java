@@ -1,9 +1,11 @@
 package dk.aau.ds304e18.gui.input;
 
 import dk.aau.ds304e18.JavaFXMain;
-import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.math.Maths;
+import dk.aau.ds304e18.math.MonteCarlo;
+import dk.aau.ds304e18.math.MonteCarloExecutorService;
 import dk.aau.ds304e18.math.Probabilities;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectState;
@@ -206,11 +208,52 @@ public class InputTab {
         Tooltip.install(vBoxSplitter.getChildren().get(2), new Tooltip("If checked the program will try to give the most optimal path for tasks"));
         Tooltip.install(vBoxSplitter.getChildren().get(3), new Tooltip("If checked the program will try to find more relevant sequences, which will make it less accurate but faster"));
 
-        vBoxSplitter.getChildren().get(4).setOnMouseClicked(event -> calculate(
-                LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
-                ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
-                Double.parseDouble(numOfEmployees.getText()),
-                ((CheckBox) vBoxSplitter.getChildren().get(3)).isSelected()));
+        vBoxSplitter.getChildren().get(4).setOnMouseClicked(event -> {
+            disableInput();
+            rootPane.lookup("#projectView").setDisable(true);
+            javafx.concurrent.Task<Void> calcTask = calculate(
+                    LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
+                    ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
+                    Double.parseDouble(numOfEmployees.getText()),
+                    ((CheckBox) vBoxSplitter.getChildren().get(3)).isSelected());
+            ProgressBar bar = new ProgressBar();
+            bar.progressProperty().bind(calcTask.progressProperty());
+            ((Button) vBoxSplitter.getChildren().get(4)).setText("Stop");
+            vBoxSplitter.getChildren().get(4).setOnMouseClicked(event1 -> {
+                calcTask.cancel();
+                ((Button) vBoxSplitter.getChildren().get(4)).setText("Calculate");
+                setupInputTab();
+            });
+
+
+            ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1)).getChildren().add(bar);
+            bar.setTooltip(new Tooltip("Current progress."));
+            calcTask.progressProperty().addListener((observable, oldValue, newValue) ->
+                    bar.getTooltip().setText("Progress: " + Math.round(calcTask.getWorkDone() * 100) + "%"));
+
+            //Remove bar if cancelled.
+            calcTask.setOnCancelled(event1 -> {
+                ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1)).getChildren().remove(bar);
+                rootPane.lookup("#projectView").setDisable(false);
+            });
+
+            calcTask.setOnSucceeded(event1 -> {
+                JavaFXMain.outputTab.drawOutputTab(true);
+                tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
+                ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1)).getChildren().remove(bar);
+                enableInput();
+                rootPane.lookup("#projectView").setDisable(false);
+                MonteCarloExecutorService.shutdownExecutor();
+                ((Button) vBoxSplitter.getChildren().get(4)).setText("Calculate");
+            });
+
+            MonteCarloExecutorService.init();
+            Thread thread = new Thread(calcTask);
+            thread.setPriority(9);
+            thread.setName("Calculate");
+            thread.start();
+        });
+
         ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1)).setTooltip(new Tooltip("Edits the selected task from the project"));
         ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1).setOnMouseClicked(event -> editTask(duration1, probability1, duration2, probability2, duration3,
                 probability3, nameTextField, estimatedTimeTextField, priority));
@@ -291,30 +334,38 @@ public class InputTab {
      * @param useFast        - Is the useFast toggled or not. (boolean)
      * @param useMonty       - the monte carlo method is used.
      */
-    private void calculate(Project project, boolean useMonty, double numOfEmployees, boolean useFast) {
-        //Set the number of employees of the project.
-        project.setNumberOfEmployees(numOfEmployees);
-        //Start time taking.
-        Instant start = Instant.now();
-        //Sequence the tasks.
-        Sequence.sequenceTasks(project, useMonty, useFast);
-        //Stop the time taking.
-        Instant end = java.time.Instant.now();
-        //Calculate the time between start and end.
-        Duration between = java.time.Duration.between(start, end);
-        //Print the result out.
-        System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 +
-                        "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
-                between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
+    public javafx.concurrent.Task<Void> calculate(Project project, boolean useMonty, double numOfEmployees, boolean useFast) {
+        return new javafx.concurrent.Task<>() {
 
-        //Update the output tab.
-        JavaFXMain.outputTab.drawOutputTab(useMonty);
-        //Update the input tab.
-        drawInputTab();
-        //Go to the output tab.
-        tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
-        //Update all the tasks.
-        project.getTasks().forEach(DatabaseManager::updateTask);
+            @Override
+            protected void cancelled() {
+                MonteCarloExecutorService.shutdownNow();
+            }
+
+            @Override
+            protected Void call() {
+                //Set the number of employees of the project.
+                project.setNumberOfEmployees(numOfEmployees);
+                //Start time taking.
+                Instant start = Instant.now();
+                //Sequence the tasks.
+                MonteCarlo.progressProperty().addListener((obs, oldProgress, newProgress) ->
+                        updateProgress(newProgress.doubleValue(), 1));
+
+                Sequence.sequenceTasks(project, useMonty, useFast);
+                //Stop the time taking.
+                Instant end = java.time.Instant.now();
+                //Calculate the time between start and end.
+                Duration between = java.time.Duration.between(start, end);
+                //Print the result out.
+                System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 +
+                                "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
+                        between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
+                //Update all the tasks.
+                project.getTasks().forEach(DatabaseManager::updateTask);
+                return null;
+            }
+        };
     }
 
     /**

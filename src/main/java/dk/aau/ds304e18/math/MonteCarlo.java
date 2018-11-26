@@ -6,6 +6,8 @@ import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
 import dk.aau.ds304e18.sequence.Sequence;
+import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.ReadOnlyDoubleWrapper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +15,25 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class MonteCarlo {
-    
+
+    private static final ReadOnlyDoubleWrapper progress = new ReadOnlyDoubleWrapper();
+
+    public double getProgress() {
+        return progressProperty().get();
+    }
+
+    public static ReadOnlyDoubleProperty progressProperty() {
+        return progress;
+    }
+
+    public static void findFastestSequence(Project project) {
+
+        //Calls the function with the default value 200 - Might up this default value when/if we optimize estimateTime
+        //This might be enough if we find a better way of finding random sequences
+        findFastestSequence(project, 200, true);
+
+    }
+
     public static void findFastestSequence(Project project, boolean fast) {
         findFastestSequence(project, 200, fast);
     }
@@ -87,6 +107,7 @@ public class MonteCarlo {
                 if (j == monteCarloRepeats)
                     System.out.println(j);
 
+
             }
         } else {
             randomSequences[0] = Sequence.findRandomSequence(project, fast);
@@ -113,6 +134,7 @@ public class MonteCarlo {
             time.add(estimateTime(project, true, i));
 
             i++;
+            progress.set((double) i / monteCarloRepeats);
         }
 
         //Set temporary index to the index of the minimum
@@ -326,7 +348,7 @@ public class MonteCarlo {
 
         double duration = 0.0;
 
-        ExecutorService executor = Executors.newFixedThreadPool(numOfThreads);
+        ExecutorService executor = MonteCarloExecutorService.getExecutor();
         //create a list to hold the Future object associated with Callable
         List<Future<Estimate>> list = new ArrayList<>();
         //Create MyCallable instance
@@ -357,12 +379,9 @@ public class MonteCarlo {
                             workingList.get(i) + tempList.get(i));
                 }
             } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
-
-        //shut down the executor service now
-        executor.shutdown();
         return duration / monteCarloRepeats;
     }
 }
