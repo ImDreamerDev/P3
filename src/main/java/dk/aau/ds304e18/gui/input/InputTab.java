@@ -198,6 +198,7 @@ public class InputTab {
 
         ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1)).setTooltip(new Tooltip("Edits the selected task from the project"));
         ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1).setOnMouseClicked(event -> editTask(duration1, probability1, duration2, probability2, duration3,
+                probability3, nameTextField, estimatedTimeTextField, priority));
         vBoxSplitter.getChildren().get(4).setOnMouseClicked(event -> {
             disableInput();
             rootPane.lookup("#projectView").setDisable(true);
