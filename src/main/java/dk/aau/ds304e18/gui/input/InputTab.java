@@ -201,15 +201,17 @@ public class InputTab {
                 ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected(),
                 Double.parseDouble(numOfEmployees.getText()),
                 ((CheckBox) vBoxSplitter.getChildren().get(3)).isSelected()));
-
-        ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1)).setTooltip(new Tooltip("Removes the selected task from the project"));
-        ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1).setOnMouseClicked(event -> removeTask());
+        ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1)).setTooltip(new Tooltip("Edits the selected task from the project"));
+        ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1).setOnMouseClicked(event -> editTask(duration1, probability1, duration2, probability2, duration3,
+                probability3, nameTextField, estimatedTimeTextField, priority));
+        ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(2)).setTooltip(new Tooltip("Removes the selected task from the project"));
+        ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(2).setOnMouseClicked(event -> removeTask());
         //End right side input
 
 
         tableView.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                editTask(listViewDependency, duration1, probability1, duration2, probability2, duration3,
+                editTask(duration1, probability1, duration2, probability2, duration3,
                         probability3, nameTextField, estimatedTimeTextField, priority);
             }
         });
@@ -387,7 +389,7 @@ public class InputTab {
         }
     }
 
-    private void editTask(ListView<Task> listViewDependency, TextField... textFields) {
+    private void editTask(TextField... textFields) {
         ((Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
                 .get(0)).getChildren().get(0))
                 .setText("Update Task");
