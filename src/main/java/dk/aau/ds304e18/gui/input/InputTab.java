@@ -204,7 +204,14 @@ public class InputTab {
         Pane paneSplitter = ((Pane) flowPane.getChildren().get(2));
         VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(1));
-        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked in parallel" + System.lineSeparator() + "Input must be an integer"));
+        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" + System.lineSeparator() + "Input must be an integer"));
+        numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isBlank() && newValue.charAt(0) == '0') {
+                numOfEmployees.setText(newValue.replace("0", ""));
+            }
+            if (!newValue.isBlank())
+                numOfEmployees.setStyle("");
+        });
 
         ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).setTooltip(new Tooltip("Adds the task to the project"));
         //Add task
@@ -229,10 +236,15 @@ public class InputTab {
         ((Button) vBoxSplitter.getChildren().get(3)).setTooltip(new Tooltip("Calculates the probability for the length of the project"));
 
         Tooltip.install(vBoxSplitter.getChildren().get(2), new Tooltip("If checked the program will try to give the most optimal path for tasks"));
-       
+
         vBoxSplitter.getChildren().get(3).setOnMouseClicked(event -> {
             disableInput();
             rootPane.lookup("#projectView").setDisable(true);
+            if (numOfEmployees.getText().isBlank()) {
+                numOfEmployees.setStyle("-fx-background-color: red");
+                return;
+            }
+
             javafx.concurrent.Task<Void> calcTask = calculate(
                     LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
                     Double.parseDouble(numOfEmployees.getText()),
