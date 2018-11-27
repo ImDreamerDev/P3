@@ -204,7 +204,7 @@ public class InputTab {
         Pane paneSplitter = ((Pane) flowPane.getChildren().get(2));
         VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(1));
-        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" + System.lineSeparator() + "Input must be an integer"));
+        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" + System.lineSeparator() + "Input must be a positive integer"));
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isBlank() && newValue.charAt(0) == '0') {
                 numOfEmployees.setText(newValue.replace("0", ""));
