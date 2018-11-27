@@ -180,6 +180,16 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>private javafx.scene.layout.BorderPane</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#flowPane">flowPane</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEditMode">isEditMode</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>private javafx.scene.control.ListView&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#listViewDependency">listViewDependency</a></span></code></th>
 <td class="colLast">&nbsp;</td>
@@ -264,9 +274,8 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>private void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculate(dk.aau.ds304e18.models.Project,boolean,double,boolean)">calculate</a></span>&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-         boolean&nbsp;useMonty,
+<td class="colFirst"><code>javafx.concurrent.Task&lt;java.lang.Void&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculate(dk.aau.ds304e18.models.Project,double,boolean)">calculate</a></span>&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
          double&nbsp;numOfEmployees,
          boolean&nbsp;useFast)</code></th>
 <td class="colLast">
@@ -301,8 +310,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>private void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#editTask(javafx.scene.control.ListView,javafx.scene.control.TextField...)">editTask</a></span>&#8203;(javafx.scene.control.ListView&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
-        javafx.scene.control.TextField...&nbsp;textFields)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#editTask(javafx.scene.control.TextField...)">editTask</a></span>&#8203;(javafx.scene.control.TextField...&nbsp;textFields)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
@@ -482,10 +490,28 @@ extends java.lang.Object</pre>
 <a id="probability3">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>probability3</h4>
 <pre>private&nbsp;javafx.scene.control.TextField probability3</pre>
+</li>
+</ul>
+<a id="flowPane">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>flowPane</h4>
+<pre>private&nbsp;javafx.scene.layout.BorderPane flowPane</pre>
+</li>
+</ul>
+<a id="isEditMode">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isEditMode</h4>
+<pre>private&nbsp;boolean isEditMode</pre>
 </li>
 </ul>
 </li>
@@ -598,23 +624,21 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">private&nbsp;int&nbsp;validate&#8203;(javafx.scene.control.TextField...&nbsp;textFields)</pre>
 </li>
 </ul>
-<a id="calculate(dk.aau.ds304e18.models.Project,boolean,double,boolean)">
+<a id="calculate(dk.aau.ds304e18.models.Project,double,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>calculate</h4>
-<pre class="methodSignature">private&nbsp;void&nbsp;calculate&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-                       boolean&nbsp;useMonty,
-                       double&nbsp;numOfEmployees,
-                       boolean&nbsp;useFast)</pre>
+<pre class="methodSignature">public&nbsp;javafx.concurrent.Task&lt;java.lang.Void&gt;&nbsp;calculate&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                                        double&nbsp;numOfEmployees,
+                                                        boolean&nbsp;useFast)</pre>
 <div class="block">This method calculates and produces the output.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>project</code> - - the project to calculate.</dd>
 <dd><code>numOfEmployees</code> - - the amount of employees.</dd>
 <dd><code>useFast</code> - - Is the useFast toggled or not. (boolean)</dd>
-<dd><code>useMonty</code> - - the monte carlo method is used.</dd>
 </dl>
 </li>
 </ul>
@@ -671,14 +695,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="editTask(javafx.scene.control.ListView,javafx.scene.control.TextField...)">
+<a id="editTask(javafx.scene.control.TextField...)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>editTask</h4>
-<pre class="methodSignature">private&nbsp;void&nbsp;editTask&#8203;(javafx.scene.control.ListView&lt;<a href="../../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listViewDependency,
-                      javafx.scene.control.TextField...&nbsp;textFields)</pre>
+<pre class="methodSignature">private&nbsp;void&nbsp;editTask&#8203;(javafx.scene.control.TextField...&nbsp;textFields)</pre>
 </li>
 </ul>
 <a id="removeTask()">

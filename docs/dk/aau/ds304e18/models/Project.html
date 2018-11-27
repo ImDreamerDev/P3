@@ -208,32 +208,43 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>private <a href="../math/RecommendedEmployees.html" title="class in dk.aau.ds304e18.math">RecommendedEmployees</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recommendedEmployees">recommendedEmployees</a></span></code></th>
+<td class="colLast">
+<div class="block">Used to give possible other solutions with an amount of employees
+ The Integer is the amount of employees
+ The Double is the estimated time of the project with that amount of employees
+ It is worth noting that it is possible the project can find a better solution with another amount of employees
+ Which will give a lower time, consider finding a way to write this into the GUI</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>private java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recommendedPath">recommendedPath</a></span></code></th>
 <td class="colLast">
 <div class="block">The calculated recommended path for the tasks in the project</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sequence">sequence</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private <a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#state">state</a></span></code></th>
 <td class="colLast">
 <div class="block">The current state of the project.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tasks">tasks</a></span></code></th>
 <td class="colLast">
 <div class="block">The list of tasks.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private java.util.List&lt;java.util.List&lt;java.lang.Double&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tempPossibleCompletions">tempPossibleCompletions</a></span></code></th>
 <td class="colLast">
@@ -364,78 +375,78 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecommendedPath()">getRecommendedPath</a></span>()</code></th>
+<td class="colFirst"><code><a href="../math/RecommendedEmployees.html" title="class in dk.aau.ds304e18.math">RecommendedEmployees</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecommendedEmployees()">getRecommendedEmployees</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSequence()">getSequence</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecommendedPath()">getRecommendedPath</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSequence()">getSequence</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getState()">getState</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the current state og the project.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTasks()">getTasks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the list of all tasks in the project.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;java.util.List&lt;java.lang.Double&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTempPossibleCompletions()">getTempPossibleCompletions</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeEmployee(dk.aau.ds304e18.models.Employee)">removeEmployee</a></span>&#8203;(<a href="Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&nbsp;employee)</code></th>
 <td class="colLast">
 <div class="block">Removes employee from project.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTask(dk.aau.ds304e18.models.Task)">removeTask</a></span>&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</code></th>
 <td class="colLast">
 <div class="block">Removes task from tasks.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCreator(dk.aau.ds304e18.models.ProjectManager)">setCreator</a></span>&#8203;(<a href="ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a>&nbsp;creator)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDuration(double)">setDuration</a></span>&#8203;(double&nbsp;duration)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(int)">setId</a></span>&#8203;(int&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Sets the unique ID.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setNumberOfEmployees(double)">setNumberOfEmployees</a></span>&#8203;(double&nbsp;numberOfEmployees)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPossibleCompletions(java.util.List)">setPossibleCompletions</a></span>&#8203;(java.util.List&lt;java.lang.Double&gt;&nbsp;values)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setNumberOfEmployees(double)">setNumberOfEmployees</a></span>&#8203;(double&nbsp;numberOfEmployees)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -445,25 +456,25 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRecommendedPath(java.lang.String)">setRecommendedPath</a></span>&#8203;(java.lang.String&nbsp;recommendedPath)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRecommendedEmployees(dk.aau.ds304e18.math.RecommendedEmployees)">setRecommendedEmployees</a></span>&#8203;(<a href="../math/RecommendedEmployees.html" title="class in dk.aau.ds304e18.math">RecommendedEmployees</a>&nbsp;recommendedEmployees)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSequence(java.lang.String)">setSequence</a></span>&#8203;(java.lang.String&nbsp;sequence)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRecommendedPath(java.lang.String)">setRecommendedPath</a></span>&#8203;(java.lang.String&nbsp;recommendedPath)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSequence(java.lang.String)">setSequence</a></span>&#8203;(java.lang.String&nbsp;sequence)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setState(dk.aau.ds304e18.models.ProjectState)">setState</a></span>&#8203;(<a href="ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a>&nbsp;state)</code></th>
 <td class="colLast">
 <div class="block">Sets the current state of the project.</div>
 </td>
-</tr>
-<tr id="i29" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTempPossibleCompletions(java.util.List)">setTempPossibleCompletions</a></span>&#8203;(java.util.List&lt;java.util.List&lt;java.lang.Double&gt;&gt;&nbsp;tempPossibleCompletions)</code></th>
-<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -609,11 +620,25 @@ extends java.lang.Object</pre>
 <a id="tempPossibleCompletions">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>tempPossibleCompletions</h4>
-<pre>private&nbsp;java.util.List&lt;java.util.List&lt;java.lang.Double&gt;&gt; tempPossibleCompletions</pre>
+<pre>private final&nbsp;java.util.List&lt;java.util.List&lt;java.lang.Double&gt;&gt; tempPossibleCompletions</pre>
 <div class="block">Used to find the quickest one to put into the above one</div>
+</li>
+</ul>
+<a id="recommendedEmployees">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>recommendedEmployees</h4>
+<pre>private&nbsp;<a href="../math/RecommendedEmployees.html" title="class in dk.aau.ds304e18.math">RecommendedEmployees</a> recommendedEmployees</pre>
+<div class="block">Used to give possible other solutions with an amount of employees
+ The Integer is the amount of employees
+ The Double is the estimated time of the project with that amount of employees
+ It is worth noting that it is possible the project can find a better solution with another amount of employees
+ Which will give a lower time, consider finding a way to write this into the GUI</div>
 </li>
 </ul>
 </li>
@@ -956,15 +981,6 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Double&gt;&nbsp;getPossibleCompletions()</pre>
 </li>
 </ul>
-<a id="setPossibleCompletions(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setPossibleCompletions</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setPossibleCompletions&#8203;(java.util.List&lt;java.lang.Double&gt;&nbsp;values)</pre>
-</li>
-</ul>
 <a id="getPossibleSequences()">
 <!--   -->
 </a>
@@ -992,13 +1008,22 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;java.util.List&lt;java.lang.Double&gt;&gt;&nbsp;getTempPossibleCompletions()</pre>
 </li>
 </ul>
-<a id="setTempPossibleCompletions(java.util.List)">
+<a id="getRecommendedEmployees()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRecommendedEmployees</h4>
+<pre class="methodSignature">public&nbsp;<a href="../math/RecommendedEmployees.html" title="class in dk.aau.ds304e18.math">RecommendedEmployees</a>&nbsp;getRecommendedEmployees()</pre>
+</li>
+</ul>
+<a id="setRecommendedEmployees(dk.aau.ds304e18.math.RecommendedEmployees)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>setTempPossibleCompletions</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setTempPossibleCompletions&#8203;(java.util.List&lt;java.util.List&lt;java.lang.Double&gt;&gt;&nbsp;tempPossibleCompletions)</pre>
+<h4>setRecommendedEmployees</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setRecommendedEmployees&#8203;(<a href="../math/RecommendedEmployees.html" title="class in dk.aau.ds304e18.math">RecommendedEmployees</a>&nbsp;recommendedEmployees)</pre>
 </li>
 </ul>
 </li>

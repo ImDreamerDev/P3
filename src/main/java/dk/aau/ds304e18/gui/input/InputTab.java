@@ -158,8 +158,6 @@ public class InputTab {
                 nameTextField.setStyle("-fx-border-color: #ff9c00");
             }
 
-            isEditMode = false;
-
             if (task != null) {
                 ((Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
                         .get(0)).getChildren().get(0))
@@ -326,24 +324,31 @@ public class InputTab {
 
         duration1 = ((TextField) probabilityHBox.getChildren().get(0));
         probability1 = ((TextField) probabilityHBox.getChildren().get(1));
-        duration1.setTooltip(new Tooltip("Estimated duration of the task" + System.lineSeparator() + "Can be a decimal number separated by point"));
-        probability1.setTooltip(new Tooltip("The chance of the task being finished at the given time" + System.lineSeparator() + "Input is given in percentage and can be a decimal number separated by point"));
-        duration1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration1, newValue, false));
-        probability1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability1, newValue, false));
 
         duration2 = ((TextField) probabilityHBox2.getChildren().get(0));
         probability2 = ((TextField) probabilityHBox2.getChildren().get(1));
-        duration2.setTooltip(new Tooltip("Estimated duration of the task" + System.lineSeparator() + "Can be a decimal number separated by point"));
-        probability2.setTooltip(new Tooltip("The chance of the task being finished at the given time" + System.lineSeparator() + "Input is given in percentage and can be a decimal number separated by point"));
-        duration2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration2, newValue, false));
-        probability2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability2, newValue, false));
 
         duration3 = ((TextField) probabilityHBox3.getChildren().get(0));
         probability3 = ((TextField) probabilityHBox3.getChildren().get(1));
-        duration3.setTooltip(new Tooltip("Estimated duration of the task" + System.lineSeparator() + "Can be a decimal number separated by point"));
-        probability3.setTooltip(new Tooltip("The chance of the task being finished at the given time" + System.lineSeparator() + "Input is given in percentage and can be a decimal number separated by point"));
-        duration3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration3, newValue, false));
-        probability3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability3, newValue, false));
+
+        List<TextField> durations = new ArrayList<>();
+        durations.add(duration1);
+        durations.add(duration2);
+        durations.add(duration3);
+
+        List<TextField> probabilities = new ArrayList<>();
+        probabilities.add(probability1);
+        probabilities.add(probability2);
+        probabilities.add(probability3);
+
+        for (int i = 0; i < 3; i++) {
+            durations.get(i).setTooltip(new Tooltip("Estimated duration of the task" + System.lineSeparator() + "Can be a decimal number separated by point"));
+            probabilities.get(i).setTooltip(new Tooltip("The chance of the task being finished at the given time" + System.lineSeparator() + "Input is given in percentage and can be a decimal number separated by point"));
+            int finalI = i;
+            durations.get(i).textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(durations.get(finalI), newValue, false));
+            probabilities.get(i).textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probabilities.get(finalI), newValue, false));
+        }
+
     }
 
     private int validate(TextField... textFields) {

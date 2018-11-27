@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -177,18 +177,6 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>private java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#previousTask">previousTask</a></span></code></th>
-<td class="colLast">
-<div class="block">The tasks that the employee has previously worked on.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>private java.util.List&lt;java.lang.Integer&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#previousTaskIds">previousTaskIds</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>private <a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#project">project</a></span></code></th>
 <td class="colLast">
@@ -218,18 +206,11 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String,java.util.List)">Employee</a></span>&#8203;(int&nbsp;id,
-        java.lang.String&nbsp;name,
-        java.util.List&lt;java.lang.Integer&gt;&nbsp;previousTaskIds)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int,java.lang.String)">Employee</a></span>&#8203;(int&nbsp;id,
+        java.lang.String&nbsp;name)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">Employee</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
-<td class="colLast">
-<div class="block">The constructor for the employee class</div>
-</td>
-</tr>
-<tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,dk.aau.ds304e18.models.Project)">Employee</a></span>&#8203;(java.lang.String&nbsp;name,
         <a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -261,91 +242,74 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addPreviousTask(dk.aau.ds304e18.models.Task)">addPreviousTask</a></span>&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#distributeAddTask(dk.aau.ds304e18.models.Task)">distributeAddTask</a></span>&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</code></th>
 <td class="colLast">
-<div class="block">A function to add a task to the previousTask list.</div>
+<div class="block">This method is used in the distributeModels method to add tasks locally and not interfere with the database.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#distributeAddTask(dk.aau.ds304e18.models.Task)">distributeAddTask</a></span>&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentTask()">getCurrentTask</a></span>()</code></th>
 <td class="colLast">
 <div class="block">the getter for the currentTask</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getId()">getId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the id</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the name.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPreviousTask()">getPreviousTask</a></span>()</code></th>
-<td class="colLast">
-<div class="block">The getter for previousTask.</div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>java.util.List&lt;java.lang.Integer&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPreviousTaskIds()">getPreviousTaskIds</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i9" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProject()">getProject</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for the project</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProjectId()">getProjectId</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(int)">setId</a></span>&#8203;(int&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">The setter for the id</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProject(dk.aau.ds304e18.models.Project)">setProject</a></span>&#8203;(<a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
 <td class="colLast">
 <div class="block">The setter for the project</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProjectId(int)">setProjectId</a></span>&#8203;(int&nbsp;projectId)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -416,30 +380,11 @@ extends java.lang.Object</pre>
 <a id="currentTask">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>currentTask</h4>
 <pre>private final&nbsp;java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt; currentTask</pre>
 <div class="block">The task he is currently assigned.</div>
-</li>
-</ul>
-<a id="previousTask">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>previousTask</h4>
-<pre>private final&nbsp;java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt; previousTask</pre>
-<div class="block">The tasks that the employee has previously worked on.</div>
-</li>
-</ul>
-<a id="previousTaskIds">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>previousTaskIds</h4>
-<pre>private final&nbsp;java.util.List&lt;java.lang.Integer&gt; previousTaskIds</pre>
 </li>
 </ul>
 </li>
@@ -452,20 +397,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>Employee</h4>
-<pre>public&nbsp;Employee&#8203;(java.lang.String&nbsp;name)</pre>
-<div class="block">The constructor for the employee class</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - - The name of the employee.</dd>
-</dl>
-</li>
-</ul>
 <a id="&lt;init&gt;(java.lang.String,dk.aau.ds304e18.models.Project)">
 <!--   -->
 </a>
@@ -476,15 +407,14 @@ extends java.lang.Object</pre>
                 <a href="Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</pre>
 </li>
 </ul>
-<a id="&lt;init&gt;(int,java.lang.String,java.util.List)">
+<a id="&lt;init&gt;(int,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Employee</h4>
 <pre>public&nbsp;Employee&#8203;(int&nbsp;id,
-                java.lang.String&nbsp;name,
-                java.util.List&lt;java.lang.Integer&gt;&nbsp;previousTaskIds)</pre>
+                java.lang.String&nbsp;name)</pre>
 </li>
 </ul>
 </li>
@@ -518,6 +448,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>distributeAddTask</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;distributeAddTask&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</pre>
+<div class="block">This method is used in the distributeModels method to add tasks locally and not interfere with the database.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>task</code> - - the task to add.</dd>
+</dl>
 </li>
 </ul>
 <a id="getId()">
@@ -576,34 +511,6 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getPreviousTask()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getPreviousTask</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;getPreviousTask()</pre>
-<div class="block">The getter for previousTask.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>previousTask - a list of the previous tasks that the employee is no longer working on.</dd>
-</dl>
-</li>
-</ul>
-<a id="addPreviousTask(dk.aau.ds304e18.models.Task)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addPreviousTask</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;addPreviousTask&#8203;(<a href="Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task)</pre>
-<div class="block">A function to add a task to the previousTask list.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>task</code> - - The task to add.</dd>
-</dl>
-</li>
-</ul>
 <a id="setId(int)">
 <!--   -->
 </a>
@@ -634,15 +541,6 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setProjectId</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setProjectId&#8203;(int&nbsp;projectId)</pre>
-</li>
-</ul>
-<a id="getPreviousTaskIds()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getPreviousTaskIds</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Integer&gt;&nbsp;getPreviousTaskIds()</pre>
 </li>
 </ul>
 <a id="setProject(dk.aau.ds304e18.models.Project)">
