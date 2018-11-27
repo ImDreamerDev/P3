@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The tests for the ProjectManager class.
@@ -94,5 +93,13 @@ class ProjectManagerTest {
         Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
         newProjectManager.getCurrentProjectIds().add(newProject.getId());
         assertTrue(newProjectManager.getCurrentProjectIds().contains(1));
+    }
+
+    @Test
+    void TestProjectDistributeAddCurrentProject() {
+        ProjectManager newProjectManager = new ProjectManager("Adam", "test");
+        Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
+        newProjectManager.distributeAddCurrentProject(newProject);
+        assertNotNull(newProjectManager.getCurrentProjects().get(0));
     }
 }

@@ -394,18 +394,17 @@ public class DatabaseManager {
     }
 
     /**
-     * Gets the employees with no current project or those part of his current project.
+     * Gets the employees with no current project or those part of the ProjectManagers current project.
      *
-     * @param projectManager the project manager to get available employees of
-     * @return list of employees with no current project or are part of project managers current project.
+     * @param projectManager the project manager to get the employees of.
+     * @return list of employees with no current project or are part of  the project managers current projects.
      */
     static List<Employee> getAvailableEmployees(ProjectManager projectManager) {
-        List<Integer> employeeIdsToQuery = new ArrayList<>();
 
-        //We want unassigned employees
+        //We want unassigned employees (unassigned have null as their id)
         employeeIdsToQuery.add(0);
         //We want employees from the current project
-        employeeIdsToQuery.addAll(projectManager.getCurrentProjectIds());
+        List<Integer> employeeIdsToQuery = new ArrayList<>(projectManager.getCurrentProjectIds());
 
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
@@ -441,6 +440,7 @@ public class DatabaseManager {
             return null;
         }
     }
+
 
     /**
      * Used to log out. Closes connection to database and clears local storage.

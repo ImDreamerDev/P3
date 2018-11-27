@@ -124,7 +124,6 @@ public class InverseGaussian {
 
     /**
      * The getter for the duration
-     * TODO: Look into optimizing this
      *
      * @param y - The probability of the task succeeding at that duration.
      * @return x - Duration of task.
