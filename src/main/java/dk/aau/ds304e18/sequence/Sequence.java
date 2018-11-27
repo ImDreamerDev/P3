@@ -14,29 +14,9 @@ import static dk.aau.ds304e18.sequence.ParseSequence.unparseList;
 
 public class Sequence {
 
-    public static void sequenceTasks(Project project) {
-        sequenceTasks(project, true);
-    }
-
     public static void sequenceTasks(Project project, boolean fast) {
 
-        /*
-        | indicates where it's supposed to be drawn
-        taskId(taskId, taskId) indicates dependencies
-        taskIds are separated by a comma
-
-        ex:
-
-        1,2|3(1),4(1,2)|5(2,3),6(4)|7(5)
-
-        Would be that 1 and 2 can be done in parallel
-        3 has a dependency on 1
-        4 has a dependency on 1 and 2
-        5 has a dependency on 2 and 3
-        6 has a dependency on 4
-        7 has a dependency on 5
-         */
-
+        //Find the best sequence
         findFastestSequence(project, fast);
 
         //So we don't change the task list in the project
@@ -78,10 +58,6 @@ public class Sequence {
 
         //Set the list of sequenced tasks
         project.setSequence(sequencedTasks.toString());
-
-        //Find the estimated time
-        //   if (!findSequenceMonteCarlo)
-        //      MonteCarlo.estimateTime(project);
     }
 
     public static List<Task> sortTasks(List<Task> tasks) {
