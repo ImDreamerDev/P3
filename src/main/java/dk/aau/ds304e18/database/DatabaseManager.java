@@ -400,9 +400,6 @@ public class DatabaseManager {
      * @return list of employees with no current project or are part of  the project managers current projects.
      */
     static List<Employee> getAvailableEmployees(ProjectManager projectManager) {
-
-        //We want unassigned employees (unassigned have null as their id)
-        employeeIdsToQuery.add(0);
         //We want employees from the current project
         List<Integer> employeeIdsToQuery = new ArrayList<>(projectManager.getCurrentProjectIds());
 
