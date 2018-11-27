@@ -111,6 +111,7 @@ public class InverseGaussian {
     public double getLambda() {
         return this.lambda;
     }
+
     /**
      * The getter for the probability
      *
@@ -132,14 +133,13 @@ public class InverseGaussian {
         double x = 20;
         double startX = -1;
         double endX = -1;
+        double probX = getProbability(x);
 
         //While we're not within a margin from the probability
-        while (getProbability(x) < (y - 1) || getProbability(x) > (y + 1)) {
-
-            double tempProb = getProbability(x);
+        while (probX < (y - 1) || probX > (y + 1)) {
 
             //Check if we're lower
-            if (tempProb < y) {
+            if (probX < y) {
                 //Set startX so we know where to look
                 startX = x;
 
@@ -160,6 +160,7 @@ public class InverseGaussian {
                 else
                     x -= (endX - startX) / 2;
             }
+            probX = getProbability(x);
         }
 
         //Return the x value
