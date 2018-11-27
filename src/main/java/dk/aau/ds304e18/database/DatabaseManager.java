@@ -131,11 +131,28 @@ public class DatabaseManager {
      * @param id id of the Employee to remove.
      */
     public static void removeEmployee(int id) {
-        DatabaseManager.query("DELETE FROM employees WHERE id = " + id);
+        try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
+
+            PreparedStatement statement = dbConnection.prepareStatement("DELETE FROM employees where id = ?");
+            statement.setInt(1, id);
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void removeProjectManager(int id) {
-        DatabaseManager.query("DELETE FROM projectmanagers WHERE id = " + id);
+        try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
+
+            PreparedStatement statement = dbConnection.prepareStatement("DELETE FROM projectmanagers where id = ?");
+            statement.setInt(1, id);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -154,7 +171,16 @@ public class DatabaseManager {
                 DatabaseManager.updateTask(task);
             }
         });
-        DatabaseManager.query("DELETE FROM tasks WHERE id = " + id);
+        try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
+
+            PreparedStatement statement = dbConnection.prepareStatement("DELETE FROM tasks where id = ?");
+            statement.setInt(1, id);
+            statement.execute();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -433,9 +459,10 @@ public class DatabaseManager {
 
                 // for each employee in the localobjectstorage assigns the employee to the project.
                 for (Employee emp : LocalObjStorage.getEmployeeList()) {
-                    if (emp.getProjectId() != 0){
+                    if (emp.getProjectId() != 0) {
                         emp.setProject(LocalObjStorage.getProjectById(emp.getProjectId()));
-                        LocalObjStorage.getProjectById(emp.getProjectId()).addNewEmployee(emp);}
+                        LocalObjStorage.getProjectById(emp.getProjectId()).addNewEmployee(emp);
+                    }
                 }
 
                 updateProgress(4, progressBarParts);
