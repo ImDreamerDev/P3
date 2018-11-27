@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -231,26 +231,12 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>private static double</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#density(double,double,double)">density</a></span>&#8203;(double&nbsp;mu,
-       double&nbsp;lambda,
-       double&nbsp;x)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>private static double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#evalCheby(double)">evalCheby</a></span>&#8203;(double&nbsp;x)</code></th>
 <td class="colLast">
 <div class="block">Used to calculate the CDF of the normal distribution</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>double</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDensity(double)">getDensity</a></span>&#8203;(double&nbsp;x)</code></th>
-<td class="colLast">
-<div class="block">The getter for Density</div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDuration(double)">getDuration</a></span>&#8203;(double&nbsp;y)</code></th>
 <td class="colLast">
@@ -258,28 +244,21 @@ extends java.lang.Object</pre>
  TODO: Look into optimizing this</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLambda()">getLambda</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The getter for lambda.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>double</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMu()">getMu</a></span>()</code></th>
-<td class="colLast">
-<div class="block">The getter for mu.</div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProbability(double)">getProbability</a></span>&#8203;(double&nbsp;x)</code></th>
 <td class="colLast">
 <div class="block">The getter for the probability</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParams(double,double)">setParams</a></span>&#8203;(double&nbsp;mu,
          double&nbsp;lambda)</code></th>
@@ -377,17 +356,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="density(double,double,double)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>density</h4>
-<pre class="methodSignature">private static&nbsp;double&nbsp;density&#8203;(double&nbsp;mu,
-                              double&nbsp;lambda,
-                              double&nbsp;x)</pre>
-</li>
-</ul>
 <a id="cdf(double,double,double)">
 <!--   -->
 </a>
@@ -467,36 +435,6 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>lambda.</dd>
-</dl>
-</li>
-</ul>
-<a id="getMu()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getMu</h4>
-<pre class="methodSignature">public&nbsp;double&nbsp;getMu()</pre>
-<div class="block">The getter for mu.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>mu.</dd>
-</dl>
-</li>
-</ul>
-<a id="getDensity(double)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getDensity</h4>
-<pre class="methodSignature">public&nbsp;double&nbsp;getDensity&#8203;(double&nbsp;x)</pre>
-<div class="block">The getter for Density</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>x</code> - - x value</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>density</dd>
 </dl>
 </li>
 </ul>

@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -90,13 +90,13 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -140,6 +140,34 @@ extends java.lang.Object</pre>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="memberSummary">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private static int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#numOfThreads">numOfThreads</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private static javafx.beans.property.ReadOnlyDoubleWrapper</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#progress">progress</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section role="region">
 <ul class="blockList">
@@ -176,13 +204,23 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static double</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateTime(dk.aau.ds304e18.models.Project)">estimateTime</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
-<td class="colLast">
-<div class="block">If you have a project you want to estimate the time in</div>
-</td>
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#allLowestToNextLowest(java.util.List)">allLowestToNextLowest</a></span>&#8203;(java.util.List&lt;java.lang.Double&gt;&nbsp;startTimes)</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>private static boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#check(dk.aau.ds304e18.models.Task,java.util.List)">check</a></span>&#8203;(<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task,
+     java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;alreadyStarted)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>static double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateTime(dk.aau.ds304e18.models.Project,boolean)">estimateTime</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+            boolean&nbsp;rec)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>static double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateTime(dk.aau.ds304e18.models.Project,boolean,int)">estimateTime</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
             boolean&nbsp;random,
@@ -191,32 +229,47 @@ extends java.lang.Object</pre>
 <div class="block">If you have a project you want to estimate the time in with random sequences</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateTime(dk.aau.ds304e18.models.Project,int,boolean,int)">estimateTime</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
             int&nbsp;monteCarloRepeats,
             boolean&nbsp;random,
             int&nbsp;index)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>static double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateTime(dk.aau.ds304e18.models.Project,int,boolean,int,boolean)">estimateTime</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+            int&nbsp;monteCarloRepeats,
+            boolean&nbsp;random,
+            int&nbsp;index,
+            boolean&nbsp;rec)</code></th>
 <td class="colLast">
 <div class="block">The main estimateTime function used to estimate the time of a project</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findFastestSequence(dk.aau.ds304e18.models.Project)">findFastestSequence</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findFastestSequence(dk.aau.ds304e18.models.Project,boolean)">findFastestSequence</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
                    boolean&nbsp;fast)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findFastestSequence(dk.aau.ds304e18.models.Project,int,boolean)">findFastestSequence</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
                    int&nbsp;monteCarloRepeats,
                    boolean&nbsp;fast)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>private static int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findSmallestPossible(dk.aau.ds304e18.models.Task,java.util.List)">findSmallestPossible</a></span>&#8203;(<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task,
+                    java.util.List&lt;java.lang.Double&gt;&nbsp;startTimes)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>static javafx.beans.property.ReadOnlyDoubleProperty</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#progressProperty()">progressProperty</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -236,6 +289,34 @@ extends java.lang.Object</pre>
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a id="progress">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>progress</h4>
+<pre>private static final&nbsp;javafx.beans.property.ReadOnlyDoubleWrapper progress</pre>
+</li>
+</ul>
+<a id="numOfThreads">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>numOfThreads</h4>
+<pre>private static final&nbsp;int numOfThreads</pre>
+</li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section role="region">
 <ul class="blockList">
@@ -262,13 +343,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="findFastestSequence(dk.aau.ds304e18.models.Project)">
+<a id="progressProperty()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>findFastestSequence</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;findFastestSequence&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</pre>
+<h4>progressProperty</h4>
+<pre class="methodSignature">public static&nbsp;javafx.beans.property.ReadOnlyDoubleProperty&nbsp;progressProperty()</pre>
 </li>
 </ul>
 <a id="findFastestSequence(dk.aau.ds304e18.models.Project,boolean)">
@@ -292,20 +373,43 @@ extends java.lang.Object</pre>
                                        boolean&nbsp;fast)</pre>
 </li>
 </ul>
-<a id="estimateTime(dk.aau.ds304e18.models.Project)">
+<a id="allLowestToNextLowest(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>allLowestToNextLowest</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;allLowestToNextLowest&#8203;(java.util.List&lt;java.lang.Double&gt;&nbsp;startTimes)</pre>
+</li>
+</ul>
+<a id="check(dk.aau.ds304e18.models.Task,java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>check</h4>
+<pre class="methodSignature">private static&nbsp;boolean&nbsp;check&#8203;(<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task,
+                             java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;alreadyStarted)</pre>
+</li>
+</ul>
+<a id="findSmallestPossible(dk.aau.ds304e18.models.Task,java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>findSmallestPossible</h4>
+<pre class="methodSignature">private static&nbsp;int&nbsp;findSmallestPossible&#8203;(<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task,
+                                        java.util.List&lt;java.lang.Double&gt;&nbsp;startTimes)</pre>
+</li>
+</ul>
+<a id="estimateTime(dk.aau.ds304e18.models.Project,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>estimateTime</h4>
-<pre class="methodSignature">public static&nbsp;double&nbsp;estimateTime&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</pre>
-<div class="block">If you have a project you want to estimate the time in</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>project</code> - The project you want estimated</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The estimated time</dd>
-</dl>
+<pre class="methodSignature">public static&nbsp;double&nbsp;estimateTime&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                  boolean&nbsp;rec)</pre>
 </li>
 </ul>
 <a id="estimateTime(dk.aau.ds304e18.models.Project,boolean,int)">
@@ -331,13 +435,26 @@ extends java.lang.Object</pre>
 <a id="estimateTime(dk.aau.ds304e18.models.Project,int,boolean,int)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>estimateTime</h4>
 <pre class="methodSignature">public static&nbsp;double&nbsp;estimateTime&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
                                   int&nbsp;monteCarloRepeats,
                                   boolean&nbsp;random,
                                   int&nbsp;index)</pre>
+</li>
+</ul>
+<a id="estimateTime(dk.aau.ds304e18.models.Project,int,boolean,int,boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>estimateTime</h4>
+<pre class="methodSignature">public static&nbsp;double&nbsp;estimateTime&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                  int&nbsp;monteCarloRepeats,
+                                  boolean&nbsp;random,
+                                  int&nbsp;index,
+                                  boolean&nbsp;rec)</pre>
 <div class="block">The main estimateTime function used to estimate the time of a project</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -403,13 +520,13 @@ extends java.lang.Object</pre>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

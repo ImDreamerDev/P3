@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -164,11 +164,6 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#duration">duration</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code>private java.util.HashMap&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>,&#8203;java.lang.Double&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startTimes">startTimes</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
 </table>
 </li>
 </ul>
@@ -187,8 +182,7 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.List,java.util.HashMap,double)">Estimate</a></span>&#8203;(java.util.List&lt;java.lang.Double&gt;&nbsp;chances,
-        java.util.HashMap&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>,&#8203;java.lang.Double&gt;&nbsp;startTimes,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.util.List,double)">Estimate</a></span>&#8203;(java.util.List&lt;java.lang.Double&gt;&nbsp;chances,
         double&nbsp;duration)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -218,16 +212,6 @@ extends java.lang.Object</pre>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDuration()">getDuration</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>java.util.HashMap&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>,&#8203;java.lang.Double&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStartTimes()">getStartTimes</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDuration(double)">setDuration</a></span>&#8203;(double&nbsp;duration)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -260,16 +244,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>chances</h4>
-<pre>private&nbsp;java.util.List&lt;java.lang.Double&gt; chances</pre>
-</li>
-</ul>
-<a id="startTimes">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>startTimes</h4>
-<pre>private&nbsp;java.util.HashMap&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>,&#8203;java.lang.Double&gt; startTimes</pre>
+<pre>private final&nbsp;java.util.List&lt;java.lang.Double&gt; chances</pre>
 </li>
 </ul>
 <a id="duration">
@@ -278,7 +253,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>duration</h4>
-<pre>private&nbsp;double duration</pre>
+<pre>private final&nbsp;double duration</pre>
 </li>
 </ul>
 </li>
@@ -291,14 +266,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.util.List,java.util.HashMap,double)">
+<a id="&lt;init&gt;(java.util.List,double)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Estimate</h4>
 <pre>public&nbsp;Estimate&#8203;(java.util.List&lt;java.lang.Double&gt;&nbsp;chances,
-                java.util.HashMap&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>,&#8203;java.lang.Double&gt;&nbsp;startTimes,
                 double&nbsp;duration)</pre>
 </li>
 </ul>
@@ -321,31 +295,13 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public&nbsp;double&nbsp;getDuration()</pre>
 </li>
 </ul>
-<a id="setDuration(double)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDuration</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDuration&#8203;(double&nbsp;duration)</pre>
-</li>
-</ul>
 <a id="getChances()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getChances</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Double&gt;&nbsp;getChances()</pre>
-</li>
-</ul>
-<a id="getStartTimes()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getStartTimes</h4>
-<pre class="methodSignature">public&nbsp;java.util.HashMap&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>,&#8203;java.lang.Double&gt;&nbsp;getStartTimes()</pre>
+<h4>getChances</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Double&gt;&nbsp;getChances()</pre>
 </li>
 </ul>
 </li>

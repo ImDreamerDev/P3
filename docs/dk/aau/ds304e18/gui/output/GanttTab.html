@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -155,21 +155,26 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>private javafx.scene.layout.AnchorPane</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pane">pane</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>private <a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#project">project</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private javafx.scene.Parent</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rootPane">rootPane</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 <tr class="altColor">
+<td class="colFirst"><code>private javafx.scene.layout.AnchorPane</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#scrollViewPane">scrollViewPane</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>private double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zoomFactor">zoomFactor</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private javafx.scene.control.Label</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zoomFactorLabel">zoomFactorLabel</a></span></code></th>
 <td class="colLast">&nbsp;</td>
@@ -214,20 +219,30 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearText(javafx.scene.layout.VBox)">clearText</a></span>&#8203;(javafx.scene.layout.VBox&nbsp;optGroup)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drawTasks()">drawTasks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The function for drawing the tasks and arrows</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#recommend()">recommend</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zoomIn()">zoomIn</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The function for zooming in</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zoomOut()">zoomOut</a></span>()</code></th>
 <td class="colLast">
@@ -273,25 +288,34 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>project</h4>
-<pre>private&nbsp;<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a> project</pre>
+<pre>private final&nbsp;<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a> project</pre>
 </li>
 </ul>
-<a id="pane">
+<a id="scrollViewPane">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>pane</h4>
-<pre>private&nbsp;javafx.scene.layout.AnchorPane pane</pre>
+<h4>scrollViewPane</h4>
+<pre>private&nbsp;javafx.scene.layout.AnchorPane scrollViewPane</pre>
 </li>
 </ul>
 <a id="zoomFactorLabel">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>zoomFactorLabel</h4>
 <pre>private&nbsp;javafx.scene.control.Label zoomFactorLabel</pre>
+</li>
+</ul>
+<a id="rootPane">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>rootPane</h4>
+<pre>private&nbsp;javafx.scene.Parent rootPane</pre>
 </li>
 </ul>
 </li>
@@ -346,11 +370,29 @@ extends java.lang.Object</pre>
 <a id="drawTasks()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>drawTasks</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;drawTasks()</pre>
 <div class="block">The function for drawing the tasks and arrows</div>
+</li>
+</ul>
+<a id="recommend()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>recommend</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;recommend()</pre>
+</li>
+</ul>
+<a id="clearText(javafx.scene.layout.VBox)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>clearText</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;clearText&#8203;(javafx.scene.layout.VBox&nbsp;optGroup)</pre>
 </li>
 </ul>
 </li>
