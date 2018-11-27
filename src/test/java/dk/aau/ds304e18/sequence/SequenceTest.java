@@ -106,7 +106,7 @@ class SequenceTest {
 
         task3.addDependency(Collections.singletonList(task1));
 
-        Sequence.sequenceTasks(project, false, false);
+        Sequence.sequenceTasks(project, false);
         String assertedSequencedTasks = task4.getId() + "," +
                 task2.getId() + "," +
                 task1.getId() + "|" +
@@ -135,7 +135,7 @@ class SequenceTest {
 
         task3.addDependency(Collections.singletonList(task1));
 
-        Sequence.sequenceTasks(project, false, false);
+        Sequence.sequenceTasks(project, false);
         String assertedSequencedTasks = task4.getId() + "," +
                 task2.getId() + "," +
                 task1.getId() + "|" +

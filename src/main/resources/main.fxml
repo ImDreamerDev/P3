@@ -79,22 +79,21 @@
                         </HBox.margin>
                     </Label>
                 </HBox>
-                <HBox id="projectToolbar2" alignment="TOP_RIGHT" layoutX="825.0" prefHeight="40.0" prefWidth="450.0"
-                      AnchorPane.leftAnchor="825.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                <HBox id="projectToolbar2" alignment="TOP_RIGHT" layoutX="825.0" prefHeight="40.0" prefWidth="450.0" AnchorPane.leftAnchor="825.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                     <Button mnemonicParsing="false" text="Archive Project">
                         <HBox.margin>
-                            <Insets left="40.0"/>
+                            <Insets left="40.0" />
                         </HBox.margin>
                     </Button>
                     <Label prefHeight="24.0" prefWidth="43.0" text="Search:">
                         <HBox.margin>
-                            <Insets left="5.0"/>
+                            <Insets left="5.0" />
                         </HBox.margin>
                     </Label>
-                    <TextField prefHeight="10.0" prefWidth="141.0"/>
+                    <TextField prefHeight="10.0" prefWidth="141.0" />
                     <CheckBox id="showArchivedCheckbox" mnemonicParsing="false" text="Show Archived">
                         <HBox.margin>
-                            <Insets left="10.0" top="4.0"/>
+                            <Insets left="10.0" top="4.0" />
                         </HBox.margin>
                     </CheckBox>
                 </HBox>
@@ -202,7 +201,6 @@
                                                         <Insets left="3.0" right="3.0" top="-20.0" />
                                                     </VBox.margin>
                                                 </TextField>
-                                                <CheckBox mnemonicParsing="false" selected="true" text="Sequence" />
                                                 <CheckBox mnemonicParsing="false" selected="true" text="Use fast" />
                                                 <Button mnemonicParsing="false" text="Calculate" />
                                             </VBox>
@@ -305,31 +303,29 @@
                                     <Label id="zoomLevelLabel" text="Zoom level: 100%" />
                            <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="19.0" />
                                     <VBox prefHeight="0.0">
-                                        <Label text="Current Work groups: "/>
-                                        <Label text="Estimated time: "/>
+                                        <Label text="Current Work groups: " />
+                                        <Label text="Estimated time: " />
                                     </VBox>
                                     <VBox id="OptGroup0">
                                         <Label text="2">
                                             <padding>
-                                                <Insets left="13.0"/>
+                                                <Insets left="13.0" />
                                             </padding>
                                         </Label>
-                                        <Label text="310"/>
+                                        <Label text="310" />
                                     </VBox>
                            <Separator orientation="VERTICAL" prefWidth="20.0" />
                                     <VBox prefHeight="0.0" prefWidth="120.0">
-                                        <Label id="OptGroup4" text="Other Possibilities: "/>
-                                        <Label text="Duration:"/>
+                                        <Label id="OptGroup4" text="Other Possibilities: " />
+                                        <Label text="Duration:" />
                                     </VBox>
-                                    <VBox id="OptGroup1" layoutX="198.0" layoutY="8.0" prefHeight="0.0"
-                                          prefWidth="100.0">
-                                        <Label text="2 work groups"/>
-                                        <Label text="350"/>
+                                    <VBox id="OptGroup1" layoutX="198.0" layoutY="8.0" prefHeight="0.0" prefWidth="100.0">
+                                        <Label text="2 work groups" />
+                                        <Label text="350" />
                                     </VBox>
-                                    <VBox id="OptGroup2" layoutX="302.0" layoutY="8.0" maxWidth="1.7976931348623157E308"
-                                          prefHeight="0.0">
-                                        <Label text="3 work groups"/>
-                                        <Label text="320"/>
+                                    <VBox id="OptGroup2" layoutX="302.0" layoutY="8.0" maxWidth="1.7976931348623157E308" prefHeight="0.0">
+                                        <Label text="3 work groups" />
+                                        <Label text="320" />
                                     </VBox>
                                 </ToolBar>
                                 <ScrollPane layoutY="39.0" prefHeight="599.0" prefWidth="1077.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.0">

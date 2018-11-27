@@ -15,10 +15,10 @@ import static dk.aau.ds304e18.sequence.ParseSequence.unparseList;
 public class Sequence {
 
     public static void sequenceTasks(Project project) {
-        sequenceTasks(project, false, true);
+        sequenceTasks(project, true);
     }
 
-    public static void sequenceTasks(Project project, boolean findSequenceMonteCarlo, boolean fast) {
+    public static void sequenceTasks(Project project, boolean fast) {
 
         /*
         | indicates where it's supposed to be drawn
@@ -37,8 +37,7 @@ public class Sequence {
         7 has a dependency on 5
          */
 
-        if (findSequenceMonteCarlo)
-            findFastestSequence(project, fast);
+        findFastestSequence(project, fast);
 
         //So we don't change the task list in the project
         List<Task> tasks = new ArrayList<>(project.getTasks());
@@ -81,8 +80,8 @@ public class Sequence {
         project.setSequence(sequencedTasks.toString());
 
         //Find the estimated time
-        if (!findSequenceMonteCarlo)
-            MonteCarlo.estimateTime(project);
+        //   if (!findSequenceMonteCarlo)
+        //      MonteCarlo.estimateTime(project);
     }
 
     public static List<Task> sortTasks(List<Task> tasks) {
@@ -99,6 +98,7 @@ public class Sequence {
      * Finds a random sequence with a project
      * TODO: Optimize this so we only find relevant sequences when going fast (Or close to every relevant sequence)
      * TODO: Still not good enough, there are significantly better sequences found if you do it slow rather than fast
+     *
      * @param project The project where we want a random sequence
      * @param fast    If you want to do fast calculation or slow
      * @return Returns a string with the sequence
@@ -128,8 +128,8 @@ public class Sequence {
 
         sortTasks(tasksNotSequenced); //Might not make sense to put prioritised first - It can make the project longer than it should
 
-        if(project.getNumberOfEmployees() < 2) {
-            for(int i = 0; i < tasksLeft; i++) {
+        if (project.getNumberOfEmployees() < 2) {
+            for (int i = 0; i < tasksLeft; i++) {
                 if (!tasksSequenced.containsAll(tasksNotSequenced.get(i).getDependencies())) continue;
                 tasksSequenced.add(tasksNotSequenced.get(i));
                 tasksNotSequenced.remove(tasksNotSequenced.get(i));
