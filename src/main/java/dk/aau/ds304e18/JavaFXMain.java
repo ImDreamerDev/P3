@@ -91,14 +91,14 @@ public class JavaFXMain extends Application {
         outputTabPane.getTabs().get(2).setTooltip(new Tooltip("The page to assign employees to the task on the selected project"));
 
         //Get the update button from the GUI.
-        Button updateButton = (Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1);
+        Button updateButton = (Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(0);
         //Set the tooltip of the update button.
         updateButton.setTooltip(new Tooltip("Updates the program"));
         //Makes the update button update the local stored objects.
         updateButton.setOnMouseClicked(event -> update());
 
         //Get the log out button from the GUI.
-        Button logoutButton = (Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(3);
+        Button logoutButton = (Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(2);
         //Set the tooltip of the log out button.
         logoutButton.setTooltip(new Tooltip("Logs out of the program"));
         //Makes the logout button log the user out.

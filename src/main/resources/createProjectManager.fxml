@@ -12,64 +12,60 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea">
-   <StackPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <StackPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-         <VBox id="loginPane" alignment="CENTER" prefHeight="400.0" prefWidth="445.0">
+         <VBox id="loginPane" alignment="CENTER" prefHeight="400.0" prefWidth="387.0">
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="509.0" text="Create project manager">
                <font>
-                  <Font name="System Bold" size="28.0"/>
+                  <Font name="System Bold" size="28.0" />
                </font>
             </Label>
             <Label text="Username">
                <VBox.margin>
-                  <Insets top="10.0"/>
+                  <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                       prefWidth="160.0" promptText="username">
+            <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="160.0" promptText="username">
                <VBox.margin>
-                  <Insets/>
+                  <Insets />
                </VBox.margin>
             </TextField>
-            <Label text="Password"/>
-            <PasswordField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                           minWidth="-Infinity" prefWidth="160.0" promptText="password">
+            <Label text="Password" />
+            <PasswordField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="160.0" promptText="password">
                <VBox.margin>
-                  <Insets/>
+                  <Insets />
                </VBox.margin>
             </PasswordField>
-            <Label text="Repeat password"/>
-            <PasswordField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                           minWidth="-Infinity" prefWidth="160.0" promptText="repeat password">
+            <Label text="Repeat password" />
+            <PasswordField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="160.0" promptText="repeat password">
                <VBox.margin>
-                  <Insets/>
+                  <Insets />
                </VBox.margin>
             </PasswordField>
             <Label text="Error: " textFill="RED" visible="false">
                <font>
-                  <Font size="16.0"/>
+                  <Font size="16.0" />
                </font>
             </Label>
             <Button mnemonicParsing="false" text="Create">
                <VBox.margin>
-                  <Insets top="5.0"/>
+                  <Insets top="5.0" />
                </VBox.margin>
             </Button>
          </VBox>
          <VBox id="currentUsers" alignment="CENTER" prefHeight="400.0" prefWidth="169.0">
             <Label text="Project managers:">
                <VBox.margin>
-                  <Insets top="20.0"/>
+                  <Insets top="20.0" />
                </VBox.margin>
                <font>
-                  <Font size="14.0"/>
+                  <Font size="14.0" />
                </font>
             </Label>
             <ListView prefHeight="200.0" prefWidth="166.0">
                <VBox.margin>
-                  <Insets bottom="10.0"/>
+                  <Insets bottom="10.0" />
                </VBox.margin>
             </ListView>
          </VBox>
