@@ -152,7 +152,7 @@ public class InputTab {
 
         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
-            Task task = LocalObjStorage.getTaskList().stream().filter(t -> t.getName().equals(newValue)).findFirst().orElse(null);
+            Task task = LocalObjStorage.getTaskList().stream().filter(t -> t.getProject().getId() == JavaFXMain.selectedProjectId && t.getName().equals(newValue)).findFirst().orElse(null);
 
             if (task != null && !isEditMode) {
                 nameTextField.setStyle("-fx-border-color: #ff9c00");

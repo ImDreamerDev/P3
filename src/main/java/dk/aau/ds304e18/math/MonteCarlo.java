@@ -27,7 +27,6 @@ public class MonteCarlo {
     }
 
     public static void findFastestSequence(Project project) {
-
         //Calls the function with the default value 200 - Might up this default value when/if we optimize estimateTime
         //This might be enough if we find a better way of finding random sequences
         findFastestSequence(project, 200, true);
@@ -107,8 +106,6 @@ public class MonteCarlo {
 
                 if (j == monteCarloRepeats)
                     System.out.println(j);
-
-
             }
         } else {
             randomSequences[0] = Sequence.findRandomSequence(project, fast);
@@ -138,18 +135,13 @@ public class MonteCarlo {
             progress.set((double) i / monteCarloRepeats);
         }
 
-        //Set temporary index to the index of the minimum
-        int tempI = time.indexOf(Collections.min(time));
-
-        //System.out.println(project.getTempPossibleCompletions().get(tempI));
-
-        project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(tempI));
-
         //Set the variables to correct stuff
         bestTime = Collections.min(time);
         bestSequence = randomSequences[time.indexOf(bestTime)];
         worstTime = Collections.max(time);
         worstSequence = randomSequences[time.indexOf(worstTime)];
+
+        project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(time.indexOf(bestTime)));
 
         //Set the projects values to correct stuff
         project.setRecommendedPath(bestSequence);
@@ -158,11 +150,12 @@ public class MonteCarlo {
         List<Task> alreadyStarted = new ArrayList<>();
         List<Task> withoutDeps = new ArrayList<>();
         boolean stuffChanged;
-        for (Task task : tempRecList)
+        for (Task task : tempRecList) {
             if (task.getDependencies().size() == 0)
                 withoutDeps.add(task);
-        for (Task task : tempRecList)
             task.setStartTime(-1);
+        }
+
         for (int count = 0; count < tempRecList.size(); ) {
             stuffChanged = false;
             for (Task task : tempRecList) {
