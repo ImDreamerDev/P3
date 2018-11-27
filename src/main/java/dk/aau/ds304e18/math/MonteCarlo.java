@@ -29,11 +29,7 @@ public class MonteCarlo {
     public static void findFastestSequence(Project project, int monteCarloRepeats, boolean fast) {
         //Resets the possible completions every time so it's accurate
         project.getPossibleCompletions().clear();
-        double numOfWorkGroups = project.getNumberOfEmployees();
-
-        //2 index integers
-        int i = 0;
-        int j = 0;
+        int numOfWorkGroups = (int) project.getNumberOfEmployees();
 
         //The strings that will hold the best and worst sequence
         String bestSequence;
@@ -43,20 +39,51 @@ public class MonteCarlo {
         double bestTime;
         double worstTime; //May be used in the future
 
-        List<Double> startTimes = new ArrayList<>();
+        //Initialize an array of strings, we use array because array is faster than list
+        String[] randomSequences = findRandomSequences(monteCarloRepeats, numOfWorkGroups, project, fast);
+
+        //Calculate the lambda value for all tasks and look for optimizing the mu value
+        calculateLambdaForAllTasks(project);
+
+        //Go through all the sequences made and add them to the temporary list "time"
+        List<Double> time = estimateTimeForAllSequences(monteCarloRepeats, randomSequences, project);
+
+        //Set the variables to correct stuff
+        bestTime = Collections.min(time);
+        bestSequence = randomSequences[time.indexOf(bestTime)];
+
+        //This is only used for fun - To see how big the difference is between the worst and best sequence
+        worstTime = Collections.max(time);
+        worstSequence = randomSequences[time.indexOf(worstTime)];
+
+        //Set the projects values to correct stuff
+        project.setRecommendedPath(bestSequence);
+        project.setDuration(bestTime);
+        project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(time.indexOf(bestTime)));
+        setStartTimesOfTasks(project, numOfWorkGroups);
+        project.setRecommendedEmployees(optimizeWorkGroups(project, numOfWorkGroups));
+
+        //Set amount of employeees back to what it was
+        project.setNumberOfEmployees(numOfWorkGroups);
+
+        //SOUT
+        System.out.println("Worst Path: " + worstSequence);
+        System.out.println("Worst Time: " + worstTime);
+        System.out.println("Best Path: " + bestSequence);
+        System.out.println("Best Time: " + bestTime);
+
+    }
+
+    //TODO: Consider putting this into more functions
+    private static String[] findRandomSequences(int monteCarloRepeats, int numOfWorkGroups, Project project, boolean fast) {
 
         project.setPossibleSequences(new String[monteCarloRepeats]);
-
-        //Initialize an array of strings, we use array because array is faster than list
         String[] randomSequences = project.getPossibleSequences();
-
-        //Initialize a list of doubles which we will use as temporary placeholder
-        List<Double> time = new ArrayList<>();
+        int j = 0;
 
         //Used to check if we can find any other random sequences within a million tries
         int counter = 0;
 
-        //TODO: Really needs some optimizing - Actually maybe not, it's fast apparently
         if (numOfWorkGroups > 1) {
             while (j < monteCarloRepeats) {
 
@@ -100,15 +127,21 @@ public class MonteCarlo {
             randomSequences[0] = Sequence.findRandomSequence(project, fast);
         }
 
-        //For each task in taskList
+        return randomSequences;
+    }
+
+    private static void calculateLambdaForAllTasks(Project project) {
         for (Task task : project.getTasks()) {
             //If the task does not have a lambda yet
             //Calculate the lambda and optimize the mu value
             List<Double> temp = CalculateLambda.calculateLambda(task.getEstimatedTime(), task.getProbabilities());
             task.getInvG().setParams(temp.get(0), temp.get(1));
         }
+    }
 
-        //Go through all the sequences made
+    private static List<Double> estimateTimeForAllSequences(int monteCarloRepeats, String[] randomSequences, Project project) {
+        int i = 0;
+        List<Double> time = new ArrayList<>();
         while (i < monteCarloRepeats) {
 
             //If there is no more random sequences break
@@ -122,17 +155,30 @@ public class MonteCarlo {
             progress.set((double) i / monteCarloRepeats);
         }
 
-        //Set the variables to correct stuff
-        bestTime = Collections.min(time);
-        bestSequence = randomSequences[time.indexOf(bestTime)];
-        worstTime = Collections.max(time);
-        worstSequence = randomSequences[time.indexOf(worstTime)];
+        return time;
+    }
 
-        project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(time.indexOf(bestTime)));
+    public static void allLowestToNextLowest(List<Double> startTimes) {
+        int index = 0;
 
-        //Set the projects values to correct stuff
-        project.setRecommendedPath(bestSequence);
-        project.setDuration(bestTime);
+        Collections.sort(startTimes);
+
+        for (Double tempStartTime : startTimes) {
+            if (tempStartTime > startTimes.get(0)) {
+                index = startTimes.indexOf(tempStartTime);
+                break;
+            }
+        }
+
+        double minUpper = startTimes.get(index);
+
+        for (int k = 0; k < index; k++)
+            startTimes.set(k, minUpper);
+    }
+
+    //TODO: Consider putting this into more functions
+    private static void setStartTimesOfTasks(Project project, int numOfWorkGroups) {
+        List<Double> startTimes = new ArrayList<>();
         List<Task> tempRecList = ParseSequence.parseToSingleList(project, true);
         List<Task> alreadyStarted = new ArrayList<>();
         List<Task> withoutDeps = new ArrayList<>();
@@ -192,70 +238,58 @@ public class MonteCarlo {
 
             }
         }
+    }
 
+    private static RecommendedEmployees optimizeWorkGroups(Project project, int numOfWorkGroups) {
         //Initialize the temp amount of employee groups and the temp recommended employees
         RecommendedEmployees tempRecEmp = new RecommendedEmployees();
 
         //Initialize lower and upperBound and make sure no funny business happens
-        int lowerBound = (int) (numOfWorkGroups * 0.5);
-        if (lowerBound == (int) numOfWorkGroups)
-            lowerBound = (int) (numOfWorkGroups - 1);
-        if (lowerBound < 1)
-            lowerBound = 1;
-
-        int upperBound = (int) (numOfWorkGroups * 1.5);
-        if (upperBound == (int) numOfWorkGroups)
-            upperBound = (int) (numOfWorkGroups + 1);
+        int[] lowUp = findLowUp(numOfWorkGroups);
 
         //Calculate the estimated time with the different amount of employee groups
-        for (int k = lowerBound; k <= upperBound; k++) {
-            if (k == numOfWorkGroups) continue;
-            //Set the amount of employees to the set number of employees just to check them
-            project.setNumberOfEmployees(k);
-            //Calculate the estimated time with the current sequence
-            //We just want to give a guess, not give an extremely accurate estimate at different employee group numbers
-            double tempEst = estimateTime(project, true);
-            //If it's within a margin add it to the list
-            if (tempEst < project.getDuration() * 0.95 && k > numOfWorkGroups || tempEst < project.getDuration() * 1.05 && k < numOfWorkGroups) {
-                //Add it to the recommended amount list
-                tempRecEmp.add(k, tempEst);
-                System.out.println(k + " amount of employees has time " + tempEst);
-                if (k > numOfWorkGroups)
-                    break;
-                k = (int) numOfWorkGroups;
-            }
+        for (int i = lowUp[0]; i <= lowUp[1]; i++) {
+            int temp = estimateWithDifferentAmountOfWorkGroups(i, numOfWorkGroups, project, tempRecEmp);
+            if(temp == 0) continue;
+            if(temp == 1) break;
+            if(temp == 2) i = numOfWorkGroups;
         }
 
-        //Set the amount of employee groups recommended
-        project.setRecommendedEmployees(tempRecEmp);
-
-        //Set amount of employeees back to what it was
-        project.setNumberOfEmployees(numOfWorkGroups);
-
-        //SOUT
-        System.out.println("Worst Path: " + worstSequence);
-        System.out.println("Worst Time: " + worstTime);
-        System.out.println("Best Path: " + bestSequence);
-        System.out.println("Best Time: " + bestTime);
+        return tempRecEmp;
 
     }
 
-    public static void allLowestToNextLowest(List<Double> startTimes) {
-        int index = 0;
+    private static int[] findLowUp(int numOfWorkGroups) {
+        int lowerBound = (int) (numOfWorkGroups * 0.5);
+        if (lowerBound == numOfWorkGroups)
+            lowerBound -= 1;
+        if (lowerBound == 0)
+            lowerBound = 1;
 
-        Collections.sort(startTimes);
+        int upperBound = (int) (numOfWorkGroups * 1.5);
+        if (upperBound == numOfWorkGroups)
+            upperBound += 1;
 
-        for (Double tempStartTime : startTimes) {
-            if (tempStartTime > startTimes.get(0)) {
-                index = startTimes.indexOf(tempStartTime);
-                break;
-            }
+        return new int[]{lowerBound, upperBound};
+    }
+
+    private static int estimateWithDifferentAmountOfWorkGroups(int i, int numOfWorkGroups, Project project, RecommendedEmployees tempRecEmp) {
+        if (i == numOfWorkGroups) return 0;
+        //Set the amount of employees to the set number of employees just to check them
+        project.setNumberOfEmployees(i);
+        //Calculate the estimated time with the current sequence
+        //We just want to give a guess, not give an extremely accurate estimate at different employee group numbers
+        double tempEst = estimateTime(project, true);
+        //If it's within a margin add it to the list
+        if (tempEst < project.getDuration() * 0.95 && i > numOfWorkGroups || tempEst < project.getDuration() * 1.05 && i < numOfWorkGroups) {
+            //Add it to the recommended amount list
+            tempRecEmp.add(i, tempEst);
+            System.out.println(i + " amount of employees has time " + tempEst);
+            if (i > numOfWorkGroups)
+                return 1;
+            return 2;
         }
-
-        double minUpper = startTimes.get(index);
-
-        for (int k = 0; k < index; k++)
-            startTimes.set(k, minUpper);
+        return -1;
     }
 
     private static boolean check(Task task, List<Task> alreadyStarted) {
