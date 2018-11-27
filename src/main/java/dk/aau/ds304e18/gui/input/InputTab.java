@@ -372,8 +372,8 @@ public class InputTab {
      * @param numOfEmployees - the amount of employees.
      * @param useFast        - Is the useFast toggled or not. (boolean)
      */
-    public javafx.concurrent.Task<Void> calculate(Project project, double numOfEmployees,
-                                                  boolean useFast) {
+    private javafx.concurrent.Task<Void> calculate(Project project, double numOfEmployees,
+                                                   boolean useFast) {
         return new javafx.concurrent.Task<>() {
 
             @Override

@@ -3,7 +3,7 @@ package dk.aau.ds304e18.math;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CalculateLambda {
+class CalculateLambda {
 
     /**
      * Optimizes mu and calculates lambda from the given probabilities.

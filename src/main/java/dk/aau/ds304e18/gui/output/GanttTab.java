@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class GanttTab {
+class GanttTab {
     private double zoomFactor = 1;
     private final Project project;
     private AnchorPane scrollViewPane;

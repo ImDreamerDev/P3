@@ -1,6 +1,7 @@
 package dk.aau.ds304e18.gui;
 
 import dk.aau.ds304e18.JavaFXMain;
+import dk.aau.ds304e18.database.DatabaseDistributor;
 import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.ProjectManager;
@@ -121,7 +122,7 @@ public class Login {
             Label error = ((Label) vBoxLogin.getChildren().get(2));
             error.setText("");
             error.setVisible(false);
-            Task<Void> voidTask = DatabaseManager.distributeModels(pm.get());
+            Task<Void> voidTask = DatabaseDistributor.distributeModels(pm.get());
             //Create and bind a progressbar to show the process on downloading and setting up everything.
             ProgressBar bar = new ProgressBar();
             bar.progressProperty().bind(voidTask.progressProperty());

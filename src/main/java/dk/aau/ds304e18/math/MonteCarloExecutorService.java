@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class MonteCarloExecutorService {
-    public static ExecutorService executor;
+    private static ExecutorService executor;
 
     public static ExecutorService getExecutor() {
         if (executor == null) {

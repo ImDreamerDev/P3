@@ -1,6 +1,6 @@
 package dk.aau.ds304e18;
 
-import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.database.DatabaseDistributor;
 import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.gui.Login;
 import dk.aau.ds304e18.gui.ProjectTab;
@@ -125,7 +125,7 @@ public class JavaFXMain extends Application {
         //Set the selected id to 0.
         JavaFXMain.selectedProjectId = 0;
         //Make a new task
-        Task<Void> voidTask = DatabaseManager.distributeModels(LocalObjStorage.getProjectManagerList().get(0));
+        Task<Void> voidTask = DatabaseDistributor.distributeModels(LocalObjStorage.getProjectManagerList().get(0));
         //Create and add a progressbar showing the progress of the task.
         ProgressBar bar = new ProgressBar();
         bar.progressProperty().bind(voidTask.progressProperty());
@@ -148,7 +148,7 @@ public class JavaFXMain extends Application {
         });
         //If the task fails set the progress bar red.
         voidTask.setOnFailed(observable -> bar.setStyle("-fx-progress-color: red"));
-        
+
         //Start the task
         new Thread(voidTask).start();
     }

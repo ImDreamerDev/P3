@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LocalObjStorageTest {
-    Employee employee = new Employee("Jens", null);
+class LocalObjStorageTest {
+    private Employee employee = new Employee("Jens", null);
 
 
     @BeforeAll

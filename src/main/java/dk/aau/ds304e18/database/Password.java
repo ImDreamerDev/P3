@@ -21,7 +21,7 @@ public class Password {
      *
      * @return a 16 bytes random salt
      */
-    public static byte[] getNextSalt() {
+    static byte[] getNextSalt() {
         byte[] salt = new byte[16];
         RANDOM.nextBytes(salt);
         return salt;
@@ -57,7 +57,7 @@ public class Password {
      * @param expectedHash the expected hashed value of the password
      * @return true if the given password and salt match the hashed value, false otherwise
      */
-    public static boolean isExpectedPassword(char[] password, byte[] salt, byte[] expectedHash) {
+    static boolean isExpectedPassword(char[] password, byte[] salt, byte[] expectedHash) {
         byte[] passHash = hash(password, salt);
         Arrays.fill(password, Character.MIN_VALUE);
         if (passHash.length != expectedHash.length) return false;
