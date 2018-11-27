@@ -1,6 +1,5 @@
 package dk.aau.ds304e18.sequence;
 
-import dk.aau.ds304e18.math.MonteCarlo;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 
