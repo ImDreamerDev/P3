@@ -32,7 +32,9 @@ class ParseSequenceTest {
 
         task3.addDependency(Collections.singletonList(task1));
 
-        Sequence.sequenceTasks(project);
+        project.setNumberOfEmployees(1);
+
+        Sequence.sequenceTasks(project, false);
 
         List<List<Task>> assertedList = new ArrayList<>();
         List<Task> list1 = new ArrayList<>();
@@ -63,9 +65,11 @@ class ParseSequenceTest {
         Task task3 = new Task("Test3", 5.0, 1, project);
         new Task("Test4", 2.0, 1, project);
 
+        project.setNumberOfEmployees(1);
+
         task3.addDependency(Collections.singletonList(task1));
 
-        Sequence.sequenceTasks(project);
+        Sequence.sequenceTasks(project, false);
         assertNotNull(ParseSequence.parseToSingleList(project, false));
         for (Task task : project.getTasks()) {
             DatabaseManager.removeTask(task.getId());

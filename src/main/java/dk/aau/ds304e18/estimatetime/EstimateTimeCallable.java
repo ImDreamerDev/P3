@@ -91,16 +91,13 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                 duration += durations.get(durations.indexOf(Collections.max(durations)));
 
             } else {
-
-                double currentTime = 0d;
-
                 //For each task in the taskList
                 for (Task task : taskList) {
 
                     //Calculate the duration at the given random value and add that to duration
                     double temp = invG.get(task).getDuration(random.nextDouble() * 100);
                     duration += temp;
-                    currentTime += temp;
+
                 }
             }
 

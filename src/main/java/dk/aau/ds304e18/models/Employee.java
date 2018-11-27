@@ -75,6 +75,10 @@ public class Employee {
         DatabaseManager.updateEmployee(this);
     }
 
+    /**
+     * This method is used in the distributeModels method to add tasks locally and not interfere with the database.
+     * @param task - the task to add.
+     */
     public void distributeAddTask(Task task) {
         if (!this.currentTask.contains(task)) currentTask.add(task);
     }

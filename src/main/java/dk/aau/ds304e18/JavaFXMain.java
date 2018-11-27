@@ -129,8 +129,7 @@ public class JavaFXMain extends Application {
                 JavaFXMain.outputTab = new OutputTab(rootPane);
                 JavaFXMain.inputTab = new InputTab(rootPane);
                 JavaFXMain.projectTab = new ProjectTab(rootPane, LocalObjStorage.getProjectManagerList().get(0));
-                Task<Void> calcTask = inputTab.calculate(LocalObjStorage.getProjectById(Integer.parseInt(getParameters().getNamed().get("projectId"))),
-                        true, Double.parseDouble(getParameters().getNamed().get("numOfEmps")), true);
+                Task<Void> calcTask = inputTab.calculate(LocalObjStorage.getProjectById(Integer.parseInt(getParameters().getNamed().get("projectId"))), Double.parseDouble(getParameters().getNamed().get("numOfEmps")), true);
                 calcTask.setOnSucceeded(event1 -> {
                     MonteCarloExecutorService.shutdownExecutor();
                     Platform.exit();

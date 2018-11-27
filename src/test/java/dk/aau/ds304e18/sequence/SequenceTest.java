@@ -33,7 +33,9 @@ class SequenceTest {
         task2.addDependency(Arrays.asList(task1, task3));
         task4.addDependency(Collections.singletonList(task2));
 
-        Sequence.sequenceTasks(project);
+        project.setNumberOfEmployees(1);
+
+        Sequence.sequenceTasks(project, false);
         String assertedSequencedTasks = task1.getId() + "," +
                 task3.getId() + "|" +
                 task2.getId() + "(" + task1.getId() + "," + task3.getId() + ")" + "|" +
@@ -55,8 +57,10 @@ class SequenceTest {
         Task task2 = new Task("Test2", 2.0, 2, project);
         Task task3 = new Task("Test3", 5.0, 3, project);
         Task task4 = new Task("Test4", 2.0, 4, project);
-        
-        Sequence.sequenceTasks(project);
+
+        project.setNumberOfEmployees(1);
+
+        Sequence.sequenceTasks(project, false);
         String assertedSequencedTasks = task4.getId() + "," +
                 task3.getId() + "," +
                 task2.getId() + "," +
@@ -80,8 +84,10 @@ class SequenceTest {
         Task task4 = new Task("Test4", 2.0, 4, project);
 
         task3.addDependency(Collections.singletonList(task1));
-        
-        Sequence.sequenceTasks(project);
+
+        project.setNumberOfEmployees(1);
+
+        Sequence.sequenceTasks(project, false);
         String assertedSequencedTasks = task4.getId() + "," +
                 task2.getId() + "," +
                 task1.getId() + "|" +
@@ -106,7 +112,9 @@ class SequenceTest {
 
         task3.addDependency(Collections.singletonList(task1));
 
-        Sequence.sequenceTasks(project, false, false);
+        project.setNumberOfEmployees(1);
+
+        Sequence.sequenceTasks(project, false);
         String assertedSequencedTasks = task4.getId() + "," +
                 task2.getId() + "," +
                 task1.getId() + "|" +
@@ -129,13 +137,11 @@ class SequenceTest {
         Task task3 = new Task("Test3", 5.0, 3, project);
         Task task4 = new Task("Test4", 2.0, 4, project);
 
-        Employee employee1 = new Employee("Tester");
-        Employee employee2 = new Employee("Tester2");
-        project.addNewEmployee(employee1, employee2);
+        project.setNumberOfEmployees(2);
 
         task3.addDependency(Collections.singletonList(task1));
 
-        Sequence.sequenceTasks(project, false, false);
+        Sequence.sequenceTasks(project, false);
         String assertedSequencedTasks = task4.getId() + "," +
                 task2.getId() + "," +
                 task1.getId() + "|" +
