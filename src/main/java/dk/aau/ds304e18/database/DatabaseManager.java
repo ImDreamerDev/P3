@@ -24,7 +24,7 @@ public class DatabaseManager {
     /**
      * Connects to the database P3.
      */
-    static void connect() {
+    private static void connect() {
         String url;
         if (isTests)
             url = "jdbc:postgresql://molae.duckdns.org/TestP3";
@@ -375,6 +375,73 @@ public class DatabaseManager {
         return null;
     }
 
+    static List<Task> getTasksForProjectManager(ProjectManager projectManager) {
+        List<Integer> queryArray = new ArrayList<>();
+        queryArray.addAll(projectManager.getCurrentProjectIds());
+        queryArray.addAll(projectManager.getOldProjectsId());
+
+        try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM tasks " +
+                    "WHERE projectid = ANY (?)");
+            statement.setArray(1, dbConnection.createArrayOf("INTEGER", queryArray.toArray()));
+            ResultSet rs = statement.executeQuery();
+            return DatabaseParser.parseTasksFromResultSet(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Gets the employees with no current project or those part of his current project.
+     *
+     * @param projectManager the project manager to get available employees of
+     * @return list of employees with no current project or are part of project managers current project.
+     */
+    static List<Employee> getAvailableEmployees(ProjectManager projectManager) {
+        List<Integer> employeeIdsToQuery = new ArrayList<>();
+
+        //We want unassigned employees
+        employeeIdsToQuery.add(0);
+        //We want employees from the current project
+        employeeIdsToQuery.addAll(projectManager.getCurrentProjectIds());
+
+        try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM employees WHERE projectid IS NULL OR projectid = ANY (?) ");
+            statement.setArray(1, dbConnection.createArrayOf("INTEGER", employeeIdsToQuery.toArray()));
+            ResultSet rs = statement.executeQuery();
+            return DatabaseParser.parseEmployeesFromResultSet(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    static List<Project> getPMProjects(ProjectManager projectManager) {
+        try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
+            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projects WHERE id = ANY(?)");
+            List<Integer> queryList = new ArrayList<>();
+            if (projectManager.getCurrentProjectIds().size() != 0) {
+                queryList.addAll(projectManager.getCurrentProjectIds());
+            }
+
+            if (projectManager.getOldProjectsId() != null) {
+                queryList.addAll(projectManager.getOldProjectsId());
+            }
+            Array queryArray = dbConnection.createArrayOf("INTEGER", queryList.toArray());
+            statement.setArray(1, queryArray);
+            ResultSet rs = statement.executeQuery();
+            if (rs == null) return null;
+            return DatabaseParser.parseProjectsFromResultSet(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * Used to log out. Closes connection to database and clears local storage.
      */
@@ -391,9 +458,5 @@ public class DatabaseManager {
         LocalObjStorage.getProjectList().clear();
         LocalObjStorage.getTaskList().clear();
         LocalObjStorage.getProjectManagerList().clear();
-    }
-
-    static Connection getDbConnection() {
-        return dbConnection;
     }
 }
