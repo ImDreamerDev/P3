@@ -316,7 +316,7 @@ public class DatabaseManager {
 
                 updateProgress(1, progressBarParts);
 
-                // adds all projects to the localObjectStorage.
+                // Adds all projects to the localObjectStorage.
                 if (projectManagerProjects != null) {
                     projectManagerProjects.forEach(LocalObjStorage::addProject);
                 } else return null;
@@ -333,7 +333,7 @@ public class DatabaseManager {
                     });
 
                 }
-                // a list of the oldProjects.
+                // A list of the oldProjects.
                 List<Integer> projectIds = new ArrayList<>(projectManager.getOldProjectsId());
 
                 // Gets all oldProjectIds and creates oldProject objects, and sets the creator as the projectManager.
@@ -344,11 +344,11 @@ public class DatabaseManager {
                         oldProject.setState(ProjectState.ARCHIVED);
 
                 }
-                // adds the projectManager to the localobjectstorage.
+                // Adds the projectManager to the localobjectstorage.
                 LocalObjStorage.addProjectManager(projectManager);
                 updateProgress(3, progressBarParts);
 
-                // for each employee in the localobjectstorage assigns the employee to the project.
+                // For each employee in the localobjectstorage assigns the employee to the project.
                 for (Employee emp : LocalObjStorage.getEmployeeList()) {
                     if (emp.getProjectId() != 0) {
                         emp.setProject(LocalObjStorage.getProjectById(emp.getProjectId()));
@@ -368,7 +368,7 @@ public class DatabaseManager {
                     if (project != null)
                         project.addNewTask(task);
 
-                    // for each employeeId add the employee to the corresponding who has their employeeId.
+                    // For each employeeId add the employee to the corresponding task which has their employeeId.
                     for (Integer employeeId : task.getEmployeeIds()) {
                         Employee emp = LocalObjStorage.getEmployeeById(employeeId);
 
