@@ -158,8 +158,6 @@ public class InputTab {
                 nameTextField.setStyle("-fx-border-color: #ff9c00");
             }
 
-            isEditMode = false;
-
             if (task != null) {
                 ((Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
                         .get(0)).getChildren().get(0))
