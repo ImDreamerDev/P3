@@ -17,7 +17,7 @@ public class LocalObjStorageTest {
 
     @Test
     void testGetEmployees() {
-        employee = new Employee("Jens");
+        employee = new Employee(0,"Jens");
         LocalObjStorage.addEmployee(employee);
 
         assertTrue(LocalObjStorage.getEmployeeList().contains(employee));
@@ -25,7 +25,7 @@ public class LocalObjStorageTest {
 
     @Test
     void testGetEmployeeById() {
-        employee = new Employee("Jens");
+        employee = new Employee(1,"Jens");
         LocalObjStorage.addEmployee(employee);
 
         assertEquals(LocalObjStorage.getEmployeeById(employee.getId()), employee);

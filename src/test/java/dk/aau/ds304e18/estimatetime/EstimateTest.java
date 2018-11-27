@@ -9,7 +9,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class EstimateTest {
+class EstimateTest {
     @BeforeAll
     static void init() {
         DatabaseManager.isTests = true;
@@ -26,14 +26,6 @@ public class EstimateTest {
     void getDurationTest() {
         Estimate estimate = new Estimate(null, 20);
         assertEquals(estimate.getDuration(), 20);
-    }
-
-    @Test
-    void setDurationTest() {
-        Estimate estimate = new Estimate(null, 20);
-        assertEquals(estimate.getDuration(), 20);
-        estimate.setDuration(30);
-        assertEquals(estimate.getDuration(), 30);
     }
 
     @Test

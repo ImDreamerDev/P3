@@ -36,16 +36,6 @@ public class Task {
     private double startTime;
 
     /**
-     * Start time of the task, but in a list so we can have more than one
-     */
-    private final List<Double> startTimeList = new ArrayList<>();
-
-    /**
-     * The estimated lambda value for the inverse gaussian
-     */
-    private double lambda = -1;
-
-    /**
      * The list of the employees assigned to the task
      */
     private final List<Employee> employees = new ArrayList<>();
@@ -240,6 +230,7 @@ public class Task {
 
     /**
      * This method is used in the distributeModels method to add dependencies.
+     *
      * @param task - the task to add the dependency to.
      */
     public void distributeAddDependency(Task task) {
@@ -290,24 +281,7 @@ public class Task {
     public List<Probabilities> getProbabilities() {
         return probabilities;
     }
-
-    /**
-     * The getter for the lambda value.
-     *
-     * @return lambda.
-     */
-    public double getLambda() {
-        return lambda;
-    }
-
-    /**
-     * The setter for lambda.
-     *
-     * @param lambda - the shape parameter.
-     */
-    public void setLambda(double lambda) {
-        this.lambda = lambda;
-    }
+    
 
     @Override
     public String toString() {
@@ -332,14 +306,6 @@ public class Task {
         this.startTime = startTime;
     }
 
-    /**
-     * The getter for the startTimeList
-     *
-     * @return startTimeList
-     */
-    public List<Double> getStartTimeList() {
-        return startTimeList;
-    }
 
     /**
      * The getter for the tasks inverse gaussian distribution

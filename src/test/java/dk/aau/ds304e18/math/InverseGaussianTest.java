@@ -18,7 +18,6 @@ class InverseGaussianTest {
     void InverseGaussian01() {
         InverseGaussian invG = new InverseGaussian();
         assertEquals(0, invG.getLambda());
-        assertEquals(0, invG.getMu());
     }
 
     @Test
@@ -39,12 +38,6 @@ class InverseGaussianTest {
             return;
         }
         fail();
-    }
-
-    @Test
-    void InverseGaussian04() {
-        InverseGaussian invG = new InverseGaussian(10, 10);
-        assertEquals(0, invG.getDensity(0));
     }
 
     @Test
@@ -69,18 +62,6 @@ class InverseGaussianTest {
     void InverseGaussian05() {
         InverseGaussian invG = new InverseGaussian(10, 10);
         assertEquals(66.81020012231707, invG.getProbability(10));
-    }
-
-    @Test
-    void InverseGaussianDensityTest001() {
-        InverseGaussian invG = new InverseGaussian(1, 1);
-        assertEquals(invG.getDensity(1), 0.4, 0.01);
-    }
-
-    @Test
-    void InverseGaussianGetMuTest001() {
-        InverseGaussian invG = new InverseGaussian(1, 1);
-        assertEquals(invG.getMu(), 1);
     }
 
     @Test

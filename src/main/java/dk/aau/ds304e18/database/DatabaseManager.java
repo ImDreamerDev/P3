@@ -23,25 +23,6 @@ public class DatabaseManager {
     public static boolean isTests = false;
 
     /**
-     * Sends a query to the DB and returns the result.
-     *
-     * @param query The search query.
-     * @return The result from the DB.
-     */
-    public static ResultSet query(String query) {
-        try {
-            if (dbConnection == null || dbConnection.isClosed()) connect();
-            Statement st = dbConnection.createStatement();
-            return st.executeQuery(query);
-        } catch (PSQLException e) {
-            return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
      * Connects to the database P3.
      */
     private static void connect() {
@@ -71,15 +52,11 @@ public class DatabaseManager {
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employees (name," +
-                    " previoustasks, projectid) values (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    "  projectid) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, emp.getName());
 
-            statement.setArray(2, dbConnection.createArrayOf("INTEGER",
-                    emp.getPreviousTask().stream().map(Task::getId).toArray()
-            ));
-
-            if (emp.getProject() != null) statement.setInt(3, emp.getProject().getId());
-            else statement.setInt(3, 0);
+            if (emp.getProject() != null) statement.setInt(2, emp.getProject().getId());
+            else statement.setInt(2, 0);
 
             if (statement.execute()) return;
             ResultSet rs = statement.getGeneratedKeys();
@@ -126,36 +103,6 @@ public class DatabaseManager {
     }
 
     /**
-     * Removes an employee with id from the database.
-     *
-     * @param id id of the Employee to remove.
-     */
-    public static void removeEmployee(int id) {
-        try {
-            if (dbConnection == null || dbConnection.isClosed()) connect();
-
-            PreparedStatement statement = dbConnection.prepareStatement("DELETE FROM employees where id = ?");
-            statement.setInt(1, id);
-            statement.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void removeProjectManager(int id) {
-        try {
-            if (dbConnection == null || dbConnection.isClosed()) connect();
-
-            PreparedStatement statement = dbConnection.prepareStatement("DELETE FROM projectmanagers where id = ?");
-            statement.setInt(1, id);
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Removes a task with id from the database.
      *
      * @param id id of the task to remove.
@@ -177,7 +124,7 @@ public class DatabaseManager {
             PreparedStatement statement = dbConnection.prepareStatement("DELETE FROM tasks where id = ?");
             statement.setInt(1, id);
             statement.execute();
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -268,62 +215,6 @@ public class DatabaseManager {
             return null;
         }
 
-    }
-
-    /**
-     * Gets a task with taskId from the database or null.
-     *
-     * @param taskId the id of the task to get from db.
-     * @return the Task with taskId or null.
-     */
-    public static Task getTask(int taskId) {
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM tasks WHERE id = ?");
-            statement.setInt(1, taskId);
-
-            ResultSet rs = statement.executeQuery();
-            if (rs == null) return null;
-            return Objects.requireNonNull(DatabaseParser.parseTasksFromResultSet(rs)).get(0);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * Gets a single employee with empId from the db.
-     *
-     * @param empId the id of the employee to get.
-     * @return the employee or null.
-     */
-    public static Employee getEmployee(int empId) {
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM employees WHERE id = ?");
-            statement.setInt(1, empId);
-            ResultSet rs = statement.executeQuery();
-            return Objects.requireNonNull(DatabaseParser.parseEmployeesFromResultSet(rs)).get(0);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Returns a project with project Id from db.
-     *
-     * @param projectId the id of the project to get.
-     * @return the project or null.
-     */
-    public static Project getProject(int projectId) {
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projects WHERE id = ?");
-            statement.setInt(1, projectId);
-            ResultSet rs = statement.executeQuery();
-            return Objects.requireNonNull(DatabaseParser.parseProjectsFromResultSet(rs)).get(0);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     private static List<Project> getPMProjects(ProjectManager projectManager) {
@@ -486,7 +377,7 @@ public class DatabaseManager {
                             emp.distributeAddTask(task);
                         } else {
                             //TODO We don't get employees from previous projects from DB
-                            task.addEmployee(new Employee(0, "John Doe", new ArrayList<>()));
+                            task.addEmployee(new Employee(0, "John Doe"));
                         }
                     }
                     // Adds all the dependencies to the tasks that has the same id as the dependency.
@@ -518,17 +409,12 @@ public class DatabaseManager {
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("UPDATE employees SET " +
-                    " previoustasks = ?, projectid = ? WHERE id = ?");
-
-            statement.setArray(1, dbConnection.createArrayOf("INTEGER",
-                    employee.getPreviousTask().stream().map(Task::getId).toArray()
-            ));
-
+                    " projectid = ? WHERE id = ?");
             if (employee.getProject() != null)
-                statement.setInt(2, employee.getProject().getId());
+                statement.setInt(1, employee.getProject().getId());
             else
-                statement.setNull(2, java.sql.Types.INTEGER);
-            statement.setInt(3, employee.getId());
+                statement.setNull(1, java.sql.Types.INTEGER);
+            statement.setInt(2, employee.getId());
             statement.execute();
 
         } catch (SQLException e) {

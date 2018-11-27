@@ -45,8 +45,6 @@ class SequenceTest {
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
         assertEquals(project.getSequence(), assertedSequencedTasks);
-
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     @Test
@@ -70,8 +68,6 @@ class SequenceTest {
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
         assertEquals(project.getSequence(), assertedSequencedTasks);
-
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     @Test
@@ -97,8 +93,6 @@ class SequenceTest {
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
         assertEquals(project.getSequence(), assertedSequencedTasks);
-
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     @Test
@@ -124,8 +118,6 @@ class SequenceTest {
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
         assertEquals(project.getSequence(), assertedSequencedTasks);
-
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     @Test
@@ -151,8 +143,6 @@ class SequenceTest {
         System.out.println("SequencedTasks: " + sequencedTasks);
         System.out.println("AssertedSequencedTasks: " + assertedSequencedTasks.toString());*/
         assertEquals(project.getSequence(), assertedSequencedTasks);
-
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
 }

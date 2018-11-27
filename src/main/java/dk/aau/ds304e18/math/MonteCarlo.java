@@ -18,19 +18,8 @@ public class MonteCarlo {
 
     private static final ReadOnlyDoubleWrapper progress = new ReadOnlyDoubleWrapper();
 
-    public double getProgress() {
-        return progressProperty().get();
-    }
-
     public static ReadOnlyDoubleProperty progressProperty() {
         return progress;
-    }
-
-    public static void findFastestSequence(Project project) {
-        //Calls the function with the default value 200 - Might up this default value when/if we optimize estimateTime
-        //This might be enough if we find a better way of finding random sequences
-        findFastestSequence(project, 200, true);
-
     }
 
     public static void findFastestSequence(Project project, boolean fast) {
@@ -114,7 +103,7 @@ public class MonteCarlo {
         //For each task in taskList
         for (Task task : project.getTasks()) {
             //If the task does not have a lambda yet
-            if (task.getLambda() == -1) {
+            if (task.getInvG().getLambda() == -1) {
                 //Calculate the lambda and optimize the mu value
                 List<Double> temp = CalculateLambda.calculateLambda(task.getEstimatedTime(), task.getProbabilities());
                 task.getInvG().setParams(temp.get(0), temp.get(1));
@@ -289,16 +278,6 @@ public class MonteCarlo {
         }
 
         return temp.indexOf(Collections.min(temp));
-    }
-
-    /**
-     * If you have a project you want to estimate the time in
-     *
-     * @param project The project you want estimated
-     * @return The estimated time
-     */
-    public static void estimateTime(Project project) {
-        estimateTime(project, 10000, false, 0);
     }
 
     public static double estimateTime(Project project, boolean rec) {

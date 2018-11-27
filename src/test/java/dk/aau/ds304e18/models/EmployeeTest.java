@@ -21,18 +21,15 @@ class EmployeeTest {
      */
     @Test
     void TestEmployeeConstructor01() {
-        Employee newEmployee = new Employee("Abraham");
+        Employee newEmployee = new Employee(0, "Abraham");
 
         assertEquals("Abraham", newEmployee.getName());
-
-        DatabaseManager.removeEmployee(newEmployee.getId());
     }
 
 
     @Test
     void TestEmployeeConstructor02() {
-        List<Integer> previousTasks = new ArrayList<>();
-        Employee newEmployee = new Employee(1, "Test Person", previousTasks);
+        Employee newEmployee = new Employee(1, "Test Person");
 
         assertEquals(1, newEmployee.getId());
     }
@@ -40,19 +37,11 @@ class EmployeeTest {
 
     @Test
     void TestEmployeeConstructor03() {
-        List<Integer> previousTasks = new ArrayList<>();
-        Employee newEmployee = new Employee(1, "Kasper", previousTasks);
+        Employee newEmployee = new Employee(1, "Kasper");
 
         assertEquals("Kasper", newEmployee.getName());
     }
 
-    @Test
-    void TestEmployeeConstructor04() {
-        List<Integer> previousTasks = new ArrayList<>();
-        Employee newEmployee = new Employee(1, "Kasper BTW", previousTasks);
-
-        assertEquals(previousTasks, newEmployee.getPreviousTaskIds());
-    }
 
     @Test
     void TestEmployeeConstructor05() {
@@ -69,7 +58,7 @@ class EmployeeTest {
      */
     @Test
     void TestEmployeeAddNewTask01() {
-        Employee newEmployee = new Employee("Slim Shady");
+        Employee newEmployee = new Employee(0, "Slim Shady");
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
         Task newTask = new Task("Test Task", 5, 1, newProject);
@@ -77,11 +66,6 @@ class EmployeeTest {
         newEmployee.addNewTask(newTask);
 
         assertEquals(newTask, newEmployee.getCurrentTask().get(0));
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeEmployee(newEmployee.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -89,8 +73,7 @@ class EmployeeTest {
      */
     @Test
     void TestEmployeeGetId01() {
-        Employee newEmployee = new Employee("The Real Slim Shady");
-        DatabaseManager.removeEmployee(newEmployee.getId());
+        Employee newEmployee = new Employee(0, "The Real Slim Shady");
 
         newEmployee.setId(1000);
 
@@ -102,10 +85,8 @@ class EmployeeTest {
      */
     @Test
     void TestEmployeeGetName01() {
-        Employee newEmployee = new Employee("Employee");
+        Employee newEmployee = new Employee(0, "Employee");
         assertEquals("Employee", newEmployee.getName());
-
-        DatabaseManager.removeEmployee(newEmployee.getId());
     }
 
     /**
@@ -113,17 +94,13 @@ class EmployeeTest {
      */
     @Test
     void TestEmployeeGetProject01() {
-        Employee newEmployee = new Employee("Employee");
+        Employee newEmployee = new Employee(0, "Employee");
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
 
         newEmployee.setProject(newProject);
 
         assertEquals(newProject, newEmployee.getProject());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeEmployee(newEmployee.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -131,7 +108,7 @@ class EmployeeTest {
      */
     @Test
     void TestEmployeeGetCurrentTask01() {
-        Employee newEmployee = new Employee("Test Employee");
+        Employee newEmployee = new Employee(0, "Test Employee");
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
         Task newTask = new Task("Test Task", 5, 1, newProject);
@@ -139,30 +116,6 @@ class EmployeeTest {
         newEmployee.addNewTask(newTask);
 
         assertEquals(newTask, newEmployee.getCurrentTask().get(0));
-
-        DatabaseManager.removeEmployee(newEmployee.getId());
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
-    }
-
-    /**
-     * Tests getting the previous tasks of the employee.
-     */
-    @Test
-    void TestEmployeeGetPreviousTask01() {
-        Employee newEmployee = new Employee("Test Employee");
-        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
-        Project newProject = new Project("Test Project", projectManager);
-        Task newTask = new Task("Test Task", 5, 1, newProject);
-        newEmployee.addPreviousTask(newTask);
-
-        assertEquals(newTask, newEmployee.getPreviousTask().get(0));
-
-        DatabaseManager.removeEmployee(newEmployee.getId());
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
 
@@ -171,12 +124,10 @@ class EmployeeTest {
      */
     @Test
     void TestEmployeeSetId01() {
-        Employee newEmployee = new Employee("Employee");
+        Employee newEmployee = new Employee(0, "Employee");
         newEmployee.setId(5);
 
         assertEquals(5, newEmployee.getId());
-
-        DatabaseManager.removeEmployee(newEmployee.getId());
     }
 
     /**
@@ -184,17 +135,13 @@ class EmployeeTest {
      */
     @Test
     void TestEmployeeSetProject01() {
-        Employee newEmployee = new Employee("Employee");
+        Employee newEmployee = new Employee(0, "Employee");
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
 
         newEmployee.setProject(newProject);
 
         assertEquals(newProject, newEmployee.getProject());
-
-        DatabaseManager.removeEmployee(newEmployee.getId());
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -202,15 +149,13 @@ class EmployeeTest {
      */
     @Test
     void TestEmployeeEquals01() {
-        Employee employee1 = new Employee("Test Person1");
-        Employee employee2 = new Employee("Test Person2");
+        Employee employee1 = new Employee(0, "Test Person1");
+        Employee employee2 = new Employee(1, "Test Person2");
 
         employee1.setId(1);
         employee2.setId(1);
 
         assertEquals(employee1, employee2);
-
-        DatabaseManager.removeEmployee(employee1.getId());
     }
 
     /**
@@ -218,16 +163,13 @@ class EmployeeTest {
      */
     @Test
     void TestEmployeeEquals02() {
-        Employee employee1 = new Employee("Test Person1");
-        Employee employee2 = new Employee("Test Person2");
+        Employee employee1 = new Employee(0, "Test Person1");
+        Employee employee2 = new Employee(1, "Test Person2");
 
         employee1.setId(1);
         employee2.setId(2);
 
         assertNotEquals(employee1, employee2);
-
-        DatabaseManager.removeEmployee(employee1.getId());
-        DatabaseManager.removeEmployee(employee2.getId());
     }
 
     /**
@@ -235,10 +177,9 @@ class EmployeeTest {
      */
     @Test
     void TestEmployeeHashcode01() {
-        Employee employee1 = new Employee("Test Person1");
-        Employee employee2 = new Employee("Test Person2");
+        Employee employee1 = new Employee(0, "Test Person1");
+        Employee employee2 = new Employee(1, "Test Person2");
 
-        DatabaseManager.removeEmployee(employee1.getId());
 
         employee1.setId(1);
         employee2.setId(1);
@@ -251,11 +192,8 @@ class EmployeeTest {
      */
     @Test
     void TestEmployeeHashcode02() {
-        Employee employee1 = new Employee("Test Person1");
-        Employee employee2 = new Employee("Test Person2");
-
-        DatabaseManager.removeEmployee(employee1.getId());
-        DatabaseManager.removeEmployee(employee2.getId());
+        Employee employee1 = new Employee(0, "Test Person1");
+        Employee employee2 = new Employee(1, "Test Person2");
 
         employee1.setId(1);
         employee2.setId(2);
@@ -268,7 +206,7 @@ class EmployeeTest {
      */
     @Test
     void TestEmployeeDistributeAddTask01() {
-        Employee newEmployee = new Employee("Lars");
+        Employee newEmployee = new Employee(0, "Lars");
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
         Task newTask = new Task("Task", 1, 1, newProject);
@@ -276,21 +214,16 @@ class EmployeeTest {
         newEmployee.distributeAddTask(newTask);
 
         assertEquals(newTask, newEmployee.getCurrentTask().get(0));
-
-        DatabaseManager.removeEmployee(newEmployee.getId());
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     @Test
     void TestToString() {
-        assertEquals(new Employee("Lars").toString(), "Lars");
+        assertEquals(new Employee(0, "Lars").toString(), "Lars");
     }
 
     @Test
     void TestSetProjectId() {
-        Employee lars = new Employee("Lars");
+        Employee lars = new Employee(0, "Lars");
         lars.setProjectId(1);
         assertEquals(lars.getProjectId(), 1);
     }

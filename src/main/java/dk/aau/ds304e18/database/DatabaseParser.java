@@ -21,8 +21,7 @@ public class DatabaseParser {
         try {
             if (rs == null) return null;
             while (rs.next()) {
-                Employee emp = new Employee(rs.getInt(1), rs.getString(2),
-                        Arrays.asList((Integer[]) rs.getArray(3).getArray()));
+                Employee emp = new Employee(rs.getInt(1), rs.getString(2));
                 emp.setProjectId(rs.getInt(4));
                 empList.add(emp);
             }

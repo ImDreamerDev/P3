@@ -563,7 +563,7 @@ public class InputTab {
         //Get the current project.
         Project project = LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId);
         //Remove the selected task from the project.
-        project.getTasks().remove(LocalObjStorage.getTaskById(taskId));
+        project.removeTask(LocalObjStorage.getTaskById(taskId));
         //Reset the sequence.
         project.setSequence("");
         //Remove the task from the database.

@@ -52,8 +52,6 @@ class ParseSequenceTest {
         for (Task task : project.getTasks()) {
             DatabaseManager.removeTask(task.getId());
         }
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + project.getId());
-        DatabaseManager.query("DELETE FROM projectmanagers WHERE id = " + projectManager.getId());
     }
 
     @Test
@@ -74,8 +72,6 @@ class ParseSequenceTest {
         for (Task task : project.getTasks()) {
             DatabaseManager.removeTask(task.getId());
         }
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + project.getId());
-        DatabaseManager.query("DELETE FROM projectmanagers WHERE id = " + tom.getId());
     }
 
 }
