@@ -32,6 +32,8 @@ class ParseSequenceTest {
 
         task3.addDependency(Collections.singletonList(task1));
 
+        project.setNumberOfEmployees(1);
+
         Sequence.sequenceTasks(project, false);
 
         List<List<Task>> assertedList = new ArrayList<>();
@@ -62,6 +64,8 @@ class ParseSequenceTest {
         new Task("Test2", 2.0, 1, project);
         Task task3 = new Task("Test3", 5.0, 1, project);
         new Task("Test4", 2.0, 1, project);
+
+        project.setNumberOfEmployees(1);
 
         task3.addDependency(Collections.singletonList(task1));
 
