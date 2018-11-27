@@ -9,21 +9,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DatabaseParser {
+class DatabaseParser {
     /**
      * Parses a ResultSet to a list of Employees.
      *
      * @param rs the ResultSet to parse.
      * @return list of Employees that got parsed or null.
      */
-    public static List<Employee> parseEmployeesFromResultSet(ResultSet rs) {
+    static List<Employee> parseEmployeesFromResultSet(ResultSet rs) {
         List<Employee> empList = new ArrayList<>();
         try {
             if (rs == null) return null;
             while (rs.next()) {
-                Employee emp = new Employee(rs.getInt(1), rs.getString(2),
-                        Arrays.asList((Integer[]) rs.getArray(3).getArray()));
-                emp.setProjectId(rs.getInt(4));
+                Employee emp = new Employee(rs.getInt(1), rs.getString(2));
+                emp.setProjectId(rs.getInt(3));
                 empList.add(emp);
             }
         } catch (SQLException e) {
@@ -38,7 +37,7 @@ public class DatabaseParser {
      * @param rs the ResultSet to parse.
      * @return a list of Projects that got passed or null.
      */
-    public static List<Project> parseProjectsFromResultSet(ResultSet rs) {
+    static List<Project> parseProjectsFromResultSet(ResultSet rs) {
         List<Project> projects = new ArrayList<>();
         try {
             if (rs == null) return null;
@@ -68,7 +67,7 @@ public class DatabaseParser {
      * @param rs - the result set to parse
      * @return ProjectManagers - a list of project managers.
      */
-    public static List<ProjectManager> parseProjectManagersFromResultSet(ResultSet rs) {
+    static List<ProjectManager> parseProjectManagersFromResultSet(ResultSet rs) {
 
         List<ProjectManager> projectManagers = new ArrayList<>();
 
@@ -100,7 +99,7 @@ public class DatabaseParser {
      * @param rs the ResultSet to parse.
      * @return a list of Task that got parsed.
      */
-    public static List<Task> parseTasksFromResultSet(ResultSet rs) {
+    static List<Task> parseTasksFromResultSet(ResultSet rs) {
 
         List<Task> tasks = new ArrayList<>();
 
@@ -155,7 +154,7 @@ public class DatabaseParser {
      * @param task - the task to parse.
      * @return Probability string - the probabilities turned into string format.
      */
-    public static String parseProbabilities(Task task) {
+    static String parseProbabilities(Task task) {
         //Turns the Probabilities into a string in the following format
         //     * '{"(1.1,2.2)","(534.1,3123.2)"}'
         //     * '{"(duration,probability)"}'

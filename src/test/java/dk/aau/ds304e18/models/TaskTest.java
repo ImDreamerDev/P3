@@ -29,10 +29,6 @@ class TaskTest {
         Task newTask = new Task("Test Task", 1, 1, newProject);
 
         assertEquals("Test Task", newTask.getName());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -45,10 +41,6 @@ class TaskTest {
         Task newTask = new Task("Test Task", 1, 1, newProject);
 
         assertEquals(1, newTask.getEstimatedTime());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -61,10 +53,6 @@ class TaskTest {
         Task newTask = new Task("Test Task", 1, 1, newProject);
 
         assertEquals(1, newTask.getPriority());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -77,10 +65,6 @@ class TaskTest {
         Task newTask = new Task("Test Task", 1, 1, newProject);
 
         assertEquals(newProject, newTask.getProject());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -91,10 +75,6 @@ class TaskTest {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
         Task newTask = new Task("Test Task", 1, 1, newProject);
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
 
         newTask.setId(5);
 
@@ -111,10 +91,6 @@ class TaskTest {
         Task newTask = new Task("Test Task", 1, 2, newProject);
 
         assertEquals("Test Task", newTask.getName());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -127,10 +103,6 @@ class TaskTest {
         Task newTask = new Task("Test Task", 1, 2, newProject);
 
         assertEquals(1, newTask.getEstimatedTime());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -143,10 +115,6 @@ class TaskTest {
         Task newTask = new Task("Test Task", 1, 2, newProject);
 
         assertEquals(2, newTask.getPriority());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -157,8 +125,8 @@ class TaskTest {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
         Task newTask = new Task("Test Task", 1, 1, newProject);
-        Employee newEmployee01 = new Employee("Person01");
-        Employee newEmployee02 = new Employee("Person02");
+        Employee newEmployee01 = new Employee(0, "Person01");
+        Employee newEmployee02 = new Employee(1, "Person02");
 
         newTask.addEmployee(newEmployee01, newEmployee02);
 
@@ -167,12 +135,6 @@ class TaskTest {
         testList.add(newEmployee02);
 
         assertEquals(testList, newTask.getEmployees());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeEmployee(newEmployee01.getId());
-        DatabaseManager.removeEmployee(newEmployee02.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -193,12 +155,6 @@ class TaskTest {
         testList.add(dependency02);
 
         assertEquals(testList, newTask.getDependencies());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeTask(dependency01.getId());
-        DatabaseManager.removeTask(dependency02.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
 
@@ -212,10 +168,6 @@ class TaskTest {
         Task newTask = new Task("Test Task", 1, 4, newProject);
 
         assertEquals(newProject, newTask.getProject());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
 
@@ -231,10 +183,6 @@ class TaskTest {
         newTask.setPriority(5);
 
         assertEquals(5, newTask.getPriority());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -246,9 +194,9 @@ class TaskTest {
         Project newProject = new Project("Test Project", projectManager);
         Task newTask = new Task("Test Task", 1, 1, newProject);
 
-        Employee newEmployee01 = new Employee("Person01");
-        Employee newEmployee02 = new Employee("Person02");
-        Employee newEmployee03 = new Employee("Person03");
+        Employee newEmployee01 = new Employee(0, "Person01");
+        Employee newEmployee02 = new Employee(1, "Person02");
+        Employee newEmployee03 = new Employee(2, "Person03");
 
         newTask.addEmployee(newEmployee01, newEmployee02, newEmployee03);
 
@@ -258,13 +206,6 @@ class TaskTest {
         testList.add(newEmployee03);
 
         assertEquals(testList, newTask.getEmployees());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeEmployee(newEmployee01.getId());
-        DatabaseManager.removeEmployee(newEmployee02.getId());
-        DatabaseManager.removeEmployee(newEmployee03.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -287,13 +228,6 @@ class TaskTest {
         testList.add(dependency03);
 
         assertEquals(testList, newTask.getDependencies());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeTask(dependency01.getId());
-        DatabaseManager.removeTask(dependency01.getId());
-        DatabaseManager.removeTask(dependency01.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -309,11 +243,6 @@ class TaskTest {
         newTask.setProject(newProject);
 
         assertEquals(newProject, newTask.getProject());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + project.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -328,10 +257,6 @@ class TaskTest {
         newTask.setEstimatedTime(9.1);
 
         assertEquals(9.1, newTask.getEstimatedTime());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + project.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -347,11 +272,6 @@ class TaskTest {
         newTask.distributeAddDependency(dependency01);
 
         assertEquals(dependency01, newTask.getDependencies().get(0));
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeTask(dependency01.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
     }
 
     /**
@@ -363,12 +283,6 @@ class TaskTest {
         Project newProject = new Project("Test Project", projectManager);
         Task task1 = new Task("Task1", 1, 1, newProject);
         Task task2 = new Task("Task2", 2, 2, newProject);
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(task1.getId());
-        DatabaseManager.removeTask(task2.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
-
         task1.setId(1);
         task2.setId(1);
 
@@ -384,11 +298,6 @@ class TaskTest {
         Project newProject = new Project("Test Project", projectManager);
         Task task1 = new Task("Task1", 1, 1, newProject);
         Task task2 = new Task("Task1", 1, 1, newProject);
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(task1.getId());
-        DatabaseManager.removeTask(task2.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
 
         task1.setId(1);
         task2.setId(2);
@@ -406,11 +315,6 @@ class TaskTest {
         Task task1 = new Task("Task1", 1, 1, newProject);
         Task task2 = new Task("Task2", 2, 2, newProject);
 
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(task1.getId());
-        DatabaseManager.removeTask(task2.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
-
         task1.setId(1);
         task2.setId(1);
 
@@ -427,11 +331,6 @@ class TaskTest {
         Task task1 = new Task("Task1", 1, 1, newProject);
         Task task2 = new Task("Task2", 1, 1, newProject);
 
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(task1.getId());
-        DatabaseManager.removeTask(task2.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
-
         task1.setId(1);
         task2.setId(2);
 
@@ -445,11 +344,7 @@ class TaskTest {
     void TestTaskGetEmployeeIds01() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
-        Employee newEmployee = new Employee("Employee");
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeEmployee(newEmployee.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
+        Employee newEmployee = new Employee(0, "Employee");
 
         newEmployee.setId(10);
 
@@ -473,10 +368,6 @@ class TaskTest {
         Project newProject = new Project("Test Project", projectManager);
         Task dependency = new Task("Dependency", 1, 1, newProject);
 
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(dependency.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
-
         dependency.setId(1);
 
         List<Integer> dependencyIds = new ArrayList<>();
@@ -490,41 +381,6 @@ class TaskTest {
         assertEquals(1, newTask.getDependencyIds().get(0).intValue());
     }
 
-    /**
-     * Tests the task getter for lambda
-     */
-    @Test
-    void TestTaskGetLambda01() {
-        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
-        Project newProject = new Project("Test Project", projectManager);
-        Task newTask = new Task("Task", 1, 1, newProject);
-
-        newTask.setLambda(10);
-
-        assertEquals(10, newTask.getLambda());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
-    }
-
-    /**
-     * Tests the task setter for lambda
-     */
-    @Test
-    void TestTaskSetLambda01() {
-        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
-        Project newProject = new Project("Test Project", projectManager);
-        Task newTask = new Task("New Task", 1, 1, newProject);
-
-        newTask.setLambda(1);
-
-        assertEquals(1, newTask.getLambda());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeTask(newTask.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
-    }
 
     /**
      * Tests the tasks toString returns the name correct.
@@ -536,10 +392,6 @@ class TaskTest {
         Task newTask = new Task("Test Task", 1, 1, newProject);
 
         assertEquals("Test Task", newTask.toString());
-
-        DatabaseManager.query("DELETE FROM projects WHERE id = " + newProject.getId());
-        DatabaseManager.removeProjectManager(projectManager.getId());
-        DatabaseManager.removeTask(newTask.getId());
     }
 
     @Test
@@ -553,14 +405,6 @@ class TaskTest {
     }
 
     @Test
-    void TestTaskGetStartTimeList() {
-        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
-        Project newProject = new Project("Test Project", projectManager);
-        Task newTask = new Task("Test Task", 1, 1, newProject);
-        assertEquals(newTask.getStartTimeList().size(), 0);
-    }
-
-    @Test
     void TestTaskGetProjectId() {
         ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
         Project newProject = new Project("Test Project", projectManager);
@@ -568,5 +412,4 @@ class TaskTest {
 
         assertEquals(newProject.getId(), newTask.getProjectId());
     }
-
 }

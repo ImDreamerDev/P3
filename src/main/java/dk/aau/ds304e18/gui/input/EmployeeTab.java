@@ -137,7 +137,6 @@ public class EmployeeTab {
             return;
         }
 
-        //TODO: Maybe add to prev tasks.
         //Foreach of the selected employees remove the tasks associated with this project.
         for (Employee employee : projectEmployeeTableView.getSelectionModel().getSelectedItems()) {
             for (Task task : employee.getCurrentTask()) {
@@ -164,7 +163,6 @@ public class EmployeeTab {
         freeEmployeeTableView.getItems().clear();
 
         //Sets the project employee table view to all the employees assigned to this project.
-        //TODO: Looks sups (LSer)
         projectEmployeeTableView.setItems(FXCollections.observableArrayList(LocalObjStorage.getEmployeeList().stream().
                 filter(employee -> {
                     if (employee.getProject() == null) return false;

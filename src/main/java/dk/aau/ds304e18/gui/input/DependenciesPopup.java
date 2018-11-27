@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * The DependenciesPopup for tasks
  */
-public class DependenciesPopup {
+class DependenciesPopup {
 
     /**
      * The root pane of the GUI.

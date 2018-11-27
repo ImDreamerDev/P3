@@ -158,8 +158,6 @@ public class InputTab {
                 nameTextField.setStyle("-fx-border-color: #ff9c00");
             }
 
-            isEditMode = false;
-
             if (task != null) {
                 ((Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
                         .get(0)).getChildren().get(0))
@@ -204,7 +202,14 @@ public class InputTab {
         Pane paneSplitter = ((Pane) flowPane.getChildren().get(2));
         VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(1));
-        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" + System.lineSeparator() + "Input must be an integer"));
+        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" + System.lineSeparator() + "Input must be a positive integer"));
+        numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isBlank() && newValue.charAt(0) == '0') {
+                numOfEmployees.setText(newValue.replace("0", ""));
+            }
+            if (!newValue.isBlank())
+                numOfEmployees.setStyle("");
+        });
 
         ((Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).setTooltip(new Tooltip("Adds the task to the project"));
         //Add task
@@ -229,10 +234,15 @@ public class InputTab {
         ((Button) vBoxSplitter.getChildren().get(3)).setTooltip(new Tooltip("Calculates the probability for the length of the project"));
 
         Tooltip.install(vBoxSplitter.getChildren().get(2), new Tooltip("If checked the program will try to give the most optimal path for tasks"));
-       
+
         vBoxSplitter.getChildren().get(3).setOnMouseClicked(event -> {
             disableInput();
             rootPane.lookup("#projectView").setDisable(true);
+            if (numOfEmployees.getText().isBlank()) {
+                numOfEmployees.setStyle("-fx-background-color: red");
+                return;
+            }
+
             javafx.concurrent.Task<Void> calcTask = calculate(
                     LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
                     Double.parseDouble(numOfEmployees.getText()),
@@ -242,6 +252,7 @@ public class InputTab {
             ((Button) vBoxSplitter.getChildren().get(3)).setText("Stop");
             vBoxSplitter.getChildren().get(3).setOnMouseClicked(event1 -> {
                 calcTask.cancel();
+                ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1)).getChildren().remove(bar);
                 ((Button) vBoxSplitter.getChildren().get(3)).setText("Calculate");
                 setupInputTab();
             });
@@ -310,24 +321,31 @@ public class InputTab {
 
         duration1 = ((TextField) probabilityHBox.getChildren().get(0));
         probability1 = ((TextField) probabilityHBox.getChildren().get(1));
-        duration1.setTooltip(new Tooltip("Estimated duration of the task" + System.lineSeparator() + "Can be a decimal number separated by point"));
-        probability1.setTooltip(new Tooltip("The chance of the task being finished at the given time" + System.lineSeparator() + "Input is given in percentage and can be a decimal number separated by point"));
-        duration1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration1, newValue, false));
-        probability1.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability1, newValue, false));
 
         duration2 = ((TextField) probabilityHBox2.getChildren().get(0));
         probability2 = ((TextField) probabilityHBox2.getChildren().get(1));
-        duration2.setTooltip(new Tooltip("Estimated duration of the task" + System.lineSeparator() + "Can be a decimal number separated by point"));
-        probability2.setTooltip(new Tooltip("The chance of the task being finished at the given time" + System.lineSeparator() + "Input is given in percentage and can be a decimal number separated by point"));
-        duration2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration2, newValue, false));
-        probability2.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability2, newValue, false));
 
         duration3 = ((TextField) probabilityHBox3.getChildren().get(0));
         probability3 = ((TextField) probabilityHBox3.getChildren().get(1));
-        duration3.setTooltip(new Tooltip("Estimated duration of the task" + System.lineSeparator() + "Can be a decimal number separated by point"));
-        probability3.setTooltip(new Tooltip("The chance of the task being finished at the given time" + System.lineSeparator() + "Input is given in percentage and can be a decimal number separated by point"));
-        duration3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(duration3, newValue, false));
-        probability3.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probability3, newValue, false));
+
+        List<TextField> durations = new ArrayList<>();
+        durations.add(duration1);
+        durations.add(duration2);
+        durations.add(duration3);
+
+        List<TextField> probabilities = new ArrayList<>();
+        probabilities.add(probability1);
+        probabilities.add(probability2);
+        probabilities.add(probability3);
+
+        for (int i = 0; i < 3; i++) {
+            durations.get(i).setTooltip(new Tooltip("Estimated duration of the task" + System.lineSeparator() + "Can be a decimal number separated by point"));
+            probabilities.get(i).setTooltip(new Tooltip("The chance of the task being finished at the given time" + System.lineSeparator() + "Input is given in percentage and can be a decimal number separated by point"));
+            int finalI = i;
+            durations.get(i).textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(durations.get(finalI), newValue, false));
+            probabilities.get(i).textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probabilities.get(finalI), newValue, false));
+        }
+
     }
 
     private int validate(TextField... textFields) {
@@ -547,7 +565,7 @@ public class InputTab {
         //Get the current project.
         Project project = LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId);
         //Remove the selected task from the project.
-        project.getTasks().remove(LocalObjStorage.getTaskById(taskId));
+        project.removeTask(LocalObjStorage.getTaskById(taskId));
         //Reset the sequence.
         project.setSequence("");
         //Remove the task from the database.

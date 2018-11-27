@@ -1,6 +1,5 @@
 package dk.aau.ds304e18.sequence;
 
-import dk.aau.ds304e18.math.MonteCarlo;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.Task;
 
@@ -81,9 +80,6 @@ public class Sequence {
 
     /**
      * Finds a random sequence with a project
-     * TODO: Optimize this so we only find relevant sequences when going fast (Or close to every relevant sequence)
-     * TODO: Still not good enough, there are significantly better sequences found if you do it slow rather than fast
-     *
      * @param project The project where we want a random sequence
      * @param fast    If you want to do fast calculation or slow
      * @return Returns a string with the sequence

@@ -94,16 +94,7 @@ public class ProjectManager {
     public List<Project> getCurrentProjects() {
         return currentProjects;
     }
-
-    /**
-     * The getter for the old projects list.
-     *
-     * @return oldProjects - The list of the old projects that the program manager has worked on previously.
-     */
-    public List<Project> getOldProjects() {
-        return oldProjects;
-    }
-
+    
     /**
      * This function adds a project to the old projects list.
      *

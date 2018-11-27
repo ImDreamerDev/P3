@@ -95,7 +95,7 @@ public class OutputTab {
     /**
      * This method fills the chart with the data from the monte carlo.
      */
-    public void populateChart() {
+    private void populateChart() {
         //Get the current selected project.
         Project project = LocalObjStorage.getProjectList().stream()
                 .filter(pro -> pro.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);

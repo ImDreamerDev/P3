@@ -34,35 +34,15 @@ public class Employee {
     private final List<Task> currentTask = new ArrayList<>();
 
 
-    /**
-     * The tasks that the employee has previously worked on.
-     */
-    private final List<Task> previousTask = new ArrayList<>();
-
-    private final List<Integer> previousTaskIds = new ArrayList<>();
-
-    /**
-     * The constructor for the employee class
-     *
-     * @param name - The name of the employee.
-     */
-    public Employee(String name) {
-        this.name = name;
-        DatabaseManager.addEmployees(this);
-    }
-
-
     public Employee(String name, Project project) {
         this.name = name;
         this.project = project;
         DatabaseManager.addEmployees(this);
     }
 
-
-    public Employee(int id, String name, List<Integer> previousTaskIds) {
+    public Employee(int id, String name) {
         this.name = name;
         this.id = id;
-        this.previousTaskIds.addAll(previousTaskIds);
     }
 
     /**
@@ -77,6 +57,7 @@ public class Employee {
 
     /**
      * This method is used in the distributeModels method to add tasks locally and not interfere with the database.
+     *
      * @param task - the task to add.
      */
     public void distributeAddTask(Task task) {
@@ -120,26 +101,6 @@ public class Employee {
     }
 
     /**
-     * The getter for previousTask.
-     *
-     * @return previousTask - a list of the previous tasks that the employee is no longer working on.
-     */
-    public List<Task> getPreviousTask() {
-        return previousTask;
-    }
-
-    /**
-     * A function to add a task to the previousTask list.
-     *
-     * @param task - The task to add.
-     */
-    public void addPreviousTask(Task task) {
-        this.previousTask.add(task);
-        DatabaseManager.updateEmployee(this);
-        if (!task.getEmployees().contains(this)) task.addEmployee(this);
-    }
-
-    /**
      * The setter for the id
      *
      * @param id - The unique id for the employee.
@@ -154,10 +115,6 @@ public class Employee {
 
     public void setProjectId(int projectId) {
         this.projectId = projectId;
-    }
-
-    public List<Integer> getPreviousTaskIds() {
-        return previousTaskIds;
     }
 
     /**

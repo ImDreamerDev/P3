@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * The assignment tab of the GUI.
  */
-public class AssignmentTab {
+class AssignmentTab {
 
     /**
      * The table view of the employee(s) on the project.

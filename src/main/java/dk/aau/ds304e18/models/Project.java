@@ -66,7 +66,7 @@ public class Project {
     /**
      * Used to find the quickest one to put into the above one
      */
-    private List<List<Double>> tempPossibleCompletions = new ArrayList<>();
+    private final List<List<Double>> tempPossibleCompletions = new ArrayList<>();
 
     /**
      * Used to give possible other solutions with an amount of employees
@@ -283,10 +283,6 @@ public class Project {
         return possibleCompletions;
     }
 
-    public void setPossibleCompletions(List<Double> values) {
-        possibleCompletions = values;
-    }
-
     public String[] getPossibleSequences() {
         return possibleSequences;
     }
@@ -297,10 +293,6 @@ public class Project {
 
     public List<List<Double>> getTempPossibleCompletions() {
         return tempPossibleCompletions;
-    }
-
-    public void setTempPossibleCompletions(List<List<Double>> tempPossibleCompletions) {
-        this.tempPossibleCompletions = tempPossibleCompletions;
     }
 
     public RecommendedEmployees getRecommendedEmployees() {

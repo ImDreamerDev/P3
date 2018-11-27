@@ -71,9 +71,8 @@ public class CreateProjectManager extends Application {
             listView.setItems(FXCollections.observableArrayList(DatabaseManager.getAllProjectManagers().stream().
                     map(ProjectManager::getName).collect(Collectors.toList())));
 
-        Scene scene = new Scene(rootPane, 1280, 720);
+        Scene scene = new Scene(rootPane, 600, 400);
         stage.setTitle("Planexus");
-
         stage.setScene(scene);
         stage.show();
 
@@ -116,9 +115,6 @@ public class CreateProjectManager extends Application {
             usernameField.clear();
             passwordField.clear();
             passwordFieldRepeat.clear();
-
         }
-
     }
-
 }

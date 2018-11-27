@@ -1,6 +1,6 @@
 package dk.aau.ds304e18;
 
-import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.database.DatabaseDistributor;
 import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.gui.Login;
 import dk.aau.ds304e18.gui.ProjectTab;
@@ -94,14 +94,14 @@ public class JavaFXMain extends Application {
         outputTabPane.getTabs().get(2).setTooltip(new Tooltip("The page to assign employees to the task on the selected project"));
 
         //Get the update button from the GUI.
-        Button updateButton = (Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(1);
+        Button updateButton = (Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(0);
         //Set the tooltip of the update button.
         updateButton.setTooltip(new Tooltip("Updates the program"));
         //Makes the update button update the local stored objects.
         updateButton.setOnMouseClicked(event -> update());
 
         //Get the log out button from the GUI.
-        Button logoutButton = (Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(3);
+        Button logoutButton = (Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(2);
         //Set the tooltip of the log out button.
         logoutButton.setTooltip(new Tooltip("Logs out of the program"));
         //Makes the logout button log the user out.
@@ -147,7 +147,7 @@ public class JavaFXMain extends Application {
         //Set the selected id to 0.
         JavaFXMain.selectedProjectId = 0;
         //Make a new task
-        Task<Void> voidTask = DatabaseManager.distributeModels(LocalObjStorage.getProjectManagerList().get(0));
+        Task<Void> voidTask = DatabaseDistributor.distributeModels(LocalObjStorage.getProjectManagerList().get(0));
         //Create and add a progressbar showing the progress of the task.
         ProgressBar bar = new ProgressBar();
         bar.progressProperty().bind(voidTask.progressProperty());

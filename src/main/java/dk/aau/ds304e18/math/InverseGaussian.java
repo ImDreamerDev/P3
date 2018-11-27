@@ -14,16 +14,6 @@ public class InverseGaussian {
         this.setParams(mu, lambda);
     }
 
-    //Calculate the density at a given x-coordinate from the Inverse Gaussian Distribution PDF
-    private static double density(double mu, double lambda, double x) {
-        if (x <= 0.0D) {
-            return 0.0D;
-        } else {
-            double sqrtX = Math.sqrt(x);
-            return Math.sqrt(lambda / 6.283185307179586D) / (sqrtX * sqrtX * sqrtX) * Math.exp(-lambda * (x - 2.0D * mu + mu * mu / x) / (2.0D * mu * mu));
-        }
-    }
-
     /**
      * Calculate the y-value given an x value, i.e. the probability of a task completing at a certain time (y : probability, x : time) using the CDF
      *
@@ -123,25 +113,6 @@ public class InverseGaussian {
     }
 
     /**
-     * The getter for mu.
-     *
-     * @return mu.
-     */
-    public double getMu() {
-        return this.mu;
-    }
-
-    /**
-     * The getter for Density
-     *
-     * @param x - x value
-     * @return density
-     */
-    public double getDensity(double x) {
-        return density(this.mu, this.lambda, x);
-    }
-
-    /**
      * The getter for the probability
      *
      * @param x - the x value from the cdf (the task estimated completion time)
@@ -162,14 +133,13 @@ public class InverseGaussian {
         double x = 20;
         double startX = -1;
         double endX = -1;
+        double probX = getProbability(x);
 
         //While we're not within a margin from the probability
-        while (getProbability(x) < (y - 1) || getProbability(x) > (y + 1)) {
-
-            double tempProb = getProbability(x);
+        while (probX < (y - 1) || probX > (y + 1)) {
 
             //Check if we're lower
-            if (tempProb < y) {
+            if (probX < y) {
                 //Set startX so we know where to look
                 startX = x;
 
@@ -190,6 +160,7 @@ public class InverseGaussian {
                 else
                     x -= (endX - startX) / 2;
             }
+            probX = getProbability(x);
         }
 
         //Return the x value
