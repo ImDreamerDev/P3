@@ -126,7 +126,7 @@ public class Sequence {
             return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, tasksNotSequenced.size()).toString();
         }
 
-        //sortTasks(tasksNotSequenced); //Might not make sense to put prioritised first - It can make the project longer than it should
+        sortTasks(tasksNotSequenced); //Might not make sense to put prioritised first - It can make the project longer than it should
 
         if(project.getNumberOfEmployees() < 2) {
             for(int i = 0; i < tasksLeft; i++) {
