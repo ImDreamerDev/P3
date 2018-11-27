@@ -441,6 +441,7 @@ public class DatabaseManager {
         }
     }
 
+
     /**
      * Used to log out. Closes connection to database and clears local storage.
      */
