@@ -74,7 +74,6 @@ public class MonteCarlo {
 
     }
 
-    //TODO: Consider putting this into more functions
     private static String[] findRandomSequences(int monteCarloRepeats, int numOfWorkGroups, Project project, boolean fast) {
 
         project.setPossibleSequences(new String[monteCarloRepeats]);
@@ -176,7 +175,6 @@ public class MonteCarlo {
             startTimes.set(k, minUpper);
     }
 
-    //TODO: Consider putting this into more functions
     private static void setStartTimesOfTasks(Project project, int numOfWorkGroups) {
         List<Double> startTimes = new ArrayList<>();
         List<Task> tempRecList = ParseSequence.parseToSingleList(project, true);

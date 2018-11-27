@@ -1,6 +1,7 @@
 package dk.aau.ds304e18.models;
 
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.math.RecommendedEmployees;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -364,6 +365,20 @@ class ProjectTest {
     void TestProjectGetTempPossibleCompletions() {
         Project newProject = new Project(1, "Rasmus Test Project", ProjectState.ONGOING, "", 34, "", 2, null);
         assertEquals(newProject.getTempPossibleCompletions().size(), 0);
+    }
 
+    @Test
+    void TestProjectGetRecommendedEmployees() {
+        Project newProject = new Project(1, "Rasmus Test Project", ProjectState.ONGOING, "", 34, "", 2, null);
+        assertNull(newProject.getRecommendedEmployees());
+    }
+
+    @Test
+    void TestProjectSetRecommendedEmployees() {
+        Project newProject = new Project(1, "Rasmus Test Project", ProjectState.ONGOING, "", 34, "", 2, null);
+        RecommendedEmployees recommendedEmployees = new RecommendedEmployees();
+        recommendedEmployees.add(2, 43.3);
+        newProject.setRecommendedEmployees(recommendedEmployees);
+        assertEquals(newProject.getRecommendedEmployees().getEstimatedTime().get(0).doubleValue(), 43.3);
     }
 }

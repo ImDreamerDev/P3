@@ -400,12 +400,9 @@ public class DatabaseManager {
      * @return list of employees with no current project or are part of project managers current project.
      */
     static List<Employee> getAvailableEmployees(ProjectManager projectManager) {
-        List<Integer> employeeIdsToQuery = new ArrayList<>();
 
-        //We want unassigned employees
-        employeeIdsToQuery.add(0);
         //We want employees from the current project
-        employeeIdsToQuery.addAll(projectManager.getCurrentProjectIds());
+        List<Integer> employeeIdsToQuery = new ArrayList<>(projectManager.getCurrentProjectIds());
 
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();

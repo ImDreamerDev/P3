@@ -412,4 +412,12 @@ class TaskTest {
 
         assertEquals(newProject.getId(), newTask.getProjectId());
     }
+
+    @Test
+    void TestTaskGetInvG() {
+        ProjectManager projectManager = new ProjectManager("Project Manager", "Password");
+        Project newProject = new Project("Test Project", projectManager);
+        Task newTask = new Task("Test Task", 1, 1, newProject);
+        assertEquals(newTask.getInvG().getLambda(), 0);
+    }
 }

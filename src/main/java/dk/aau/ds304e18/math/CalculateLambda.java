@@ -103,12 +103,9 @@ class CalculateLambda {
                     bestMu = currentMu;
                 }
 
-                //TODO: Consider changing this amount
                 currentLambda += 0.1;
-
             }
 
-            //TODO: Consider changing this amount
             currentMu += mu / 10;
         }
 
