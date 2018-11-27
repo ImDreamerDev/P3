@@ -629,7 +629,7 @@ public class DatabaseManager {
             if (manager.getCurrentProjects() != null && manager.getCurrentProjects().size() != 0)
                 statement.setArray(1, dbConnection.createArrayOf("INTEGER", currentProjArray.toArray()));
             else
-                statement.setNull(1, Types.INTEGER);
+                statement.setNull(1, Types.ARRAY);
             statement.setArray(2, dbConnection.createArrayOf("INTEGER",
                     manager.getOldProjectsId().toArray()));
             statement.setInt(3, manager.getId());
