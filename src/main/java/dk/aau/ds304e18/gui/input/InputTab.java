@@ -254,6 +254,7 @@ public class InputTab {
             ((Button) vBoxSplitter.getChildren().get(3)).setText("Stop");
             vBoxSplitter.getChildren().get(3).setOnMouseClicked(event1 -> {
                 calcTask.cancel();
+                ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1)).getChildren().remove(bar);
                 ((Button) vBoxSplitter.getChildren().get(3)).setText("Calculate");
                 setupInputTab();
             });
