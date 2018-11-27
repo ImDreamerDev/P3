@@ -103,11 +103,9 @@ public class MonteCarlo {
         //For each task in taskList
         for (Task task : project.getTasks()) {
             //If the task does not have a lambda yet
-            if (task.getInvG().getLambda() == -1) {
-                //Calculate the lambda and optimize the mu value
-                List<Double> temp = CalculateLambda.calculateLambda(task.getEstimatedTime(), task.getProbabilities());
-                task.getInvG().setParams(temp.get(0), temp.get(1));
-            }
+            //Calculate the lambda and optimize the mu value
+            List<Double> temp = CalculateLambda.calculateLambda(task.getEstimatedTime(), task.getProbabilities());
+            task.getInvG().setParams(temp.get(0), temp.get(1));
         }
 
         //Go through all the sequences made

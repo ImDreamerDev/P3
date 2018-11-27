@@ -22,7 +22,7 @@ public class DatabaseParser {
             if (rs == null) return null;
             while (rs.next()) {
                 Employee emp = new Employee(rs.getInt(1), rs.getString(2));
-                emp.setProjectId(rs.getInt(4));
+                emp.setProjectId(rs.getInt(3));
                 empList.add(emp);
             }
         } catch (SQLException e) {
