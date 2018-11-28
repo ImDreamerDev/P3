@@ -6,6 +6,11 @@ import java.util.concurrent.TimeUnit;
 
 public class MonteCarloExecutorService {
     private static ExecutorService executor;
+    private static int numOfThreads = Runtime.getRuntime().availableProcessors();
+
+    public static int getNumOfThreads() {
+        return numOfThreads;
+    }
 
     public static ExecutorService getExecutor() {
         if (executor == null) {

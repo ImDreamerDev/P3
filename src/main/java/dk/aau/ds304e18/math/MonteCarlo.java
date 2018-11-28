@@ -338,7 +338,7 @@ public class MonteCarlo {
     }
 
     //Find number of threads
-    private static final int numOfThreads = Runtime.getRuntime().availableProcessors();
+    private static final int numOfThreads = MonteCarloExecutorService.getNumOfThreads();
 
     public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index) {
         return estimateTime(project, monteCarloRepeats, random, index, false);
