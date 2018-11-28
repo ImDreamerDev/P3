@@ -16,6 +16,9 @@ import java.util.concurrent.*;
 
 public class MonteCarlo {
 
+    //Find number of threads
+    private static final int numOfThreads = MonteCarloExecutorService.getNumOfThreads();
+
     private static final ReadOnlyDoubleWrapper progress = new ReadOnlyDoubleWrapper();
 
     /**
@@ -418,9 +421,6 @@ public class MonteCarlo {
 
         return startTimes.indexOf(Collections.min(startTimes));
     }
-
-    //Find number of threads
-    private static final int numOfThreads = MonteCarloExecutorService.getNumOfThreads();
 
     /**
      * The main estimateTime function used to estimate the time of a project
