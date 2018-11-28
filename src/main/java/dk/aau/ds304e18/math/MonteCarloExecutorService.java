@@ -9,7 +9,7 @@ public class MonteCarloExecutorService {
     private static ExecutorService executor;
 
     //The amount of processor threads/cores available
-    private static int numOfThreads = Runtime.getRuntime().availableProcessors();
+    private static int numOfThreads = -1;
 
     public static int getNumOfThreads() {
         return numOfThreads;
@@ -17,25 +17,25 @@ public class MonteCarloExecutorService {
 
 
     /**
-     * Gets the executor. If it's null it makes a new one and returns.
+     * Gets the executor.
      *
      * @return The executor service
      */
     public static ExecutorService getExecutor() {
-        if (executor == null) {
-            MonteCarloExecutorService.executor = Executors.newFixedThreadPool(numOfThreads);
-        }
         return executor;
     }
 
     /**
      * Makes sure the executor service is not terminated.
-     * Should be called once before using the executor.
+     * HAS to be called once before using the executor.
      */
     public static void init() {
+        numOfThreads = Runtime.getRuntime().availableProcessors();
+
         if (executor == null || executor.isTerminated()) {
             MonteCarloExecutorService.executor = Executors.newFixedThreadPool(numOfThreads);
         }
+
     }
 
 
