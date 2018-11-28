@@ -176,16 +176,16 @@ public class MonteCarlo {
      * This makes it possible to find the best sequence as that is
      * the one with the same index as the smallest time.
      *
-     * @param monteCarloRepeats The amount of times to try each task before concluding an average time
+     * @param amountSequences The amount of sequences to be tried
      * @param randomSequences The sequences to be tried
      * @param project The project with the sequences
      *
      * @return The list of estimated times
      */
-    private static List<Double> estimateTimeForAllSequences(int monteCarloRepeats, String[] randomSequences, Project project) {
+    private static List<Double> estimateTimeForAllSequences(int amountSequences, String[] randomSequences, Project project) {
         int i = 0;
         List<Double> time = new ArrayList<>();
-        while (i < monteCarloRepeats) {
+        while (i < amountSequences) {
 
             //If there is no more random sequences break
             if (randomSequences[i] == null)
@@ -195,7 +195,7 @@ public class MonteCarlo {
             time.add(estimateTime(project, true, i));
 
             i++;
-            progress.set((double) i / monteCarloRepeats);
+            progress.set((double) i / amountSequences);
         }
 
         return time;
