@@ -75,7 +75,7 @@ public class OutputTab {
 
             // The part of the method that draws the ganttTab.
             ganttTab.drawTasks();
-            if (useMonty) {
+            if (useMonty && pro.getTasks() != null && pro.getTasks().size() != 0) {
                 ((ListView<Task>) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
                         .setItems(FXCollections.observableArrayList(ParseSequence.parseToSingleList(pro, true)));
             } else if (pro.getRecommendedPath() != null && !pro.getRecommendedPath().equals("")) {
