@@ -18,15 +18,26 @@ public class MonteCarlo {
 
     private static final ReadOnlyDoubleWrapper progress = new ReadOnlyDoubleWrapper();
 
+    /**
+     * TODO: SOMEONE COMMENT THIS I DIDN'T MAKE THIS REEEE I ASSUME IT JUST RETURNS THE PROGRESS SO THE PROGRESSBAR CAN BE UPDATED REEEEEE
+     * @return progress
+     */
     public static ReadOnlyDoubleProperty progressProperty() {
         return progress;
     }
 
-    public static void findFastestSequence(Project project, boolean fast) {
-        findFastestSequence(project, 200, fast);
-    }
-
-    public static void findFastestSequence(Project project, int monteCarloRepeats, boolean fast) {
+    /**
+     * Calculates the project information
+     * The best sequence,
+     * The time of this sequence,
+     * The probability of completing at different times
+     * Sets the start time of each task for the gantt view
+     * The recommended amount of employees
+     * @param project The project you want to calculate and set values for
+     * @param amountSequences The amount of sequences you want
+     * @param fast Less accurate, but possibly faster
+     */
+    public static void calculateProjectInformation(Project project, int amountSequences, boolean fast) {
         //Resets the possible completions every time so it's accurate
         project.getPossibleCompletions().clear();
         int numOfWorkGroups = (int) project.getNumberOfEmployees();
@@ -40,13 +51,13 @@ public class MonteCarlo {
         double worstTime; //May be used in the future
 
         //Initialize an array of strings, we use array because array is faster than list
-        String[] randomSequences = findRandomSequences(monteCarloRepeats, numOfWorkGroups, project, fast);
+        String[] randomSequences = findRandomSequences(amountSequences, numOfWorkGroups, project, fast);
 
         //Calculate the lambda value for all tasks and look for optimizing the mu value
         calculateLambdaForAllTasks(project);
 
         //Go through all the sequences made and add them to the temporary list "time"
-        List<Double> time = estimateTimeForAllSequences(monteCarloRepeats, randomSequences, project);
+        List<Double> time = estimateTimeForAllSequences(amountSequences, randomSequences, project);
 
         //Set the variables to correct stuff
         bestTime = Collections.min(time);

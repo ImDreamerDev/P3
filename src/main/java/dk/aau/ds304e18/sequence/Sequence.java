@@ -8,15 +8,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static dk.aau.ds304e18.math.MonteCarlo.findFastestSequence;
+import static dk.aau.ds304e18.math.MonteCarlo.calculateProjectInformation;
 import static dk.aau.ds304e18.sequence.ParseSequence.unparseList;
 
 public class Sequence {
 
     public static void sequenceTasks(Project project, boolean fast) {
 
-        //Find the best sequence
-        findFastestSequence(project, fast);
+        //Find the best sequence with 200 monteCarloRepeats
+        calculateProjectInformation(project, 200, fast);
 
         //The sequence to return
         String sequencedTasks = makeSequenceString(project);
