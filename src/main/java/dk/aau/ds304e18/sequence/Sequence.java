@@ -13,7 +13,13 @@ import static dk.aau.ds304e18.sequence.ParseSequence.unparseList;
 
 public class Sequence {
 
-    public static void sequenceTasks(Project project, boolean fast) {
+    /**
+     * Finds the sequence of the project and calculates everything related to the project
+     *
+     * @param project The project to sequence and calculate
+     * @param fast If a fast sequencing is wanted - Less accurate
+     */
+    public static void sequenceAndCalculateProject(Project project, boolean fast) {
 
         //Find the best sequence with 200 monteCarloRepeats
         calculateProjectInformation(project, 200, fast);
@@ -25,6 +31,13 @@ public class Sequence {
         project.setSequence(sequencedTasks);
     }
 
+    /**
+     * Makes the sequence into a string so it can be sent everywhere and be understood
+     *
+     * @param project The project to make the sequence for
+     *
+     * @return The string of the sequence
+     */
     private static String makeSequenceString(Project project) {
 
         //The sequence to set
@@ -68,6 +81,13 @@ public class Sequence {
 
     }
 
+    /**
+     * Sorts the tasks by priority
+     *
+     * @param tasks the tasks to sort
+     *
+     * @return A sorted (by priority) list of tasks
+     */
     private static List<Task> sortTasks(List<Task> tasks) {
 
         //Sort tasks after their priority in descending order
@@ -80,8 +100,10 @@ public class Sequence {
 
     /**
      * Finds a random sequence with a project
+     *
      * @param project The project where we want a random sequence
      * @param fast    If you want to do fast calculation or slow
+     *
      * @return Returns a string with the sequence
      */
     public static String findRandomSequence(Project project, boolean fast) {
@@ -127,6 +149,13 @@ public class Sequence {
         return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, 0).toString();
     }
 
+    /**
+     * Finds a legal sequence, makes no effort to optimize
+     *
+     * @param project The project to find a sequence for
+     *
+     * @return Returns a legal sequence
+     */
     private static String simpleSequenceFinder(Project project) {
         int tasksLeft = project.getTasks().size();
         List<Task> tasksSequenced = new ArrayList<>();
@@ -137,6 +166,13 @@ public class Sequence {
         return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, 0).toString();
     }
 
+    /**
+     * Sequences a list of tasks and puts them into a list in a legal order
+     *
+     * @param tasksToSequence The amount of tasks to sequence
+     * @param putInto The list to put into
+     * @param takeFrom The list of tasks to take from
+     */
     private static void simpleSequencing(int tasksToSequence, List<Task> putInto, List<Task> takeFrom) {
         while (tasksToSequence > 0) {
             for (int i = 0; i < tasksToSequence; i++) {
@@ -148,6 +184,13 @@ public class Sequence {
         }
     }
 
+    /**
+     * Finds tasks in a list that doesn't have dependencies
+     *
+     * @param listToSearch The tasks to search
+     *
+     * @return The list of tasks without dependencies
+     */
     private static List<Task> findTasksWithoutDeps(List<Task> listToSearch){
         List<Task> result = new ArrayList<>();
 
@@ -159,6 +202,14 @@ public class Sequence {
         return result;
     }
 
+    /**
+     * Finds the tasks without dependencies that other tasks are dependent on
+     *
+     * @param tasksWithoutDependencies Amount of tasks without dependencies
+     * @param listToLookThrough The full list of tasks
+     *
+     * @return The tasks without dependencies that other tasks are dependent on
+     */
     private static List<Task> findUsefulTasksWithoutDeps(List<Task> tasksWithoutDependencies, List<Task> listToLookThrough) {
         List<Task> result = new ArrayList<>();
 
@@ -177,6 +228,14 @@ public class Sequence {
 
     }
 
+    /**
+     * Sequences tasks at the start so every work group has something to do at the start if possible
+     *
+     * @param project The project to sequence
+     * @param tasksSequenced The tasks that has been sequenced
+     * @param tasksNotSequenced The tasks that has yet to be sequenced
+     * @param tasksWithoutDependencies The tasks without dependencies which will be put at the start
+     */
     private static void sequenceEmployees(Project project, List<Task> tasksSequenced, List<Task> tasksNotSequenced, List<Task> tasksWithoutDependencies) {
         int amountEmployees = (int) project.getNumberOfEmployees();
 
