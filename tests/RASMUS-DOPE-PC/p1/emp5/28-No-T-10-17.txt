@@ -1,0 +1,8 @@
+200
+4 amount of employees has time 275.469921875
+Worst Path: 1,8,2,5,6(2),4(2),3(1),7(4,6),9(2),10(8)
+Worst Time: 282.786765625
+Best Path: 1,8,2,5,3(1),9(2),10(8),4(2),6(2),7(4,6)
+Best Time: 269.3431875
+[31mNote: total in that unit!
+[39mHours: 00 Minutes: 00 Seconds: 13 Milliseconds: 13265 
