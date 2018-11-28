@@ -8,6 +8,14 @@ import java.util.List;
 
 public class ParseSequence {
 
+    /**
+     * Parses to a single list with standard values
+     *
+     * @param project The project to be sequenced
+     * @param rec If it's recommended path or sequenced path
+     *
+     * @return The sequenced list
+     */
     public static List<Task> parseToSingleList(Project project, boolean rec) {
         return parseToSingleList(project, rec, false, 0);
     }
