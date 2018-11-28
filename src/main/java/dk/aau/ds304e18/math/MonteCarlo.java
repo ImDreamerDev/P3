@@ -74,7 +74,7 @@ public class MonteCarlo {
         setStartTimesOfTasks(project, numOfWorkGroups);
         project.setRecommendedEmployees(optimizeWorkGroups(project, numOfWorkGroups));
 
-        //Set amount of employeees back to what it was
+        //Set amount of employees back to what it was
         project.setNumberOfEmployees(numOfWorkGroups);
 
         //SOUT
