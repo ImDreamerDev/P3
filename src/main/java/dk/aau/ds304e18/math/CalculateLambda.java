@@ -10,7 +10,7 @@ class CalculateLambda {
      *
      * @param mu            - The value of mu before the calculation.
      * @param probabilities - The completion probabilities of the tasks.
-     * @return Mu value, Lambda value.
+     * @return A list containing the mu value at index 0, lambda value at 1, and an accuracy value at 2 (lower the better).
      */
     public static List<Double> calculateLambda(double mu, List<Probabilities> probabilities) {
         List<Double> returnVariables = new ArrayList<>();
