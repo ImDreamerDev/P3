@@ -20,6 +20,7 @@ public class MonteCarlo {
 
     /**
      * TODO: SOMEONE COMMENT THIS I DIDN'T MAKE THIS REEEE I ASSUME IT JUST RETURNS THE PROGRESS SO THE PROGRESSBAR CAN BE UPDATED REEEEEE
+     *
      * @return progress
      */
     public static ReadOnlyDoubleProperty progressProperty() {
@@ -27,12 +28,13 @@ public class MonteCarlo {
     }
 
     /**
-     * Calculates the project information
+     * Calculates the project information:
      * The best sequence,
      * The time of this sequence,
-     * The probability of completing at different times
-     * Sets the start time of each task for the gantt view
-     * The recommended amount of employees
+     * The probability of completing at different times,
+     * Sets the start time of each task for the gantt view,
+     * The recommended amount of employees.
+     *
      * @param project The project you want to calculate and set values for
      * @param amountSequences The amount of sequences you want
      * @param fast Less accurate, but possibly faster
@@ -85,9 +87,23 @@ public class MonteCarlo {
 
     }
 
-    private static String[] findRandomSequences(int monteCarloRepeats, int numOfWorkGroups, Project project, boolean fast) {
+    /**
+     * Finds an array of random sequences in a project.
+     * If there's only 1 work group it just finds a random sequence
+     * As all sequences would take the same amount of time assuming they're legal
+     *
+     * @param amountSequences Amount of sequences wanted (max)
+     * @param numOfWorkGroups Amount of work groups in the project
+     *                        (Slightly faster to just send the integer than getting it from project)
+     * @param project The project we want to find random sequences for
+     * @param fast Finds less sequences, which is faster, but less accurate
+     *             (Only faster with relatively small projects)
+     *
+     * @return An array of strings with random sequences for the project, all legal
+     */
+    private static String[] findRandomSequences(int amountSequences, int numOfWorkGroups, Project project, boolean fast) {
 
-        project.setPossibleSequences(new String[monteCarloRepeats]);
+        project.setPossibleSequences(new String[amountSequences]);
         String[] randomSequences = project.getPossibleSequences();
         int j = 0;
 
@@ -95,7 +111,7 @@ public class MonteCarlo {
         int counter = 0;
 
         if (numOfWorkGroups > 1) {
-            while (j < monteCarloRepeats) {
+            while (j < amountSequences) {
 
                 //If this is true skip
                 boolean continueLoop = false;
@@ -130,7 +146,7 @@ public class MonteCarlo {
                 counter = 0;
                 j++;
 
-                if (j == monteCarloRepeats)
+                if (j == amountSequences)
                     System.out.println(j);
             }
         } else {
@@ -140,6 +156,12 @@ public class MonteCarlo {
         return randomSequences;
     }
 
+    /**
+     * Calculates the lambda value (And an optimized mu value) for each task in a given project
+     * Sets the tasks inverse gaussian parameters (mu and lambda)
+     *
+     * @param project The project with the tasks that will be calculated
+     */
     private static void calculateLambdaForAllTasks(Project project) {
         for (Task task : project.getTasks()) {
             //If the task does not have a lambda yet
@@ -149,6 +171,17 @@ public class MonteCarlo {
         }
     }
 
+    /**
+     * Estimates the time for all sequences and returns a list of doubles.
+     * This makes it possible to find the best sequence as that is
+     * the one with the same index as the smallest time.
+     *
+     * @param monteCarloRepeats The amount of times to try each task before concluding an average time
+     * @param randomSequences The sequences to be tried
+     * @param project The project with the sequences
+     *
+     * @return The list of estimated times
+     */
     private static List<Double> estimateTimeForAllSequences(int monteCarloRepeats, String[] randomSequences, Project project) {
         int i = 0;
         List<Double> time = new ArrayList<>();
@@ -168,24 +201,41 @@ public class MonteCarlo {
         return time;
     }
 
-    public static void allLowestToNextLowest(List<Double> startTimes) {
+    /**
+     * Sets all the doubles in a list that has the same value as the smallest value to the first value that is
+     * higher than the smallest value - Also sorts the list from smallest to highest
+     * i.e.
+     * [1, 1, 1, 9, 5, 3]
+     * would become
+     * [3, 3, 3, 3, 5, 9]
+     *
+     * @param list The list in which to set the smallest values to the first value above
+     */
+    public static void allLowestToNextLowest(List<Double> list) {
         int index = 0;
 
-        Collections.sort(startTimes);
+        Collections.sort(list);
 
-        for (Double tempStartTime : startTimes) {
-            if (tempStartTime > startTimes.get(0)) {
-                index = startTimes.indexOf(tempStartTime);
+        for (Double tempStartTime : list) {
+            if (tempStartTime > list.get(0)) {
+                index = list.indexOf(tempStartTime);
                 break;
             }
         }
 
-        double minUpper = startTimes.get(index);
+        double minUpper = list.get(index);
 
         for (int k = 0; k < index; k++)
-            startTimes.set(k, minUpper);
+            list.set(k, minUpper);
     }
 
+    /**
+     * Sets the start times of tasks to an available time slot depending on amount of work groups and dependencies
+     * This is used to create a reasonable gantt view
+     *
+     * @param project The project in which the tasks exist
+     * @param numOfWorkGroups The amount of work groups
+     */
     private static void setStartTimesOfTasks(Project project, int numOfWorkGroups) {
         List<Double> startTimes = new ArrayList<>();
         List<Task> tempRecList = ParseSequence.parseToSingleList(project, true);
@@ -205,11 +255,11 @@ public class MonteCarlo {
                 if (task.getStartTime() != -1)
                     continue;
 
-                if (check(task, alreadyStarted))
+                if (NotLegal(task, alreadyStarted))
                     continue;
 
                 if (startTimes.size() < numOfWorkGroups && startTimes.size() < withoutDeps.size()) {
-                    if (check(task, alreadyStarted))
+                    if (NotLegal(task, alreadyStarted))
                         continue;
                     if (task.getStartTime() == -1)
                         task.setStartTime(0d);
@@ -221,7 +271,7 @@ public class MonteCarlo {
                         startTimes.add(0d);
                     continue;
                 } else {
-                    if (check(task, alreadyStarted))
+                    if (NotLegal(task, alreadyStarted))
                         continue;
                     int temp = findSmallestPossible(task, startTimes);
                     if (temp == -1)
@@ -249,6 +299,20 @@ public class MonteCarlo {
         }
     }
 
+    /**
+     * Finds the smallest amount of work groups needed to get
+     * within a margin of the estimated time of the calculated project.
+     * Finds the smallest amount of work groups to get the project under a certain time.
+     *
+     * I.e. The project takes 100 duration
+     * Finds the smallest amount of work groups needed to be below 110 duration
+     * Finds the smallest amount of work groups needed to be below 90 duration
+     *
+     * @param project The project to optimize number of work groups
+     * @param numOfWorkGroups The number of work groups in the project
+     *
+     * @return Returns the recommended amount of employees and their estimated time
+     */
     private static RecommendedEmployees optimizeWorkGroups(Project project, int numOfWorkGroups) {
         //Initialize the temp amount of employee groups and the temp recommended employees
         RecommendedEmployees tempRecEmp = new RecommendedEmployees();
@@ -268,6 +332,15 @@ public class MonteCarlo {
 
     }
 
+    /**
+     * Finds lower bound of a number of work groups.
+     * Finds upper bound of a number of work groups.
+     * So the program doesn't calculate forever.
+     *
+     * @param numOfWorkGroups Amount of work groups currently in the project
+     *
+     * @return An array of integers, first one being the lower bound, second being the upper bound.
+     */
     private static int[] findLowUp(int numOfWorkGroups) {
         int lowerBound = (int) (numOfWorkGroups * 0.5);
         if (lowerBound == numOfWorkGroups)
@@ -282,45 +355,78 @@ public class MonteCarlo {
         return new int[]{lowerBound, upperBound};
     }
 
-    private static int estimateWithDifferentAmountOfWorkGroups(int i, int numOfWorkGroups, Project project, RecommendedEmployees tempRecEmp) {
-        if (i == numOfWorkGroups) return 0;
+    /**
+     * Estimates the time for a project to complete with the sequence found for the current amount of employees.
+     * This gives a guess at an optimal amount of employees.
+     *
+     * @param amountEmployees The amount of employees to guess with
+     * @param numOfWorkGroups The amount of employees the project has at the start
+     * @param project The project to calculate
+     * @param tempRecEmp The result
+     *
+     * @return 0 = Skip this one, 1 = Estimation is done, 2 = No need to guess under the current amount of employees
+     */
+    private static int estimateWithDifferentAmountOfWorkGroups(int amountEmployees, int numOfWorkGroups, Project project, RecommendedEmployees tempRecEmp) {
+        if (amountEmployees == numOfWorkGroups) return 0;
         //Set the amount of employees to the set number of employees just to check them
-        project.setNumberOfEmployees(i);
+        project.setNumberOfEmployees(amountEmployees);
         //Calculate the estimated time with the current sequence
         //We just want to give a guess, not give an extremely accurate estimate at different employee group numbers
         double tempEst = estimateTime(project, true);
         //If it's within a margin add it to the list
-        if (tempEst < project.getDuration() * 0.95 && i > numOfWorkGroups || tempEst < project.getDuration() * 1.05 && i < numOfWorkGroups) {
+        if (tempEst < project.getDuration() * 0.9 && amountEmployees > numOfWorkGroups ||
+                tempEst < project.getDuration() * 1.1 && amountEmployees < numOfWorkGroups) {
             //Add it to the recommended amount list
-            tempRecEmp.add(i, tempEst);
-            System.out.println(i + " amount of employees has time " + tempEst);
-            if (i > numOfWorkGroups)
+            tempRecEmp.add(amountEmployees, tempEst);
+            System.out.println(amountEmployees + " amount of employees has time " + tempEst);
+            if (amountEmployees > numOfWorkGroups)
                 return 1;
             return 2;
         }
-        return -1;
+        return 1;
     }
 
-    private static boolean check(Task task, List<Task> alreadyStarted) {
+    /**
+     * Checks if the task currently being put into a schedule can legally be put in there.
+     *
+     * @param task The task to check if legal to put in.
+     * @param alreadyStarted The list of tasks already in.
+     *
+     * @return A boolean - True = Not legal - False = Legal
+     */
+    private static boolean NotLegal(Task task, List<Task> alreadyStarted) {
         return !alreadyStarted.containsAll(task.getDependencies());
     }
 
+    /**
+     * Checks if the task is ready to be put in after the task that is done the fastest currently.
+     *
+     * @param task The task to check
+     * @param startTimes The current startTimes available
+     *
+     * @return The index of the startTime to be placed in, -1 if illegal
+     */
     private static int findSmallestPossible(Task task, List<Double> startTimes) {
-        List<Double> temp = new ArrayList<>(startTimes);
-
         if (task.getDependencies().size() == 0)
-            return temp.indexOf(Collections.min(temp));
+            return startTimes.indexOf(Collections.min(startTimes));
 
         for (Task dependency : task.getDependencies()) {
-            //if(bestCase) {
-            if (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(temp))
+            if (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(startTimes))
                 return -1;
 
         }
 
-        return temp.indexOf(Collections.min(temp));
+        return startTimes.indexOf(Collections.min(startTimes));
     }
 
+    /**
+     * Calls the estimateTime with standard values
+     *
+     * @param project The project to calculate time on
+     * @param rec If the estimateTime should use recommended path or the main sequence
+     *
+     * @return The time of the project using the path
+     */
     public static double estimateTime(Project project, boolean rec) {
         return estimateTime(project, 10000, false, 0, rec);
     }
@@ -340,6 +446,16 @@ public class MonteCarlo {
     //Find number of threads
     private static final int numOfThreads = Runtime.getRuntime().availableProcessors();
 
+    /**
+     * Calculates the time of a project given a random sequence
+     *
+     * @param project The project you want estimated.
+     * @param monteCarloRepeats The amount of times you want it repeated.
+     * @param random Is it a random sequence or not.
+     * @param index The index of the possible loop this is called in (If no loop, send 0).
+     *
+     * @return The time estimated.
+     */
     public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index) {
         return estimateTime(project, monteCarloRepeats, random, index, false);
     }
@@ -347,10 +463,12 @@ public class MonteCarlo {
     /**
      * The main estimateTime function used to estimate the time of a project
      *
-     * @param project           The project you want estimated
-     * @param monteCarloRepeats The amount of times you want it repeated
-     * @param index             The index of the possible loop this is called in (If no loop, send 0)
+     * @param project           The project you want estimated.
+     * @param monteCarloRepeats The amount of times you want it repeated.
      * @param random            Is it a random sequence or not.
+     * @param index             The index of the possible loop this is called in (If no loop, send 0).
+     * @param rec               If it should use the recommended path or not.
+     *
      * @return Returns the estimated time of the project
      */
     public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index, boolean rec) {
