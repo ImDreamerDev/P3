@@ -233,7 +233,7 @@ public class InputTab {
 
         ((Button) vBoxSplitter.getChildren().get(3)).setTooltip(new Tooltip("Calculates the probability for the length of the project"));
 
-        Tooltip.install(vBoxSplitter.getChildren().get(2), new Tooltip("If checked the program will try to give the most optimal path for tasks"));
+        Tooltip.install(vBoxSplitter.getChildren().get(2), new Tooltip("If checked, the program will try to guess good sequences, however it might be inaccurate.\nIf not checked, the program will use significantly longer to find the best sequence."));
 
         vBoxSplitter.getChildren().get(3).setOnMouseClicked(event -> {
             disableInput();

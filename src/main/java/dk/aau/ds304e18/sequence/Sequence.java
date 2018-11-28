@@ -21,8 +21,15 @@ public class Sequence {
      */
     public static void sequenceAndCalculateProject(Project project, boolean fast) {
 
-        //Find the best sequence with 200 monteCarloRepeats
-        calculateProjectInformation(project, 200, fast);
+        int amountSeq;
+
+        if(fast)
+            amountSeq = 200;
+        else
+            amountSeq = 1000;
+
+        //Find the best sequence with amountSeq sequences
+        calculateProjectInformation(project, amountSeq, fast);
 
         //The sequence to return
         String sequencedTasks = makeSequenceString(project);
@@ -117,7 +124,7 @@ public class Sequence {
 
         //If we're not going fast, just plug all of the tasks in, in a legal way and return that
         if (!fast) {
-            return simpleSequenceFinder(project);
+            return simpleSequenceFinder(project, tasksNotSequenced);
         }
 
         //Sorts the tasks in prioritized order
@@ -125,7 +132,7 @@ public class Sequence {
 
         //If we're going fast but there's less than 2 employees
         if (project.getNumberOfEmployees() < 2) {
-            return simpleSequenceFinder(project);
+            return simpleSequenceFinder(project, tasksNotSequenced);
         }
 
         //Add all the tasks without dependencies to a list
@@ -156,10 +163,9 @@ public class Sequence {
      *
      * @return Returns a legal sequence
      */
-    private static String simpleSequenceFinder(Project project) {
+    private static String simpleSequenceFinder(Project project, List<Task> tasksNotSequenced) {
         int tasksLeft = project.getTasks().size();
         List<Task> tasksSequenced = new ArrayList<>();
-        List<Task> tasksNotSequenced = new ArrayList<>(project.getTasks());
 
         simpleSequencing(tasksLeft, tasksSequenced, tasksNotSequenced);
 
