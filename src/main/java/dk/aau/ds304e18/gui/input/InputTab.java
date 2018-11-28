@@ -12,6 +12,7 @@ import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.Sequence;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Worker;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -233,7 +234,7 @@ public class InputTab {
 
         ((Button) vBoxSplitter.getChildren().get(3)).setTooltip(new Tooltip("Calculates the probability for the length of the project"));
 
-        Tooltip.install(vBoxSplitter.getChildren().get(2), new Tooltip("If checked, the program will try to guess good sequences, however it might be inaccurate.\nIf not checked, the program will use significantly longer to find the best sequence."));
+        Tooltip.install(vBoxSplitter.getChildren().get(2), new Tooltip("If checked the program will try to give the most optimal path for tasks"));
 
         vBoxSplitter.getChildren().get(3).setOnMouseClicked(event -> {
             disableInput();
@@ -254,6 +255,7 @@ public class InputTab {
                 calcTask.cancel();
                 ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1)).getChildren().remove(bar);
                 ((Button) vBoxSplitter.getChildren().get(3)).setText("Calculate");
+                rootPane.lookup("#projectView").setDisable(false);
                 setupInputTab();
             });
 
@@ -263,12 +265,6 @@ public class InputTab {
             calcTask.progressProperty().addListener((observable, oldValue, newValue) ->
                     bar.getTooltip().setText("Progress: " + Math.round(calcTask.getWorkDone() * 100) + "%"));
 
-            //Remove bar if cancelled.
-            calcTask.setOnCancelled(event1 -> {
-                ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1)).getChildren().remove(bar);
-                rootPane.lookup("#projectView").setDisable(false);
-            });
-
             calcTask.setOnSucceeded(event1 -> {
                 JavaFXMain.outputTab.drawOutputTab(true);
                 tabPane.getSelectionModel().select(tabPane.getTabs().get(2));
@@ -277,6 +273,7 @@ public class InputTab {
                 rootPane.lookup("#projectView").setDisable(false);
                 MonteCarloExecutorService.shutdownExecutor();
                 ((Button) vBoxSplitter.getChildren().get(3)).setText("Calculate");
+                setupInputTab();
             });
 
             MonteCarloExecutorService.init();
