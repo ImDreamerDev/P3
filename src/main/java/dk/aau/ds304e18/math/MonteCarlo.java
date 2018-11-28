@@ -192,7 +192,7 @@ public class MonteCarlo {
                 break;
 
             //Add whatever is returned to the time list
-            time.add(estimateTime(project, true, i));
+            time.add(estimateTime(project, 10000, true, i, false));
 
             i++;
             progress.set((double) i / amountSequences);
@@ -372,7 +372,7 @@ public class MonteCarlo {
         project.setNumberOfEmployees(amountEmployees);
         //Calculate the estimated time with the current sequence
         //We just want to give a guess, not give an extremely accurate estimate at different employee group numbers
-        double tempEst = estimateTime(project, true);
+        double tempEst = estimateTime(project, 10000, false, 0, true);
         //If it's within a margin add it to the list
         if (tempEst < project.getDuration() * 0.9 && amountEmployees > numOfWorkGroups ||
                 tempEst < project.getDuration() * 1.1 && amountEmployees < numOfWorkGroups) {
@@ -419,46 +419,8 @@ public class MonteCarlo {
         return startTimes.indexOf(Collections.min(startTimes));
     }
 
-    /**
-     * Calls the estimateTime with standard values
-     *
-     * @param project The project to calculate time on
-     * @param rec If the estimateTime should use recommended path or the main sequence
-     *
-     * @return The time of the project using the path
-     */
-    public static double estimateTime(Project project, boolean rec) {
-        return estimateTime(project, 10000, false, 0, rec);
-    }
-
-    /**
-     * If you have a project you want to estimate the time in with random sequences
-     *
-     * @param project The project you want estimated
-     * @param random  Want to specify that it's random sequences
-     * @param index   The index we're at in the random sequences
-     * @return The estimated time
-     */
-    public static double estimateTime(Project project, boolean random, int index) {
-        return estimateTime(project, 10000, random, index);
-    }
-
     //Find number of threads
     private static final int numOfThreads = MonteCarloExecutorService.getNumOfThreads();
-
-    /**
-     * Calculates the time of a project given a random sequence
-     *
-     * @param project The project you want estimated.
-     * @param monteCarloRepeats The amount of times you want it repeated.
-     * @param random Is it a random sequence or not.
-     * @param index The index of the possible loop this is called in (If no loop, send 0).
-     *
-     * @return The time estimated.
-     */
-    public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index) {
-        return estimateTime(project, monteCarloRepeats, random, index, false);
-    }
 
     /**
      * The main estimateTime function used to estimate the time of a project
