@@ -4,6 +4,7 @@ import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.models.Task;
 import javafx.collections.FXCollections;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -91,7 +92,8 @@ class DependenciesPopup {
 
         // Make the add button on click add the selected task to the dependencies.
         ((HBox) bar.getItems().get(0)).getChildren().get(0).setOnMouseClicked(event -> addDependency(dependencies.getSelectionModel().getSelectedItems()));
-        //TODO: Tooltip?
+        ((Button) ((HBox) bar.getItems().get(0)).getChildren().get(0)).setTooltip(new Tooltip("Adds the selected task(s) to dependencies"));
+
         //Get the remove button from the toolbar.
         Button removeDep = (Button) ((HBox) bar.getItems().get(0)).getChildren().get(1);
 
