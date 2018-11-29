@@ -435,9 +435,11 @@ public class MonteCarlo {
         double duration = 0.0;
 
         ExecutorService executor = MonteCarloExecutorService.getExecutor();
-        //create a list to hold the Future object associated with Callable
+
+        //create a list to hold the Future Estimate
         List<Future<Estimate>> list = new ArrayList<>();
-        //Create MyCallable instance
+
+        //Create the threads
         for (int i = 0; i < numOfThreads; i++) {
             Callable<Estimate> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(),
                     monteCarloRepeats / numOfThreads);

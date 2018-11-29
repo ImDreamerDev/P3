@@ -33,7 +33,7 @@ public class MonteCarloExecutorService {
         numOfThreads = Runtime.getRuntime().availableProcessors();
 
         if (executor == null || executor.isTerminated()) {
-            MonteCarloExecutorService.executor = Executors.newFixedThreadPool(numOfThreads);
+            executor = Executors.newFixedThreadPool(numOfThreads);
         }
 
     }
