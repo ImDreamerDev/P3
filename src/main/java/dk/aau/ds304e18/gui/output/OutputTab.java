@@ -67,8 +67,6 @@ public class OutputTab {
         Project pro = LocalObjStorage.getProjectList().stream().
                 filter(project -> project.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
         assert pro != null;
-        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output: " +
-                pro.getName() + ":" + JavaFXMain.selectedProjectId);
         AnchorPane pane = ((AnchorPane) rootPane.lookup("#outputScrollView"));
         pane.getChildren().clear();
         if (pro.getSequence() != null) {

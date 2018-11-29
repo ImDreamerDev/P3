@@ -36,9 +36,6 @@ class GanttTab {
         project = LocalObjStorage.getProjectList().stream().
                 filter(pro -> pro.getId() == JavaFXMain.selectedProjectId).findFirst().orElse(null);
         assert project != null;
-        //Sets the title of the output tab to include the name of the project and id.
-        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output: " +
-                project.getName() + ":" + JavaFXMain.selectedProjectId);
 
         //Get the anchor scrollViewPane used from the GUI.
         this.scrollViewPane = ((AnchorPane) rootPane.lookup("#outputScrollView"));

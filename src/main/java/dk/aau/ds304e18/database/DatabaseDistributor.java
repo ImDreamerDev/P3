@@ -100,6 +100,7 @@ public class DatabaseDistributor {
                             emp.distributeAddTask(task);
                         } else {
                             //TODO We don't get employees from previous projects from DB
+                            //Note: Old projects can't have employees.
                             task.addEmployee(new Employee(0, "John Doe"));
                         }
                     }
