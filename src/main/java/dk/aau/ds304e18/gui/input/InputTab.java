@@ -141,6 +141,12 @@ public class InputTab {
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         TextField nameTextField = ((TextField) inputVBox.getChildren().get(1));
         nameTextField.setTooltip(new Tooltip("The name of the Task" + System.lineSeparator() + "Can be both letters and numbers"));
+        if (nameTextField.getText().isBlank()) {
+            nameTextField.setStyle("-fx-border-color: #ff0000");
+        } else {
+            nameTextField.setStyle("");
+        }
+/*
         nameTextField.textProperty().addListener((observableValue, s, t1) -> {
             if (t1.isBlank()) {
                 nameTextField.setStyle("-fx-border-color: #ff0000");
@@ -148,7 +154,7 @@ public class InputTab {
                 nameTextField.setStyle("");
             }
         });
-
+*/
         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
             Task task = LocalObjStorage.getTaskList().stream().filter(t -> t.getProject().getId() == JavaFXMain.selectedProjectId && t.getName().equals(newValue)).findFirst().orElse(null);
