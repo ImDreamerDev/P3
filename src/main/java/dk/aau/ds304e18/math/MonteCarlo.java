@@ -22,9 +22,9 @@ public class MonteCarlo {
     private static final ReadOnlyDoubleWrapper progress = new ReadOnlyDoubleWrapper();
 
     /**
-     * TODO: SOMEONE COMMENT THIS I DIDN'T MAKE THIS REEEE I ASSUME IT JUST RETURNS THE PROGRESS SO THE PROGRESSBAR CAN BE UPDATED REEEEEE
+     * The progress property of the calculation process.
      *
-     * @return progress
+     * @return progress The amount progress currently made.
      */
     public static ReadOnlyDoubleProperty progressProperty() {
         return progress;
@@ -38,9 +38,9 @@ public class MonteCarlo {
      * Sets the start time of each task for the gantt view,
      * The recommended amount of employees.
      *
-     * @param project The project you want to calculate and set values for
+     * @param project         The project you want to calculate and set values for
      * @param amountSequences The amount of sequences you want
-     * @param fast Less accurate, but possibly faster
+     * @param fast            Less accurate, but possibly faster
      */
     public static void calculateProjectInformation(Project project, int amountSequences, boolean fast) {
         //Resets the possible completions every time so it's accurate
@@ -98,10 +98,9 @@ public class MonteCarlo {
      * @param amountSequences Amount of sequences wanted (max)
      * @param numOfWorkGroups Amount of work groups in the project
      *                        (Slightly faster to just send the integer than getting it from project)
-     * @param project The project we want to find random sequences for
-     * @param fast Finds less sequences, which is faster, but less accurate
-     *             (Only faster with relatively small projects)
-     *
+     * @param project         The project we want to find random sequences for
+     * @param fast            Finds less sequences, which is faster, but less accurate
+     *                        (Only faster with relatively small projects)
      * @return An array of strings with random sequences for the project, all legal
      */
     private static String[] findRandomSequences(int amountSequences, int numOfWorkGroups, Project project, boolean fast) {
@@ -181,8 +180,7 @@ public class MonteCarlo {
      *
      * @param amountSequences The amount of sequences to be tried
      * @param randomSequences The sequences to be tried
-     * @param project The project with the sequences
-     *
+     * @param project         The project with the sequences
      * @return The list of estimated times
      */
     private static List<Double> estimateTimeForAllSequences(int amountSequences, String[] randomSequences, Project project) {
@@ -236,7 +234,7 @@ public class MonteCarlo {
      * Sets the start times of tasks to an available time slot depending on amount of work groups and dependencies
      * This is used to create a reasonable gantt view
      *
-     * @param project The project in which the tasks exist
+     * @param project         The project in which the tasks exist
      * @param numOfWorkGroups The amount of work groups
      */
     private static void setStartTimesOfTasks(Project project, int numOfWorkGroups) {
@@ -307,14 +305,13 @@ public class MonteCarlo {
      * Finds the smallest amount of work groups needed to get
      * within a margin of the estimated time of the calculated project.
      * Finds the smallest amount of work groups to get the project under a certain time.
-     *
+     * <p>
      * I.e. The project takes 100 duration
      * Finds the smallest amount of work groups needed to be below 110 duration
      * Finds the smallest amount of work groups needed to be below 90 duration
      *
-     * @param project The project to optimize number of work groups
+     * @param project         The project to optimize number of work groups
      * @param numOfWorkGroups The number of work groups in the project
-     *
      * @return Returns the recommended amount of employees and their estimated time
      */
     private static RecommendedEmployees optimizeWorkGroups(Project project, int numOfWorkGroups) {
@@ -327,9 +324,9 @@ public class MonteCarlo {
         //Calculate the estimated time with the different amount of employee groups
         for (int i = lowUp[0]; i <= lowUp[1]; i++) {
             int temp = estimateWithDifferentAmountOfWorkGroups(i, numOfWorkGroups, project, tempRecEmp);
-            if(temp == 0) continue;
-            if(temp == 1) break;
-            if(temp == 2) i = numOfWorkGroups;
+            if (temp == 0) continue;
+            if (temp == 1) break;
+            if (temp == 2) i = numOfWorkGroups;
         }
 
         return tempRecEmp;
@@ -342,7 +339,6 @@ public class MonteCarlo {
      * So the program doesn't calculate forever.
      *
      * @param numOfWorkGroups Amount of work groups currently in the project
-     *
      * @return An array of integers, first one being the lower bound, second being the upper bound.
      */
     private static int[] findLowUp(int numOfWorkGroups) {
@@ -365,9 +361,8 @@ public class MonteCarlo {
      *
      * @param amountEmployees The amount of employees to guess with
      * @param numOfWorkGroups The amount of employees the project has at the start
-     * @param project The project to calculate
-     * @param tempRecEmp The result
-     *
+     * @param project         The project to calculate
+     * @param tempRecEmp      The result
      * @return 0 = Skip this one, 1 = Estimation is done, 2 = No need to guess under the current amount of employees
      */
     private static int estimateWithDifferentAmountOfWorkGroups(int amountEmployees, int numOfWorkGroups, Project project, RecommendedEmployees tempRecEmp) {
@@ -393,9 +388,8 @@ public class MonteCarlo {
     /**
      * Checks if the task currently being put into a schedule can legally be put in there.
      *
-     * @param task The task to check if legal to put in.
+     * @param task           The task to check if legal to put in.
      * @param alreadyStarted The list of tasks already in.
-     *
      * @return A boolean - True = Not legal - False = Legal
      */
     private static boolean NotLegal(Task task, List<Task> alreadyStarted) {
@@ -405,9 +399,8 @@ public class MonteCarlo {
     /**
      * Checks if the task is ready to be put in after the task that is done the fastest currently.
      *
-     * @param task The task to check
+     * @param task       The task to check
      * @param startTimes The current startTimes available
-     *
      * @return The index of the startTime to be placed in, -1 if illegal
      */
     private static int findSmallestPossible(Task task, List<Double> startTimes) {
@@ -431,7 +424,6 @@ public class MonteCarlo {
      * @param random            Is it a random sequence or not.
      * @param index             The index of the possible loop this is called in (If no loop, send 0).
      * @param rec               If it should use the recommended path or not.
-     *
      * @return Returns the estimated time of the project
      */
     public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index, boolean rec) {

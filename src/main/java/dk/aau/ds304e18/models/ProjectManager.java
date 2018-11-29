@@ -110,7 +110,7 @@ public class ProjectManager {
             }
             for (Employee emp : project.getEmployees()) {
                 emp.setProject(null);
-                if (emp.getCurrentTask() != null && emp.getCurrentTask().size() != 0) {
+                if (emp.getCurrentTask() != null) {
                     for (Task task : emp.getCurrentTask()) {
                         task.getEmployees().remove(emp);
                         emp.getCurrentTask().remove(task);
