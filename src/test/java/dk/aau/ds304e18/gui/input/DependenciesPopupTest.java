@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DependenciesPopupTest {
 
-    private static StartUpTest deps;
-
     @BeforeAll
     static void realInit() {
         DatabaseManager.isTests = true;
@@ -23,11 +21,11 @@ public class DependenciesPopupTest {
 
     @Test
     void openDependenciesPopupTest01() {
-        BorderPane flowPane = ((BorderPane) deps.getRootPane().lookup("#inputFlowPane"));
+        BorderPane flowPane = ((BorderPane) StartUpTest.getRootPane().lookup("#inputFlowPane"));
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
-        DependenciesPopup test = new DependenciesPopup(deps.getRootPane(), ((ListView<Task>) inputVBox.getChildren().get(11)));
+        DependenciesPopup test = new DependenciesPopup(StartUpTest.getRootPane(), ((ListView<Task>) inputVBox.getChildren().get(11)));
         test.openDependenciesPopup();
-        assertTrue(deps.getRootPane().getChildrenUnmodifiable().get(3).isVisible());
+        assertTrue(StartUpTest.getRootPane().getChildrenUnmodifiable().get(3).isVisible());
     }
 }
 
