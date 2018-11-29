@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.util.stream.Collectors;
@@ -92,8 +93,10 @@ public class ProjectTab {
         tableView.setOnMouseClicked(event -> {
             onTableElementSelected();
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() > 1) {
-                if (JavaFXMain.selectedProjectId != 0)
+                if (JavaFXMain.selectedProjectId != 0) {
                     tabPane.getSelectionModel().select(tabPane.getTabs().get(1));
+                    ((TabPane) ((AnchorPane) tabPane.getTabs().get(1).getContent()).getChildren().get(0)).getSelectionModel().select(0);
+                }
             }
         });
         //Sort the table view after id.
@@ -262,8 +265,9 @@ public class ProjectTab {
         JavaFXMain.inputTab.drawInputTab();
 
         //Set the selected label equal to the selected project name.
-        ((Label) projectToolBar.getChildren().get(4)).setText("Selected: " +
+        ((Label) projectToolBar.getChildren().get(4)).setText("Selected project: " +
                 LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getName());
+        ((TabPane) ((AnchorPane) tabPane.getTabs().get(1).getContent()).getChildren().get(0)).getSelectionModel().select(0);
 
         //Get the tabs from the GUI.
         TabPane tabPane = (TabPane) rootPane.getChildrenUnmodifiable().get(1);
