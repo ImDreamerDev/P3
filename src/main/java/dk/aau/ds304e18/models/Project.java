@@ -4,7 +4,6 @@ import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.RecommendedEmployees;
 
-import javax.xml.crypto.Data;
 import java.util.*;
 
 /**

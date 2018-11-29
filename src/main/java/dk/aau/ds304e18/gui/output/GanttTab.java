@@ -7,7 +7,6 @@ import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.ParseSequence;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -258,19 +257,11 @@ class GanttTab {
                     if (sy < ey) ey -= ((Rectangle) endAncPane.getChildrenUnmodifiable().get(0)).getHeight();
 
                     //Makes the lines and sets start and end
-                    Line horizontalLine = new Line();
-                    horizontalLine.setStartX(sx);
-                    horizontalLine.setStartY(sy);
-                    horizontalLine.setEndX(ex);
-                    horizontalLine.setEndY(sy);
-                    shapeList.add(horizontalLine);
+                    //Horizontal line
+                    shapeList.add(new Line(sx, sy, ex, sy));
 
-                    Line verticalLine = new Line();
-                    verticalLine.setStartX(ex);
-                    verticalLine.setStartY(sy);
-                    verticalLine.setEndX(ex);
-                    verticalLine.setEndY(ey);
-                    shapeList.add(verticalLine);
+                    //Vertical line
+                    shapeList.add(new Line(ex, sy, ex, ey));
 
 
                     double triangleP1X, triangleP1Y, triangleP2X, triangleP2Y;

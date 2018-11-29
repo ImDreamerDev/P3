@@ -12,7 +12,6 @@ import dk.aau.ds304e18.models.ProjectState;
 import dk.aau.ds304e18.models.Task;
 import dk.aau.ds304e18.sequence.Sequence;
 import javafx.collections.FXCollections;
-import javafx.concurrent.Worker;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;

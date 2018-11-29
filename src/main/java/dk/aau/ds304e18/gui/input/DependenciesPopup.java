@@ -4,7 +4,6 @@ import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.models.Task;
 import javafx.collections.FXCollections;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
