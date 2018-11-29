@@ -387,7 +387,7 @@ public class InputTab {
                 MonteCarlo.progressProperty().addListener((obs, oldProgress, newProgress) ->
                         updateProgress(newProgress.doubleValue(), 1));
 
-                Sequence.sequenceAndCalculateProject(project, useFast);
+                Sequence.sequenceAndCalculateProject(project, useFast, 10000);
                 //Stop the time taking.
                 Instant end = java.time.Instant.now();
                 //Calculate the time between start and end.

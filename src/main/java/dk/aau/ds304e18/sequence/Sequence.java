@@ -19,7 +19,7 @@ public class Sequence {
      * @param project The project to sequence and calculate
      * @param fast If a fast sequencing is wanted - Less accurate
      */
-    public static void sequenceAndCalculateProject(Project project, boolean fast) {
+    public static void sequenceAndCalculateProject(Project project, boolean fast, int monteCarloRepeats) {
 
         int amountSeq;
 
@@ -29,7 +29,7 @@ public class Sequence {
             amountSeq = 1000;
 
         //Find the best sequence with amountSeq sequences
-        calculateProjectInformation(project, amountSeq, fast);
+        calculateProjectInformation(project, amountSeq, fast, monteCarloRepeats);
 
         //The sequence to return
         String sequencedTasks = makeSequenceString(project);

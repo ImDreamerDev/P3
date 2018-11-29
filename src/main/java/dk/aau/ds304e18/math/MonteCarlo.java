@@ -42,7 +42,7 @@ public class MonteCarlo {
      * @param amountSequences The amount of sequences you want
      * @param fast            Less accurate, but possibly faster
      */
-    public static void calculateProjectInformation(Project project, int amountSequences, boolean fast) {
+    public static void calculateProjectInformation(Project project, int amountSequences, boolean fast, int monteCarloRepeats) {
         //Resets the possible completions every time so it's accurate
         project.getPossibleCompletions().clear();
         int numOfWorkGroups = (int) project.getNumberOfEmployees();
@@ -62,7 +62,7 @@ public class MonteCarlo {
         calculateLambdaForAllTasks(project);
 
         //Go through all the sequences made and add them to the temporary list "time"
-        List<Double> time = estimateTimeForAllSequences(amountSequences, randomSequences, project);
+        List<Double> time = estimateTimeForAllSequences(amountSequences, randomSequences, project, monteCarloRepeats);
 
         //Set the variables to correct stuff
         bestTime = Collections.min(time);
@@ -183,7 +183,7 @@ public class MonteCarlo {
      * @param project         The project with the sequences
      * @return The list of estimated times
      */
-    private static List<Double> estimateTimeForAllSequences(int amountSequences, String[] randomSequences, Project project) {
+    private static List<Double> estimateTimeForAllSequences(int amountSequences, String[] randomSequences, Project project, int monteCarloRepeats) {
         int i = 0;
         List<Double> time = new ArrayList<>();
         while (i < amountSequences) {
@@ -193,7 +193,7 @@ public class MonteCarlo {
                 break;
 
             //Add whatever is returned to the time list
-            time.add(estimateTime(project, 10000, true, i, false));
+            time.add(estimateTime(project, monteCarloRepeats, true, i, false));
 
             i++;
             progress.set((double) i / amountSequences);
