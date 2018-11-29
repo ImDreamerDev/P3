@@ -262,6 +262,7 @@ public class MonteCarlo {
                     continue;
 
                 if (startTimes.size() < numOfWorkGroups && startTimes.size() < withoutDeps.size()) {
+                    if (task.getDependencies().size() != 0) continue;
                     if (NotLegal(task, alreadyStarted))
                         continue;
                     if (task.getStartTime() == -1)
