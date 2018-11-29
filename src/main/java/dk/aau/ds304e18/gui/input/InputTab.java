@@ -201,6 +201,7 @@ public class InputTab {
         Pane paneSplitter = ((Pane) flowPane.getChildren().get(2));
         VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
         TextField numOfMonte = ((TextField) vBoxSplitter.getChildren().get(1));
+        numOfMonte.setTooltip(new Tooltip("The amount of times the project will be simulated"));
         numOfMonte.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfMonte, newValue, true));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(3));
         numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" + System.lineSeparator() + "Input must be a positive integer"));
