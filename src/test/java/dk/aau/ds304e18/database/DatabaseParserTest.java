@@ -2,14 +2,12 @@ package dk.aau.ds304e18.database;
 
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
-import dk.aau.ds304e18.models.ProjectState;
+import dk.aau.ds304e18.models.Task;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,27 +36,36 @@ class DatabaseParserTest {
         assertEquals(empCount, employees.size());
     }
 
-    static List<Project> parseProjectsFromResultSet(ResultSet rs) {
-        List<Project> projects = new ArrayList<>();
+    @Test
+    void testParseProjectsFromResultSet() {
+        int projectsCount = 0;
+        ResultSet resultSet = DatabaseManager.query("SELECT COUNT(*) FROM projects");
         try {
-            if (rs == null) return null;
-            while (rs.next()) {
-
-                List<Double> possibleCompletions = new ArrayList<>();
-
-                if (rs.getArray("possiblecompletions") != null)
-
-                    possibleCompletions.addAll(Arrays.asList((Double[]) rs.getArray("possiblecompletions").getArray()));
-
-                Project project = new Project(rs.getInt(1), rs.getString(2),
-                        ProjectState.values()[rs.getInt(3)], rs.getString(4),
-                        rs.getDouble(5), rs.getString(6), rs.getDouble(7), possibleCompletions);
-                projects.add(project);
-            }
+            Objects.requireNonNull(resultSet).next();
+            projectsCount = resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
-        return projects;
+        ResultSet rs = DatabaseManager.query("select * from projects");
+        List<Project> projects = DatabaseParser.parseProjectsFromResultSet(rs);
+        assertNotNull(projects);
+        assertEquals(projectsCount, projects.size());
+
+    }
+
+    @Test
+    void testParseTasksFromResultSet() {
+        int tasksCount = 0;
+        ResultSet resultSet = DatabaseManager.query("SELECT COUNT(*) FROM tasks");
+        try {
+            Objects.requireNonNull(resultSet).next();
+            tasksCount = resultSet.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ResultSet rs = DatabaseManager.query("select * from tasks");
+        List<Task> tasks = DatabaseParser.parseTasksFromResultSet(rs);
+        assertNotNull(tasks);
+        assertEquals(tasksCount, tasks.size());
     }
 }
