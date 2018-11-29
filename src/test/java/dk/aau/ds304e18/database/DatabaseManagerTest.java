@@ -8,8 +8,10 @@ import dk.aau.ds304e18.models.Task;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javax.xml.crypto.Data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,6 +22,46 @@ class DatabaseManagerTest {
     static void init() {
         DatabaseManager.isTests = true;
     }
+
+    @Test
+    void testGetAllProjectManagers() {
+        int projectManagerCount = 0;
+        ResultSet resultSet = DatabaseManager.query("SELECT COUNT(*) FROM projectmanagers");
+        try {
+            Objects.requireNonNull(resultSet).next();
+            projectManagerCount = resultSet.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        List<ProjectManager> managers = DatabaseManager.getAllProjectManagers();
+        assertNotNull(managers);
+        assertEquals(managers.size(), projectManagerCount);
+    }
+
+    @Test
+    void testAddProjectManager() {
+        int projectManagerCount = 0;
+        ResultSet resultSet = DatabaseManager.query("SELECT COUNT(*) FROM projectmanagers");
+        try {
+            Objects.requireNonNull(resultSet).next();
+            projectManagerCount = resultSet.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ProjectManager projectManager = new ProjectManager("Project Manager" + projectManagerCount + 1, "Password");
+        Project testProj = new Project("TestProj", projectManager);
+        Employee testEmp = new Employee("Søren", testProj);
+        Task testTask = new Task("TestTask", 10, 1, testProj);
+        Employee testGetEmp = Objects.requireNonNull(DatabaseParser.parseEmployeesFromResultSet(DatabaseManager.query("select * from employees where id =" + testEmp.getId()))).get(0);
+        assertNotNull(testGetEmp);
+        assertEquals(testEmp.getId(), testGetEmp.getId());
+        assertEquals(testEmp.getName(), testGetEmp.getName());
+        assertEquals(testGetEmp.getProjectId(), testProj.getId());
+
+        DatabaseManager.removeTask(testTask.getId());
+    }
+
 
     /**
      * Asserts that addEmployee function in DatabaseManager works.
