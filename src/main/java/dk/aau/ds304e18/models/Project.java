@@ -4,6 +4,7 @@ import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.math.RecommendedEmployees;
 
+import javax.xml.crypto.Data;
 import java.util.*;
 
 /**
@@ -87,8 +88,8 @@ public class Project {
         this.name = name;
         this.state = ProjectState.ONGOING;
         this.Creator = creator;
-        creator.addCurrentProject(LocalObjStorage.getProjectById(getId()));
         DatabaseManager.addProject(this);
+        creator.addCurrentProject(LocalObjStorage.getProjectById(getId()));
     }
 
     public Project(int id, String name, ProjectState projectState, String sequence,
