@@ -200,7 +200,9 @@ public class InputTab {
         //Right side input
         Pane paneSplitter = ((Pane) flowPane.getChildren().get(2));
         VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
-        TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(1));
+        TextField numOfMonte = ((TextField) vBoxSplitter.getChildren().get(1));
+        numOfMonte.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfMonte, newValue, true));
+        TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(3));
         numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" + System.lineSeparator() + "Input must be a positive integer"));
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isBlank() && newValue.charAt(0) == '0') {
@@ -231,11 +233,11 @@ public class InputTab {
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true));
         numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" + System.lineSeparator() + "Input must be an integer"));
 
-        ((Button) vBoxSplitter.getChildren().get(3)).setTooltip(new Tooltip("Calculates the probability for the length of the project"));
+        ((Button) vBoxSplitter.getChildren().get(5)).setTooltip(new Tooltip("Calculates the probability for the length of the project"));
 
-        Tooltip.install(vBoxSplitter.getChildren().get(2), new Tooltip("If checked the program will try to give the most optimal path for tasks"));
+        Tooltip.install(vBoxSplitter.getChildren().get(4), new Tooltip("If checked the program will try to give the most optimal path for tasks"));
 
-        vBoxSplitter.getChildren().get(3).setOnMouseClicked(event -> {
+        vBoxSplitter.getChildren().get(5).setOnMouseClicked(event -> {
             disableInput();
             rootPane.lookup("#projectView").setDisable(true);
             if (numOfEmployees.getText().isBlank()) {
@@ -246,14 +248,14 @@ public class InputTab {
             javafx.concurrent.Task<Void> calcTask = calculate(
                     LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
                     Double.parseDouble(numOfEmployees.getText()),
-                    ((CheckBox) vBoxSplitter.getChildren().get(2)).isSelected());
+                    ((CheckBox) vBoxSplitter.getChildren().get(4)).isSelected(), Integer.parseInt(numOfMonte.getText()));
             ProgressBar bar = new ProgressBar();
             bar.progressProperty().bind(calcTask.progressProperty());
-            ((Button) vBoxSplitter.getChildren().get(3)).setText("Stop");
-            vBoxSplitter.getChildren().get(3).setOnMouseClicked(event1 -> {
+            ((Button) vBoxSplitter.getChildren().get(5)).setText("Stop");
+            vBoxSplitter.getChildren().get(5).setOnMouseClicked(event1 -> {
                 calcTask.cancel();
                 ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1)).getChildren().remove(bar);
-                ((Button) vBoxSplitter.getChildren().get(3)).setText("Calculate");
+                ((Button) vBoxSplitter.getChildren().get(5)).setText("Calculate");
                 rootPane.lookup("#projectView").setDisable(false);
                 setupInputTab();
             });
@@ -271,7 +273,7 @@ public class InputTab {
                 enableInput();
                 rootPane.lookup("#projectView").setDisable(false);
                 MonteCarloExecutorService.shutdownExecutor();
-                ((Button) vBoxSplitter.getChildren().get(3)).setText("Calculate");
+                ((Button) vBoxSplitter.getChildren().get(5)).setText("Calculate");
                 setupInputTab();
             });
 
@@ -369,7 +371,7 @@ public class InputTab {
      * @param useFast        - Is the useFast toggled or not. (boolean)
      */
     private javafx.concurrent.Task<Void> calculate(Project project, double numOfEmployees,
-                                                   boolean useFast) {
+                                                   boolean useFast, int numOfMonte) {
         return new javafx.concurrent.Task<>() {
 
             @Override
@@ -387,7 +389,7 @@ public class InputTab {
                 MonteCarlo.progressProperty().addListener((obs, oldProgress, newProgress) ->
                         updateProgress(newProgress.doubleValue(), 1));
 
-                Sequence.sequenceAndCalculateProject(project, useFast, 10000);
+                Sequence.sequenceAndCalculateProject(project, useFast, numOfMonte);
                 //Stop the time taking.
                 Instant end = java.time.Instant.now();
                 //Calculate the time between start and end.
