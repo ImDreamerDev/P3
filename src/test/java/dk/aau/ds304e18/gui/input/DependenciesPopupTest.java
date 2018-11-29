@@ -2,7 +2,6 @@ package dk.aau.ds304e18.gui.input;
 
 import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Task;
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ListView;
