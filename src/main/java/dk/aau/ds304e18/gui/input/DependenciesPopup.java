@@ -79,12 +79,7 @@ class DependenciesPopup {
         });
 
         //Sets the columns of the table view to display the different fields of the task.
-        dependencies.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
-        dependencies.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
-        dependencies.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("estimatedTime"));
-        dependencies.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("priority"));
-        dependencies.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("probabilities"));
-        dependencies.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dependencies"));
+        setupTableView(dependencies);
         dependencies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null)
                 return;
@@ -120,6 +115,15 @@ class DependenciesPopup {
             ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
         });
 
+    }
+
+    static void setupTableView(TableView<Task> dependencies) {
+        dependencies.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
+        dependencies.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+        dependencies.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("estimatedTime"));
+        dependencies.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("priority"));
+        dependencies.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("probabilities"));
+        dependencies.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dependencies"));
     }
 
 

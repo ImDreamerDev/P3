@@ -589,12 +589,7 @@ public class InputTab {
                 .collect(Collectors.toList())));
 
         //Sets the columns of the table view to display the different fields of the task.
-        tableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
-        tableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
-        tableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("estimatedTime"));
-        tableView.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("priority"));
-        tableView.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("probabilities"));
-        tableView.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dependencies"));
+        DependenciesPopup.setupTableView(tableView);
 
         //Set the sorting order of the table to sort after id.
         tableView.getSortOrder().add(tableView.getColumns().get(0));
