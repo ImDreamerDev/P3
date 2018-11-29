@@ -12,8 +12,7 @@ public class ParseSequence {
      * Parses to a single list with standard values
      *
      * @param project The project to be sequenced
-     * @param rec If it's recommended path or sequenced path
-     *
+     * @param rec     If it's recommended path or sequenced path
      * @return The sequenced list
      */
     public static List<Task> parseToSingleList(Project project, boolean rec) {
@@ -37,9 +36,17 @@ public class ParseSequence {
         //Splits the sequence so we just need to find the corresponding taskIds in order
         String taskList;
         if (!random)
-            if (rec) taskList = project.getRecommendedPath();
-            else taskList = project.getSequence();
-        else taskList = project.getPossibleSequences()[index];
+            if (rec) {
+                if (project.getRecommendedPath() == null) return new ArrayList<>();
+                taskList = project.getRecommendedPath();
+            } else {
+                if (project.getSequence() == null) return new ArrayList<>();
+                taskList = project.getSequence();
+            }
+        else {
+            if (project.getPossibleSequences()[index] == null) return new ArrayList<>();
+            taskList = project.getPossibleSequences()[index];
+        }
         taskList = taskList.replaceAll("[/(/)|]", ",");
         String[] taskListSplit = taskList.split(",");
 
