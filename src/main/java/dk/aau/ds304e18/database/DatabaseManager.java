@@ -456,4 +456,21 @@ public class DatabaseManager {
         LocalObjStorage.getTaskList().clear();
         LocalObjStorage.getProjectManagerList().clear();
     }
+
+    /**
+     * Sends a query to the DB and returns the result.
+     *
+     * @param query The search query.
+     * @return The result from the DB.
+     */
+    static ResultSet query(String query) {
+        try {
+            if (dbConnection == null || dbConnection.isClosed()) connect();
+            Statement st = dbConnection.createStatement();
+            return st.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

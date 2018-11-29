@@ -50,16 +50,20 @@ class DependenciesPopup {
         //Init fields
         this.rootPane = rootPane;
         this.listViewDependency = listViewDependency;
-
         this.taskDependencies = new ArrayList<>();
+        //Get the table view from the root pane
+        dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
+
+        setupDeDependenciesPopup();
+    }
+
+    private void setupDeDependenciesPopup() {
         //Get the bottom toolbar of the dependencies popup.
         ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
 
         ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
         ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
-        //Get the table view from the root pane
-        dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
-
+        
         //Set the items of the table view, equal to the all the tasks on this project.
         dependencies.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
                 .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
@@ -115,7 +119,6 @@ class DependenciesPopup {
             ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
             ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
         });
-
 
     }
 

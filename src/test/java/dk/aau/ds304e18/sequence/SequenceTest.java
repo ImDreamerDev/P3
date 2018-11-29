@@ -32,7 +32,7 @@ class SequenceTest {
 
         project.setNumberOfEmployees(1);
 
-        Sequence.sequenceAndCalculateProject(project, false);
+        Sequence.sequenceAndCalculateProject(project, false, 10000);
         String assertedSequencedTasks = task1.getId() + "," +
                 task3.getId() + "|" +
                 task2.getId() + "(" + task1.getId() + "," + task3.getId() + ")" + "|" +
@@ -55,7 +55,7 @@ class SequenceTest {
 
         project.setNumberOfEmployees(5);
 
-        Sequence.sequenceAndCalculateProject(project, true);
+        Sequence.sequenceAndCalculateProject(project, true, 10000);
         String assertedSequencedTasks = task4.getId() + "," +
                 task3.getId() + "," +
                 task2.getId() + "," +
@@ -80,7 +80,7 @@ class SequenceTest {
 
         project.setNumberOfEmployees(2);
 
-        Sequence.sequenceAndCalculateProject(project, true);
+        Sequence.sequenceAndCalculateProject(project, true, 10000);
         String assertedSequencedTasks = task4.getId() + "," +
                 task2.getId() + "," +
                 task1.getId() + "|" +
@@ -105,7 +105,7 @@ class SequenceTest {
 
         project.setNumberOfEmployees(1);
 
-        Sequence.sequenceAndCalculateProject(project, true);
+        Sequence.sequenceAndCalculateProject(project, true, 10000);
         String assertedSequencedTasks = task4.getId() + "," +
                 task2.getId() + "," +
                 task1.getId() + "|" +
@@ -130,7 +130,7 @@ class SequenceTest {
 
         task3.addDependency(Collections.singletonList(task1));
 
-        Sequence.sequenceAndCalculateProject(project, false);
+        Sequence.sequenceAndCalculateProject(project, false, 10000);
         String assertedSequencedTasks = task4.getId() + "," +
                 task2.getId() + "," +
                 task1.getId() + "|" +
