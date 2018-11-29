@@ -2,6 +2,7 @@ package dk.aau.ds304e18.database;
 
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
+import dk.aau.ds304e18.models.ProjectManager;
 import dk.aau.ds304e18.models.Task;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -67,5 +68,10 @@ class DatabaseParserTest {
         List<Task> tasks = DatabaseParser.parseTasksFromResultSet(rs);
         assertNotNull(tasks);
         assertEquals(tasksCount, tasks.size());
+    }
+
+    @Test
+    void testParseProjectManagersFromResultSet() {
+
     }
 }

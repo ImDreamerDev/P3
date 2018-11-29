@@ -23,9 +23,14 @@ public class StartUpTest extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        BorderPane pane = new BorderPane();
+        Scene scene = new Scene(pane, 500, 500);
+        stage.setScene(scene);
+        stage.show();
         stage.close();
     }
-    
+
+
     static Parent getRootPane() {
         return rootPane;
     }
