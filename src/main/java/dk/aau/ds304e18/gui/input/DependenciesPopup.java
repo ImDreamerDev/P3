@@ -50,9 +50,13 @@ class DependenciesPopup {
         //Init fields
         this.rootPane = rootPane;
         this.listViewDependency = listViewDependency;
+
         this.taskDependencies = new ArrayList<>();
         //Get the bottom toolbar of the dependencies popup.
         ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
+
+        ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
+        ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
         //Get the table view from the root pane
         dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
 
@@ -63,13 +67,6 @@ class DependenciesPopup {
 
         // Set if any element is double clicked either remove them from the dependencies or add them to the dependencies.
         dependencies.setOnMouseClicked(event -> {
-            if (taskDependencies.stream().noneMatch(task -> task.getId() == dependencies.getSelectionModel().getSelectedItem().getId())) {
-                ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(false);
-                ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
-            } else {
-                ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
-                ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(false);
-            }
             if (event.getClickCount() > 1 && taskDependencies.stream().noneMatch(task -> task.getId() == dependencies.getSelectionModel().getSelectedItem().getId())) {
                 addDependency(Collections.singletonList(dependencies.getSelectionModel().getSelectedItem()));
             } else if (event.getClickCount() > 1) {
@@ -84,7 +81,18 @@ class DependenciesPopup {
         dependencies.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("priority"));
         dependencies.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("probabilities"));
         dependencies.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("dependencies"));
-
+        dependencies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null)
+                return;
+            if (taskDependencies.stream().noneMatch(task -> task.getId() == dependencies.getSelectionModel().getSelectedItem().getId())) {
+                ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(false);
+                ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
+            } else {
+                ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
+                ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(false);
+            }
+            dependencies.requestFocus();
+        });
         //Set the selection mode to multiple
         dependencies.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -107,8 +115,8 @@ class DependenciesPopup {
             ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
             ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
         });
-        ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
-        ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
+
+
     }
 
 
@@ -119,6 +127,9 @@ class DependenciesPopup {
 
         dependencies.getSortOrder().add(dependencies.getColumns().get(0));
         rootPane.getChildrenUnmodifiable().get(3).setVisible(true);
+        dependencies.getSelectionModel().clearSelection();
+        if (listViewDependency.getSelectionModel().getSelectedIndex() != -1)
+            dependencies.getSelectionModel().select(listViewDependency.getSelectionModel().getSelectedItem());
     }
 
     /**
