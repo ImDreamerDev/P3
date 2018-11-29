@@ -1,6 +1,7 @@
 package dk.aau.ds304e18.gui.input;
 
 import dk.aau.ds304e18.JavaFXMain;
+import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.models.Task;
 import javafx.collections.FXCollections;
@@ -10,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -63,10 +65,14 @@ class DependenciesPopup {
 
         ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
         ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
-        
+
         //Set the items of the table view, equal to the all the tasks on this project.
         dependencies.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
-                .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
+                .stream().filter(task -> {
+                    if (task.getProject() == null)
+                        return task.getProjectId() == JavaFXMain.selectedProjectId;
+                    return task.getProject().getId() == JavaFXMain.selectedProjectId;
+                })
                 .collect(Collectors.toList())));
 
         // Set if any element is double clicked either remove them from the dependencies or add them to the dependencies.

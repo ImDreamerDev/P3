@@ -1,5 +1,6 @@
 package dk.aau.ds304e18.database;
 
+import dk.aau.ds304e18.math.Probabilities;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Project;
 import dk.aau.ds304e18.models.ProjectManager;
@@ -82,12 +83,42 @@ class DatabaseParserTest {
         }
         ResultSet rs = DatabaseManager.query("select * from projectmanagers");
         List<ProjectManager> projectManagers = DatabaseParser.parseProjectManagersFromResultSet(rs);
+
         assertNotNull(projectManagers);
         assertEquals(projectManagerCount, projectManagers.size());
     }
 
     @Test
     void testParseProbabilities() {
-        
+        ProjectManager projectManager = new ProjectManager("Tg", "whoknows");
+        Project project = new Project("Tasd", projectManager);
+        Task task = new Task("30", 20, 0, project);
+        task.getProbabilities().add(new Probabilities(30, 60));
+        DatabaseManager.updateTask(task);
+        DatabaseParser.parseProbabilities(task);
+        ResultSet rs = DatabaseManager.query("select * from tasks where id =" + task.getId());
+
+        Task dbTask = DatabaseParser.parseTasksFromResultSet(rs).get(0);
+        assertEquals(dbTask.getProbabilities().get(0).getDuration(), task.getProbabilities().get(0).getDuration());
+        assertEquals(dbTask.getProbabilities().get(0).getProbability(), task.getProbabilities().get(0).getProbability());
+
+    }
+
+    @Test
+    void testParseProbabilities02() {
+        ProjectManager projectManager = new ProjectManager("Tg", "whoknows");
+        Project project = new Project("Tasd", projectManager);
+        Task task = new Task("30", 20, 0, project);
+        task.getProbabilities().add(new Probabilities(30, 60));
+        task.getProbabilities().add(new Probabilities(534, 50));
+        DatabaseManager.updateTask(task);
+        DatabaseParser.parseProbabilities(task);
+        ResultSet rs = DatabaseManager.query("select * from tasks where id =" + task.getId());
+
+        Task dbTask = DatabaseParser.parseTasksFromResultSet(rs).get(0);
+        assertEquals(dbTask.getProbabilities().get(0).getDuration(), task.getProbabilities().get(0).getDuration());
+        assertEquals(dbTask.getProbabilities().get(0).getProbability(), task.getProbabilities().get(0).getProbability());
+        assertEquals(dbTask.getProbabilities().get(1).getDuration(), task.getProbabilities().get(1).getDuration());
+        assertEquals(dbTask.getProbabilities().get(1).getProbability(), task.getProbabilities().get(1).getProbability());
     }
 }

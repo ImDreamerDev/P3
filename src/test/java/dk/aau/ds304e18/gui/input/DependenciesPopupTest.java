@@ -1,6 +1,8 @@
 package dk.aau.ds304e18.gui.input;
 
+import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.models.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
