@@ -57,7 +57,7 @@ public class ProjectManager {
      *
      * @param id                - the unique id of the project manager.
      * @param name              - the name of the project manager.
-     * @param currentProjectIds - the id of the project the project manager is currently working on.
+     * @param currentProjectIds - the ids of the project the project manager is currently working on.
      * @param oldProjects       - A list of projects that the project manager has previously worked on.
      */
     public ProjectManager(int id, String name, List<Integer> currentProjectIds, List<Integer> oldProjects) {
@@ -113,8 +113,8 @@ public class ProjectManager {
                 if (emp.getCurrentTask() != null) {
                     for (Task task : emp.getCurrentTask()) {
                         task.getEmployees().remove(emp);
-                        emp.getCurrentTask().remove(task);
                     }
+                        emp.getCurrentTask().clear();
                 }
             }
             project.getEmployees().clear();

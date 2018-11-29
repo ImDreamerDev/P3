@@ -1,10 +1,13 @@
 package dk.aau.ds304e18.models;
 
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.math.Probabilities;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -102,4 +105,35 @@ class ProjectManagerTest {
         newProjectManager.distributeAddCurrentProject(newProject);
         assertNotNull(newProjectManager.getCurrentProjects().get(0));
     }
+
+    @Test
+    void TestProjectManagerArchiveProject(){
+        ProjectManager newProjectManager = new ProjectManager("Adam", "test");
+        Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
+        newProjectManager.archiveProject(newProject);
+        assertEquals(ProjectState.ARCHIVED, newProject.getState());
+    }
+    @Test
+    void TestProjectManagerArchiveProject2(){
+        Project newProject = new Project(-1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
+        Employee newEmployee = new Employee("Tim",newProject);
+        Task newTask = new Task(-1,"Dish",1,1, new ArrayList<>(),new ArrayList<>(),-1,new ArrayList<>(),10);
+
+        newProject.addNewEmployee(newEmployee);
+        newEmployee.addNewTask(newTask);
+
+        ProjectManager newProjectManager = new ProjectManager(-1,"Adam", new ArrayList<>(), new ArrayList<>());
+        newProjectManager.archiveProject(newProject);
+        assertEquals(null,newEmployee.getProject());
+
+    }
+    @Test
+    void TestProjectManagerArchiveProject3(){
+        ProjectManager newProjectManager = new ProjectManager("Adam", "test");
+        Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
+        newProjectManager.getOldProjectsId().add(newProject.getId());
+        newProjectManager.archiveProject(newProject);
+        assertEquals(ProjectState.ARCHIVED, newProject.getState());
+    }
+
 }
