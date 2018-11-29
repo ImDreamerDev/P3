@@ -34,7 +34,6 @@ public class InputTab {
     private DependenciesPopup dependenciesPopup;
     public EmployeeTab employeeTab;
 
-
     private TextField duration1;
     private TextField probability1;
 
@@ -217,9 +216,10 @@ public class InputTab {
         ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0).setOnMouseClicked(event -> {
             List<Probabilities> probabilities = convertToProbabilities();
 
-            if (validate(estimatedTimeTextField, priority) != 0)
+            if (validate(nameTextField, estimatedTimeTextField, priority) != 0)
                 return;
-            boolean taskNameIsThere = LocalObjStorage.getTaskList().stream().anyMatch(task -> task.getName().equals(nameTextField.getText()) && task.getProject().getId() == JavaFXMain.selectedProjectId);
+            boolean taskNameIsThere = LocalObjStorage.getTaskList().stream().anyMatch(task ->
+                    task.getName().equals(nameTextField.getText()) && task.getProject().getId() == JavaFXMain.selectedProjectId);
             if (taskNameIsThere && !isEditMode) {
                 return;
             }
