@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <HBox alignment="TOP_RIGHT" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="22.0" prefWidth="60.0" text="Update">
+            <HBox.margin>
+                <Insets right="20.0" top="1.0" />
+            </HBox.margin>
+            <font>
+                <Font size="11.0" />
+            </font>
+        </Button>
+        <Separator maxHeight="30.0" orientation="VERTICAL" prefHeight="20.0" prefWidth="36.0">
+            <HBox.margin>
+                <Insets right="20.0" />
+            </HBox.margin>
+        </Separator>
+        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="22.0" prefWidth="60.0" text="Logout">
+            <HBox.margin>
+                <Insets right="5.0" top="1.0" />
+            </HBox.margin>
+            <font>
+                <Font size="11.0" />
+            </font>
+        </Button>
+    </HBox>
+    <TabPane id="tapPane" layoutX="7.0" layoutY="24.0" prefHeight="376.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
+        <Tab id="tabProjects" text="Projects">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <HBox id="projectToolbar" layoutX="403.0" layoutY="-2.0" prefHeight="43.0" prefWidth="870.0" spacing="20.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="405.0" AnchorPane.topAnchor="5.0">
+                    <Label prefHeight="17.0" prefWidth="82.0" text="Project Name: ">
+                        <HBox.margin>
+                            <Insets top="3.0" />
+                        </HBox.margin>
+                    </Label>
+                    <TextField promptText="Project Name:" />
+                    <Button mnemonicParsing="false" text="Add Project" />
+                    <Separator orientation="VERTICAL" prefHeight="200.0">
+                        <HBox.margin>
+                            <Insets top="-3.0" />
+                        </HBox.margin>
+                    </Separator>
+                    <Label prefHeight="17.0" prefWidth="355.0" text="Selected: ">
+                        <HBox.margin>
+                            <Insets top="5.0" />
+                        </HBox.margin>
+                    </Label>
+                </HBox>
+                <HBox id="projectToolbar2" alignment="TOP_RIGHT" layoutX="825.0" prefHeight="40.0" prefWidth="450.0" AnchorPane.leftAnchor="825.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                    <Button mnemonicParsing="false" text="Archive Project">
+                        <HBox.margin>
+                            <Insets left="40.0" />
+                        </HBox.margin>
+                    </Button>
+                    <Label prefHeight="24.0" prefWidth="43.0" text="Search:">
+                        <HBox.margin>
+                            <Insets left="5.0" />
+                        </HBox.margin>
+                    </Label>
+                    <TextField prefHeight="10.0" prefWidth="141.0" />
+                    <CheckBox id="showArchivedCheckbox" mnemonicParsing="false" text="Show Archived">
+                        <HBox.margin>
+                            <Insets left="10.0" top="4.0" />
+                        </HBox.margin>
+                    </CheckBox>
+                </HBox>
+                <TableView fx:id="projectView" layoutY="39.0" prefHeight="304.0" prefWidth="1191.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                    <columns>
+                        <TableColumn id="idCol" prefWidth="39.0" text="Id" />
+                        <TableColumn id="nameCol" prefWidth="116.0" text="Name" />
+                        <TableColumn id="creatorCol" minWidth="0.0" prefWidth="101.0" text="Creator" />
+                        <TableColumn id="sequenceCol" prefWidth="83.0" text="Sequence" />
+                        <TableColumn id="durationCol" minWidth="7.0" prefWidth="128.0" text="Duration" />
+                        <TableColumn id="stateCol" minWidth="7.0" prefWidth="132.0" text="State" />
+                        <TableColumn prefWidth="75.0" text="Tasks" />
+                    </columns>
+                </TableView>
+            </AnchorPane>
+        </Tab>
+        <Tab id="tabInput" disable="true" text="Input">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <TabPane prefHeight="667.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <Tab text="Tasks">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <BorderPane id="inputFlowPane" prefHeight="667.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <left>
+                                    <VBox alignment="TOP_CENTER" prefHeight="646.0" prefWidth="222.0" spacing="5.0" BorderPane.alignment="CENTER">
+                                        <BorderPane.margin>
+                                            <Insets left="5.0" right="5.0" />
+                                        </BorderPane.margin>
+                                        <Label text="Task name*" />
+                                        <TextField promptText="Task name:" />
+                                        <Label text="Task priority*" />
+                                        <TextField promptText="Task priority:" />
+                                        <Label text="Estimated time*" />
+                                        <TextField promptText="Estimated time:" />
+                                        <HBox prefHeight="29.0" prefWidth="222.0">
+                                            <Label text="Certainty" />
+                                            <Label text="Duration">
+                                                <HBox.margin>
+                                                    <Insets left="-45.0" top="20.0" />
+                                                </HBox.margin>
+                                            </Label>
+                                            <Label text="Probability %">
+                                                <HBox.margin>
+                                                    <Insets left="60.0" top="20.0" />
+                                                </HBox.margin>
+                                            </Label>
+                                        </HBox>
+                                        <HBox prefHeight="31.0" prefWidth="121.0">
+                                            <TextField promptText="Duration:" />
+                                            <TextField promptText="0 - 100 %" />
+                                        </HBox>
+                                        <HBox prefHeight="32.0" prefWidth="121.0">
+                                            <TextField promptText="Duration:" />
+                                            <TextField promptText="0 - 100 %" />
+                                        </HBox>
+                                        <HBox layoutX="10.0" layoutY="196.0" prefHeight="32.0" prefWidth="121.0">
+                                            <TextField promptText="Duration:" />
+                                            <TextField promptText="0 - 100 %" />
+                                        </HBox>
+                                        <Label text="Task dependencies" />
+                                        <ListView prefHeight="196.0" prefWidth="202.0" />
+                                        <HBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="222.0" spacing="50.0">
+                                            <Button mnemonicParsing="false" text="Dependencies">
+                                                <HBox.margin>
+                                                    <Insets />
+                                                </HBox.margin>
+                                            </Button>
+                                        </HBox>
+                                        <Button alignment="TOP_LEFT" mnemonicParsing="false" text="Clear Text Fields">
+                                            <VBox.margin>
+                                                <Insets top="40.0" />
+                                            </VBox.margin>
+                                        </Button>
+                                    </VBox>
+                                </left>
+                                <center>
+                                    <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="667.0" prefWidth="921.0" BorderPane.alignment="CENTER">
+                                        <columns>
+                                            <TableColumn prefWidth="75.0" text="Id" />
+                                            <TableColumn prefWidth="130.0" text="Name" />
+                                            <TableColumn prefWidth="107.0" text="Estimated Time" />
+                                            <TableColumn prefWidth="93.0" text="Priority" />
+                                            <TableColumn prefWidth="104.0" text="Probabilities" />
+                                            <TableColumn prefWidth="123.0" text="Dependencies" />
+                                        </columns>
+                                    </TableView>
+                                </center>
+                                <right>
+                                    <Pane maxWidth="125.0" prefHeight="646.0" prefWidth="124.0" BorderPane.alignment="CENTER">
+                                        <VBox maxHeight="1.7976931348623157E308" prefHeight="638.0" prefWidth="124.0">
+                                            <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" prefWidth="100.0" spacing="20.0">
+                                                <padding>
+                                                    <Insets left="10.0" right="10.0" top="5.0" />
+                                                </padding>
+                                                <Button mnemonicParsing="false" text="Add task" />
+                                    <Button mnemonicParsing="false" text="Edit task" />
+                                                <Button mnemonicParsing="false" text="Delete Task" />
+                                            </VBox>
+                                            <VBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" prefHeight="600.0" prefWidth="124.0" spacing="20.0">
+                                                <padding>
+                                                    <Insets bottom="5.0" left="10.0" right="10.0" />
+                                                </padding>
+                                    <Label prefHeight="17.0" prefWidth="167.0" text="Monte Carlo repeats">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font></Label>
+                                    <TextField text="10000">
+                                       <VBox.margin>
+                                          <Insets top="-20.0" />
+                                       </VBox.margin></TextField>
+                                                <Label text="No. of work groups" />
+                                                <TextField promptText="No. of groups">
+                                                    <VBox.margin>
+                                                        <Insets left="3.0" right="3.0" top="-20.0" />
+                                                    </VBox.margin>
+                                                </TextField>
+                                                <CheckBox mnemonicParsing="false" selected="true" text="Use fast" />
+                                                <Button mnemonicParsing="false" text="Calculate" />
+                                            </VBox>
+                                        </VBox>
+                                    </Pane>
+                                </right>
+                            </BorderPane>
+                        </AnchorPane>
+                    </Tab>
+                    <Tab text="Employees">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <BorderPane id="employeesBorderpane" prefHeight="638.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <left>
+                                    <VBox alignment="TOP_CENTER" prefHeight="627.0" prefWidth="222.0" spacing="5.0" BorderPane.alignment="CENTER">
+                                        <BorderPane.margin>
+                                            <Insets left="5.0" right="5.0" />
+                                        </BorderPane.margin>
+                                        <Label text="Name:" />
+                                        <TextField promptText="Employee name:" />
+                                        <Button mnemonicParsing="false" text="Add employee" />
+                                    </VBox>
+                                </left>
+                                <right>
+                                    <Pane maxWidth="222.0" prefHeight="578.0" prefWidth="222.0" BorderPane.alignment="CENTER">
+                                        <VBox alignment="TOP_CENTER" prefHeight="638.0" prefWidth="222.0" spacing="20.0">
+                                            <Button mnemonicParsing="false" text="Assign employee">
+                                                <VBox.margin>
+                                                    <Insets top="10.0" />
+                                                </VBox.margin>
+                                            </Button>
+                                            <Button mnemonicParsing="false" text="Unassign employee" />
+                                        </VBox>
+                                    </Pane>
+                                </right>
+                                <center>
+                                    <TabPane prefHeight="611.0" prefWidth="934.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                                        <Tab text="Project Employees">
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="581.0" prefWidth="934.0">
+                                                <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="609.0" prefWidth="934.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                    <columns>
+                                                        <TableColumn prefWidth="75.0" text="Id" />
+                                                        <TableColumn prefWidth="130.0" text="Name" />
+                                                        <TableColumn prefWidth="107.0" text="Tasks" />
+                                                    </columns>
+                                                </TableView>
+                                            </AnchorPane>
+                                        </Tab>
+                                        <Tab text="All free employees">
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="597.0" prefWidth="934.0">
+                                                <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="638.0" prefWidth="934.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                    <columns>
+                                                        <TableColumn prefWidth="75.0" text="Id" />
+                                                        <TableColumn prefWidth="130.0" text="Name" />
+                                                        <TableColumn prefWidth="107.0" text="Tasks" />
+                                                    </columns>
+                                                </TableView>
+                                            </AnchorPane>
+                                        </Tab>
+                                    </TabPane>
+                                </center>
+                            </BorderPane>
+                        </AnchorPane>
+                    </Tab>
+                </TabPane>
+            </AnchorPane>
+        </Tab>
+        <Tab id="tabOutput" disable="true" text="Output">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                <HBox prefHeight="667.0" prefWidth="1330.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <VBox id="outputPane" alignment="TOP_CENTER" maxWidth="330.0" prefHeight="667.0" prefWidth="326.0">
+                        <Label text="Recommend path">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets top="11.0" />
+                            </VBox.margin>
+                        </Label>
+                        <ListView VBox.vgrow="ALWAYS" />
+                    </VBox>
+                    <TabPane prefHeight="660.0" tabClosingPolicy="UNAVAILABLE" HBox.hgrow="ALWAYS">
+                        <Tab id="ProbavilityTab" text="Probability">
+                            <AnchorPane prefWidth="1200.0">
+                                <BarChart id="tasksDiagram" alternativeColumnFillVisible="true" barGap="1.0" categoryGap="1.0" prefHeight="631.0" prefWidth="1123.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="72.0" AnchorPane.topAnchor="0.0">
+                                    <xAxis>
+                                        <CategoryAxis side="BOTTOM" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis side="LEFT" />
+                                    </yAxis>
+                                </BarChart>
+                            </AnchorPane>
+                        </Tab>
+                        <Tab text="Gantt">
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                <ToolBar maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="40.0" prefWidth="8000.0">
+                                    <Button id="zoomInButton" mnemonicParsing="false" text="+" />
+                                    <Button id="resetZoomButton" mnemonicParsing="false" text="1:1" />
+                                    <Button id="zoomOutButton" mnemonicParsing="false" text="-" />
+                                    <Label id="zoomLevelLabel" text="Zoom level: 100%" />
+                           <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="19.0" />
+                                    <VBox prefHeight="0.0">
+                                        <Label text="Current Work groups: " />
+                                        <Label text="Estimated time: " />
+                                    </VBox>
+                                    <VBox id="OptGroup0">
+                                        <Label alignment="CENTER_RIGHT" minWidth="26.0" prefWidth="26.0" text="2" textAlignment="RIGHT" />
+                                        <Label alignment="CENTER_RIGHT" minWidth="26.0" prefWidth="26.0" text="4500" />
+                                    </VBox>
+                           <Label text="Repeats: ">
+                              <padding>
+                                 <Insets left="5.0" />
+                              </padding></Label>
+                           <Label text="20" />
+                           <Separator orientation="VERTICAL" prefWidth="20.0" />
+                                    <VBox prefHeight="0.0" prefWidth="120.0">
+                                        <Label id="OptGroup4" text="Other Possibilities: " />
+                                        <Label text="Duration:" />
+                                    </VBox>
+                                    <VBox id="OptGroup1" layoutX="198.0" layoutY="8.0" prefHeight="0.0" prefWidth="100.0">
+                                        <Label text="2 work groups" />
+                                        <Label text="350" />
+                                    </VBox>
+                                    <VBox id="OptGroup2" layoutX="302.0" layoutY="8.0" maxWidth="1.7976931348623157E308" prefHeight="0.0">
+                                        <Label text="3 work groups" />
+                                        <Label text="320" />
+                                    </VBox>
+                                </ToolBar>
+                                <ScrollPane layoutY="39.0" prefHeight="599.0" prefWidth="1077.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.0">
+                                    <AnchorPane id="outputScrollView" />
+                                </ScrollPane>
+                            </AnchorPane>
+                        </Tab>
+                        <Tab text="Assignments">
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                <BorderPane id="employeesBorderPane" prefHeight="638.0" prefWidth="1077.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <right>
+                                        <VBox alignment="TOP_CENTER" prefHeight="638.0" prefWidth="145.0" spacing="20.0" BorderPane.alignment="CENTER">
+                                            <BorderPane.margin>
+                                                <Insets top="24.0" />
+                                            </BorderPane.margin>
+                                            <Button mnemonicParsing="false" text="Add employee(s)" />
+                                            <Button mnemonicParsing="false" text="Remove employee(s)" />
+                                        </VBox>
+                                    </right>
+                                    <left>
+                                        <VBox BorderPane.alignment="CENTER">
+                                            <Label alignment="TOP_CENTER" prefHeight="17.0" prefWidth="384.0" text="Tasks">
+                                                <font>
+                                                    <Font name="System Bold" size="17.0" />
+                                                </font>
+                                            </Label>
+                                            <TableView prefHeight="9000.0" prefWidth="450.0">
+                                                <columns>
+                                                    <TableColumn prefWidth="234.0" text="Name" />
+                                                    <TableColumn prefWidth="226.0" text="Employees" />
+                                                </columns>
+                                            </TableView>
+                                        </VBox>
+                                    </left>
+                                    <center>
+                                        <VBox prefHeight="638.0" prefWidth="472.0" BorderPane.alignment="CENTER">
+                                            <Label alignment="CENTER" prefHeight="17.0" prefWidth="552.0" text="Employees">
+                                                <font>
+                                                    <Font name="System Bold" size="17.0" />
+                                                </font>
+                                            </Label>
+                                            <TableView prefHeight="9000.0" prefWidth="550.0">
+                                                <columns>
+                                                    <TableColumn prefWidth="236.0" text="Name" />
+                                                    <TableColumn minWidth="0.0" prefWidth="234.0" text="Assigned" />
+                                                </columns>
+                                            </TableView>
+                                        </VBox>
+                                    </center>
+                                </BorderPane>
+                            </AnchorPane>
+                        </Tab>
+                    </TabPane>
+                </HBox>
+            </AnchorPane>
+        </Tab>
+    </TabPane>
+    <StackPane alignment="TOP_LEFT" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox id="loginPane" alignment="CENTER" prefHeight="783.0" prefWidth="1396.0">
+            <HBox alignment="CENTER" prefHeight="37.0" prefWidth="270.0">
+                <Label text="Username:">
+                    <HBox.margin>
+                        <Insets left="50.0" />
+                    </HBox.margin>
+                </Label>
+                <TextField>
+                    <HBox.margin>
+                        <Insets left="7.0" />
+                    </HBox.margin>
+                </TextField>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="31.0" prefWidth="600.0">
+                <Label text="Password:">
+                    <HBox.margin>
+                        <Insets left="50.0" />
+                    </HBox.margin>
+                </Label>
+                <PasswordField>
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </PasswordField>
+            </HBox>
+            <Label text="Error:" textFill="#f50000" visible="false">
+                <VBox.margin>
+                    <Insets />
+                </VBox.margin>
+            </Label>
+            <Button mnemonicParsing="false" text="Login">
+                <VBox.margin>
+                    <Insets left="100.0" top="25.0" />
+                </VBox.margin>
+            </Button>
+        </VBox>
+    </StackPane>
+    <FlowPane layoutX="104.0" layoutY="43.0" prefHeight="568.0" prefWidth="1050.0" style="-fx-border-width: 5; -fx-border-color: grey;" visible="false">
+        <ToolBar layoutX="15.0" layoutY="533.0" prefHeight="40.0" prefWidth="1040.0">
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="1020.0">
+                <Label text="Add Dependencies">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+            </HBox>
+        </ToolBar>
+        <TableView prefHeight="493.0" prefWidth="1040.0">
+            <columns>
+                <TableColumn prefWidth="75.0" text="Id" />
+                <TableColumn prefWidth="130.0" text="Name" />
+                <TableColumn prefWidth="107.0" text="Estimated Time" />
+                <TableColumn prefWidth="93.0" text="Priority" />
+                <TableColumn prefWidth="234.0" text="Probabilities" />
+                <TableColumn prefWidth="396.0" text="Dependencies" />
+            </columns>
+        </TableView>
+        <ToolBar prefHeight="40.0" prefWidth="1040.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="505.0">
+                <Button mnemonicParsing="false" text="Add">
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" text="Remove" />
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="511.0">
+                <Button mnemonicParsing="false" text="Close" />
+            </HBox>
+        </ToolBar>
+    </FlowPane>
+</AnchorPane>
