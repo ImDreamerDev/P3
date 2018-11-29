@@ -1,11 +1,11 @@
 language: java
-jdk:
-- oraclejdk11
+jdk: oraclejdk11
+env: _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw"
 after_success:
-- wget https://raw.githubusercontent.com/Lasser01/TravisCIDiscord/master/send.sh
-- chmod +x send.sh
-- ./send.sh success $WEBHOOK_URL
+  - wget https://raw.githubusercontent.com/Lasser01/TravisCIDiscord/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh success $WEBHOOK_URL
 after_failure:
-- wget https://raw.githubusercontent.com/Lasser01/TravisCIDiscord/master/send.sh
-- chmod +x send.sh
-- ./send.sh failure $WEBHOOK_URL
+  - wget https://raw.githubusercontent.com/Lasser01/TravisCIDiscord/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh failure $WEBHOOK_URL

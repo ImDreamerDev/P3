@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"dk.aau.ds304e18"},{"l":"dk.aau.ds304e18.database"},{"l":"dk.aau.ds304e18.estimatetime"},{"l":"dk.aau.ds304e18.gui"},{"l":"dk.aau.ds304e18.gui.input"},{"l":"dk.aau.ds304e18.gui.output"},{"l":"dk.aau.ds304e18.math"},{"l":"dk.aau.ds304e18.models"},{"l":"dk.aau.ds304e18.sequence"}]
