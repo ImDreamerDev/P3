@@ -51,7 +51,8 @@ class DependenciesPopup {
         this.rootPane = rootPane;
         this.listViewDependency = listViewDependency;
         this.taskDependencies = new ArrayList<>();
-
+        //Get the bottom toolbar of the dependencies popup.
+        ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
         //Get the table view from the root pane
         dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
 
@@ -62,12 +63,20 @@ class DependenciesPopup {
 
         // Set if any element is double clicked either remove them from the dependencies or add them to the dependencies.
         dependencies.setOnMouseClicked(event -> {
+            if (taskDependencies.stream().noneMatch(task -> task.getId() == dependencies.getSelectionModel().getSelectedItem().getId())) {
+                ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(false);
+                ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
+            } else {
+                ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
+                ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(false);
+            }
             if (event.getClickCount() > 1 && taskDependencies.stream().noneMatch(task -> task.getId() == dependencies.getSelectionModel().getSelectedItem().getId())) {
                 addDependency(Collections.singletonList(dependencies.getSelectionModel().getSelectedItem()));
             } else if (event.getClickCount() > 1) {
                 removeDependency(Collections.singletonList(dependencies.getSelectionModel().getSelectedItem()));
             }
         });
+
         //Sets the columns of the table view to display the different fields of the task.
         dependencies.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         dependencies.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -79,8 +88,6 @@ class DependenciesPopup {
         //Set the selection mode to multiple
         dependencies.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        //Get the bottom toolbar of the dependencies popup.
-        ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
 
         // Make the add button on click add the selected task to the dependencies.
         ((HBox) bar.getItems().get(0)).getChildren().get(0).setOnMouseClicked(event -> addDependency(dependencies.getSelectionModel().getSelectedItems()));
@@ -94,7 +101,13 @@ class DependenciesPopup {
         removeDep.setTooltip(new Tooltip("Removes the selected task from dependencies"));
 
         //Make the close button close the popup.
-        ((HBox) bar.getItems().get(1)).getChildren().get(0).setOnMouseClicked(event -> closeDependenciesPopup());
+        ((HBox) bar.getItems().get(1)).getChildren().get(0).setOnMouseClicked(event -> {
+            closeDependenciesPopup();
+            ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
+            ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
+        });
+        ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
+        ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
     }
 
 
@@ -122,12 +135,15 @@ class DependenciesPopup {
      * @param selectedItems The current selected items.
      */
     private void removeDependency(List<Task> selectedItems) {
+        ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
         for (Task task : selectedItems) {
             if (taskDependencies.contains(task)) {
                 taskDependencies.remove(task);
                 listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
             }
         }
+        ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
+        ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(false);
     }
 
     /**
@@ -136,6 +152,7 @@ class DependenciesPopup {
      * @param tasks - The list of the tasks in the project.
      */
     private void addDependency(List<Task> tasks) {
+        ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
         if (tasks == null || tasks.size() == 0)
             return;
         for (Task task : tasks) {
@@ -144,6 +161,8 @@ class DependenciesPopup {
                 listViewDependency.setItems(FXCollections.observableArrayList(taskDependencies));
             }
         }
+        ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(false);
+        ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
     }
 
     public List<Task> getTaskDependencies() {
