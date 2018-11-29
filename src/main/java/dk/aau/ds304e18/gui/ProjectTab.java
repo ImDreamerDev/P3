@@ -279,7 +279,7 @@ public class ProjectTab {
         //If a project is selected.
         if (JavaFXMain.selectedProjectId != 0) {
             //Set the current project as a old project.
-            projectManager.addOldProject(LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
+            projectManager.archiveProject(LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
 
             //Update the table view depending on if the show archived is true.
             if (!((CheckBox) rootPane.lookup("#showArchivedCheckbox")).isSelected())

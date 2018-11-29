@@ -114,7 +114,7 @@ public class DatabaseDistributor {
                 }
                 // Adds all the oldProjects to the projectManager wit the corresponding id.
                 for (Integer projectId : projectManager.getOldProjectsId()) {
-                    projectManager.addOldProject(LocalObjStorage.getProjectById(projectId));
+                    projectManager.archiveProject(LocalObjStorage.getProjectById(projectId));
                 }
                 updateProgress(5, progressBarParts);
                 return null;

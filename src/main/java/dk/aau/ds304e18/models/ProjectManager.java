@@ -94,13 +94,13 @@ public class ProjectManager {
     public List<Project> getCurrentProjects() {
         return currentProjects;
     }
-    
+
     /**
      * This function adds a project to the old projects list.
      *
      * @param project - the project to be added to the list.
      */
-    public void addOldProject(Project project) {
+    public void archiveProject(Project project) {
         boolean isLoadingFromDB = false;
         if (oldProjects.contains(project)) return;
 
@@ -108,7 +108,16 @@ public class ProjectManager {
             if (oldProjectsId.contains(project.getId())) {
                 isLoadingFromDB = true;
             }
-
+            for (Employee emp : project.getEmployees()) {
+                emp.setProject(null);
+                if (emp.getCurrentTask() != null && emp.getCurrentTask().size() != 0) {
+                    for (Task task : emp.getCurrentTask()) {
+                        task.getEmployees().remove(emp);
+                        emp.getCurrentTask().remove(task);
+                    }
+                }
+            }
+            project.getEmployees().clear();
 
             oldProjects.add(project);
 
