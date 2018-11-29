@@ -87,8 +87,8 @@ public class Project {
         this.name = name;
         this.state = ProjectState.ONGOING;
         this.Creator = creator;
-        DatabaseManager.addProject(this);
         creator.addCurrentProject(LocalObjStorage.getProjectById(getId()));
+        DatabaseManager.addProject(this);
     }
 
     public Project(int id, String name, ProjectState projectState, String sequence,

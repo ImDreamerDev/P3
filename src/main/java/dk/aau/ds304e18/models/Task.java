@@ -79,10 +79,10 @@ public class Task {
         this.estimatedTime = estimatedTime;
         this.priority = priority;
         this.project = project;
-        DatabaseManager.addTask(this);
         this.project.addNewTask(this);
         this.projectId = project.getId();
         this.startTime = -1d;
+        DatabaseManager.addTask(this);
     }
 
 
