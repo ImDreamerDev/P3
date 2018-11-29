@@ -72,6 +72,22 @@ class DatabaseParserTest {
 
     @Test
     void testParseProjectManagersFromResultSet() {
+        int projectManagerCount = 0;
+        ResultSet resultSet = DatabaseManager.query("SELECT COUNT(*) FROM projectmanagers");
+        try {
+            Objects.requireNonNull(resultSet).next();
+            projectManagerCount = resultSet.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ResultSet rs = DatabaseManager.query("select * from projectmanagers");
+        List<ProjectManager> projectManagers = DatabaseParser.parseProjectManagersFromResultSet(rs);
+        assertNotNull(projectManagers);
+        assertEquals(projectManagerCount, projectManagers.size());
+    }
 
+    @Test
+    void testParseProbabilities() {
+        
     }
 }
