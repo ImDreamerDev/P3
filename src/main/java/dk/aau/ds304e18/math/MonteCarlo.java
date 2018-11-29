@@ -426,7 +426,7 @@ public class MonteCarlo {
      * @param rec               If it should use the recommended path or not.
      * @return Returns the estimated time of the project
      */
-    private static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index, boolean rec) {
+    public static double estimateTime(Project project, int monteCarloRepeats, boolean random, int index, boolean rec) {
         //Adds a list to the index of the possibleCompletions list on the project
         project.getTempPossibleCompletions().add(index, new ArrayList<>());
         //Gets the task list from the project
