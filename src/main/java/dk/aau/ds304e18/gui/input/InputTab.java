@@ -219,7 +219,7 @@ public class InputTab {
 
             if (validate(estimatedTimeTextField, priority) != 0)
                 return;
-            boolean taskNameIsThere = LocalObjStorage.getTaskList().stream().anyMatch(task -> task.getName().equals(nameTextField.getText()));
+            boolean taskNameIsThere = LocalObjStorage.getTaskList().stream().anyMatch(task -> task.getName().equals(nameTextField.getText()) && task.getProject().getId() == JavaFXMain.selectedProjectId);
             if (taskNameIsThere && !isEditMode) {
                 return;
             }
