@@ -62,7 +62,7 @@ public class DependenciesPopupTest extends ApplicationTest {
     }
 
     @Test
-    void testcloseDependenciesPopupTest01() {
+    void testCloseDependenciesPopupTest01() {
         DependenciesPopup test = new DependenciesPopup(rootPane, listView);
         test.closeDependenciesPopup();
         assertFalse(rootPane.getChildrenUnmodifiable().get(3).isVisible());
@@ -76,6 +76,13 @@ public class DependenciesPopupTest extends ApplicationTest {
     }
 
     @Test
+    void testAddDependency02() {
+        DependenciesPopup test = new DependenciesPopup(rootPane, listView);
+        test.addDependency(null);
+        assertEquals(0, test.getTaskDependencies().size());
+    }
+
+    @Test
     void testRemoveDependency() {
         DependenciesPopup test = new DependenciesPopup(rootPane, listView);
         test.addDependency(Collections.singletonList(new Task(-1, "Hello", 30, 40, null, null, -1, null, 20)));
@@ -84,7 +91,7 @@ public class DependenciesPopupTest extends ApplicationTest {
     }
 
     @Test
-    void testcloseDependenciesPopupTest02() {
+    void testCloseDependenciesPopupTest02() {
         DependenciesPopup test = new DependenciesPopup(rootPane, listView);
         test.openDependenciesPopup();
         ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
@@ -92,6 +99,36 @@ public class DependenciesPopupTest extends ApplicationTest {
                 0, 0, 0, 0, MouseButton.PRIMARY, 1,
                 true, true, true, true, true, true, true, true, true, true, null));
         assertFalse(rootPane.getChildrenUnmodifiable().get(3).isVisible());
+    }
+
+    @Test
+    void testShowContextualButtons01() {
+        DependenciesPopup test = new DependenciesPopup(rootPane, listView);
+        test.showContextualButtons(null, null);
+
+    }
+
+    @Test
+    void testShowContextualButtons02() {
+        DependenciesPopup test = new DependenciesPopup(rootPane, listView);
+        ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
+        test.showContextualButtons(new Task(-1, "Hello", 30, 40, null,
+                null, -1, null, 20), bar);
+        assertFalse(((HBox) bar.getItems().get(0)).getChildren().get(0).isDisable());
+    }
+
+    @Test
+    void testShowContextualButtons03() {
+        DependenciesPopup test = new DependenciesPopup(rootPane, listView);
+        ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
+        Task task = new Task(-1, "Hello", 30, 40, null,
+                null, -1, null, 20);
+        TableView<Task> taskTableView = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
+        taskTableView.getItems().add(task);
+        taskTableView.getSelectionModel().select(0);
+        test.getTaskDependencies().add(task);
+        test.showContextualButtons(task, bar);
+        assertTrue(((HBox) bar.getItems().get(0)).getChildren().get(0).isDisable());
     }
 }
 

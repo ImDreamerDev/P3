@@ -85,18 +85,9 @@ class DependenciesPopup {
 
         //Sets the columns of the table view to display the different fields of the task.
         setupTableView(dependencies);
-        dependencies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null)
-                return;
-            if (taskDependencies.stream().noneMatch(task -> task.getId() == dependencies.getSelectionModel().getSelectedItem().getId())) {
-                ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(false);
-                ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
-            } else {
-                ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
-                ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(false);
-            }
-            dependencies.requestFocus();
-        });
+        dependencies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                showContextualButtons(newValue, bar));
+        
         //Set the selection mode to multiple
         dependencies.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -192,4 +183,17 @@ class DependenciesPopup {
         return taskDependencies;
     }
 
+    void showContextualButtons(Task newValue, ToolBar bar) {
+        if (newValue == null)
+            return;
+        if (taskDependencies.stream().noneMatch(task -> task.getId() == dependencies.getSelectionModel().getSelectedItem().getId())) {
+            ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(false);
+            ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
+        } else {
+            ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
+            ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(false);
+        }
+        dependencies.requestFocus();
+    }
 }
+
