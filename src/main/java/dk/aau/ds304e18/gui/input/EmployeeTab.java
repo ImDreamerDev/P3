@@ -130,7 +130,7 @@ public class EmployeeTab {
     /**
      * Assigns the selected employee(s) to the current project.
      */
-    private void assignEmployee() {
+    void assignEmployee() {
         //If nothing is selected return.
         if (freeEmployeeTableView.getSelectionModel().getSelectedItems() == null
                 && freeEmployeeTableView.getSelectionModel().getSelectedItems().size() == 0) {

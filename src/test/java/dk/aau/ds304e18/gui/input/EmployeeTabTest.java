@@ -1,6 +1,8 @@
 package dk.aau.ds304e18.gui.input;
 
+import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.gui.output.OutputTab;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Task;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -61,6 +64,19 @@ public class EmployeeTabTest extends ApplicationTest {
 
         projectEmployeeTableView.getItems().add(new Employee("Hans", null));
 
+        test.drawEmployees();
+
+        assertEquals(projectEmployeeTableView.getItems(), new ArrayList<>());
+    }
+
+    @Test
+    void addEmployeeTest01() {
+        EmployeeTab test = new EmployeeTab(rootPane);
+
+        JavaFXMain.selectedProjectId = 48;
+        JavaFXMain.outputTab = new OutputTab(rootPane);
+
+        test.addEmployee(new TextField("Test"));
         test.drawEmployees();
 
         assertEquals(projectEmployeeTableView.getItems(), new ArrayList<>());
