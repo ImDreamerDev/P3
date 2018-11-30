@@ -55,14 +55,15 @@ public class InputTab {
     }
 
     /**
-     * The method that draws the inputTab. If the project is ongoing you can interact with the gui, if it isn't you cannot.
+     * The method that draws the inputTab. If the project is ongoing you can interact with the gui, if it isn't you
+     * cannot.
      * Uses the method disableInput - if the project is archived.
      * Uses the method enableInput - if the project is ongoing.
      */
     public void drawInputTab() {
         //If the selected project is archived disable the input. Otherwise enable the input.
-        if (JavaFXMain.selectedProjectId != 0 && LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getState()
-                == ProjectState.ARCHIVED)
+        if (JavaFXMain.selectedProjectId != 0 && LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId)
+                .getState() == ProjectState.ARCHIVED)
             disableInput();
         else
             enableInput();
