@@ -29,6 +29,7 @@ public class EmployeeTabTest extends ApplicationTest {
     private BorderPane borderPane;
     private TabPane tabPane;
     private TableView<Employee> projectEmployeeTableView;
+    private TableView<Employee> freeEmployeeTableView;
 
     @BeforeAll
     static void realInit() {
@@ -47,7 +48,7 @@ public class EmployeeTabTest extends ApplicationTest {
         borderPane = (BorderPane) rootPane.lookup("#employeesBorderpane");
         tabPane = (TabPane) borderPane.getCenter();
         projectEmployeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(0).getContent()).getChildren().get(0);
-
+        freeEmployeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(1).getContent()).getChildren().get(0);
     }
 
     @Test
@@ -82,5 +83,100 @@ public class EmployeeTabTest extends ApplicationTest {
         }
 
         assertEquals(projectEmployeeTableView.getItems().size(), 1);
+    }
+
+    @Test
+    void addEmployeeTest02() {
+        EmployeeTab test = new EmployeeTab(rootPane);
+        LocalObjStorage.getProjectList().addAll(DatabaseManager.getPMProjects(DatabaseManager.logIn("Project Manager111", "Password")));
+        JavaFXMain.selectedProjectId = 13075;
+        VBox inputVBox = (VBox) borderPane.getLeft();
+        TextField nameTextField = (TextField) inputVBox.getChildren().get(1);
+        nameTextField.setText("");
+        try {
+            test.addEmployee(nameTextField);
+        } catch (NullPointerException ignored) {
+        }
+
+        assertEquals(projectEmployeeTableView.getItems().size(), 0);
+    }
+
+    @Test
+    void assignEmployeeTest01() {
+        EmployeeTab test = new EmployeeTab(rootPane);
+
+        LocalObjStorage.getProjectList().addAll(DatabaseManager.getPMProjects(DatabaseManager.logIn("Project Manager111", "Password")));
+        JavaFXMain.selectedProjectId = 13075;
+        VBox inputVBox = (VBox) borderPane.getLeft();
+        TextField nameTextField = (TextField) inputVBox.getChildren().get(1);
+        nameTextField.setText("Hans");
+        try {
+            test.addEmployee(nameTextField);
+        } catch (NullPointerException ignored) {
+        }
+
+        projectEmployeeTableView.getSelectionModel().select(0);
+        try {
+            test.unassignEmployee();
+        } catch (Exception weDontCareAboutExceptionsLol) {
+        }
+
+        freeEmployeeTableView.getSelectionModel().select(0);
+        try {
+            test.assignEmployee();
+        } catch (Exception weDontCareAboutExceptionsLol) {
+        }
+
+        assertEquals(3, projectEmployeeTableView.getItems().size());
+    }
+
+    @Test
+    void unassignAssignEmployeeTest01() {
+        EmployeeTab test = new EmployeeTab(rootPane);
+
+        LocalObjStorage.getProjectList().addAll(DatabaseManager.getPMProjects(DatabaseManager.logIn("Project Manager111", "Password")));
+        JavaFXMain.selectedProjectId = 13075;
+        VBox inputVBox = (VBox) borderPane.getLeft();
+        TextField nameTextField = (TextField) inputVBox.getChildren().get(1);
+        nameTextField.setText("Hans");
+        try {
+            test.addEmployee(nameTextField);
+        } catch (NullPointerException ignored) {
+        }
+
+        try {
+            test.unassignEmployee();
+        } catch (Exception weDontCareAboutExceptionsLol) {
+        }
+
+        try {
+            test.assignEmployee();
+        } catch (Exception weDontCareAboutExceptionsLol) {
+        }
+
+        assertEquals(2, projectEmployeeTableView.getItems().size());
+    }
+
+    @Test
+    void unassignEmployeeTest01() {
+        EmployeeTab test = new EmployeeTab(rootPane);
+
+        LocalObjStorage.getProjectList().addAll(DatabaseManager.getPMProjects(DatabaseManager.logIn("Project Manager111", "Password")));
+        JavaFXMain.selectedProjectId = 13075;
+        VBox inputVBox = (VBox) borderPane.getLeft();
+        TextField nameTextField = (TextField) inputVBox.getChildren().get(1);
+        nameTextField.setText("Hans");
+        try {
+            test.addEmployee(nameTextField);
+        } catch (NullPointerException ignored) {
+        }
+
+        projectEmployeeTableView.getSelectionModel().select(0);
+        try {
+            test.unassignEmployee();
+        } catch (Exception weDontCareAboutExceptionsLol) {
+        }
+
+        assertEquals(1, projectEmployeeTableView.getItems().size());
     }
 }
