@@ -1,23 +1,32 @@
 package dk.aau.ds304e18.gui.input;
 
 import dk.aau.ds304e18.database.DatabaseManager;
+import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class EmployeeTabTest {
+public class EmployeeTabTest extends ApplicationTest {
     private Parent rootPane;
-    private static ListView listView;
+
+    private BorderPane borderPane;
+    private TabPane tabPane;
+    private TableView<Employee> projectEmployeeTableView;
 
     @BeforeAll
     static void realInit() {
@@ -33,13 +42,27 @@ public class EmployeeTabTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        BorderPane flowPane = ((BorderPane) rootPane.lookup("#inputFlowPane"));
-        VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
-        listView = ((ListView<Task>) inputVBox.getChildren().get(11));
+        borderPane = (BorderPane) rootPane.lookup("#employeesBorderpane");
+        tabPane = (TabPane) borderPane.getCenter();
+        projectEmployeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(0).getContent()).getChildren().get(0);
+
     }
 
     @Test
-    void test(){
-        assertEquals(1,1);
+    void employeeTabConstructorTest01(){
+        EmployeeTab test = new EmployeeTab(rootPane);
+
+        assertNotNull(test);
+    }
+
+    @Test
+    void employeeTabDrawEmployeeTest01() {
+        EmployeeTab test = new EmployeeTab(rootPane);
+
+        projectEmployeeTableView.getItems().add(new Employee("Hans", null));
+
+        test.drawEmployees();
+
+        assertEquals(projectEmployeeTableView.getItems(), new ArrayList<>());
     }
 }
