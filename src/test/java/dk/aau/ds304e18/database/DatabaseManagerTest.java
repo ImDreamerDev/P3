@@ -155,4 +155,30 @@ class DatabaseManagerTest {
         assertEquals(LocalObjStorage.getProjectManagerList().size(), 0);
         DatabaseManager.removeTask(testTask.getId());
     }
+
+    @Test
+    void testGetTasksForProjectManager() {
+        ProjectManager projectManager = DatabaseManager.logIn("Project Manager", "Password");
+        Project testProj = new Project("TestProj", projectManager);
+        Task testTask = new Task("TestTask", 10, 1, testProj);
+        List<Task> tasksForProjectManager = DatabaseManager.getTasksForProjectManager(projectManager);
+        assertNotNull(tasksForProjectManager);
+        assertTrue(projectManager.getCurrentProjects().get(0).getTasks().size() > 0);
+    }
+
+    @Test
+    void testGetAvailableEmployees() {
+        ProjectManager projectManager = DatabaseManager.logIn("Project Manager", "Password");
+        List<Employee> availableEmployees = DatabaseManager.getAvailableEmployees(projectManager);
+        assertNotNull(availableEmployees);
+        assertTrue(availableEmployees.size() > 0);
+    }
+
+    @Test
+    void testGetPMProjects() {
+        ProjectManager projectManager = DatabaseManager.logIn("Project Manager", "Password");
+        List<Project> projects = DatabaseManager.getPMProjects(projectManager);
+        assertNotNull(projects);
+        assertTrue(projects.size() > 0);
+    }
 }
