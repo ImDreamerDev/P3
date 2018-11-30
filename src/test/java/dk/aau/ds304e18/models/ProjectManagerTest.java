@@ -98,6 +98,9 @@ class ProjectManagerTest {
         assertTrue(newProjectManager.getCurrentProjectIds().contains(1));
     }
 
+    /**
+     * Test for the ProjectDistributeAddCurrentProject method.
+     */
     @Test
     void TestProjectDistributeAddCurrentProject() {
         ProjectManager newProjectManager = new ProjectManager("Adam", "test");
@@ -106,34 +109,43 @@ class ProjectManagerTest {
         assertNotNull(newProjectManager.getCurrentProjects().get(0));
     }
 
+    /**
+     * Test for archive project to see if a project is properly archived
+     */
     @Test
-    void TestProjectManagerArchiveProject(){
+    void TestProjectManagerArchiveProject() {
         ProjectManager newProjectManager = new ProjectManager("Adam", "test");
         Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
         newProjectManager.archiveProject(newProject);
         assertEquals(ProjectState.ARCHIVED, newProject.getState());
     }
+
+    /**
+     * Test for archive project to see if a project is properly archived
+     */
     @Test
-    void TestProjectManagerArchiveProject2(){
+    void TestProjectManagerArchiveProject2() {
         Project newProject = new Project(-1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
-        Employee newEmployee = new Employee("Tim",newProject);
-        Task newTask = new Task(-1,"Dish",1,1, new ArrayList<>(),new ArrayList<>(),-1,new ArrayList<>(),10);
+        Employee newEmployee = new Employee("Tim", newProject);
+        Task newTask = new Task(-1, "Dish", 1, 1, new ArrayList<>(), new ArrayList<>(), -1, new ArrayList<>(), 10);
 
         newProject.addNewEmployee(newEmployee);
         newEmployee.addNewTask(newTask);
 
-        ProjectManager newProjectManager = new ProjectManager(-1,"Adam", new ArrayList<>(), new ArrayList<>());
+        ProjectManager newProjectManager = new ProjectManager(-1, "Adam", new ArrayList<>(), new ArrayList<>());
         newProjectManager.archiveProject(newProject);
-        assertEquals(null,newEmployee.getProject());
-
+        assertEquals(null, newEmployee.getProject());
     }
+
+    /**
+     * Test for archive project to see if a project is properly archived
+     */
     @Test
-    void TestProjectManagerArchiveProject3(){
+    void TestProjectManagerArchiveProject3() {
         ProjectManager newProjectManager = new ProjectManager("Adam", "test");
         Project newProject = new Project(1, "TestProject", ProjectState.ONGOING, "", 0, "", 1, null);
         newProjectManager.getOldProjectsId().add(newProject.getId());
         newProjectManager.archiveProject(newProject);
         assertEquals(ProjectState.ARCHIVED, newProject.getState());
     }
-
 }
