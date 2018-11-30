@@ -443,8 +443,9 @@ public class InputTab {
                 //Sequence the tasks.
                 MonteCarlo.progressProperty().addListener((obs, oldProgress, newProgress) ->
                         updateProgress(newProgress.doubleValue(), 1));
-
-                Sequence.sequenceAndCalculateProject(project, useFast, numOfMonte);
+                int repeats = numOfMonte + MonteCarloExecutorService.getNumOfThreads() - numOfMonte %
+                        MonteCarloExecutorService.getNumOfThreads();
+                Sequence.sequenceAndCalculateProject(project, useFast, repeats);
                 //Stop the time taking.
                 Instant end = java.time.Instant.now();
                 //Calculate the time between start and end.
