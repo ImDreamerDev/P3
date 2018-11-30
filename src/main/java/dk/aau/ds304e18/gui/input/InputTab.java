@@ -141,11 +141,7 @@ public class InputTab {
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         TextField nameTextField = ((TextField) inputVBox.getChildren().get(1));
         nameTextField.setTooltip(new Tooltip("The name of the Task" + System.lineSeparator() + "Can be both letters and numbers"));
-        if (nameTextField.getText().isBlank()) {
-            nameTextField.setStyle("-fx-border-color: #ff0000");
-        } else {
-            nameTextField.setStyle("");
-        }
+
 /*
         nameTextField.textProperty().addListener((observableValue, s, t1) -> {
             if (t1.isBlank()) {
@@ -161,6 +157,10 @@ public class InputTab {
 
             if (task != null && !isEditMode) {
                 nameTextField.setStyle("-fx-border-color: #ff9c00");
+            } else if (((task == null) && nameTextField.getText().isBlank()) || !nameTextField.getText().isBlank()) {
+                nameTextField.setStyle("");
+            } else {
+                nameTextField.setStyle("-fx-border-color: #ff0000");
             }
 
             if (task != null) {
