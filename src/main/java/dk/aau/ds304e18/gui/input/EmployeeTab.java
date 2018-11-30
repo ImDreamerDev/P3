@@ -48,10 +48,12 @@ public class EmployeeTab {
         //Get the center tab pane, where the two tabs are.
         TabPane tabPane = (TabPane) borderPane.getCenter();
         //Get the project employee table view from the GUI.
-        projectEmployeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(0).getContent()).getChildren().get(0);
+        projectEmployeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(0)
+                .getContent()).getChildren().get(0);
 
         // Get the free employee table view from the GUI.
-        freeEmployeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(1).getContent()).getChildren().get(0);
+        freeEmployeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs()
+                .get(1).getContent()).getChildren().get(0);
         setupEmployeeTab();
     }
 
@@ -61,7 +63,8 @@ public class EmployeeTab {
         VBox buttonPane = ((VBox) ((Pane) borderPane.getRight()).getChildren().get(0));
 
         //Sets the tool tip for the assign employee(s) button.
-        ((Button) buttonPane.getChildren().get(0)).setTooltip(new Tooltip("Assigns an selected employee to the project"));
+        ((Button) buttonPane.getChildren().get(0))
+                .setTooltip(new Tooltip("Assigns an selected employee to the project"));
 
         //Make the assign button actually assign employee(s) to the project.
         buttonPane.getChildren().get(0).setOnMouseClicked(event -> assignEmployee());
@@ -69,7 +72,8 @@ public class EmployeeTab {
         buttonPane.getChildren().get(0).setVisible(false);
 
         //Sets the tool tip for the unassign employee(s) button.
-        ((Button) buttonPane.getChildren().get(1)).setTooltip(new Tooltip("Removes an selected employee from the project"));
+        ((Button) buttonPane.getChildren().get(1))
+                .setTooltip(new Tooltip("Removes an selected employee from the project"));
 
         //Make the unassign button actually unassign employee(s) from the project.
         buttonPane.getChildren().get(1).setOnMouseClicked(event -> unassignEmployee());
@@ -88,8 +92,10 @@ public class EmployeeTab {
 
 
         //Sets the tool tips for these tabs.
-        ((TabPane) borderPane.getCenter()).getTabs().get(0).setTooltip(new Tooltip("Page with all employees assigned to the selected project"));
-        ((TabPane) borderPane.getCenter()).getTabs().get(1).setTooltip(new Tooltip("Page with all the available employees"));
+        ((TabPane) borderPane.getCenter()).getTabs().get(0)
+                .setTooltip(new Tooltip("Page with all employees assigned to the selected project"));
+        ((TabPane) borderPane.getCenter()).getTabs().get(1)
+                .setTooltip(new Tooltip("Page with all the available employees"));
 
 
         //Set the selection mode to multiple.
@@ -137,7 +143,8 @@ public class EmployeeTab {
             return;
         }
         //Add the employee(s) to the project.
-        LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).addNewEmployee(freeEmployeeTableView.getSelectionModel().getSelectedItems());
+        LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId)
+                .addNewEmployee(freeEmployeeTableView.getSelectionModel().getSelectedItems());
 
         //Update the GUI to reflect the changes.
         drawEmployees();
