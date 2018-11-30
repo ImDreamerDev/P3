@@ -73,7 +73,9 @@ public class InputTab {
                 task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList())));
 
         //Get the dependencies from the GUI.
-        TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
+        TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable()
+                .get(3)).getChildren().get(1));
+
         dependencies.getItems().clear();
         dependencies.setItems(FXCollections.observableArrayList(LocalObjStorage.getTaskList()
                 .stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
@@ -83,7 +85,9 @@ public class InputTab {
         Pane paneSplitter = ((Pane) flowPane.getChildren().get(2));
         VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
         if (JavaFXMain.selectedProjectId == 0 && LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId) != null)
-            ((TextField) vBoxSplitter.getChildren().get(1)).setText(LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).getNumberOfEmployees() + "");
+            ((TextField) vBoxSplitter.getChildren().get(1)).setText(LocalObjStorage.getProjectById
+                    (JavaFXMain.selectedProjectId).getNumberOfEmployees() + "");
+
         employeeTab.drawEmployees();
         if (JavaFXMain.selectedProjectId != 0)
             JavaFXMain.outputTab.drawOutputTab(true);
@@ -106,7 +110,9 @@ public class InputTab {
      */
     private void enableInput() {
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
-        Node addEditDeleteTaskButtons = ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren().get(0);
+        Node addEditDeleteTaskButtons = ((VBox) ((Pane) flowPane.getChildren()
+                .get(2)).getChildren().get(0)).getChildren().get(0);
+
         addEditDeleteTaskButtons.setDisable(false);
         inputVBox.setDisable(false);
         Tab employeeTab = ((TabPane) flowPane.getParent().getParent().getParent()).getTabs().get(1);
@@ -117,8 +123,12 @@ public class InputTab {
     private void setupDependencies() {
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
-        ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(new Tooltip("Opens a list of tasks in the project to add as dependencies"));
-        buttonsForDependencies.getChildren().get(0).setOnMouseClicked(event -> dependenciesPopup.openDependenciesPopup());
+        ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(
+                new Tooltip("Opens a list of tasks in the project to add as dependencies"));
+
+        buttonsForDependencies.getChildren().get(0).setOnMouseClicked
+                (event -> dependenciesPopup.openDependenciesPopup());
+
         listViewDependency = ((ListView<Task>) inputVBox.getChildren().get(11));
         listViewDependency.setOnMouseClicked(event -> {
             if (event.getClickCount() > 1) {
@@ -142,7 +152,8 @@ public class InputTab {
         //Input view
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         TextField nameTextField = ((TextField) inputVBox.getChildren().get(1));
-        nameTextField.setTooltip(new Tooltip("The name of the Task" + System.lineSeparator() + "Can be both letters and numbers"));
+        nameTextField.setTooltip(new Tooltip("The name of the Task" +
+                System.lineSeparator() + "Can be both letters and numbers"));
 
 /*
         nameTextField.textProperty().addListener((observableValue, s, t1) -> {
@@ -154,8 +165,11 @@ public class InputTab {
         });
 */
         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
-            Task task = LocalObjStorage.getTaskList().stream().filter(t -> t.getProject().getId() == JavaFXMain.selectedProjectId && t.getName().equals(newValue)).findFirst().orElse(null);
+            TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable()
+                    .get(3)).getChildren().get(1));
+            Task task = LocalObjStorage.getTaskList().stream()
+                    .filter(t -> t.getProject().getId() == JavaFXMain.selectedProjectId && t.getName()
+                            .equals(newValue)).findFirst().orElse(null);
 
             if (task != null && !isEditMode) {
                 nameTextField.setStyle("-fx-border-color: #ff9c00");
@@ -165,13 +179,15 @@ public class InputTab {
                 nameTextField.setStyle("-fx-border-color: #ff0000");
             }
 
-            Button addOrEditTaskButton = (Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
-                    .get(0)).getChildren().get(0);
+            Button addOrEditTaskButton = (Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2))
+                    .getChildren().get(0)).getChildren().get(0)).getChildren().get(0);
+
             if (task != null) {
                 addOrEditTaskButton
                         .setText("Update Task");
                 List<Task> tasks = LocalObjStorage.getTaskList()
-                        .stream().filter(task2 -> task2.getProject().getId() == JavaFXMain.selectedProjectId && task2.getId() != task.getId())
+                        .stream().filter(task2 -> task2.getProject()
+                                .getId() == JavaFXMain.selectedProjectId && task2.getId() != task.getId())
                         .collect(Collectors.toList());
                 dependencies.getItems().clear();
                 dependencies.setItems(FXCollections.observableArrayList(tasks));
@@ -186,11 +202,15 @@ public class InputTab {
             }
         });
         TextField priority = ((TextField) inputVBox.getChildren().get(3));
-        priority.setTooltip(new Tooltip("The priority of the task, the bigger the more important" + System.lineSeparator() + "This value is measured in integers"));
-        priority.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(priority, newValue, true));
+        priority.setTooltip(new Tooltip("The priority of the task, the bigger the more important" +
+                System.lineSeparator() + "This value is measured in integers"));
+        priority.textProperty().addListener((observable, oldValue, newValue) ->
+                validateNumericInput(priority, newValue, true));
 
         TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(5));
-        estimatedTimeTextField.setTooltip(new Tooltip("The average time of the task" + System.lineSeparator() + "Can be a decimal number separated by point"));
+        estimatedTimeTextField.setTooltip(new Tooltip("The average time of the task" +
+                System.lineSeparator() + "Can be a decimal number separated by point"));
+
         estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) ->
                 validateNumericInput(estimatedTimeTextField, newValue, false));
 
@@ -211,9 +231,11 @@ public class InputTab {
         VBox vBoxSplitter = vBoxWhereCalculateButtonIs;
         TextField numOfMonte = ((TextField) vBoxSplitter.getChildren().get(1));
         numOfMonte.setTooltip(new Tooltip("The amount of times the project will be simulated"));
-        numOfMonte.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfMonte, newValue, true));
+        numOfMonte.textProperty().addListener((observable, oldValue, newValue) ->
+                validateNumericInput(numOfMonte, newValue, true));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(3));
-        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" + System.lineSeparator() + "Input must be a positive integer"));
+        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" +
+                System.lineSeparator() + "Input must be a positive integer"));
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isBlank() && newValue.charAt(0) == '0') {
                 numOfEmployees.setText(newValue.replace("0", ""));
@@ -222,7 +244,8 @@ public class InputTab {
                 numOfEmployees.setStyle("");
         });
 
-        Node addTaskButton = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(0);
+        Node addTaskButton = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0))
+                .getChildren().get(0);
         ((Button) addTaskButton).setTooltip(new Tooltip("Adds the task to the project"));
         //Add task
         addTaskButton.setOnMouseClicked(event -> {
@@ -231,7 +254,8 @@ public class InputTab {
             if (validate(nameTextField, estimatedTimeTextField, priority) != 0)
                 return;
             boolean taskNameIsThere = LocalObjStorage.getTaskList().stream().anyMatch(task ->
-                    task.getName().equals(nameTextField.getText()) && task.getProject().getId() == JavaFXMain.selectedProjectId);
+                    task.getName().equals(nameTextField.getText()) && task.getProject()
+                            .getId() == JavaFXMain.selectedProjectId);
             if (taskNameIsThere && !isEditMode) {
                 return;
             }
@@ -241,14 +265,18 @@ public class InputTab {
                     nameTextField, estimatedTimeTextField, priority);
         });
 
-        numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(numOfEmployees, newValue, true));
-        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" + System.lineSeparator() + "Input must be an integer"));
+        numOfEmployees.textProperty().addListener((observable, oldValue, newValue) ->
+                validateNumericInput(numOfEmployees, newValue, true));
+
+        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" +
+                System.lineSeparator() + "Input must be an integer"));
 
         Button CalculateButton = (Button) vBoxSplitter.getChildren().get(5);
         CalculateButton.setTooltip(new Tooltip("Calculates the probability for the length of the project"));
 
         CheckBox useFastCheckbox = (CheckBox) vBoxSplitter.getChildren().get(4);
-        Tooltip.install(useFastCheckbox, new Tooltip("If checked the program will try to give the most optimal path for tasks"));
+        Tooltip.install(useFastCheckbox,
+                new Tooltip("If checked the program will try to give the most optimal path for tasks"));
 
         CalculateButton.setOnMouseClicked(event -> {
             disableInput();
@@ -297,12 +325,14 @@ public class InputTab {
             thread.start();
         });
 
-        Button editTaskButton = (Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(1);
+        Button editTaskButton = (Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren()
+                .get(0)).getChildren().get(1);
         editTaskButton.setTooltip(new Tooltip("Edits the selected task from the project"));
         editTaskButton.setOnMouseClicked(event -> editTask(duration1, probability1, duration2, probability2, duration3,
                 probability3, nameTextField, estimatedTimeTextField, priority));
 
-        Button removeTaskButton = (Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0)).getChildren().get(2);
+        Button removeTaskButton = (Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren()
+                .get(0)).getChildren().get(2);
         removeTaskButton.setTooltip(new Tooltip("Removes the selected task from the project"));
         removeTaskButton.setOnMouseClicked(event -> removeTask());
         //End right side input
@@ -322,11 +352,14 @@ public class InputTab {
     private List<Probabilities> convertToProbabilities() {
         List<Probabilities> probabilities = new ArrayList<>();
         if (!probability1.getText().isBlank())
-            probabilities.add(new Probabilities(Double.parseDouble(duration1.getText()), Maths.clamp(Double.parseDouble(probability1.getText()), 0.0, 100.0)));
+            probabilities.add(new Probabilities(Double.parseDouble(duration1.getText()),
+                    Maths.clamp(Double.parseDouble(probability1.getText()), 0.0, 100.0)));
         if (!probability2.getText().isBlank())
-            probabilities.add(new Probabilities(Double.parseDouble(duration2.getText()), Maths.clamp(Double.parseDouble(probability2.getText()), 0.0, 100.0)));
+            probabilities.add(new Probabilities(Double.parseDouble(duration2.getText()),
+                    Maths.clamp(Double.parseDouble(probability2.getText()), 0.0, 100.0)));
         if (!probability3.getText().isBlank())
-            probabilities.add(new Probabilities(Double.parseDouble(duration3.getText()), Maths.clamp(Double.parseDouble(probability3.getText()), 0.0, 100.0)));
+            probabilities.add(new Probabilities(Double.parseDouble(duration3.getText()),
+                    Maths.clamp(Double.parseDouble(probability3.getText()), 0.0, 100.0)));
         return probabilities;
     }
 
@@ -356,11 +389,16 @@ public class InputTab {
         probabilities.add(probability3);
 
         for (int i = 0; i < 3; i++) {
-            durations.get(i).setTooltip(new Tooltip("Estimated duration of the task" + System.lineSeparator() + "Can be a decimal number separated by point"));
-            probabilities.get(i).setTooltip(new Tooltip("The chance of the task being finished at the given time" + System.lineSeparator() + "Input is given in percentage and can be a decimal number separated by point"));
+            durations.get(i).setTooltip(new Tooltip("Estimated duration of the task" +
+                    System.lineSeparator() + "Can be a decimal number separated by point"));
+            probabilities.get(i).setTooltip(new Tooltip("The chance of the task being finished at the given time" +
+                    System.lineSeparator()
+                    + "Input is given in percentage and can be a decimal number separated by point"));
             int finalI = i;
-            durations.get(i).textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(durations.get(finalI), newValue, false));
-            probabilities.get(i).textProperty().addListener((observable, oldValue, newValue) -> validateNumericInput(probabilities.get(finalI), newValue, false));
+            durations.get(i).textProperty().addListener((observable, oldValue, newValue) ->
+                    validateNumericInput(durations.get(finalI), newValue, false));
+            probabilities.get(i).textProperty().addListener((observable, oldValue, newValue) ->
+                    validateNumericInput(probabilities.get(finalI), newValue, false));
         }
 
     }
@@ -413,7 +451,9 @@ public class InputTab {
                 //Print the result out.
                 System.out.format((char) 27 + "[31mNote: total in that unit!\n" + (char) 27 +
                                 "[39mHours: %02d Minutes: %02d Seconds: %02d Milliseconds: %04d \n",
-                        between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis()); // 0D, 00:00:01.1001
+                        between.toHours(), between.toMinutes(), between.getSeconds(), between.toMillis());
+                // 0D, 00:00:01.1001
+
                 //Update all the tasks.
                 project.getTasks().forEach(DatabaseManager::updateTask);
                 return null;
@@ -422,8 +462,8 @@ public class InputTab {
     }
 
     /**
-     * This method is used to make sure that the estimated time and all the text boxes that only are supposed to take numeric values,
-     * actually contain numeric values.
+     * This method is used to make sure that the estimated time and all the text boxes that only are supposed to
+     * take numeric values, actually contain numeric values.
      *
      * @param intField  - a text box where only numbers can be entered.
      * @param textField - the text box
@@ -442,7 +482,8 @@ public class InputTab {
     }
 
     /**
-     * This method clears the whole input field for creating a new task. This means all the text boxes and the dependencies table.
+     * This method clears the whole input field for creating a new task. This means all the text boxes and the
+     * dependencies table.
      *
      * @param textFields - the specific text box
      */
@@ -470,7 +511,8 @@ public class InputTab {
     private void addTask(String name, double estimatedTime, int priority, List<Probabilities> probabilities) {
         //Get all the tasks on this project.
         List<Task> tasks = LocalObjStorage.getTaskList().
-                stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId).collect(Collectors.toList());
+                stream().filter(task -> task.getProject().getId() == JavaFXMain.selectedProjectId)
+                .collect(Collectors.toList());
         //Get the task with the same name otherwise returns null to signify no task with that name exists.
         Task t = tasks.stream().filter(task -> task.getName().equals(name)).findFirst().orElse(null);
         //If we found a task.
@@ -502,8 +544,8 @@ public class InputTab {
     }
 
     private void setAddTaskButtonText() {
-        Button addTaskButton = (Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
-                .get(0)).getChildren().get(0);
+        Button addTaskButton = (Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren()
+                .get(0)).getChildren().get(0)).getChildren().get(0);
         addTaskButton.setText("Add Task");
         isEditMode = false;
     }
@@ -511,8 +553,8 @@ public class InputTab {
 
     private void editTask(TextField... textFields) {
 
-        Button addTaskButton = (Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren().get(0)).getChildren()
-                .get(0)).getChildren().get(0);
+        Button addTaskButton = (Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren()
+                .get(0)).getChildren().get(0)).getChildren().get(0);
         addTaskButton
                 .setText("Update Task");
         //If no task is selected just return.
@@ -561,11 +603,12 @@ public class InputTab {
         dependenciesPopup.getTaskDependencies().addAll(new ArrayList<>(task.getDependencies()));
         listViewDependency.setItems(FXCollections.observableArrayList(dependenciesPopup.getTaskDependencies()));
         //Update the input tab to reflect the change.
-        TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(1));
+        TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable()
+                .get(3)).getChildren().get(1));
         //Set the items of the table view, equal to the all the tasks on this project.
 
-        List<Task> tasks = LocalObjStorage.getTaskList()
-                .stream().filter(task2 -> task2.getProject().getId() == JavaFXMain.selectedProjectId && task2.getId() != task.getId())
+        List<Task> tasks = LocalObjStorage.getTaskList().stream().filter(task2 ->
+                task2.getProject().getId() == JavaFXMain.selectedProjectId && task2.getId() != task.getId())
                 .collect(Collectors.toList());
         drawInputTab();
         dependencies.getItems().clear();
