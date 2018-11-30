@@ -76,7 +76,8 @@ public class DatabaseManager {
     public static void addProjectManager(ProjectManager pm, String password) {
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
-            PreparedStatement checkName = dbConnection.prepareStatement("SELECT id FROM projectmanagers WHERE username = ?");
+            PreparedStatement checkName = dbConnection
+                    .prepareStatement("SELECT id FROM projectmanagers WHERE username = ?");
             checkName.setString(1, pm.getName());
             ResultSet checkNameRs = checkName.executeQuery();
             if (checkNameRs.next()) return;
@@ -271,7 +272,8 @@ public class DatabaseManager {
     }
 
     //TODO THIS SHOULD BE FIXED AND NOT EXIST. REALLY BAD FIX TO SOCKET TIMEOUT
-    private static void sendStatementMaxRetryTimes(PreparedStatement statement, int maxRetry, int i) throws SQLException {
+    private static void sendStatementMaxRetryTimes(PreparedStatement statement, int maxRetry, int i)
+            throws SQLException {
         while (i < maxRetry) {
             try {
                 statement.execute();
@@ -292,7 +294,8 @@ public class DatabaseManager {
     public static void updateProject(Project project) {
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
-            PreparedStatement statement = dbConnection.prepareStatement("UPDATE projects SET state = ?, sequence = ?" +
+            PreparedStatement statement = dbConnection
+                    .prepareStatement("UPDATE projects SET state = ?, sequence = ?" +
                     ", duration = ?, recommendedpath = ?, numberofemployees = ?, possiblecompletions = ? WHERE id = ?");
             statement.setInt(1, project.getState().getValue());
             statement.setString(2, project.getSequence());
@@ -325,10 +328,12 @@ public class DatabaseManager {
         manager.getCurrentProjects().forEach(project -> currentProjArray.add(project.getId()));
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
-            PreparedStatement statement = dbConnection.prepareStatement("UPDATE projectmanagers SET currentproject " +
+            PreparedStatement statement = dbConnection
+                    .prepareStatement("UPDATE projectmanagers SET currentproject " +
                     "= ?, oldprojects = ? WHERE id = ? ");
             if (manager.getCurrentProjects() != null && manager.getCurrentProjects().size() != 0)
-                statement.setArray(1, dbConnection.createArrayOf("INTEGER", currentProjArray.toArray()));
+                statement.setArray(1, dbConnection
+                        .createArrayOf("INTEGER", currentProjArray.toArray()));
             else
                 statement.setNull(1, Types.ARRAY);
             statement.setArray(2, dbConnection.createArrayOf("INTEGER",
@@ -353,7 +358,8 @@ public class DatabaseManager {
             if (dbConnection == null || dbConnection.isClosed()) connect();
             if (dbConnection == null)
                 return new ProjectManager(-1, "Connection error", null, null);
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projectmanagers WHERE LOWER(username) = ?",
+            PreparedStatement statement = dbConnection
+                    .prepareStatement("SELECT * FROM projectmanagers WHERE LOWER(username) = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             statement.setString(1, username.toLowerCase());
@@ -405,8 +411,10 @@ public class DatabaseManager {
 
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM employees WHERE projectid IS NULL OR projectid = ANY (?) ");
-            statement.setArray(1, dbConnection.createArrayOf("INTEGER", employeeIdsToQuery.toArray()));
+            PreparedStatement statement = dbConnection
+                    .prepareStatement("SELECT * FROM employees WHERE projectid IS NULL OR projectid = ANY (?) ");
+            statement.setArray(1, dbConnection
+                    .createArrayOf("INTEGER", employeeIdsToQuery.toArray()));
             ResultSet rs = statement.executeQuery();
             return DatabaseParser.parseEmployeesFromResultSet(rs);
         } catch (SQLException e) {
