@@ -115,11 +115,11 @@
                                             <Insets left="5.0" right="5.0" />
                                         </BorderPane.margin>
                                         <Label text="Task name*" />
-                                        <TextField promptText="Task name:" />
+                                        <TextField promptText="Task name" />
                                         <Label text="Task priority*" />
-                                        <TextField promptText="Task priority:" />
+                                        <TextField promptText="Task priority" />
                                         <Label text="Estimated time*" />
-                                        <TextField promptText="Estimated time:" />
+                                        <TextField promptText="Estimated time" />
                                         <HBox prefHeight="29.0" prefWidth="222.0">
                                             <Label text="Certainty" />
                                             <Label text="Duration">
@@ -134,15 +134,15 @@
                                             </Label>
                                         </HBox>
                                         <HBox prefHeight="31.0" prefWidth="121.0">
-                                            <TextField promptText="Duration:" />
+                                            <TextField promptText="Duration" />
                                             <TextField promptText="0 - 100 %" />
                                         </HBox>
                                         <HBox prefHeight="32.0" prefWidth="121.0">
-                                            <TextField promptText="Duration:" />
+                                            <TextField promptText="Duration" />
                                             <TextField promptText="0 - 100 %" />
                                         </HBox>
                                         <HBox layoutX="10.0" layoutY="196.0" prefHeight="32.0" prefWidth="121.0">
-                                            <TextField promptText="Duration:" />
+                                            <TextField promptText="Duration" />
                                             <TextField promptText="0 - 100 %" />
                                         </HBox>
                                         <Label text="Task dependencies" />
@@ -219,8 +219,8 @@
                                         <BorderPane.margin>
                                             <Insets left="5.0" right="5.0" />
                                         </BorderPane.margin>
-                                        <Label text="Name:" />
-                                        <TextField promptText="Employee name:" />
+                                        <Label text="Name" />
+                                        <TextField promptText="Employee name" />
                                         <Button mnemonicParsing="false" text="Add employee" />
                                     </VBox>
                                 </left>
