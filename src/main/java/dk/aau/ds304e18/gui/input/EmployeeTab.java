@@ -13,9 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 
-import javax.swing.*;
 import java.util.stream.Collectors;
 
 /**
@@ -63,8 +61,6 @@ public class EmployeeTab {
     private void setupEmployeeTab() {
         //Get the buttons in the right side.
         VBox buttonPane = ((VBox) ((Pane) borderPane.getRight()).getChildren().get(0));
-
-        ToolTipManager.sharedInstance().setInitialDelay(0);
 
         //Sets the tool tip for the assign employee(s) button.
         Tooltip assignEmpToProject = new Tooltip("Assigns an selected employee to the project");
