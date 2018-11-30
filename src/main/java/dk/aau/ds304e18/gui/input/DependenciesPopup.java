@@ -74,9 +74,10 @@ class DependenciesPopup {
                 })
                 .collect(Collectors.toList())));
 
-        // Set if any element is double clicked either remove them from the dependencies or add them to the dependencies.
+        // Set if any element is double clicked either remove them from the dependencies or add them to the dependencies
         dependencies.setOnMouseClicked(event -> {
-            if (event.getClickCount() > 1 && taskDependencies.stream().noneMatch(task -> task.getId() == dependencies.getSelectionModel().getSelectedItem().getId())) {
+            if (event.getClickCount() > 1 && taskDependencies.stream().noneMatch(task -> task.getId() == dependencies
+                    .getSelectionModel().getSelectedItem().getId())) {
                 addDependency(Collections.singletonList(dependencies.getSelectionModel().getSelectedItem()));
             } else if (event.getClickCount() > 1) {
                 removeDependency(Collections.singletonList(dependencies.getSelectionModel().getSelectedItem()));
@@ -93,8 +94,10 @@ class DependenciesPopup {
 
 
         // Make the add button on click add the selected task to the dependencies.
-        ((HBox) bar.getItems().get(0)).getChildren().get(0).setOnMouseClicked(event -> addDependency(dependencies.getSelectionModel().getSelectedItems()));
-        ((Button) ((HBox) bar.getItems().get(0)).getChildren().get(0)).setTooltip(new Tooltip("Adds the selected task(s) to dependencies"));
+        ((HBox) bar.getItems().get(0)).getChildren().get(0).setOnMouseClicked(event ->
+                addDependency(dependencies.getSelectionModel().getSelectedItems()));
+        ((Button) ((HBox) bar.getItems().get(0)).getChildren().get(0))
+                .setTooltip(new Tooltip("Adds the selected task(s) to dependencies"));
 
         //Get the remove button from the toolbar.
         Button removeDep = (Button) ((HBox) bar.getItems().get(0)).getChildren().get(1);
@@ -186,7 +189,8 @@ class DependenciesPopup {
     void showContextualButtons(Task newValue, ToolBar bar) {
         if (newValue == null)
             return;
-        if (taskDependencies.stream().noneMatch(task -> task.getId() == dependencies.getSelectionModel().getSelectedItem().getId())) {
+        if (taskDependencies.stream().noneMatch(task -> task.getId() == dependencies.getSelectionModel()
+                .getSelectedItem().getId())) {
             ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(false);
             ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
         } else {
