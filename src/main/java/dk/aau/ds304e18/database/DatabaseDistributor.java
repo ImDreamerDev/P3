@@ -82,9 +82,11 @@ public class DatabaseDistributor {
                 updateProgress(4, progressBarParts);
 
                 if (DatabaseManager.getTasksForProjectManager(projectManager) != null)
-                    LocalObjStorage.getTaskList().addAll(Objects.requireNonNull(DatabaseManager.getTasksForProjectManager(projectManager)));
+                    LocalObjStorage.getTaskList().addAll(Objects.requireNonNull(DatabaseManager
+                            .getTasksForProjectManager(projectManager)));
 
-                // For each Task in the localObjStorage get the project with the same id and if it exists add the task to the project.
+                // For each Task in the localObjStorage get the project with the same id and if it exists
+                // add the task to the project.
                 for (Task task : LocalObjStorage.getTaskList()) {
                     Project project = LocalObjStorage.getProjectById(task.getProjectId());
 
