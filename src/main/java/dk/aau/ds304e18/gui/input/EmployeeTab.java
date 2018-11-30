@@ -13,7 +13,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
+import javax.swing.*;
 import java.util.stream.Collectors;
 
 /**
@@ -62,9 +64,12 @@ public class EmployeeTab {
         //Get the buttons in the right side.
         VBox buttonPane = ((VBox) ((Pane) borderPane.getRight()).getChildren().get(0));
 
+        ToolTipManager.sharedInstance().setInitialDelay(0);
+
         //Sets the tool tip for the assign employee(s) button.
-        ((Button) buttonPane.getChildren().get(0))
-                .setTooltip(new Tooltip("Assigns an selected employee to the project"));
+        Tooltip assignEmpToProject = new Tooltip("Assigns an selected employee to the project");
+        assignEmpToProject.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        ((Button) buttonPane.getChildren().get(0)).setTooltip(assignEmpToProject);
 
         //Make the assign button actually assign employee(s) to the project.
         buttonPane.getChildren().get(0).setOnMouseClicked(event -> assignEmployee());
@@ -72,8 +77,9 @@ public class EmployeeTab {
         buttonPane.getChildren().get(0).setVisible(false);
 
         //Sets the tool tip for the unassign employee(s) button.
-        ((Button) buttonPane.getChildren().get(1))
-                .setTooltip(new Tooltip("Removes an selected employee from the project"));
+        Tooltip removeEmpFromProject = new Tooltip("Removes an selected employee from the project");
+        removeEmpFromProject.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        ((Button) buttonPane.getChildren().get(1)).setTooltip(removeEmpFromProject);
 
         //Make the unassign button actually unassign employee(s) from the project.
         buttonPane.getChildren().get(1).setOnMouseClicked(event -> unassignEmployee());
@@ -83,19 +89,31 @@ public class EmployeeTab {
 
         //Get the name field from the inputVBox.
         TextField nameTextField = (TextField) inputVBox.getChildren().get(1);
+        nameTextField.textProperty().addListener((observableValue, s, t1) -> {
+            if (t1.isBlank()) {
+                nameTextField.setStyle("-fx-border-color: #ff0000");
+            } else {
+                nameTextField.setStyle("");
+            }
+        });
 
         //Set the tooltip for the Add employee button.
-        ((Button) inputVBox.getChildren().get(2)).setTooltip(new Tooltip("Adds an employee to the system"));
+        Tooltip addEmployeeSystem = new Tooltip("Adds an employee to the system");
+        addEmployeeSystem.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        ((Button) inputVBox.getChildren().get(2)).setTooltip(addEmployeeSystem);
 
         //Makes the add employee actually add the employees to the project.
         inputVBox.getChildren().get(2).setOnMouseClicked(event -> addEmployee(nameTextField));
 
 
         //Sets the tool tips for these tabs.
-        ((TabPane) borderPane.getCenter()).getTabs().get(0)
-                .setTooltip(new Tooltip("Page with all employees assigned to the selected project"));
-        ((TabPane) borderPane.getCenter()).getTabs().get(1)
-                .setTooltip(new Tooltip("Page with all the available employees"));
+        Tooltip empPageAssToProject = new Tooltip("Page with all employees assigned to the selected project");
+        empPageAssToProject.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        ((TabPane) borderPane.getCenter()).getTabs().get(0).setTooltip(empPageAssToProject);
+
+        Tooltip availableEmp = new Tooltip("Page with all the available employees");
+        availableEmp.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        ((TabPane) borderPane.getCenter()).getTabs().get(1).setTooltip(availableEmp);
 
 
         //Set the selection mode to multiple.
