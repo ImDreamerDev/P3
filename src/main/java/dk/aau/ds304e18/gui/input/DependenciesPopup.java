@@ -47,8 +47,7 @@ class DependenciesPopup {
      * @param rootPane           The root pane of the GUI
      * @param listViewDependency The list view where the current dependencies are shown to the user.
      */
-    public DependenciesPopup(Parent rootPane, ListView<Task> listViewDependency) {
-
+    DependenciesPopup(Parent rootPane, ListView<Task> listViewDependency) {
         //Init fields
         this.rootPane = rootPane;
         this.listViewDependency = listViewDependency;

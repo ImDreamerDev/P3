@@ -415,7 +415,7 @@ public class DatabaseManager {
         }
     }
 
-    static List<Project> getPMProjects(ProjectManager projectManager) {
+    public static List<Project> getPMProjects(ProjectManager projectManager) {
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM projects WHERE id = ANY(?)");

@@ -41,7 +41,7 @@ public class EmployeeTab {
      *
      * @param rootPane The root pane of the GUI.
      */
-    public EmployeeTab(Parent rootPane) {
+    EmployeeTab(Parent rootPane) {
         //Get the borderpane where all of this is contained.
 
         borderPane = (BorderPane) rootPane.lookup("#employeesBorderpane");

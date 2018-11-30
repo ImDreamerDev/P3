@@ -135,7 +135,7 @@ public class JavaFXMain extends Application {
             //Remove the progress bar.
             ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().remove(bar);
             //Create a new set of tabs.
-            JavaFXMain.outputTab = new OutputTab(rootPane);
+            outputTab = new OutputTab(rootPane);
             inputTab = new InputTab(rootPane);
             projectTab = new ProjectTab(rootPane, LocalObjStorage.getProjectManagerList().get(0));
 

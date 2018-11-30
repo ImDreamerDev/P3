@@ -2,12 +2,10 @@ package dk.aau.ds304e18.gui.input;
 
 import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.database.DatabaseManager;
-import dk.aau.ds304e18.gui.output.OutputTab;
+import dk.aau.ds304e18.database.LocalObjStorage;
 import dk.aau.ds304e18.models.Employee;
-import dk.aau.ds304e18.models.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -22,7 +20,8 @@ import org.testfx.framework.junit5.ApplicationTest;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class EmployeeTabTest extends ApplicationTest {
     private Parent rootPane;
@@ -52,7 +51,7 @@ public class EmployeeTabTest extends ApplicationTest {
     }
 
     @Test
-    void employeeTabConstructorTest01(){
+    void employeeTabConstructorTest01() {
         EmployeeTab test = new EmployeeTab(rootPane);
 
         assertNotNull(test);
@@ -72,13 +71,16 @@ public class EmployeeTabTest extends ApplicationTest {
     @Test
     void addEmployeeTest01() {
         EmployeeTab test = new EmployeeTab(rootPane);
+        LocalObjStorage.getProjectList().addAll(DatabaseManager.getPMProjects(DatabaseManager.logIn("Project Manager111", "Password")));
+        JavaFXMain.selectedProjectId = 13075;
+        VBox inputVBox = (VBox) borderPane.getLeft();
+        TextField nameTextField = (TextField) inputVBox.getChildren().get(1);
+        nameTextField.setText("Tom");
+        try {
+            test.addEmployee(nameTextField);
+        } catch (NullPointerException ignored) {
+        }
 
-        JavaFXMain.selectedProjectId = 48;
-        JavaFXMain.outputTab = new OutputTab(rootPane);
-
-        test.addEmployee(new TextField("Test"));
-        test.drawEmployees();
-
-        assertEquals(projectEmployeeTableView.getItems(), new ArrayList<>());
+        assertEquals(projectEmployeeTableView.getItems().size(), 1);
     }
 }
