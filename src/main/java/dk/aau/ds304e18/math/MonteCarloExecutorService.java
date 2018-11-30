@@ -44,8 +44,7 @@ public class MonteCarloExecutorService {
      */
     public static void shutdownExecutor() {
         if (executor == null) return;
-
-        if (!executor.isTerminated()) executor.shutdown();
+        executor.shutdown();
     }
 
 
