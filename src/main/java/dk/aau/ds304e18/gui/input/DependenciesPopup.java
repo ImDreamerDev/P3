@@ -136,8 +136,7 @@ class DependenciesPopup {
     /**
      * Opens the dependencies popup
      */
-    public void openDependenciesPopup() {
-
+    void openDependenciesPopup() {
         dependencies.getSortOrder().add(dependencies.getColumns().get(0));
         rootPane.getChildrenUnmodifiable().get(3).setVisible(true);
         dependencies.getSelectionModel().clearSelection();
@@ -148,7 +147,7 @@ class DependenciesPopup {
     /**
      * Closes the dependencies popup
      */
-    private void closeDependenciesPopup() {
+    void closeDependenciesPopup() {
         rootPane.getChildrenUnmodifiable().get(3).setVisible(false);
     }
 
@@ -159,7 +158,7 @@ class DependenciesPopup {
      *
      * @param selectedItems The current selected items.
      */
-    private void removeDependency(List<Task> selectedItems) {
+    void removeDependency(List<Task> selectedItems) {
         ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
         for (Task task : selectedItems) {
             if (taskDependencies.contains(task)) {
@@ -176,7 +175,7 @@ class DependenciesPopup {
      *
      * @param tasks - The list of the tasks in the project.
      */
-    private void addDependency(List<Task> tasks) {
+    void addDependency(List<Task> tasks) {
         ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
         if (tasks == null || tasks.size() == 0)
             return;
@@ -190,7 +189,7 @@ class DependenciesPopup {
         ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
     }
 
-    public List<Task> getTaskDependencies() {
+    List<Task> getTaskDependencies() {
         return taskDependencies;
     }
 

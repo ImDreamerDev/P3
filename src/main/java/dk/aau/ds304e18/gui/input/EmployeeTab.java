@@ -32,14 +32,31 @@ public class EmployeeTab {
     private final TableView<Employee> freeEmployeeTableView;
 
     /**
+     * The border pane containing the employee tab.
+     */
+    private BorderPane borderPane;
+
+    /**
      * Create and sets up the Employee tab.
      *
      * @param rootPane The root pane of the GUI.
      */
     public EmployeeTab(Parent rootPane) {
         //Get the borderpane where all of this is contained.
-        BorderPane borderPane = (BorderPane) rootPane.lookup("#employeesBorderpane");
 
+        borderPane = (BorderPane) rootPane.lookup("#employeesBorderpane");
+        //Get the center tab pane, where the two tabs are.
+        TabPane tabPane = (TabPane) borderPane.getCenter();
+        //Get the project employee table view from the GUI.
+        projectEmployeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(0).getContent()).getChildren().get(0);
+
+        // Get the free employee table view from the GUI.
+        freeEmployeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(1).getContent()).getChildren().get(0);
+        setupEmployeeTab();
+    }
+
+
+    private void setupEmployeeTab() {
         //Get the buttons in the right side.
         VBox buttonPane = ((VBox) ((Pane) borderPane.getRight()).getChildren().get(0));
 
@@ -69,23 +86,20 @@ public class EmployeeTab {
         //Makes the add employee actually add the employees to the project.
         inputVBox.getChildren().get(2).setOnMouseClicked(event -> addEmployee(nameTextField));
 
-        //Get the center tab pane, where the two tabs are.
-        TabPane tabPane = (TabPane) borderPane.getCenter();
 
         //Sets the tool tips for these tabs.
         ((TabPane) borderPane.getCenter()).getTabs().get(0).setTooltip(new Tooltip("Page with all employees assigned to the selected project"));
         ((TabPane) borderPane.getCenter()).getTabs().get(1).setTooltip(new Tooltip("Page with all the available employees"));
 
-        //Get the project employee table view from the GUI.
-        projectEmployeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(0).getContent()).getChildren().get(0);
 
         //Set the selection mode to multiple.
         projectEmployeeTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         //Sets the columns of the project employee table view to the fields of the employee.
-        projectEmployeeTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
-        projectEmployeeTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
-        projectEmployeeTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("currentTask"));
+        setupEmployeeTableView(projectEmployeeTableView);
+
+        //Get the center tab pane, where the two tabs are.
+        TabPane tabPane = (TabPane) borderPane.getCenter();
 
         //When tabs are "tabbed" between, toggle the right buttons on the right side.
         tabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
@@ -98,17 +112,20 @@ public class EmployeeTab {
             }
         });
 
-        // Get the free employee table view from the GUI.
-        freeEmployeeTableView = (TableView<Employee>) ((AnchorPane) tabPane.getTabs().get(1).getContent()).getChildren().get(0);
 
         // Sets the columns of the free employee table view to the fields of the employee.
-        freeEmployeeTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
-        freeEmployeeTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
-        freeEmployeeTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("currentTask"));
+        setupEmployeeTableView(freeEmployeeTableView);
 
         //Sets the selection mode to multiple.
         freeEmployeeTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
+
+    private void setupEmployeeTableView(TableView<Employee> projectEmployeeTableView) {
+        projectEmployeeTableView.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
+        projectEmployeeTableView.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
+        projectEmployeeTableView.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("currentTask"));
+    }
+
 
     /**
      * Assigns the selected employee(s) to the current project.
@@ -130,7 +147,7 @@ public class EmployeeTab {
     /**
      * Removes the selected employee(s) from the current project.
      */
-    private void unassignEmployee() {
+    void unassignEmployee() {
         //If nothing is selected return.
         if (projectEmployeeTableView.getSelectionModel().getSelectedItems() == null
                 && projectEmployeeTableView.getSelectionModel().getSelectedItems().size() == 0) {
@@ -185,7 +202,7 @@ public class EmployeeTab {
      *
      * @param name The name of the employee.
      */
-    private void addEmployee(TextField name) {
+    void addEmployee(TextField name) {
         if (!name.getText().isBlank()) {
             new Employee(name.getText(), LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
             drawEmployees();
