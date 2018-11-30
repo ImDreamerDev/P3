@@ -343,8 +343,8 @@
                                             <BorderPane.margin>
                                                 <Insets top="24.0" />
                                             </BorderPane.margin>
-                                            <Button mnemonicParsing="false" text="Add employee(s)" />
-                                            <Button mnemonicParsing="false" text="Remove employee(s)" />
+                                            <Button mnemonicParsing="false" text="Assign employee(s)" />
+                                            <Button mnemonicParsing="false" text="Unassign employee(s)" />
                                         </VBox>
                                     </right>
                                     <left>
