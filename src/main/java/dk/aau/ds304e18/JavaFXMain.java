@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -37,6 +38,11 @@ public class JavaFXMain extends Application {
      * The login in screen background.
      */
     private Image image;
+
+    /**
+     * The duration it takes for a tooltip to show.
+     */
+    private static Duration tooltipShowDelay = Duration.ZERO;
 
     /**
      * The components of the GUI.
@@ -153,6 +159,13 @@ public class JavaFXMain extends Application {
         new Thread(voidTask).start();
     }
 
+    /**
+     * Getter for tooltipShowDelay
+     * @return The duration it takes for a tooltip to show
+     */
+    public static Duration getTooltipShowDelay() {
+        return tooltipShowDelay;
+    }
 
     public static void main(String[] args) {
         launch();
