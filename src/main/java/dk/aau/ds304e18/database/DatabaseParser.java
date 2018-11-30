@@ -47,11 +47,13 @@ class DatabaseParser {
 
                 if (rs.getArray("possiblecompletions") != null)
 
-                    possibleCompletions.addAll(Arrays.asList((Double[]) rs.getArray("possiblecompletions").getArray()));
+                    possibleCompletions
+                            .addAll(Arrays.asList((Double[]) rs.getArray("possiblecompletions").getArray()));
 
                 Project project = new Project(rs.getInt(1), rs.getString(2),
                         ProjectState.values()[rs.getInt(3)], rs.getString(4),
-                        rs.getDouble(5), rs.getString(6), rs.getDouble(7), possibleCompletions);
+                        rs.getDouble(5), rs.getString(6), rs.getDouble(7),
+                        possibleCompletions);
                 projects.add(project);
             }
         } catch (SQLException e) {
@@ -75,7 +77,8 @@ class DatabaseParser {
             if (rs == null) return null;
             while (rs.next()) {
                 List<Integer> currentProjects = new ArrayList<>();
-                if (rs.getArray(4) != null) currentProjects = Arrays.asList((Integer[]) rs.getArray(4).getArray());
+                if (rs.getArray(4) != null) currentProjects = Arrays
+                        .asList((Integer[]) rs.getArray(4).getArray());
                 ProjectManager projectManager;
                 if (rs.getArray(5) != null)
                     projectManager = new ProjectManager(rs.getInt(1), rs.getString(2),
