@@ -74,8 +74,17 @@ public class MonteCarlo {
 
         //Set the projects values to correct stuff
         project.setRecommendedPath(bestSequence);
+
+        //So we get a real result from the sequence
+        int secondMonte;
+        if(monteCarloRepeats <= 10000)
+            secondMonte = 100000;
+        else
+            secondMonte = monteCarloRepeats*10;
+
+        bestTime = estimateTime(project, secondMonte,false,0, true);
         project.setDuration(bestTime);
-        project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(time.indexOf(bestTime)));
+        project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(0));
         setStartTimesOfTasks(project, numOfWorkGroups);
         project.setRecommendedEmployees(optimizeWorkGroups(project, numOfWorkGroups));
 
