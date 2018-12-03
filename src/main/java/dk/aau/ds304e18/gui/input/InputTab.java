@@ -124,8 +124,10 @@ public class InputTab {
     private void setupDependencies() {
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         HBox buttonsForDependencies = (HBox) inputVBox.getChildren().get(12);
-        ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(
-                new Tooltip("Opens a list of tasks in the project to add as dependencies"));
+
+        Tooltip dependencyTooltip = new Tooltip("Opens a list of tasks in the project to add as dependencies");
+        dependencyTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        ((Button) buttonsForDependencies.getChildren().get(0)).setTooltip(dependencyTooltip);
 
         buttonsForDependencies.getChildren().get(0).setOnMouseClicked
                 (event -> dependenciesPopup.openDependenciesPopup());
@@ -153,8 +155,10 @@ public class InputTab {
         //Input view
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
         TextField nameTextField = ((TextField) inputVBox.getChildren().get(1));
-        nameTextField.setTooltip(new Tooltip("The name of the Task" +
-                System.lineSeparator() + "Can be both letters and numbers"));
+        Tooltip taskNameTooltip = new Tooltip("The name of the Task" +
+                System.lineSeparator() + "Can be both letters and numbers");
+        taskNameTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        nameTextField.setTooltip(taskNameTooltip);
 
 /*
         nameTextField.textProperty().addListener((observableValue, s, t1) -> {
@@ -203,14 +207,19 @@ public class InputTab {
             }
         });
         TextField priority = ((TextField) inputVBox.getChildren().get(3));
-        priority.setTooltip(new Tooltip("The priority of the task, the bigger the more important" +
-                System.lineSeparator() + "This value is measured in integers"));
+        Tooltip priorityTooltip = new Tooltip("The priority of the task, the bigger the more important" +
+                System.lineSeparator() + "This value is measured in integers");
+        priorityTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        priority.setTooltip(priorityTooltip);
+
         priority.textProperty().addListener((observable, oldValue, newValue) ->
                 validateNumericInput(priority, newValue, true));
 
         TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(5));
-        estimatedTimeTextField.setTooltip(new Tooltip("The average time of the task" +
-                System.lineSeparator() + "Can be a decimal number separated by point"));
+        Tooltip avgTimeTooltip = new Tooltip("The average time of the task" +
+                System.lineSeparator() + "Can be a decimal number separated by point");
+        avgTimeTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        estimatedTimeTextField.setTooltip(avgTimeTooltip);
 
         estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) ->
                 validateNumericInput(estimatedTimeTextField, newValue, false));
@@ -219,7 +228,9 @@ public class InputTab {
         setupDependencies();
 
         Button clearInputButton = ((Button) inputVBox.getChildren().get(13));
-        clearInputButton.setTooltip(new Tooltip("Clears all the input fields"));
+        Tooltip clearTooltip = new Tooltip("Clears all the input fields");
+        clearTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        clearInputButton.setTooltip(clearTooltip);
         clearInputButton.setOnMouseClicked(event -> clearInputFields(duration1,
                 probability1, duration2, probability2, duration3, probability3,
                 nameTextField, estimatedTimeTextField, priority));
@@ -230,8 +241,11 @@ public class InputTab {
         Pane paneSplitter = ((Pane) flowPane.getChildren().get(2));
         VBox vBoxWhereCalculateButtonIs = (VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1);
         VBox vBoxSplitter = vBoxWhereCalculateButtonIs;
+
         TextField numOfMonte = ((TextField) vBoxSplitter.getChildren().get(1));
-        numOfMonte.setTooltip(new Tooltip("The amount of times the project will be simulated"));
+        Tooltip monteTooltip = new Tooltip("The amount of times the project will be simulated");
+        monteTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        numOfMonte.setTooltip(monteTooltip);
         numOfMonte.textProperty().addListener((observable, oldValue, newValue) ->
                 validateNumericInput(numOfMonte, newValue, true));
         TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(3));
@@ -247,7 +261,9 @@ public class InputTab {
 
         Node addTaskButton = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0))
                 .getChildren().get(0);
-        ((Button) addTaskButton).setTooltip(new Tooltip("Adds the task to the project"));
+        Tooltip addTaskTooltip = new Tooltip("Adds the task to the project");
+        addTaskTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        ((Button) addTaskButton).setTooltip(addTaskTooltip);
         //Add task
         addTaskButton.setOnMouseClicked(event -> {
             List<Probabilities> probabilities = convertToProbabilities();
@@ -269,15 +285,21 @@ public class InputTab {
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) ->
                 validateNumericInput(numOfEmployees, newValue, true));
 
-        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" +
-                System.lineSeparator() + "Input must be an integer"));
+        Tooltip workGroupsTooltip = new Tooltip("The amount of tasks which can be worked on in parallel" +
+                System.lineSeparator() + "Input must be an integer");
+        workGroupsTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        numOfEmployees.setTooltip(workGroupsTooltip);
 
         Button CalculateButton = (Button) vBoxSplitter.getChildren().get(5);
-        CalculateButton.setTooltip(new Tooltip("Calculates the probability for the length of the project"));
+        Tooltip calculateTooltip = new Tooltip("Calculates the probability for the length of the project");
+        calculateTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        CalculateButton.setTooltip(calculateTooltip);
 
         CheckBox useFastCheckbox = (CheckBox) vBoxSplitter.getChildren().get(4);
+        Tooltip useFastTooltip = new Tooltip("If checked the program will try to give the most optimal path for tasks");
+        useFastTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
         Tooltip.install(useFastCheckbox,
-                new Tooltip("If checked the program will try to give the most optimal path for tasks"));
+                useFastTooltip);
 
         CalculateButton.setOnMouseClicked(event -> {
             disableInput();
@@ -304,7 +326,9 @@ public class InputTab {
 
 
             vBoxWhereCalculateButtonIs.getChildren().add(bar);
-            bar.setTooltip(new Tooltip("Current progress."));
+            Tooltip barTooltip = new Tooltip("Current progress.");
+            barTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+            bar.setTooltip(barTooltip);
             calcTask.progressProperty().addListener((observable, oldValue, newValue) ->
                     bar.getTooltip().setText("Progress: " + Math.round(calcTask.getWorkDone() * 100) + "%"));
 
@@ -328,13 +352,17 @@ public class InputTab {
 
         Button editTaskButton = (Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren()
                 .get(0)).getChildren().get(1);
-        editTaskButton.setTooltip(new Tooltip("Edits the selected task from the project"));
+        Tooltip editTooltip = new Tooltip("Edits the selected task from the project");
+        editTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        editTaskButton.setTooltip(editTooltip);
         editTaskButton.setOnMouseClicked(event -> editTask(duration1, probability1, duration2, probability2, duration3,
                 probability3, nameTextField, estimatedTimeTextField, priority));
 
         Button removeTaskButton = (Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren()
                 .get(0)).getChildren().get(2);
-        removeTaskButton.setTooltip(new Tooltip("Removes the selected task from the project"));
+        Tooltip removeTaskTooltip = new Tooltip("Removes the selected task from the project");
+        removeTaskTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        removeTaskButton.setTooltip(removeTaskTooltip);
         removeTaskButton.setOnMouseClicked(event -> removeTask());
         //End right side input
 
@@ -389,12 +417,18 @@ public class InputTab {
         probabilities.add(probability2);
         probabilities.add(probability3);
 
+        Tooltip taskDurationTooltip = new Tooltip("Estimated duration of the task" +
+                System.lineSeparator() + "Can be a decimal number separated by point");
+        taskDurationTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+
+        Tooltip taskChanceTooltip = new Tooltip("The chance of the task being finished at the given time" +
+                System.lineSeparator()
+                + "Input is given in percentage and can be a decimal number separated by point");
+        taskChanceTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+
         for (int i = 0; i < 3; i++) {
-            durations.get(i).setTooltip(new Tooltip("Estimated duration of the task" +
-                    System.lineSeparator() + "Can be a decimal number separated by point"));
-            probabilities.get(i).setTooltip(new Tooltip("The chance of the task being finished at the given time" +
-                    System.lineSeparator()
-                    + "Input is given in percentage and can be a decimal number separated by point"));
+            durations.get(i).setTooltip(taskDurationTooltip);
+            probabilities.get(i).setTooltip(taskChanceTooltip);
             int finalI = i;
             durations.get(i).textProperty().addListener((observable, oldValue, newValue) ->
                     validateNumericInput(durations.get(finalI), newValue, false));
