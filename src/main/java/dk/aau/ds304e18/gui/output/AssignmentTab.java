@@ -68,7 +68,9 @@ class AssignmentTab {
         VBox buttons = ((VBox) borderPane.getRight());
 
         //The tool tip of the assign employee button.
-        ((Button) buttons.getChildren().get(0)).setTooltip(new Tooltip("Assigns an selected employee to the selected task"));
+        Tooltip assignEmpToTaskTooltip = new Tooltip("Assigns an selected employee to the project");
+        assignEmpToTaskTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        ((Button) buttons.getChildren().get(0)).setTooltip(assignEmpToTaskTooltip);
         //When the assign button is click assign the selected employee.
         buttons.getChildren().get(0).setOnMouseClicked(event -> assignEmployee());
 
