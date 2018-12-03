@@ -96,8 +96,10 @@ class DependenciesPopup {
         // Make the add button on click add the selected task to the dependencies.
         ((HBox) bar.getItems().get(0)).getChildren().get(0).setOnMouseClicked(event ->
                 addDependency(dependencies.getSelectionModel().getSelectedItems()));
-        ((Button) ((HBox) bar.getItems().get(0)).getChildren().get(0))
-                .setTooltip(new Tooltip("Adds the selected task(s) to dependencies"));
+
+        Tooltip addDependencyTooltip = new Tooltip("Adds the selected task(s) to dependencies");
+        addDependencyTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        ((Button) ((HBox) bar.getItems().get(0)).getChildren().get(0)).setTooltip(addDependencyTooltip);
 
         //Get the remove button from the toolbar.
         Button removeDep = (Button) ((HBox) bar.getItems().get(0)).getChildren().get(1);
@@ -105,7 +107,9 @@ class DependenciesPopup {
         //Make the remove button remove the selected task from the dependencies.
         removeDep.setOnMouseClicked(event -> removeDependency(dependencies.getSelectionModel().getSelectedItems()));
         //Set the tool tip of the remove button.
-        removeDep.setTooltip(new Tooltip("Removes the selected task from dependencies"));
+        Tooltip removeDependencyTooltip = new Tooltip("Removes the selected task from dependencies");
+        removeDependencyTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        removeDep.setTooltip(removeDependencyTooltip);
 
         //Make the close button close the popup.
         ((HBox) bar.getItems().get(1)).getChildren().get(0).setOnMouseClicked(event -> {
