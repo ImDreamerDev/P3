@@ -184,9 +184,11 @@ public class InputTab {
             if (nameTextField.getText().isBlank()) {
                 nameTextField.setStyle("");
                 validates.put(nameTextField, false);
-            } else {
+            } else if (task != null) {
                 nameTextField.setStyle("-fx-border-color: #ff9c00");
                 validates.put(nameTextField, true);
+            } else {
+                nameTextField.setStyle("");
                 validates.put(nameTextField, true);
             }
 
@@ -527,16 +529,17 @@ public class InputTab {
      * @param newValue  - the contents of the text box
      */
     private boolean validateNumericInput(TextField textField, String newValue, boolean intField) {
-        //If it's a int field. Only allow numeric values.
+        //If it's a int field. Only allow integers values.
         if (intField) {
             if (!newValue.matches("\\d*")) {
                 textField.setText(newValue.replaceAll("[[\\D]]", ""));
+                return textField.getText().matches("\\d*") && !textField.getText().isBlank();
             }
         } else if (!newValue.matches("\\d*\\.")) {
             //Otherwise allow the dot(.) separator.
             textField.setText(newValue.replaceAll("[[^\\d^\\.]]", ""));
+            return textField.getText().matches("\\d*") && !textField.getText().isBlank();
         }
-
         return !newValue.isBlank();
     }
 
