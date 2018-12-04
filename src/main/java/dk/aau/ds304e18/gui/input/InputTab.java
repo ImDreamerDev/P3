@@ -33,6 +33,7 @@ public class InputTab {
     private ListView<Task> listViewDependency;
     private DependenciesPopup dependenciesPopup;
     public EmployeeTab employeeTab;
+    public AssignmentTab assignmentTab;
 
     private TextField duration1;
     private TextField probability1;
@@ -91,8 +92,10 @@ public class InputTab {
                     (JavaFXMain.selectedProjectId).getNumberOfEmployees() + "");
 
         employeeTab.drawEmployees();
-        if (JavaFXMain.selectedProjectId != 0)
+        assignmentTab.drawEmployees();
+        if (JavaFXMain.selectedProjectId != 0) {
             JavaFXMain.outputTab.drawOutputTab(true);
+        }
 
         tableView.getSortOrder().add(tableView.getColumns().get(0));
     }
@@ -158,16 +161,11 @@ public class InputTab {
                 System.lineSeparator() + "Can be both letters and numbers");
         taskNameTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
         nameTextField.setTooltip(taskNameTooltip);
+        //Get the employee border pane.
+        BorderPane borderPane = (BorderPane) rootPane.lookup("#employeesBorderPane");
 
-/*
-        nameTextField.textProperty().addListener((observableValue, s, t1) -> {
-            if (t1.isBlank()) {
-                nameTextField.setStyle("-fx-border-color: #ff0000");
-            } else {
-                nameTextField.setStyle("");
-            }
-        });
-*/
+        //Create a new assignment tab.
+        assignmentTab = new AssignmentTab(borderPane);
 
 
         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {

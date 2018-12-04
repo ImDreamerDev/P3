@@ -9,9 +9,10 @@ import javafx.collections.FXCollections;
 import javafx.scene.Parent;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.*;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -23,7 +24,7 @@ import java.util.List;
 public class OutputTab {
     private final Parent rootPane;
     private final BarChart<String, Number> barChart;
-    private final AssignmentTab assignmentTab;
+
 
     /**
      * Create and sets up a output tab.
@@ -42,13 +43,11 @@ public class OutputTab {
         ((ListView<Task>) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1)).getItems().clear();
         //Set the tab name.
         ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setText("Output");
-        //Get the employee border pane.
-        BorderPane borderPane = (BorderPane) rootPane.lookup("#employeesBorderPane");
+
 
         //Clear the chart.
         barChart.getData().clear();
-        //Create a new assignment tab.
-        assignmentTab = new AssignmentTab(borderPane);
+
 
     }
 
@@ -83,7 +82,6 @@ public class OutputTab {
                 ((ListView) ((VBox) rootPane.lookup("#outputPane")).getChildren().get(1))
                         .getItems().clear();
 
-            assignmentTab.drawEmployees();
         }
 
         if (pro.getPossibleCompletions() != null) populateChart();

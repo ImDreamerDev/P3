@@ -138,6 +138,8 @@ public class EmployeeTab {
 
         //Sets the selection mode to multiple.
         freeEmployeeTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        if (JavaFXMain.inputTab != null)
+            JavaFXMain.inputTab.assignmentTab.drawEmployees();
     }
 
     private void setupEmployeeTableView(TableView<Employee> projectEmployeeTableView) {
@@ -159,10 +161,10 @@ public class EmployeeTab {
         //Add the employee(s) to the project.
         LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId)
                 .addNewEmployee(freeEmployeeTableView.getSelectionModel().getSelectedItems());
-
         //Update the GUI to reflect the changes.
         drawEmployees();
-        JavaFXMain.outputTab.drawOutputTab(false);
+        if (JavaFXMain.inputTab != null)
+            JavaFXMain.inputTab.assignmentTab.drawEmployees();
     }
 
     /**
@@ -188,8 +190,8 @@ public class EmployeeTab {
         }
         //Draw the new result.
         drawEmployees();
-        //Update the output tab to also update the assignment tabs.
-        JavaFXMain.outputTab.drawOutputTab(false);
+        if (JavaFXMain.inputTab != null)
+            JavaFXMain.inputTab.assignmentTab.drawEmployees();
     }
 
     /**
@@ -216,6 +218,7 @@ public class EmployeeTab {
         //Set them to sort after id, because id is at the 0'th column.
         freeEmployeeTableView.getSortOrder().add(freeEmployeeTableView.getColumns().get(0));
         projectEmployeeTableView.getSortOrder().add(projectEmployeeTableView.getColumns().get(0));
+
     }
 
     /**
@@ -228,7 +231,8 @@ public class EmployeeTab {
             new Employee(name.getText(), LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
             drawEmployees();
             name.clear();
-            JavaFXMain.outputTab.drawOutputTab(false);
+            if (JavaFXMain.inputTab != null)
+                JavaFXMain.inputTab.assignmentTab.drawEmployees();
         }
     }
 }

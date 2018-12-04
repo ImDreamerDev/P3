@@ -268,6 +268,51 @@
                             </BorderPane>
                         </AnchorPane>
                     </Tab>
+                     <Tab text="Assignments">
+                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                             <BorderPane id="employeesBorderPane" prefHeight="638.0" prefWidth="1077.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <right>
+                                     <VBox alignment="TOP_CENTER" prefHeight="638.0" prefWidth="145.0" spacing="20.0" BorderPane.alignment="CENTER">
+                                         <BorderPane.margin>
+                                             <Insets top="24.0" />
+                                         </BorderPane.margin>
+                                         <Button mnemonicParsing="false" text="Assign employee(s)" />
+                                         <Button mnemonicParsing="false" text="Unassign employee(s)" />
+                                     </VBox>
+                                 </right>
+                                 <left>
+                                     <VBox BorderPane.alignment="CENTER">
+                                         <Label alignment="TOP_CENTER" prefHeight="17.0" prefWidth="384.0" text="Tasks">
+                                             <font>
+                                                 <Font name="System Bold" size="17.0" />
+                                             </font>
+                                         </Label>
+                                         <TableView prefHeight="9000.0" prefWidth="450.0">
+                                             <columns>
+                                                 <TableColumn prefWidth="234.0" text="Name" />
+                                                 <TableColumn prefWidth="226.0" text="Employees" />
+                                             </columns>
+                                         </TableView>
+                                     </VBox>
+                                 </left>
+                                 <center>
+                                     <VBox prefHeight="638.0" prefWidth="472.0" BorderPane.alignment="CENTER">
+                                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="552.0" text="Employees">
+                                             <font>
+                                                 <Font name="System Bold" size="17.0" />
+                                             </font>
+                                         </Label>
+                                         <TableView prefHeight="9000.0" prefWidth="550.0">
+                                             <columns>
+                                                 <TableColumn prefWidth="236.0" text="Name" />
+                                                 <TableColumn minWidth="0.0" prefWidth="234.0" text="Assigned" />
+                                             </columns>
+                                         </TableView>
+                                     </VBox>
+                                 </center>
+                             </BorderPane>
+                         </AnchorPane>
+                     </Tab>
                 </TabPane>
             </AnchorPane>
         </Tab>
@@ -336,51 +381,6 @@
                                 <ScrollPane layoutY="39.0" prefHeight="599.0" prefWidth="1077.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.0">
                                     <AnchorPane id="outputScrollView" />
                                 </ScrollPane>
-                            </AnchorPane>
-                        </Tab>
-                        <Tab text="Assignments">
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                <BorderPane id="employeesBorderPane" prefHeight="638.0" prefWidth="1077.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <right>
-                                        <VBox alignment="TOP_CENTER" prefHeight="638.0" prefWidth="145.0" spacing="20.0" BorderPane.alignment="CENTER">
-                                            <BorderPane.margin>
-                                                <Insets top="24.0" />
-                                            </BorderPane.margin>
-                                            <Button mnemonicParsing="false" text="Assign employee(s)" />
-                                            <Button mnemonicParsing="false" text="Unassign employee(s)" />
-                                        </VBox>
-                                    </right>
-                                    <left>
-                                        <VBox BorderPane.alignment="CENTER">
-                                            <Label alignment="TOP_CENTER" prefHeight="17.0" prefWidth="384.0" text="Tasks">
-                                                <font>
-                                                    <Font name="System Bold" size="17.0" />
-                                                </font>
-                                            </Label>
-                                            <TableView prefHeight="9000.0" prefWidth="450.0">
-                                                <columns>
-                                                    <TableColumn prefWidth="234.0" text="Name" />
-                                                    <TableColumn prefWidth="226.0" text="Employees" />
-                                                </columns>
-                                            </TableView>
-                                        </VBox>
-                                    </left>
-                                    <center>
-                                        <VBox prefHeight="638.0" prefWidth="472.0" BorderPane.alignment="CENTER">
-                                            <Label alignment="CENTER" prefHeight="17.0" prefWidth="552.0" text="Employees">
-                                                <font>
-                                                    <Font name="System Bold" size="17.0" />
-                                                </font>
-                                            </Label>
-                                            <TableView prefHeight="9000.0" prefWidth="550.0">
-                                                <columns>
-                                                    <TableColumn prefWidth="236.0" text="Name" />
-                                                    <TableColumn minWidth="0.0" prefWidth="234.0" text="Assigned" />
-                                                </columns>
-                                            </TableView>
-                                        </VBox>
-                                    </center>
-                                </BorderPane>
                             </AnchorPane>
                         </Tab>
                     </TabPane>
