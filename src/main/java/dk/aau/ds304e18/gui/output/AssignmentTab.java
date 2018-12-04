@@ -74,8 +74,10 @@ class AssignmentTab {
         //When the assign button is click assign the selected employee.
         buttons.getChildren().get(0).setOnMouseClicked(event -> assignEmployee());
 
-        //Sets the tool tip of the unassign employee button. 
-        ((Button) buttons.getChildren().get(1)).setTooltip(new Tooltip("Removes an selected employee for their task"));
+        //Sets the tool tip of the unassign employee button.
+        Tooltip removeEmpToTask = new Tooltip("Removes an selected employee for their task");
+        removeEmpToTask.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        ((Button) buttons.getChildren().get(1)).setTooltip(removeEmpToTask);
         //When the unassign button is click unassign the selected employee.
         buttons.getChildren().get(1).setOnMouseClicked(event -> unassignEmployee());
     }
