@@ -260,6 +260,7 @@ public class InputTab {
         });
 
         Node addTaskButton = rootPane.lookup("#addTaskButton");
+        addTaskButton.setDisable(true);
         Tooltip addTaskTooltip = new Tooltip("Adds the task to the project");
         addTaskTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
         ((Button) addTaskButton).setTooltip(addTaskTooltip);
