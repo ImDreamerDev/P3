@@ -6,6 +6,7 @@ import dk.aau.ds304e18.database.DatabaseManager;
 import dk.aau.ds304e18.models.Employee;
 import dk.aau.ds304e18.models.Task;
 import javafx.collections.FXCollections;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,6 +15,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -124,12 +128,17 @@ public class EmployeeTab {
         //When tabs are "tabbed" between, toggle the right buttons on the right side.
         tabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.intValue() == 0) {
-                buttonPane.getChildren().get(0).setVisible(false);
-                buttonPane.getChildren().get(1).setVisible(true);
+                inputVBox.setVisible(true);
             } else if (newValue.intValue() == 1) {
-                buttonPane.getChildren().get(0).setVisible(true);
-                buttonPane.getChildren().get(1).setVisible(false);
+                inputVBox.setVisible(false);
             }
+
+            buttonPane.getChildren().get(0).setVisible(true);
+            buttonPane.getChildren().get(1).setVisible(false);
+            List<Node> nodes = new ArrayList<>(buttonPane.getChildren());
+            Collections.swap(nodes, 0, 1);
+            buttonPane.getChildren().clear();
+            buttonPane.getChildren().addAll(nodes);
         });
 
 
@@ -138,6 +147,8 @@ public class EmployeeTab {
 
         //Sets the selection mode to multiple.
         freeEmployeeTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        if (JavaFXMain.inputTab != null)
+            JavaFXMain.inputTab.assignmentTab.drawEmployees();
     }
 
     private void setupEmployeeTableView(TableView<Employee> projectEmployeeTableView) {
@@ -159,10 +170,10 @@ public class EmployeeTab {
         //Add the employee(s) to the project.
         LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId)
                 .addNewEmployee(freeEmployeeTableView.getSelectionModel().getSelectedItems());
-
         //Update the GUI to reflect the changes.
         drawEmployees();
-        JavaFXMain.outputTab.drawOutputTab(false);
+        if (JavaFXMain.inputTab != null)
+            JavaFXMain.inputTab.assignmentTab.drawEmployees();
     }
 
     /**
@@ -188,8 +199,8 @@ public class EmployeeTab {
         }
         //Draw the new result.
         drawEmployees();
-        //Update the output tab to also update the assignment tabs.
-        JavaFXMain.outputTab.drawOutputTab(false);
+        if (JavaFXMain.inputTab != null)
+            JavaFXMain.inputTab.assignmentTab.drawEmployees();
     }
 
     /**
@@ -216,6 +227,7 @@ public class EmployeeTab {
         //Set them to sort after id, because id is at the 0'th column.
         freeEmployeeTableView.getSortOrder().add(freeEmployeeTableView.getColumns().get(0));
         projectEmployeeTableView.getSortOrder().add(projectEmployeeTableView.getColumns().get(0));
+
     }
 
     /**
@@ -228,7 +240,8 @@ public class EmployeeTab {
             new Employee(name.getText(), LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId));
             drawEmployees();
             name.clear();
-            JavaFXMain.outputTab.drawOutputTab(false);
+            if (JavaFXMain.inputTab != null)
+                JavaFXMain.inputTab.assignmentTab.drawEmployees();
         }
     }
 }

@@ -102,6 +102,10 @@ public class JavaFXMain extends Application {
         employeeTabTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
         inputTabPane.getTabs().get(1).setTooltip(employeeTabTooltip);
 
+        Tooltip assignEmpToProjectTabTooltip = new Tooltip("The page to assign employees to the task on the selected project");
+        assignEmpToProjectTabTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        inputTabPane.getTabs().get(2).setTooltip(assignEmpToProjectTabTooltip);
+
         //Get the outer output tab from the root pane.
         Tab outputTab = ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2);
         //Get the inner output tab pane from the outer output tab pane.
@@ -115,9 +119,6 @@ public class JavaFXMain extends Application {
         ganttTabTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
         outputTabPane.getTabs().get(1).setTooltip(ganttTabTooltip);
 
-        Tooltip assignEmpToProjectTabTooltip = new Tooltip("The page to assign employees to the task on the selected project");
-        assignEmpToProjectTabTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
-        outputTabPane.getTabs().get(2).setTooltip(assignEmpToProjectTabTooltip);
 
         //Get the update button from the GUI.
         Button updateButton = (Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(0);
@@ -188,6 +189,7 @@ public class JavaFXMain extends Application {
 
     /**
      * Getter for tooltipShowDelay
+     *
      * @return The duration it takes for a tooltip to show
      */
     public static Duration getTooltipShowDelay() {

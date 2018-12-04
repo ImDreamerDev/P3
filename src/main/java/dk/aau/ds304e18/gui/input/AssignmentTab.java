@@ -1,4 +1,4 @@
-package dk.aau.ds304e18.gui.output;
+package dk.aau.ds304e18.gui.input;
 
 import dk.aau.ds304e18.JavaFXMain;
 import dk.aau.ds304e18.database.LocalObjStorage;
@@ -80,8 +80,13 @@ class AssignmentTab {
         ((Button) buttons.getChildren().get(1)).setTooltip(removeEmpToTask);
         //When the unassign button is click unassign the selected employee.
         buttons.getChildren().get(1).setOnMouseClicked(event -> unassignEmployee());
+        //Updates the input up to reflect the changes.
+        if (JavaFXMain.inputTab != null)
+            JavaFXMain.inputTab.employeeTab.drawEmployees();
     }
 
+    
+    
     /**
      * Updates/draws the employees in the assignment tab.
      */
@@ -102,8 +107,7 @@ class AssignmentTab {
                             == JavaFXMain.selectedProjectId;
                 }).collect(Collectors.toList())));
 
-        //Updates the input up to reflect the changes.
-        JavaFXMain.inputTab.employeeTab.drawEmployees();
+
     }
 
     /**
@@ -120,6 +124,9 @@ class AssignmentTab {
 
         //Update the GUI to reflect this change.
         drawEmployees();
+        //Updates the input up to reflect the changes.
+        if (JavaFXMain.inputTab != null)
+            JavaFXMain.inputTab.employeeTab.drawEmployees();
     }
 
     /**
@@ -143,5 +150,8 @@ class AssignmentTab {
 
         //Update the GUI to reflect this change.
         drawEmployees();
+        //Updates the input up to reflect the changes.
+        if (JavaFXMain.inputTab != null)
+            JavaFXMain.inputTab.employeeTab.drawEmployees();
     }
 }
