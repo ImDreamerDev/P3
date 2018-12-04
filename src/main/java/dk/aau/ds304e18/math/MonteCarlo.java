@@ -373,9 +373,8 @@ public class MonteCarlo {
             }
 
             //If no task changed during the look-through of tasks
+            //Increase the lowest amounts of startTimes to the second lowest value in the list
             if (!anyTaskChanged) {
-
-                //Increase the lowest amounts of startTimes to the second lowest value in the list
                 allLowestToSecondLowest(startTimes);
 
             }
