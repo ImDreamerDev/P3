@@ -125,6 +125,7 @@ public class EmployeeTab {
         //Get the center tab pane, where the two tabs are.
         TabPane tabPane = (TabPane) borderPane.getCenter();
 
+        swapButtons(buttonPane);
         //When tabs are "tabbed" between, toggle the right buttons on the right side.
         tabPane.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.intValue() == 0) {
@@ -133,12 +134,8 @@ public class EmployeeTab {
                 inputVBox.setVisible(false);
             }
 
-            buttonPane.getChildren().get(0).setVisible(true);
-            buttonPane.getChildren().get(1).setVisible(false);
-            List<Node> nodes = new ArrayList<>(buttonPane.getChildren());
-            Collections.swap(nodes, 0, 1);
-            buttonPane.getChildren().clear();
-            buttonPane.getChildren().addAll(nodes);
+
+            swapButtons(buttonPane);
         });
 
 
@@ -149,6 +146,16 @@ public class EmployeeTab {
         freeEmployeeTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         if (JavaFXMain.inputTab != null)
             JavaFXMain.inputTab.assignmentTab.drawEmployees();
+    }
+
+    private void swapButtons(VBox buttonPane) {
+        List<Node> nodes = new ArrayList<>(buttonPane.getChildren());
+        Collections.swap(nodes, 0, 1);
+        buttonPane.getChildren().clear();
+        buttonPane.getChildren().addAll(nodes);
+
+        buttonPane.getChildren().get(0).setVisible(true);
+        buttonPane.getChildren().get(1).setVisible(false);
     }
 
     private void setupEmployeeTableView(TableView<Employee> projectEmployeeTableView) {
