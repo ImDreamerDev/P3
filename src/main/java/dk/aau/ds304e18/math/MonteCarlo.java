@@ -351,12 +351,6 @@ public class MonteCarlo {
                     if (temp == -1)
                         continue;
 
-                    //What the . was the purpose of this? I set the start time of a task to something
-                    //And then immediately after changed it? Hopefully this doesn't break anything
-                    //Commented out to check
-                    //if (task.getStartTime() == -1)
-                    //task.setStartTime(0d);
-
                     //Sets the start time of the task to the legal time
                     task.setStartTime(startTimes.get(temp));
 
