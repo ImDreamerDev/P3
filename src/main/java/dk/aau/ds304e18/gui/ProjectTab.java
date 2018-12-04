@@ -105,7 +105,9 @@ public class ProjectTab {
         //Get the New project button from the GUI.
         Button createButton = ((Button) projectToolBar.getChildren().get(2));
         //Set the tool tip of the new project button.
-        createButton.setTooltip(new Tooltip("Creates a new project with the selected name"));
+        Tooltip createProjectTooltip = new Tooltip("Creates a new project with the selected name");
+        createProjectTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        createButton.setTooltip(createProjectTooltip);
 
         //Create a new project when the button is clicked.
         createButton.setOnMouseClicked(event ->
@@ -117,7 +119,9 @@ public class ProjectTab {
         //Gets the archived button from the GUI.
         Button archiveButton = ((Button) projectToolBarRight.getChildren().get(0));
         //Sets the tool tip for the archive button.
-        archiveButton.setTooltip(new Tooltip("Archives the selected project"));
+        Tooltip archiveProjectTooltip = new Tooltip("Archives the selected project");
+        archiveProjectTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        archiveButton.setTooltip(archiveProjectTooltip);
         //Sets the archive button to call the archive project method when pressed.
         archiveButton.setOnMouseClicked(event -> archiveProject());
 
