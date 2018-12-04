@@ -156,7 +156,7 @@
                                         </HBox>
                               <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                  <children>
-                                                <Button id="addTaskButton" mnemonicParsing="false" text="Add task" />
+                                                <Button id="addTaskButton" disable="true" mnemonicParsing="false" text="Add task" />
                                               <Button alignment="TOP_LEFT" mnemonicParsing="false" text="Clear Text Fields" />
                                  </children>
                                  <VBox.margin>

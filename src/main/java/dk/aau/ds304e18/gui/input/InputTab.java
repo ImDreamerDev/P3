@@ -116,8 +116,8 @@ public class InputTab {
      */
     private void enableInput() {
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
-        Node addEditDeleteTaskButtons = rootPane.lookup("#addTaskButton");
-        addEditDeleteTaskButtons.setDisable(false);
+        //Node addEditDeleteTaskButtons = rootPane.lookup("#addTaskButton");
+        //addEditDeleteTaskButtons.setDisable(false);
         inputVBox.setDisable(false);
         Tab employeeTab = ((TabPane) flowPane.getParent().getParent().getParent()).getTabs().get(1);
         employeeTab.setDisable(false);
@@ -195,7 +195,7 @@ public class InputTab {
 
             if (task != null) {
                 addOrEditTaskButton
-                        .setText("Update Task");
+                        .setText("Update");
                 List<Task> tasks = LocalObjStorage.getTaskList()
                         .stream().filter(task2 -> task2.getProject()
                                 .getId() == JavaFXMain.selectedProjectId && task2.getId() != task.getId())
@@ -260,7 +260,6 @@ public class InputTab {
         });
 
         Node addTaskButton = rootPane.lookup("#addTaskButton");
-        addTaskButton.setDisable(true);
         Tooltip addTaskTooltip = new Tooltip("Adds the task to the project");
         addTaskTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
         ((Button) addTaskButton).setTooltip(addTaskTooltip);
@@ -620,7 +619,7 @@ public class InputTab {
     private void editTask(TextField... textFields) {
 
         Button addTaskButton = (Button) rootPane.lookup("#addTaskButton");
-        addTaskButton.setText("Update Task");
+        addTaskButton.setText("Update");
         //If no task is selected just return.
         if (tableView.getSelectionModel().getSelectedIndex() == -1)
             return;
