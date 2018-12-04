@@ -185,8 +185,7 @@ public class InputTab {
                 nameTextField.setStyle("-fx-border-color: #ff0000");
             }
 
-            Button addOrEditTaskButton = (Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2))
-                    .getChildren().get(0)).getChildren().get(0)).getChildren().get(0);
+            Button addOrEditTaskButton = ((Button) rootPane.lookup("#addTaskButton"));
 
             if (task != null) {
                 addOrEditTaskButton
