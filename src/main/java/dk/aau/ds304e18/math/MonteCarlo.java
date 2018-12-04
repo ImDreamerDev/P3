@@ -72,7 +72,7 @@ public class MonteCarlo {
         worstTime = Collections.max(time);
         worstSequence = randomSequences[time.indexOf(worstTime)];
 
-        //Set the projects values to correct stuff
+        //Set the projects recommended path to the best path
         project.setRecommendedPath(bestSequence);
 
         //So we get a real result from the sequence
@@ -84,7 +84,8 @@ public class MonteCarlo {
 
         //Calculate the best time for the sequence a second time to get a more precise result
         bestTime = estimateTime(project, secondMonte,false,0, true);
-        
+
+        //Set the projects values to correct stuff
         project.setDuration(bestTime);
         project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(0));
         setStartTimesOfTasks(project, numOfWorkGroups);
