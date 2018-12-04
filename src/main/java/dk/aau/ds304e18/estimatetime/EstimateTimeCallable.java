@@ -83,7 +83,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                         }
 
                         if (!temp) {
-                            MonteCarlo.allLowestToNextLowest(durations);
+                            MonteCarlo.allLowestToSecondLowest(durations);
                         }
                     }
                 }

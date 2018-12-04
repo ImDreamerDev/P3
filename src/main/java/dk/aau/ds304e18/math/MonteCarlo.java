@@ -77,13 +77,13 @@ public class MonteCarlo {
 
         //So we get a real result from the sequence
         int secondMonte;
-        if(monteCarloRepeats <= 10000)
+        if (monteCarloRepeats <= 10000)
             secondMonte = 100000;
         else
-            secondMonte = monteCarloRepeats*10;
+            secondMonte = monteCarloRepeats * 10;
 
         //Calculate the best time for the sequence a second time to get a more precise result
-        bestTime = estimateTime(project, secondMonte,false,0, true);
+        bestTime = estimateTime(project, secondMonte, false, 0, true);
 
         //Set the projects values to correct stuff
         project.setDuration(bestTime);
@@ -224,22 +224,34 @@ public class MonteCarlo {
      *
      * @param list The list in which to set the smallest values to the first value above
      */
-    public static void allLowestToNextLowest(List<Double> list) {
+    public static void allLowestToSecondLowest(List<Double> list) {
+        //Index of the second lowest value
         int index = 0;
 
+        //Sorts the list
         Collections.sort(list);
 
+        //Goes through all the double values
         for (Double tempStartTime : list) {
+
+            //The first value that is higher than the first value (i.e. the lowest value)
             if (tempStartTime > list.get(0)) {
+
+                //Set the index of this
                 index = list.indexOf(tempStartTime);
                 break;
             }
         }
 
+        //Save the value of the first value that is higher than the lowest value
         double minUpper = list.get(index);
 
+        //Go through all the values before index
         for (int k = 0; k < index; k++)
+
+            //Set the value to the second lowest value
             list.set(k, minUpper);
+
     }
 
     /**
@@ -250,64 +262,127 @@ public class MonteCarlo {
      * @param numOfWorkGroups The amount of work groups
      */
     private static void setStartTimesOfTasks(Project project, int numOfWorkGroups) {
+        //The list with the times currently available
+        //This list will be as long as the amount of work groups in the project
         List<Double> startTimes = new ArrayList<>();
+
+        //The list of tasks from the recommended path
         List<Task> tempRecList = ParseSequence.parseToSingleList(project, true);
+
+        //The list of tasks that has been given a start time
         List<Task> alreadyStarted = new ArrayList<>();
+
+        //The list of tasks in the project without dependencies
         List<Task> withoutDeps = new ArrayList<>();
-        boolean stuffChanged;
+
+        //Boolean to check if any task has been given a start time in the current loop
+        boolean anyTaskChanged;
+
+        //Set the start time of each task to -1 to indicate they haven't been set yet.
+        //Also add each task without dependencies to the withoutDeps list
         for (Task task : tempRecList) {
             if (task.getDependencies().size() == 0)
                 withoutDeps.add(task);
             task.setStartTime(-1);
         }
 
+        //Run the for loop until every task has been given a start time
         for (int count = 0; count < tempRecList.size(); ) {
-            stuffChanged = false;
+
+            //Resets the anyTaskChanged boolean
+            anyTaskChanged = false;
+
+            //For each task in tempRecList
             for (Task task : tempRecList) {
 
+                //If the task has already been given a start time, skip it
                 if (task.getStartTime() != -1)
                     continue;
 
+                //If the task cannot legally be given a start time, skip it
                 if (NotLegal(task, alreadyStarted))
                     continue;
 
+                //If there has not been given enough start times for each workgroup yet,
+                //and the amount of starttimes is less than the amount of tasks without dependencies
                 if (startTimes.size() < numOfWorkGroups && startTimes.size() < withoutDeps.size()) {
+
+                    //If the task has atleast 1 dependency, skip it
                     if (task.getDependencies().size() != 0) continue;
+
+                    //If the task cannot be legally put into the list at this time, skip it
                     if (NotLegal(task, alreadyStarted))
                         continue;
+
+                    //If the task does not have a start time, set the start time of the task to 0
                     if (task.getStartTime() == -1)
                         task.setStartTime(0d);
+
+                    //Add the duration of the task to the startTimes list, so we find out where the next task can be put
                     startTimes.add(task.getStartTime() + task.getEstimatedTime());
+
+                    //Add the task to the list of tasks already given a start time
                     alreadyStarted.add(task);
-                    stuffChanged = true;
+
+                    //A task has been changed, therefore change the boolean
+                    anyTaskChanged = true;
+
+                    //If the amount of startTimes still is less than amount of work groups
+                    //And there are no more tasks without dependencies left to be placed at the start
                 } else if (startTimes.size() < numOfWorkGroups && startTimes.size() >= withoutDeps.size()) {
+
+                    //Add the last amount of startTimes to the list of startTimes
                     while (startTimes.size() < numOfWorkGroups)
                         startTimes.add(0d);
+
+                    //Skip the task as it cannot be placed at 0
                     continue;
+
+                    //Else if there is enough startTimes
                 } else {
+                    //If the task cannot legally be put into the list at this startTime, skip it
                     if (NotLegal(task, alreadyStarted))
                         continue;
+
+                    //Find the smallest possible start time for the task
                     int temp = findSmallestPossible(task, startTimes);
+
+                    //If it returned -1, skip the task, as it means no legal start time was found
                     if (temp == -1)
                         continue;
-                    if (task.getStartTime() == -1)
-                        task.setStartTime(0d);
+
+                    //What the . was the purpose of this? I set the start time of a task to something
+                    //And then immediately after changed it? Hopefully this doesn't break anything
+                    //Commented out to check
+                    //if (task.getStartTime() == -1)
+                    //task.setStartTime(0d);
+
+                    //Sets the start time of the task to the legal time
                     task.setStartTime(startTimes.get(temp));
+
+                    //Adds the time to the currently selected startTime
                     startTimes.set(temp, task.getStartTime() + task.getEstimatedTime());
+
+                    //Adds the task to tasks that has already been given a start time
                     alreadyStarted.add(task);
-                    stuffChanged = true;
+
+                    //A task has changed
+                    anyTaskChanged = true;
                 }
 
+                //Count up, as a task has been added if the program got this far
                 count++;
 
-                //System.out.println(task.getName() + ": " + task.getStartTime());
-
+                //Break the current for loop so the program starts over
+                //So the program finds the best possible task to put according to the recommended path
                 break;
             }
 
-            if (!stuffChanged) {
+            //If no task changed during the look-through of tasks
+            if (!anyTaskChanged) {
 
-                allLowestToNextLowest(startTimes);
+                //Increase the lowest amounts of startTimes to the second lowest value in the list
+                allLowestToSecondLowest(startTimes);
 
             }
         }
@@ -402,7 +477,7 @@ public class MonteCarlo {
      *
      * @param task           The task to check if legal to put in.
      * @param alreadyStarted The list of tasks already in.
-     * @return A boolean - True = Not legal - False = Legal
+     * @return A boolean | True = Not legal | False = Legal
      */
     private static boolean NotLegal(Task task, List<Task> alreadyStarted) {
         return !alreadyStarted.containsAll(task.getDependencies());
@@ -416,15 +491,20 @@ public class MonteCarlo {
      * @return The index of the startTime to be placed in, -1 if illegal
      */
     private static int findSmallestPossible(Task task, List<Double> startTimes) {
+
+        //If the task has no dependencies, just find the lowest value in the list of startTimes
         if (task.getDependencies().size() == 0)
             return startTimes.indexOf(Collections.min(startTimes));
 
+        //Checks all the dependencies to check if any of them gets done at a later time
+        //than the minimum time in startTimes
         for (Task dependency : task.getDependencies()) {
             if (dependency.getStartTime() + dependency.getEstimatedTime() > Collections.min(startTimes))
                 return -1;
 
         }
 
+        //If everything works out, return the index of the minimum value in startTimes
         return startTimes.indexOf(Collections.min(startTimes));
     }
 
