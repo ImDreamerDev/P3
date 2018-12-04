@@ -194,9 +194,17 @@ public class InputTab {
 
             Button addOrEditTaskButton = ((Button) rootPane.lookup("#addTaskButton"));
 
+            Tooltip addTaskTooltip = new Tooltip("Adds the task to the project");
+            addTaskTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+            addOrEditTaskButton.setTooltip(addTaskTooltip);
+
+            Tooltip updateTaskTooltip = new Tooltip("Updates the task");
+            updateTaskTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+
             if (task != null) {
                 addOrEditTaskButton
                         .setText("Update");
+                addOrEditTaskButton.setTooltip(updateTaskTooltip);
                 List<Task> tasks = LocalObjStorage.getTaskList()
                         .stream().filter(task2 -> task2.getProject()
                                 .getId() == JavaFXMain.selectedProjectId && task2.getId() != task.getId())
@@ -261,9 +269,7 @@ public class InputTab {
         });
 
         Node addTaskButton = rootPane.lookup("#addTaskButton");
-        Tooltip addTaskTooltip = new Tooltip("Adds the task to the project");
-        addTaskTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
-        ((Button) addTaskButton).setTooltip(addTaskTooltip);
+
         //Add task
         addTaskButton.setOnMouseEntered(mouseEvent -> {
             if (!validate()) {
