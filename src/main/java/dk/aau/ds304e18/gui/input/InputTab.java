@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 import java.time.Duration;
@@ -111,9 +112,7 @@ public class InputTab {
      */
     private void enableInput() {
         VBox inputVBox = ((VBox) flowPane.getChildren().get(0));
-        Node addEditDeleteTaskButtons = ((VBox) ((Pane) flowPane.getChildren()
-                .get(2)).getChildren().get(0)).getChildren().get(0);
-
+        Node addEditDeleteTaskButtons = rootPane.lookup("#addTaskButton");
         addEditDeleteTaskButtons.setDisable(false);
         inputVBox.setDisable(false);
         Tab employeeTab = ((TabPane) flowPane.getParent().getParent().getParent()).getTabs().get(1);
@@ -169,6 +168,8 @@ public class InputTab {
             }
         });
 */
+
+
         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable()
                     .get(3)).getChildren().get(1));
@@ -227,7 +228,7 @@ public class InputTab {
         setUpProbabilitiesFields();
         setupDependencies();
 
-        Button clearInputButton = ((Button) inputVBox.getChildren().get(13));
+        Button clearInputButton = ((Button) ((HBox) inputVBox.getChildren().get(13)).getChildren().get(1));
         Tooltip clearTooltip = new Tooltip("Clears all the input fields");
         clearTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
         clearInputButton.setTooltip(clearTooltip);
@@ -259,8 +260,7 @@ public class InputTab {
                 numOfEmployees.setStyle("");
         });
 
-        Node addTaskButton = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(0))
-                .getChildren().get(0);
+        Node addTaskButton = rootPane.lookup("#addTaskButton");
         Tooltip addTaskTooltip = new Tooltip("Adds the task to the project");
         addTaskTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
         ((Button) addTaskButton).setTooltip(addTaskTooltip);
@@ -281,6 +281,15 @@ public class InputTab {
             clearInputFields(duration1, probability1, duration2, probability2, duration3, probability3,
                     nameTextField, estimatedTimeTextField, priority);
         });
+
+        ((HBox) ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2)).getItems()
+                .get(1)).getChildren().get(0).setOnMouseClicked(event -> {
+            addTaskButton.fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED,
+                    0, 0, 0, 0, MouseButton.PRIMARY, 1,
+                    true, true, true, true, true, true, true, true, true, true, null));
+            dependenciesPopup.closeDependenciesPopup();
+        });
+
 
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) ->
                 validateNumericInput(numOfEmployees, newValue, true));
@@ -351,7 +360,7 @@ public class InputTab {
         });
 
         Button editTaskButton = (Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren()
-                .get(0)).getChildren().get(1);
+                .get(0)).getChildren().get(0);
         Tooltip editTooltip = new Tooltip("Edits the selected task from the project");
         editTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
         editTaskButton.setTooltip(editTooltip);
@@ -359,7 +368,7 @@ public class InputTab {
                 probability3, nameTextField, estimatedTimeTextField, priority));
 
         Button removeTaskButton = (Button) ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren()
-                .get(0)).getChildren().get(2);
+                .get(0)).getChildren().get(1);
         Tooltip removeTaskTooltip = new Tooltip("Removes the selected task from the project");
         removeTaskTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
         removeTaskButton.setTooltip(removeTaskTooltip);

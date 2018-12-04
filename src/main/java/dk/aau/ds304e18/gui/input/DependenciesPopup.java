@@ -88,7 +88,7 @@ class DependenciesPopup {
         setupTableView(dependencies);
         dependencies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 showContextualButtons(newValue, bar));
-        
+
         //Set the selection mode to multiple
         dependencies.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -110,14 +110,6 @@ class DependenciesPopup {
         Tooltip removeDependencyTooltip = new Tooltip("Removes the selected task from dependencies");
         removeDependencyTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
         removeDep.setTooltip(removeDependencyTooltip);
-
-        //Make the close button close the popup.
-        ((HBox) bar.getItems().get(1)).getChildren().get(0).setOnMouseClicked(event -> {
-            closeDependenciesPopup();
-            ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
-            ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
-        });
-
     }
 
     static void setupTableView(TableView<Task> dependencies) {
@@ -145,7 +137,10 @@ class DependenciesPopup {
      * Closes the dependencies popup
      */
     void closeDependenciesPopup() {
+        ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
         rootPane.getChildrenUnmodifiable().get(3).setVisible(false);
+        ((HBox) bar.getItems().get(0)).getChildren().get(0).setDisable(true);
+        ((HBox) bar.getItems().get(0)).getChildren().get(1).setDisable(true);
     }
 
 
