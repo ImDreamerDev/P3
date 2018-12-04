@@ -76,37 +76,64 @@ public class JavaFXMain extends Application {
         loginScreen = new Login(image, rootPane);
 
         //Tooltips for the main pages.
-        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(0).setTooltip(new Tooltip("The page with all the projects"));
-        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(1).setTooltip(new Tooltip("The page to input tasks and employees to the selected project"));
+        Tooltip projectTabTooltip = new Tooltip("The page with all the projects");
+        projectTabTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(0).setTooltip(projectTabTooltip);
+
+        Tooltip inputTabTooltip = new Tooltip("The page to input tasks and employees to the selected project");
+        inputTabTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(1).setTooltip(inputTabTooltip);
+
+        Tooltip outputTabTooltip = new Tooltip("The page with the output of the calculation");
+        outputTabTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2).setTooltip(outputTabTooltip);
 
         //Get the outer tab from the root pane.
         Tab inputTab1 = ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(1);
         //Get the inner input tab pane from the outer input tab pane.
         TabPane inputTabPane = ((TabPane) ((AnchorPane) inputTab1.getContent()).getChildren().get(0));
+
         //The input pane tabs tooltips.
-        inputTabPane.getTabs().get(0).setTooltip(new Tooltip("The page with the tasks in the selected project"));
-        inputTabPane.getTabs().get(1).setTooltip(new Tooltip("The page with the employees assigned to the selected project and the available employees"));
+        Tooltip taskTabTooltip = new Tooltip("The page with the tasks in the selected project");
+        taskTabTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        inputTabPane.getTabs().get(0).setTooltip(taskTabTooltip);
+
+        Tooltip employeeTabTooltip = new Tooltip("The page with the employees assigned to the selected project and the available employees");
+        employeeTabTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        inputTabPane.getTabs().get(1).setTooltip(employeeTabTooltip);
 
         //Get the outer output tab from the root pane.
         Tab outputTab = ((TabPane) rootPane.getChildrenUnmodifiable().get(1)).getTabs().get(2);
         //Get the inner output tab pane from the outer output tab pane.
         TabPane outputTabPane = (TabPane) ((HBox) ((AnchorPane) outputTab.getContent()).getChildren().get(0)).getChildren().get(1);
         //The output pane tabs tooltips.
-        outputTabPane.getTabs().get(0).setTooltip(new Tooltip("The page with the probabilities for the project"));
-        outputTabPane.getTabs().get(1).setTooltip(new Tooltip("The page with visual depiction of the projects tasks?"));
-        outputTabPane.getTabs().get(2).setTooltip(new Tooltip("The page to assign employees to the task on the selected project"));
+        Tooltip probabilityTabTooltip = new Tooltip("The page with the probabilities for the project");
+        probabilityTabTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        outputTabPane.getTabs().get(0).setTooltip(probabilityTabTooltip);
+
+        Tooltip ganttTabTooltip = new Tooltip("The page with visual depiction of the projects tasks?");
+        ganttTabTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        outputTabPane.getTabs().get(1).setTooltip(ganttTabTooltip);
+
+        Tooltip assignEmpToProjectTabTooltip = new Tooltip("The page to assign employees to the task on the selected project");
+        assignEmpToProjectTabTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        outputTabPane.getTabs().get(2).setTooltip(assignEmpToProjectTabTooltip);
 
         //Get the update button from the GUI.
         Button updateButton = (Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(0);
         //Set the tooltip of the update button.
-        updateButton.setTooltip(new Tooltip("Updates the program"));
+        Tooltip updateButtonTooltip = new Tooltip("Updates the program");
+        updateButtonTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        updateButton.setTooltip(updateButtonTooltip);
         //Makes the update button update the local stored objects.
         updateButton.setOnMouseClicked(event -> update());
 
         //Get the log out button from the GUI.
         Button logoutButton = (Button) ((HBox) rootPane.getChildrenUnmodifiable().get(0)).getChildren().get(2);
         //Set the tooltip of the log out button.
-        logoutButton.setTooltip(new Tooltip("Logs out of the program"));
+        Tooltip logOutButtonTooltip = new Tooltip("Logs out of the program");
+        logOutButtonTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        logoutButton.setTooltip(logOutButtonTooltip);
         //Makes the logout button log the user out.
         logoutButton.setOnMouseClicked(event -> {
             loginScreen.logOut();
