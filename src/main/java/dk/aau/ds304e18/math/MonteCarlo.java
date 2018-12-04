@@ -82,7 +82,9 @@ public class MonteCarlo {
         else
             secondMonte = monteCarloRepeats*10;
 
+        //Calculate the best time for the sequence a second time to get a more precise result
         bestTime = estimateTime(project, secondMonte,false,0, true);
+        
         project.setDuration(bestTime);
         project.getPossibleCompletions().addAll(project.getTempPossibleCompletions().get(0));
         setStartTimesOfTasks(project, numOfWorkGroups);
