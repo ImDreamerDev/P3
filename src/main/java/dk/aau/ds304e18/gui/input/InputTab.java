@@ -44,7 +44,6 @@ public class InputTab {
     private TextField probability3;
 
     private BorderPane flowPane;
-    private boolean isEditMode;
 
     private HashMap<TextField, Boolean> validates = new HashMap<>();
 
@@ -181,14 +180,14 @@ public class InputTab {
                     .filter(t -> t.getProject().getId() == JavaFXMain.selectedProjectId && t.getName()
                             .equals(newValue)).findFirst().orElse(null);
 
-            if (task != null && !isEditMode) {
-                nameTextField.setStyle("-fx-border-color: #ff9c00");
-                validates.put(nameTextField, false);
-            } else if (((task == null) && nameTextField.getText().isBlank()) || !nameTextField.getText().isBlank()) {
+
+            if (nameTextField.getText().isBlank()) {
                 nameTextField.setStyle("");
-                validates.put(nameTextField, true);
-            } else {
                 validates.put(nameTextField, false);
+            } else {
+                nameTextField.setStyle("-fx-border-color: #ff9c00");
+                validates.put(nameTextField, true);
+                validates.put(nameTextField, true);
             }
 
             Button addOrEditTaskButton = ((Button) rootPane.lookup("#addTaskButton"));
@@ -276,12 +275,6 @@ public class InputTab {
 
             if (!validate())
                 return;
-            boolean taskNameIsThere = LocalObjStorage.getTaskList().stream().anyMatch(task ->
-                    task.getName().equals(nameTextField.getText()) && task.getProject()
-                            .getId() == JavaFXMain.selectedProjectId);
-            if (taskNameIsThere && !isEditMode) {
-                return;
-            }
             addTask(nameTextField.getText(), Double.parseDouble(estimatedTimeTextField.getText()),
                     Integer.parseInt(priority.getText()), probabilities);
             clearInputFields(duration1, probability1, duration2, probability2, duration3, probability3,
@@ -411,9 +404,9 @@ public class InputTab {
             return true;
         }
         validates.forEach((key, value) -> {
-            if (!value && key.getStyle().isBlank()) {
+            if (!value && !key.getStyle().equals("-fx-border-color: #ff9c00")) {
                 key.setStyle("-fx-border-color: red");
-            } else if (value)
+            } else if (value && !key.getStyle().equals("-fx-border-color: #ff9c00"))
                 key.setStyle("");
         });
         rootPane.lookup("#addTaskButton").setDisable(true);
@@ -612,12 +605,10 @@ public class InputTab {
     private void setAddTaskButtonText() {
         Button addTaskButton = (Button) rootPane.lookup("#addTaskButton");
         addTaskButton.setText("Add Task");
-        isEditMode = false;
     }
 
 
     private void editTask(TextField... textFields) {
-
         Button addTaskButton = (Button) rootPane.lookup("#addTaskButton");
         addTaskButton.setText("Update");
         //If no task is selected just return.
@@ -630,7 +621,6 @@ public class InputTab {
                 getCellObservableValue(tableView.getSelectionModel().getSelectedIndex()).getValue();
         //Get the actual task from the id.
         Task task = LocalObjStorage.getTaskById(taskId);
-        isEditMode = true;
         //Check if task probabilities exists in task, and then fill them out. 
         if (task.getProbabilities().size() > 0) {
             textFields[0].setText(task.getProbabilities().get(0).getDuration() + "");
