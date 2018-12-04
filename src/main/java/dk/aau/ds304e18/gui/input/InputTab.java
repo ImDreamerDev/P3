@@ -290,7 +290,6 @@ public class InputTab {
             dependenciesPopup.closeDependenciesPopup();
         });
 
-
         numOfEmployees.textProperty().addListener((observable, oldValue, newValue) ->
                 validateNumericInput(numOfEmployees, newValue, true));
 
@@ -589,8 +588,7 @@ public class InputTab {
     }
 
     private void setAddTaskButtonText() {
-        Button addTaskButton = (Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren()
-                .get(0)).getChildren().get(0)).getChildren().get(0);
+        Button addTaskButton = (Button) rootPane.lookup("#addTaskButton");
         addTaskButton.setText("Add Task");
         isEditMode = false;
     }
@@ -598,10 +596,8 @@ public class InputTab {
 
     private void editTask(TextField... textFields) {
 
-        Button addTaskButton = (Button) ((VBox) ((VBox) ((Pane) flowPane.getChildren().get(2)).getChildren()
-                .get(0)).getChildren().get(0)).getChildren().get(0);
-        addTaskButton
-                .setText("Update Task");
+        Button addTaskButton = (Button) rootPane.lookup("#addTaskButton");
+        addTaskButton.setText("Update Task");
         //If no task is selected just return.
         if (tableView.getSelectionModel().getSelectedIndex() == -1)
             return;
