@@ -85,6 +85,8 @@ class AssignmentTab {
             JavaFXMain.inputTab.employeeTab.drawEmployees();
     }
 
+    
+    
     /**
      * Updates/draws the employees in the assignment tab.
      */

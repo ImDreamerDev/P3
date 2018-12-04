@@ -126,9 +126,11 @@ public class EmployeeTab {
             if (newValue.intValue() == 0) {
                 buttonPane.getChildren().get(0).setVisible(false);
                 buttonPane.getChildren().get(1).setVisible(true);
+                inputVBox.setVisible(true);
             } else if (newValue.intValue() == 1) {
                 buttonPane.getChildren().get(0).setVisible(true);
                 buttonPane.getChildren().get(1).setVisible(false);
+                inputVBox.setVisible(false);
             }
         });
 
