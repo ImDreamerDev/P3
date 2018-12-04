@@ -170,6 +170,11 @@ public class InputTab {
         validates.put(nameTextField, false);
 
         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isBlank()) {
+                validates.put(nameTextField, false);
+                validate();
+                return;
+            }
             TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable()
                     .get(3)).getChildren().get(1));
             Task task = LocalObjStorage.getTaskList().stream()
@@ -183,7 +188,6 @@ public class InputTab {
                 nameTextField.setStyle("");
                 validates.put(nameTextField, true);
             } else {
-                nameTextField.setStyle("-fx-border-color: #ff0000");
                 validates.put(nameTextField, false);
             }
 
@@ -207,8 +211,8 @@ public class InputTab {
                 dependencies.getItems().clear();
                 dependencies.setItems(FXCollections.observableArrayList(tasks));
             }
-
             validate();
+
         });
         TextField priority = ((TextField) inputVBox.getChildren().get(3));
         Tooltip priorityTooltip = new Tooltip("The priority of the task, the bigger the more important" +
@@ -406,11 +410,11 @@ public class InputTab {
             validates.keySet().forEach(textField -> textField.setStyle(""));
             return true;
         }
-        validates.entrySet().forEach(entry -> {
-            if (!entry.getValue()) {
-                entry.getKey().setStyle("-fx-border-color: red");
-            } else
-                entry.getKey().setStyle("");
+        validates.forEach((key, value) -> {
+            if (!value && key.getStyle().isBlank()) {
+                key.setStyle("-fx-border-color: red");
+            } else if (value)
+                key.setStyle("");
         });
         rootPane.lookup("#addTaskButton").setDisable(true);
         return false;
