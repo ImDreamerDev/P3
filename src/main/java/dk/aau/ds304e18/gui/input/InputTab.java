@@ -307,6 +307,7 @@ public class InputTab {
                 useFastTooltip);
 
         CalculateButton.setOnMouseClicked(event -> {
+            if (numOfEmployees.getText().isBlank()) return;
             disableInput();
             rootPane.lookup("#projectView").setDisable(true);
             if (numOfEmployees.getText().isBlank()) {
