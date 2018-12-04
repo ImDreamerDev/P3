@@ -479,7 +479,11 @@ public class MonteCarlo {
                             workingList.get(i) + tempList.get(i));
                 }
             } catch (InterruptedException | ExecutionException e) {
-                Thread.currentThread().interrupt();
+                if (MonteCarloExecutorService.getExecutor().isShutdown()) {
+                    Thread.currentThread().interrupt();
+                } else {
+                    e.printStackTrace();
+                }
             }
         }
         return duration / monteCarloRepeats;
