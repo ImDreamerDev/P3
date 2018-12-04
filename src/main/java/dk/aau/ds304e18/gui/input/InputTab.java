@@ -21,8 +21,7 @@ import javafx.scene.layout.*;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class InputTab {
@@ -46,6 +45,8 @@ public class InputTab {
 
     private BorderPane flowPane;
     private boolean isEditMode;
+
+    private HashMap<TextField, Boolean> validates = new HashMap<>();
 
     /**
      * @param rootPane - This is the parent of all gui elements in the inputTab.
@@ -166,7 +167,7 @@ public class InputTab {
 
         //Create a new assignment tab.
         assignmentTab = new AssignmentTab(borderPane);
-
+        validates.put(nameTextField, false);
 
         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             TableView<Task> dependencies = ((TableView<Task>) ((FlowPane) rootPane.getChildrenUnmodifiable()
@@ -177,10 +178,13 @@ public class InputTab {
 
             if (task != null && !isEditMode) {
                 nameTextField.setStyle("-fx-border-color: #ff9c00");
+                validates.put(nameTextField, false);
             } else if (((task == null) && nameTextField.getText().isBlank()) || !nameTextField.getText().isBlank()) {
                 nameTextField.setStyle("");
+                validates.put(nameTextField, true);
             } else {
                 nameTextField.setStyle("-fx-border-color: #ff0000");
+                validates.put(nameTextField, false);
             }
 
             Button addOrEditTaskButton = ((Button) rootPane.lookup("#addTaskButton"));
@@ -203,24 +207,18 @@ public class InputTab {
                 dependencies.getItems().clear();
                 dependencies.setItems(FXCollections.observableArrayList(tasks));
             }
+
+            validate();
         });
         TextField priority = ((TextField) inputVBox.getChildren().get(3));
         Tooltip priorityTooltip = new Tooltip("The priority of the task, the bigger the more important" +
                 System.lineSeparator() + "This value is measured in integers");
-        priorityTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
-        priority.setTooltip(priorityTooltip);
-
-        priority.textProperty().addListener((observable, oldValue, newValue) ->
-                validateNumericInput(priority, newValue, true));
+        setupTaskField(priority, priorityTooltip);
 
         TextField estimatedTimeTextField = ((TextField) inputVBox.getChildren().get(5));
         Tooltip avgTimeTooltip = new Tooltip("The average time of the task" +
                 System.lineSeparator() + "Can be a decimal number separated by point");
-        avgTimeTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
-        estimatedTimeTextField.setTooltip(avgTimeTooltip);
-
-        estimatedTimeTextField.textProperty().addListener((observable, oldValue, newValue) ->
-                validateNumericInput(estimatedTimeTextField, newValue, false));
+        setupTaskField(estimatedTimeTextField, avgTimeTooltip);
 
         setUpProbabilitiesFields();
         setupDependencies();
@@ -262,10 +260,17 @@ public class InputTab {
         addTaskTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
         ((Button) addTaskButton).setTooltip(addTaskTooltip);
         //Add task
+        addTaskButton.setOnMouseEntered(mouseEvent -> {
+            if (!validate()) {
+                addTaskButton.setDisable(true);
+                return;
+            }
+
+        });
         addTaskButton.setOnMouseClicked(event -> {
             List<Probabilities> probabilities = convertToProbabilities();
 
-            if (validate(nameTextField, estimatedTimeTextField, priority) != 0)
+            if (!validate())
                 return;
             boolean taskNameIsThere = LocalObjStorage.getTaskList().stream().anyMatch(task ->
                     task.getName().equals(nameTextField.getText()) && task.getProject()
@@ -311,14 +316,14 @@ public class InputTab {
             disableInput();
             rootPane.lookup("#projectView").setDisable(true);
             if (numOfEmployees.getText().isBlank()) {
-                numOfEmployees.setStyle("-fx-background-color: red");
+                numOfEmployees.setStyle("-fx-border-color: red");
                 return;
             }
 
             javafx.concurrent.Task<Void> calcTask = calculate(
                     LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
                     Double.parseDouble(numOfEmployees.getText()),
-                    ((CheckBox) useFastCheckbox).isSelected(), Integer.parseInt(numOfMonte.getText()));
+                    useFastCheckbox.isSelected(), Integer.parseInt(numOfMonte.getText()));
             ProgressBar bar = new ProgressBar();
             bar.progressProperty().bind(calcTask.progressProperty());
             CalculateButton.setText("Stop");
@@ -384,6 +389,33 @@ public class InputTab {
         drawInputTab();
     }
 
+    private void setupTaskField(TextField textField, Tooltip avgTimeTooltip) {
+        avgTimeTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
+        textField.setTooltip(avgTimeTooltip);
+        validates.put(textField, false);
+        textField.textProperty().addListener((observable, oldValue, newValue) ->
+        {
+            validates.put(textField, validateNumericInput(textField, newValue, true));
+            validate();
+        });
+    }
+
+    private boolean validate() {
+        if (validates.values().stream().allMatch(bool -> bool)) {
+            rootPane.lookup("#addTaskButton").setDisable(false);
+            validates.keySet().forEach(textField -> textField.setStyle(""));
+            return true;
+        }
+        validates.entrySet().forEach(entry -> {
+            if (!entry.getValue()) {
+                entry.getKey().setStyle("-fx-border-color: red");
+            } else
+                entry.getKey().setStyle("");
+        });
+        rootPane.lookup("#addTaskButton").setDisable(true);
+        return false;
+    }
+
     private List<Probabilities> convertToProbabilities() {
         List<Probabilities> probabilities = new ArrayList<>();
         if (!probability1.getText().isBlank())
@@ -444,20 +476,6 @@ public class InputTab {
 
     }
 
-    private int validate(TextField... textFields) {
-        int failed = 0;
-        for (TextField textField : textFields) {
-            if (textField.getText().isBlank()) {
-                failed++;
-                textField.setStyle("-fx-border-color: red");
-            } else {
-                textField.setStyle("");
-            }
-        }
-        return failed;
-    }
-
-
     /**
      * This method calculates and produces the output.
      *
@@ -511,7 +529,7 @@ public class InputTab {
      * @param textField - the text box
      * @param newValue  - the contents of the text box
      */
-    private void validateNumericInput(TextField textField, String newValue, boolean intField) {
+    private boolean validateNumericInput(TextField textField, String newValue, boolean intField) {
         //If it's a int field. Only allow numeric values.
         if (intField) {
             if (!newValue.matches("\\d*")) {
@@ -521,6 +539,8 @@ public class InputTab {
             //Otherwise allow the dot(.) separator.
             textField.setText(newValue.replaceAll("[[^\\d^\\.]]", ""));
         }
+
+        return !newValue.isBlank();
     }
 
     /**
