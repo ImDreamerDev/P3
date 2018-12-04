@@ -91,17 +91,6 @@ public class DependenciesPopupTest extends ApplicationTest {
     }
 
     @Test
-    void testCloseDependenciesPopupTest02() {
-        DependenciesPopup test = new DependenciesPopup(rootPane, listView);
-        test.openDependenciesPopup();
-        ToolBar bar = ((ToolBar) ((FlowPane) rootPane.getChildrenUnmodifiable().get(3)).getChildren().get(2));
-        ((HBox) bar.getItems().get(1)).getChildren().get(0).fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED,
-                0, 0, 0, 0, MouseButton.PRIMARY, 1,
-                true, true, true, true, true, true, true, true, true, true, null));
-        assertFalse(rootPane.getChildrenUnmodifiable().get(3).isVisible());
-    }
-
-    @Test
     void testShowContextualButtons01() {
         DependenciesPopup test = new DependenciesPopup(rootPane, listView);
         test.showContextualButtons(null, null);
