@@ -5,9 +5,11 @@ public class InverseGaussian {
     //Large part of the code in here is taken from:
     //https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
     //Indicated by a citation in the comments above the specific methods
-    
+
     private double mu;
     private double lambda;
+
+    //Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
     private static final double[] NORMAL2_A = new double[]
             {0.6101430819232004D, -0.4348412727125775D, 0.1763511936436055D, -0.06071079560924941D,
                     0.017712068995694115D, -0.004321119385567294D, 8.542166768870987E-4D, -1.2715509060916275E-4D,
@@ -17,6 +19,7 @@ public class InverseGaussian {
                     -4.264101694942375E-15D, -5.45371977880191E-16D, 1.58697607761671E-16D, 2.0899837844334E-17D,
                     -5.900526869409E-18D, -9.41893387554E-19D};
 
+    //Empty constructor
     public InverseGaussian() {
     }
 
