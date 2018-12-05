@@ -400,21 +400,19 @@ public class DatabaseManager {
     }
 
     /**
-     * Gets the employees with no current project or those part of the ProjectManagers current project.
+     * Gets the employees with no current project or those part of the ProjectManagers current projects.
      *
      * @param projectManager the project manager to get the employees of.
      * @return list of employees with no current project or are part of  the project managers current projects.
      */
     static List<Employee> getAvailableEmployees(ProjectManager projectManager) {
-        //We want employees from the current project
-        List<Integer> employeeIdsToQuery = new ArrayList<>(projectManager.getCurrentProjectIds());
 
         try {
             if (dbConnection == null || dbConnection.isClosed()) connect();
             PreparedStatement statement = dbConnection
                     .prepareStatement("SELECT * FROM employees WHERE projectid IS NULL OR projectid = ANY (?) ");
             statement.setArray(1, dbConnection
-                    .createArrayOf("INTEGER", employeeIdsToQuery.toArray()));
+                    .createArrayOf("INTEGER", projectManager.getCurrentProjectIds().toArray()));
             ResultSet rs = statement.executeQuery();
             return DatabaseParser.parseEmployeesFromResultSet(rs);
         } catch (SQLException e) {
