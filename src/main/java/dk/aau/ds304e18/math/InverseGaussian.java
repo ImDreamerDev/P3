@@ -2,6 +2,10 @@ package dk.aau.ds304e18.math;
 
 public class InverseGaussian {
 
+    //Large part of the code in here is taken from:
+    //https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
+    //Indicated by a citation in the comments above the specific methods
+    
     private double mu;
     private double lambda;
     private static final double[] NORMAL2_A = new double[]
@@ -22,6 +26,7 @@ public class InverseGaussian {
     }
 
     /**
+     * Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
      * Calculate the y-value given an x value, i.e. the probability of a task completing at a certain time (y : probability, x : time) using the CDF
      *
      * @param mu     - the mean.
@@ -41,6 +46,7 @@ public class InverseGaussian {
     }
 
     /**
+     * Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
      * The CDF for the Gaussian Distribution aka normal distribution (Used to calculate the CDF of the Inverse Gaussian Distribution)
      *
      * @param x - It's the x value of the normal distribution.
@@ -69,6 +75,7 @@ public class InverseGaussian {
     }
 
     /**
+     * Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
      * Used to calculate the CDF of the normal distribution
      *
      * @param x -the parameter of the Tj functions.
@@ -94,6 +101,7 @@ public class InverseGaussian {
     }
 
     /**
+     * Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
      * Sets the parameters for the Inverse Gaussian Distribution, if mu or lambda is less than or equal to 0, throw exception
      *
      * @param mu     - the mean.
