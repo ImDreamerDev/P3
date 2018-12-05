@@ -156,14 +156,20 @@ public class Sequence {
      * Finds a legal sequence, makes no effort to optimize
      *
      * @param project The project to find a sequence for
+     * @param tasksNotSequenced The tasks not yet sequenced
      * @return Returns a legal sequence
      */
     private static String simpleSequenceFinder(Project project, List<Task> tasksNotSequenced) {
+        //Amount of tasks to sequence
         int tasksLeft = project.getTasks().size();
+        
+        //The final list of sequenced tasks
         List<Task> tasksSequenced = new ArrayList<>();
 
+        //Sequence the tasks
         simpleSequencing(tasksLeft, tasksSequenced, tasksNotSequenced);
 
+        //Return the string for the sequence
         return ParseSequence.unparseList(new StringBuilder(), tasksSequenced, 0).toString();
     }
 
@@ -175,11 +181,22 @@ public class Sequence {
      * @param takeFrom        The list of tasks to take from
      */
     private static void simpleSequencing(int tasksToSequence, List<Task> putInto, List<Task> takeFrom) {
+        //While there are still tasks to sequence
         while (tasksToSequence > 0) {
+
+            //Go through all the tasks
             for (int i = 0; i < tasksToSequence; i++) {
+
+                //If the current tasks dependencies have not yet been sequenced, skip the task, it'll be sequenced later
                 if (!putInto.containsAll(takeFrom.get(i).getDependencies())) continue;
+
+                //Add the task to the list with the already sequenced tasks
                 putInto.add(takeFrom.get(i));
+
+                //Remove the task from the list with the tasks not yet sequenced
                 takeFrom.remove(takeFrom.get(i));
+
+                //Count down the tasks that need to be sequenced
                 tasksToSequence--;
             }
         }
