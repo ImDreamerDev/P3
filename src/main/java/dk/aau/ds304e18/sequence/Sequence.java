@@ -162,7 +162,7 @@ public class Sequence {
     private static String simpleSequenceFinder(Project project, List<Task> tasksNotSequenced) {
         //Amount of tasks to sequence
         int tasksLeft = project.getTasks().size();
-        
+
         //The final list of sequenced tasks
         List<Task> tasksSequenced = new ArrayList<>();
 

@@ -37,6 +37,7 @@ public class Employee {
     public Employee(String name, Project project) {
         this.name = name;
         this.project = project;
+        if (project != null && !project.getEmployees().contains(this)) project.addNewEmployee(this);
         DatabaseManager.addEmployees(this);
     }
 
