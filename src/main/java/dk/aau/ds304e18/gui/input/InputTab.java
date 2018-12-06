@@ -257,15 +257,15 @@ public class InputTab {
         numOfMonte.setTooltip(monteTooltip);
         numOfMonte.textProperty().addListener((observable, oldValue, newValue) ->
                 validateNumericInput(numOfMonte, newValue, true));
-        TextField numOfEmployees = ((TextField) vBoxSplitter.getChildren().get(3));
-        numOfEmployees.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" +
+        TextField numOfWorkGroups = ((TextField) vBoxSplitter.getChildren().get(3));
+        numOfWorkGroups.setTooltip(new Tooltip("The amount of tasks which can be worked on in parallel" +
                 System.lineSeparator() + "Input must be a positive integer"));
-        numOfEmployees.textProperty().addListener((observable, oldValue, newValue) -> {
+        numOfWorkGroups.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.isBlank() && newValue.charAt(0) == '0') {
-                numOfEmployees.setText(newValue.replace("0", ""));
+                numOfWorkGroups.setText(newValue.replace("0", ""));
             }
             if (!newValue.isBlank())
-                numOfEmployees.setStyle("");
+                numOfWorkGroups.setStyle("");
         });
 
         Node addTaskButton = rootPane.lookup("#addTaskButton");
@@ -297,13 +297,13 @@ public class InputTab {
             dependenciesPopup.closeDependenciesPopup();
         });
 
-        numOfEmployees.textProperty().addListener((observable, oldValue, newValue) ->
-                validateNumericInput(numOfEmployees, newValue, true));
+        numOfWorkGroups.textProperty().addListener((observable, oldValue, newValue) ->
+                validateNumericInput(numOfWorkGroups, newValue, true));
 
         Tooltip workGroupsTooltip = new Tooltip("The amount of tasks which can be worked on in parallel" +
                 System.lineSeparator() + "Input must be an integer");
         workGroupsTooltip.setShowDelay(JavaFXMain.getTooltipShowDelay());
-        numOfEmployees.setTooltip(workGroupsTooltip);
+        numOfWorkGroups.setTooltip(workGroupsTooltip);
 
         Button CalculateButton = (Button) vBoxSplitter.getChildren().get(5);
         Tooltip calculateTooltip = new Tooltip("Calculates the probability for the length of the project");
@@ -317,17 +317,17 @@ public class InputTab {
                 useFastTooltip);
 
         CalculateButton.setOnMouseClicked(event -> {
-            if (numOfEmployees.getText().isBlank()) return;
+            if (numOfWorkGroups.getText().isBlank()) return;
             disableInput();
             rootPane.lookup("#projectView").setDisable(true);
-            if (numOfEmployees.getText().isBlank()) {
-                numOfEmployees.setStyle("-fx-border-color: red");
+            if (numOfWorkGroups.getText().isBlank()) {
+                numOfWorkGroups.setStyle("-fx-border-color: red");
                 return;
             }
 
             javafx.concurrent.Task<Void> calcTask = calculate(
                     LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId),
-                    Double.parseDouble(numOfEmployees.getText()),
+                    Double.parseDouble(numOfWorkGroups.getText()),
                     useFastCheckbox.isSelected(), Integer.parseInt(numOfMonte.getText()));
             ProgressBar bar = new ProgressBar();
             bar.progressProperty().bind(calcTask.progressProperty());
@@ -484,11 +484,11 @@ public class InputTab {
     /**
      * This method calculates and produces the output.
      *
-     * @param project        - the project to calculate.
-     * @param numOfEmployees - the amount of employees.
-     * @param useFast        - Is the useFast toggled or not. (boolean)
+     * @param project         - the project to calculate.
+     * @param numOfWorkGroups - the amount of work groups.
+     * @param useFast         - Is the useFast toggled or not. (boolean)
      */
-    private javafx.concurrent.Task<Void> calculate(Project project, double numOfEmployees,
+    private javafx.concurrent.Task<Void> calculate(Project project, double numOfWorkGroups,
                                                    boolean useFast, int numOfMonte) {
         return new javafx.concurrent.Task<>() {
 
@@ -499,8 +499,8 @@ public class InputTab {
 
             @Override
             protected Void call() {
-                //Set the number of employees of the project.
-                project.setNumberOfWorkGroups(numOfEmployees);
+                //Set the number of work groups of the project.
+                project.setNumberOfWorkGroups(numOfWorkGroups);
                 //Start time taking.
                 Instant start = Instant.now();
                 //Sequence the tasks.
