@@ -140,7 +140,7 @@ public class Sequence {
 
         //Add enough tasks at the start so every employee has something to do, 
         // if there's not enough tasks without dependencies for everyone just add everyone
-        sequenceEmployees(project, tasksSequenced, tasksNotSequenced, tasksWithoutDependencies);
+        sequenceWorkGroups(project, tasksSequenced, tasksNotSequenced, tasksWithoutDependencies);
 
         //Count down tasksLeft so we don't end up in an infinite loop
         tasksLeft -= tasksSequenced.size();
@@ -222,7 +222,7 @@ public class Sequence {
     /**
      * Finds the tasks without dependencies that other tasks are dependent on
      *
-     * @param tasksWithoutDependencies Amount of tasks without dependencies
+     * @param tasksWithoutDependencies The tasks without dependencies
      * @param listToLookThrough        The full list of tasks
      * @return The tasks without dependencies that other tasks are dependent on
      */
@@ -252,7 +252,7 @@ public class Sequence {
      * @param tasksNotSequenced        The tasks that has yet to be sequenced
      * @param tasksWithoutDependencies The tasks without dependencies which will be put at the start
      */
-    private static void sequenceEmployees(Project project, List<Task> tasksSequenced, List<Task> tasksNotSequenced, List<Task> tasksWithoutDependencies) {
+    private static void sequenceWorkGroups(Project project, List<Task> tasksSequenced, List<Task> tasksNotSequenced, List<Task> tasksWithoutDependencies) {
         int amountEmployees = (int) project.getNumberOfWorkGroups();
 
         if (amountEmployees >= tasksWithoutDependencies.size() + tasksSequenced.size()) {
