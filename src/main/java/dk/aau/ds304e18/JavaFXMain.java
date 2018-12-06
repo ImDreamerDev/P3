@@ -42,7 +42,7 @@ public class JavaFXMain extends Application {
     /**
      * The duration it takes for a tooltip to show.
      */
-    private static Duration tooltipShowDelay = Duration.ZERO;
+    private static Duration tooltipShowDelay = Duration.millis(100);
 
     /**
      * The components of the GUI.
