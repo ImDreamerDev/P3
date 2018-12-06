@@ -36,7 +36,7 @@ public class Project {
     private double duration;
 
 
-    private double numberOfEmployees;
+    private double numberOfWorkGroups;
 
     /**
      * The list of tasks.
@@ -92,14 +92,14 @@ public class Project {
     }
 
     public Project(int id, String name, ProjectState projectState, String sequence,
-                   double duration, String recommendedPath, double numberOfEmployees, List<Double> possibleCompletions) {
+                   double duration, String recommendedPath, double numberOfWorkGroups, List<Double> possibleCompletions) {
         this.id = id;
         this.state = projectState;
         this.name = name;
         this.sequence = sequence;
         this.duration = duration;
         this.recommendedPath = recommendedPath;
-        this.numberOfEmployees = numberOfEmployees;
+        this.numberOfWorkGroups = numberOfWorkGroups;
         this.possibleCompletions = possibleCompletions;
     }
 
@@ -270,12 +270,12 @@ public class Project {
         this.recommendedPath = recommendedPath;
     }
 
-    public double getNumberOfEmployees() {
-        return numberOfEmployees;
+    public double getNumberOfWorkGroups() {
+        return numberOfWorkGroups;
     }
 
-    public void setNumberOfEmployees(double numberOfEmployees) {
-        this.numberOfEmployees = numberOfEmployees;
+    public void setNumberOfWorkGroups(double numberOfWorkGroups) {
+        this.numberOfWorkGroups = numberOfWorkGroups;
         DatabaseManager.updateProject(this);
     }
 

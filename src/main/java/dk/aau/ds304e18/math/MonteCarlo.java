@@ -45,7 +45,7 @@ public class MonteCarlo {
     public static void calculateProjectInformation(Project project, int amountSequences, boolean fast, int monteCarloRepeats) {
         //Resets the possible completions every time so it's accurate
         project.getPossibleCompletions().clear();
-        int numOfWorkGroups = (int) project.getNumberOfEmployees();
+        int numOfWorkGroups = (int) project.getNumberOfWorkGroups();
 
         //The strings that will hold the best and worst sequence
         String bestSequence;
@@ -92,7 +92,7 @@ public class MonteCarlo {
         project.setRecommendedEmployees(optimizeWorkGroups(project, numOfWorkGroups));
 
         //Set amount of employees back to what it was
-        project.setNumberOfEmployees(numOfWorkGroups);
+        project.setNumberOfWorkGroups(numOfWorkGroups);
 
         //SOUT
         System.out.println("Worst Path: " + worstSequence);
@@ -448,7 +448,7 @@ public class MonteCarlo {
     private static int estimateWithDifferentAmountOfWorkGroups(int amountEmployees, int numOfWorkGroups, Project project, RecommendedEmployees tempRecEmp) {
         if (amountEmployees == numOfWorkGroups) return 0;
         //Set the amount of employees to the set number of employees just to check them
-        project.setNumberOfEmployees(amountEmployees);
+        project.setNumberOfWorkGroups(amountEmployees);
         //Calculate the estimated time with the current sequence
         //We just want to give a guess, not give an extremely accurate estimate at different employee group numbers
         double tempEst = estimateTime(project, 10000, false, 0, true);
@@ -526,7 +526,7 @@ public class MonteCarlo {
 
         //Create the threads
         for (int i = 0; i < numOfThreads; i++) {
-            Callable<Estimate> callable = new EstimateTimeCallable(taskList, project.getNumberOfEmployees(),
+            Callable<Estimate> callable = new EstimateTimeCallable(taskList, project.getNumberOfWorkGroups(),
                     monteCarloRepeats / numOfThreads);
             //submit Callable tasks to be executed by thread pool
             Future<Estimate> future = executor.submit(callable);

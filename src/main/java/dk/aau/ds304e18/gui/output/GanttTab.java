@@ -302,7 +302,7 @@ class GanttTab {
                 .getChildren().get(2)).getChildren().get(0)).getChildren().get(1));
         TextField numOfMonte = ((TextField) vBoxSplitter.getChildren().get(1));
         VBox optGroup0 = (VBox) rootPane.lookup("#OptGroup0");
-        ((Label) optGroup0.getChildren().get(0)).setText(Math.round(project.getNumberOfEmployees()) + "");
+        ((Label) optGroup0.getChildren().get(0)).setText(Math.round(project.getNumberOfWorkGroups()) + "");
         ((Label) optGroup0.getChildren().get(1)).setText(Math.round((project.getDuration())) + "");
         ((Label) optGroup0.getParent().getChildrenUnmodifiable().get(8)).setText(numOfMonte.getText());
         VBox optGroup1 = (VBox) rootPane.lookup("#OptGroup1");

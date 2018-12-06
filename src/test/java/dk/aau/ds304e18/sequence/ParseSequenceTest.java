@@ -32,7 +32,7 @@ class ParseSequenceTest {
 
         task3.addDependency(Collections.singletonList(task1));
 
-        project.setNumberOfEmployees(1);
+        project.setNumberOfWorkGroups(1);
 
         Sequence.sequenceAndCalculateProject(project, false, 10000);
 
@@ -63,7 +63,7 @@ class ParseSequenceTest {
         Task task3 = new Task("Test3", 5.0, 1, project);
         new Task("Test4", 2.0, 1, project);
 
-        project.setNumberOfEmployees(1);
+        project.setNumberOfWorkGroups(1);
 
         task3.addDependency(Collections.singletonList(task1));
 

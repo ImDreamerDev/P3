@@ -89,7 +89,7 @@ public class InputTab {
         VBox vBoxSplitter = ((VBox) ((VBox) paneSplitter.getChildren().get(0)).getChildren().get(1));
         if (JavaFXMain.selectedProjectId == 0 && LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId) != null)
             ((TextField) vBoxSplitter.getChildren().get(1)).setText(LocalObjStorage.getProjectById
-                    (JavaFXMain.selectedProjectId).getNumberOfEmployees() + "");
+                    (JavaFXMain.selectedProjectId).getNumberOfWorkGroups() + "");
 
         employeeTab.drawEmployees();
         assignmentTab.drawEmployees();
@@ -500,7 +500,7 @@ public class InputTab {
             @Override
             protected Void call() {
                 //Set the number of employees of the project.
-                project.setNumberOfEmployees(numOfEmployees);
+                project.setNumberOfWorkGroups(numOfEmployees);
                 //Start time taking.
                 Instant start = Instant.now();
                 //Sequence the tasks.

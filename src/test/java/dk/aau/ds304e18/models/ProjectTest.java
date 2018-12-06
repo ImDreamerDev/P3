@@ -329,9 +329,9 @@ class ProjectTest {
     void TestProjectSetNumberOfEmployees01() {
         Project newProject = new Project(1, "Rasmus Test Project", ProjectState.ONGOING, "", 34, "", 2, null);
 
-        newProject.setNumberOfEmployees(2.5);
+        newProject.setNumberOfWorkGroups(2.5);
 
-        assertEquals(2.5, newProject.getNumberOfEmployees());
+        assertEquals(2.5, newProject.getNumberOfWorkGroups());
     }
 
     @Test

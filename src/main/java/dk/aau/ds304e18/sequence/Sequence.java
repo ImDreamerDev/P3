@@ -127,7 +127,7 @@ public class Sequence {
         sortTasks(tasksNotSequenced);
 
         //If we're going fast but there's less than 2 employees
-        if (project.getNumberOfEmployees() < 2) {
+        if (project.getNumberOfWorkGroups() < 2) {
             return simpleSequenceFinder(project, tasksNotSequenced);
         }
 
@@ -253,7 +253,7 @@ public class Sequence {
      * @param tasksWithoutDependencies The tasks without dependencies which will be put at the start
      */
     private static void sequenceEmployees(Project project, List<Task> tasksSequenced, List<Task> tasksNotSequenced, List<Task> tasksWithoutDependencies) {
-        int amountEmployees = (int) project.getNumberOfEmployees();
+        int amountEmployees = (int) project.getNumberOfWorkGroups();
 
         if (amountEmployees >= tasksWithoutDependencies.size() + tasksSequenced.size()) {
             tasksSequenced.addAll(tasksWithoutDependencies);

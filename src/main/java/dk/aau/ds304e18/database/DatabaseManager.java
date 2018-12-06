@@ -301,7 +301,7 @@ public class DatabaseManager {
             statement.setString(2, project.getSequence());
             statement.setDouble(3, project.getDuration());
             statement.setString(4, project.getRecommendedPath());
-            statement.setDouble(5, project.getNumberOfEmployees());
+            statement.setDouble(5, project.getNumberOfWorkGroups());
             if (project.getPossibleCompletions() != null)
                 statement.setArray(6,
                         dbConnection.createArrayOf("FLOAT", project.getPossibleCompletions().toArray()));

@@ -68,7 +68,7 @@ public class IntegrationTests {
         task3.addEmployee(employee1, employee2, employee3);
         task4.addEmployee(employee3);
 
-        project.setNumberOfEmployees(2);
+        project.setNumberOfWorkGroups(2);
 
         MonteCarloExecutorService.init();
         int repeats = 10000 + MonteCarloExecutorService.getNumOfThreads() - 10000 % MonteCarloExecutorService.getNumOfThreads();
@@ -79,7 +79,7 @@ public class IntegrationTests {
 
         assertNotNull(project.getSequence());
         assertNotNull(project.getRecommendedPath());
-        assertEquals(2, project.getNumberOfEmployees());
+        assertEquals(2, project.getNumberOfWorkGroups());
         assertEquals(243, project.getDuration(), 5);
         assertEquals(forAssertion, project.getEmployees());
         assertEquals(project.getRecommendedEmployees().getAmountEmployees(), new ArrayList<Integer>());
