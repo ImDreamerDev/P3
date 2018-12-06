@@ -83,7 +83,7 @@ public class IntegrationTests {
         assertEquals(243, project.getDuration(), 5);
         assertEquals(forAssertion, project.getEmployees());
         assertEquals(project.getRecommendedEmployees().getAmountEmployees(), new ArrayList<Integer>());
-        assertEquals(project.getRecommendedEmployees().getEstimatedTime(), new ArrayList<Integer>());
+        assertEquals(project.getRecommendedEmployees().getEstimatedTime(), new ArrayList<Double>());
 
     }
 }
