@@ -138,7 +138,7 @@ public class Sequence {
         //in which case we will do that task first to get a higher chance of having a better sequence
         List<Task> tasksSequenced = new ArrayList<>(findUsefulTasksWithoutDeps(tasksWithoutDependencies, tasksNotSequenced));
 
-        //Add enough tasks at the start so every employee has something to do, 
+        //Add enough tasks at the start so every work group has something to do,
         // if there's not enough tasks without dependencies for everyone just add everyone
         sequenceWorkGroups(project, tasksSequenced, tasksNotSequenced, tasksWithoutDependencies);
 
