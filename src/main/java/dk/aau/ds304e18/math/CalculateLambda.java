@@ -10,7 +10,8 @@ class CalculateLambda {
      *
      * @param mu            - The value of mu before the calculation.
      * @param probabilities - The completion probabilities of the tasks.
-     * @return A list containing the mu value at index 0, lambda value at 1, and an accuracy value at 2 (lower the better).
+     * @return A list containing the mu value at index 0, lambda value at 1, and an accuracy value at 2
+     * (lower the better).
      */
     public static List<Double> calculateLambda(double mu, List<Probabilities> probabilities) {
         List<Double> returnVariables = new ArrayList<>();
@@ -59,7 +60,8 @@ class CalculateLambda {
         double currentLambda;
 
         /*
-         * bestValue should be as low as possible, as that means that all the probabilities are combined closest to the wanted values
+         * bestValue should be as low as possible, as that means that all the probabilities are combined closest
+          * to the wanted values
          */
         double bestValue = -1;
 
@@ -96,7 +98,8 @@ class CalculateLambda {
 
                 }
 
-                //If tempValue is lower than bestValue (and therefore better) or bestValue is -1 change the different bestValues so we save the current best values
+                //If tempValue is lower than bestValue (and therefore better) or bestValue is -1
+                // change the different bestValues so we save the current best values
                 if (tempValue < bestValue || bestValue == -1) {
                     bestValue = tempValue;
                     bestLambda = currentLambda;
