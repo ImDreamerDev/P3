@@ -61,7 +61,7 @@ class AssignmentTab {
         //Set the column data to show how many tasks the employees is assigned to.
         column.setCellValueFactory(cellData -> {
             if (cellData.getValue().getCurrentTask() != null && cellData.getValue().getCurrentTask().size() != 0)
-                return new SimpleStringProperty("Assigned to: " + cellData.getValue().getCurrentTask().size());
+                return new SimpleStringProperty("Assigned to: " + cellData.getValue().getCurrentTask().size()+" tasks");
             return new SimpleStringProperty("Not assigned");
         });
         //Get the buttons box to the right.

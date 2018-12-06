@@ -202,6 +202,7 @@ public class EmployeeTab {
             //Removes the tasks for the employees.
             employee.getCurrentTask().removeAll(employee.getCurrentTask());
             LocalObjStorage.getProjectById(JavaFXMain.selectedProjectId).removeEmployee(employee);
+            employee.setProjectId(0);
             DatabaseManager.updateEmployee(employee);
         }
         //Draw the new result.
