@@ -65,7 +65,7 @@ public class EstimateTimeCallable implements Callable<Estimate> {
                 //Initialize a hashmap with a task and a double. This hashmap is used to figure out if we can legally put in the task at the place we want to
                 HashMap<Task, Double> taskDoneAt = new HashMap<>();
 
-                //We initialize an amaount of durations equal to the amount of tasks done in parallel
+                //We initialize an amount of durations equal to the amount of tasks done in parallel
                 for (int j = 0; j < tempBig; j++) {
                     durations.add(0d);
                 }
