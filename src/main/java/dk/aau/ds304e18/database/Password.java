@@ -9,9 +9,13 @@ import java.util.Arrays;
 import java.util.Random;
 
 class Password {
+    //Most of this code is taken from https://stackoverflow.com/a/18143616
+    //Last accessed on dec-17-2018
+
+    private static final int KEY_LENGTH = 256;
     private static final Random RANDOM = new SecureRandom();
     private static final int ITERATIONS = 10000;
-    private static final int KEY_LENGTH = 256;
+
 
     private Password() {
     }
