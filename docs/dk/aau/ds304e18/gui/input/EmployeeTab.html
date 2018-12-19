@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -156,13 +156,20 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>private javafx.scene.layout.BorderPane</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#borderPane">borderPane</a></span></code></th>
+<td class="colLast">
+<div class="block">The border pane containing the employee tab.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>private javafx.scene.control.TableView&lt;<a href="../../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#freeEmployeeTableView">freeEmployeeTableView</a></span></code></th>
 <td class="colLast">
 <div class="block">The table view of all the free employees.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private javafx.scene.control.TableView&lt;<a href="../../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#projectEmployeeTableView">projectEmployeeTableView</a></span></code></th>
 <td class="colLast">
@@ -211,14 +218,14 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>private void</code></td>
+<td class="colFirst"><code>(package private) void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEmployee(javafx.scene.control.TextField)">addEmployee</a></span>&#8203;(javafx.scene.control.TextField&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Adds a new employee to the system.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>private void</code></td>
+<td class="colFirst"><code>(package private) void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#assignEmployee()">assignEmployee</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Assigns the selected employee(s) to the current project.</div>
@@ -233,6 +240,21 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupEmployeeTab()">setupEmployeeTab</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupEmployeeTableView(javafx.scene.control.TableView)">setupEmployeeTableView</a></span>&#8203;(javafx.scene.control.TableView&lt;<a href="../../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;&nbsp;projectEmployeeTableView)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#swapButtons(javafx.scene.layout.VBox)">swapButtons</a></span>&#8203;(javafx.scene.layout.VBox&nbsp;buttonPane)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>(package private) void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#unassignEmployee()">unassignEmployee</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Removes the selected employee(s) from the current project.</div>
@@ -275,11 +297,21 @@ extends java.lang.Object</pre>
 <a id="freeEmployeeTableView">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>freeEmployeeTableView</h4>
 <pre>private final&nbsp;javafx.scene.control.TableView&lt;<a href="../../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt; freeEmployeeTableView</pre>
 <div class="block">The table view of all the free employees.</div>
+</li>
+</ul>
+<a id="borderPane">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>borderPane</h4>
+<pre>private&nbsp;javafx.scene.layout.BorderPane borderPane</pre>
+<div class="block">The border pane containing the employee tab.</div>
 </li>
 </ul>
 </li>
@@ -298,7 +330,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>EmployeeTab</h4>
-<pre>public&nbsp;EmployeeTab&#8203;(javafx.scene.Parent&nbsp;rootPane)</pre>
+<pre>EmployeeTab&#8203;(javafx.scene.Parent&nbsp;rootPane)</pre>
 <div class="block">Create and sets up the Employee tab.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -316,13 +348,40 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="setupEmployeeTab()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setupEmployeeTab</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;setupEmployeeTab()</pre>
+</li>
+</ul>
+<a id="swapButtons(javafx.scene.layout.VBox)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>swapButtons</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;swapButtons&#8203;(javafx.scene.layout.VBox&nbsp;buttonPane)</pre>
+</li>
+</ul>
+<a id="setupEmployeeTableView(javafx.scene.control.TableView)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setupEmployeeTableView</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;setupEmployeeTableView&#8203;(javafx.scene.control.TableView&lt;<a href="../../models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a>&gt;&nbsp;projectEmployeeTableView)</pre>
+</li>
+</ul>
 <a id="assignEmployee()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>assignEmployee</h4>
-<pre class="methodSignature">private&nbsp;void&nbsp;assignEmployee()</pre>
+<pre class="methodSignature">void&nbsp;assignEmployee()</pre>
 <div class="block">Assigns the selected employee(s) to the current project.</div>
 </li>
 </ul>
@@ -332,7 +391,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>unassignEmployee</h4>
-<pre class="methodSignature">private&nbsp;void&nbsp;unassignEmployee()</pre>
+<pre class="methodSignature">void&nbsp;unassignEmployee()</pre>
 <div class="block">Removes the selected employee(s) from the current project.</div>
 </li>
 </ul>
@@ -352,7 +411,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>addEmployee</h4>
-<pre class="methodSignature">private&nbsp;void&nbsp;addEmployee&#8203;(javafx.scene.control.TextField&nbsp;name)</pre>
+<pre class="methodSignature">void&nbsp;addEmployee&#8203;(javafx.scene.control.TextField&nbsp;name)</pre>
 <div class="block">Adds a new employee to the system.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

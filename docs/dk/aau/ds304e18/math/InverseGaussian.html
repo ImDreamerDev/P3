@@ -219,29 +219,31 @@ extends java.lang.Object</pre>
    double&nbsp;lambda,
    double&nbsp;x)</code></th>
 <td class="colLast">
-<div class="block">Calculate the y-value given an x value, i.e.</div>
+<div class="block">Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
+ Calculate the y-value given an x value, i.e.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>private static double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cdf01(double)">cdf01</a></span>&#8203;(double&nbsp;x)</code></th>
 <td class="colLast">
-<div class="block">The CDF for the Gaussian Distribution aka normal distribution (Used to calculate the CDF of the Inverse Gaussian Distribution)</div>
+<div class="block">Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
+ The CDF for the Gaussian Distribution aka normal distribution (Used to calculate the CDF of the Inverse Gaussian Distribution)</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>private static double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#evalCheby(double)">evalCheby</a></span>&#8203;(double&nbsp;x)</code></th>
 <td class="colLast">
-<div class="block">Used to calculate the CDF of the normal distribution</div>
+<div class="block">Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
+ Used to calculate the CDF of the normal distribution</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDuration(double)">getDuration</a></span>&#8203;(double&nbsp;y)</code></th>
 <td class="colLast">
-<div class="block">The getter for the duration
- TODO: Look into optimizing this</div>
+<div class="block">The getter for the duration</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
@@ -263,7 +265,8 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParams(double,double)">setParams</a></span>&#8203;(double&nbsp;mu,
          double&nbsp;lambda)</code></th>
 <td class="colLast">
-<div class="block">Sets the parameters for the Inverse Gaussian Distribution, if mu or lambda is less than or equal to 0, throw exception</div>
+<div class="block">Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
+ Sets the parameters for the Inverse Gaussian Distribution, if mu or lambda is less than or equal to 0, throw exception</div>
 </td>
 </tr>
 </table>
@@ -365,7 +368,8 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">private static&nbsp;double&nbsp;cdf&#8203;(double&nbsp;mu,
                           double&nbsp;lambda,
                           double&nbsp;x)</pre>
-<div class="block">Calculate the y-value given an x value, i.e. the probability of a task completing at a certain time (y : probability, x : time) using the CDF</div>
+<div class="block">Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
+ Calculate the y-value given an x value, i.e. the probability of a task completing at a certain time (y : probability, x : time) using the CDF</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>mu</code> - - the mean.</dd>
@@ -383,7 +387,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>cdf01</h4>
 <pre class="methodSignature">private static&nbsp;double&nbsp;cdf01&#8203;(double&nbsp;x)</pre>
-<div class="block">The CDF for the Gaussian Distribution aka normal distribution (Used to calculate the CDF of the Inverse Gaussian Distribution)</div>
+<div class="block">Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
+ The CDF for the Gaussian Distribution aka normal distribution (Used to calculate the CDF of the Inverse Gaussian Distribution)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>x</code> - - It's the x value of the normal distribution.</dd>
@@ -399,7 +404,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>evalCheby</h4>
 <pre class="methodSignature">private static&nbsp;double&nbsp;evalCheby&#8203;(double&nbsp;x)</pre>
-<div class="block">Used to calculate the CDF of the normal distribution</div>
+<div class="block">Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
+ Used to calculate the CDF of the normal distribution</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>x</code> - -the parameter of the Tj functions.</dd>
@@ -416,7 +422,8 @@ extends java.lang.Object</pre>
 <h4>setParams</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setParams&#8203;(double&nbsp;mu,
                       double&nbsp;lambda)</pre>
-<div class="block">Sets the parameters for the Inverse Gaussian Distribution, if mu or lambda is less than or equal to 0, throw exception</div>
+<div class="block">Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
+ Sets the parameters for the Inverse Gaussian Distribution, if mu or lambda is less than or equal to 0, throw exception</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>mu</code> - - the mean.</dd>
@@ -461,8 +468,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getDuration</h4>
 <pre class="methodSignature">public&nbsp;double&nbsp;getDuration&#8203;(double&nbsp;y)</pre>
-<div class="block">The getter for the duration
- TODO: Look into optimizing this</div>
+<div class="block">The getter for the duration</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>y</code> - - The probability of the task succeeding at that duration.</dd>

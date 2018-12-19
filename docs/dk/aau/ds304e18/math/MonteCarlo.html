@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -205,40 +205,38 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#allLowestToNextLowest(java.util.List)">allLowestToNextLowest</a></span>&#8203;(java.util.List&lt;java.lang.Double&gt;&nbsp;startTimes)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>private static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#check(dk.aau.ds304e18.models.Task,java.util.List)">check</a></span>&#8203;(<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task,
-     java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;alreadyStarted)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>static double</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateTime(dk.aau.ds304e18.models.Project,boolean)">estimateTime</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-            boolean&nbsp;rec)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>static double</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateTime(dk.aau.ds304e18.models.Project,boolean,int)">estimateTime</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-            boolean&nbsp;random,
-            int&nbsp;index)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#allLowestToSecondLowest(java.util.List)">allLowestToSecondLowest</a></span>&#8203;(java.util.List&lt;java.lang.Double&gt;&nbsp;list)</code></th>
 <td class="colLast">
-<div class="block">If you have a project you want to estimate the time in with random sequences</div>
+<div class="block">Sets all the doubles in a list that has the same value as the smallest value to the first value that is
+ higher than the smallest value - Also sorts the list from smallest to highest
+ i.e.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>static double</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateTime(dk.aau.ds304e18.models.Project,int,boolean,int)">estimateTime</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-            int&nbsp;monteCarloRepeats,
-            boolean&nbsp;random,
-            int&nbsp;index)</code></th>
-<td class="colLast">&nbsp;</td>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>private static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculateLambdaForAllTasks(dk.aau.ds304e18.models.Project)">calculateLambdaForAllTasks</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
+<td class="colLast">
+<div class="block">Calculates the lambda value (And an optimized mu value) for each task in a given project
+ Sets the tasks inverse gaussian parameters (mu and lambda)</div>
+</td>
 </tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>static double</code></td>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculateProjectInformation(dk.aau.ds304e18.models.Project,int,boolean,int)">calculateProjectInformation</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                           int&nbsp;amountSequences,
+                           boolean&nbsp;fast,
+                           int&nbsp;monteCarloRepeats)</code></th>
+<td class="colLast">
+<div class="block">Calculates the project information:
+ The best sequence,
+ The time of this sequence,
+ The probability of completing at different times,
+ Sets the start time of each task for the gantt view,
+ The recommended amount of employees.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>private static double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateTime(dk.aau.ds304e18.models.Project,int,boolean,int,boolean)">estimateTime</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
             int&nbsp;monteCarloRepeats,
             boolean&nbsp;random,
@@ -248,29 +246,83 @@ extends java.lang.Object</pre>
 <div class="block">The main estimateTime function used to estimate the time of a project</div>
 </td>
 </tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>private static java.util.List&lt;java.lang.Double&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateTimeForAllSequences(int,java.lang.String%5B%5D,dk.aau.ds304e18.models.Project,int)">estimateTimeForAllSequences</a></span>&#8203;(int&nbsp;amountSequences,
+                           java.lang.String[]&nbsp;randomSequences,
+                           <a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                           int&nbsp;monteCarloRepeats)</code></th>
+<td class="colLast">
+<div class="block">Estimates the time for all sequences and returns a list of doubles.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>private static int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#estimateWithDifferentAmountOfWorkGroups(int,int,dk.aau.ds304e18.models.Project,dk.aau.ds304e18.math.RecommendedEmployees)">estimateWithDifferentAmountOfWorkGroups</a></span>&#8203;(int&nbsp;amountEmployees,
+                                       int&nbsp;numOfWorkGroups,
+                                       <a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                       <a href="RecommendedEmployees.html" title="class in dk.aau.ds304e18.math">RecommendedEmployees</a>&nbsp;tempRecEmp)</code></th>
+<td class="colLast">
+<div class="block">Estimates the time for a project to complete with the sequence found for the current amount of employees.</div>
+</td>
+</tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findFastestSequence(dk.aau.ds304e18.models.Project,boolean)">findFastestSequence</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-                   boolean&nbsp;fast)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>private static int[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findLowUp(int)">findLowUp</a></span>&#8203;(int&nbsp;numOfWorkGroups)</code></th>
+<td class="colLast">
+<div class="block">Finds lower bound of a number of work groups.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findFastestSequence(dk.aau.ds304e18.models.Project,int,boolean)">findFastestSequence</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-                   int&nbsp;monteCarloRepeats,
+<td class="colFirst"><code>private static java.lang.String[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findRandomSequences(int,int,dk.aau.ds304e18.models.Project,boolean)">findRandomSequences</a></span>&#8203;(int&nbsp;amountSequences,
+                   int&nbsp;numOfWorkGroups,
+                   <a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
                    boolean&nbsp;fast)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Finds an array of random sequences in a project.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>private static int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findSmallestPossible(dk.aau.ds304e18.models.Task,java.util.List)">findSmallestPossible</a></span>&#8203;(<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task,
                     java.util.List&lt;java.lang.Double&gt;&nbsp;startTimes)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Checks if the task is ready to be put in after the task that is done the fastest currently.</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
+<td class="colFirst"><code>private static boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NotLegal(dk.aau.ds304e18.models.Task,java.util.List)">NotLegal</a></span>&#8203;(<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task,
+        java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;alreadyStarted)</code></th>
+<td class="colLast">
+<div class="block">Checks if the task currently being put into a schedule can legally be put in there.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>private static <a href="RecommendedEmployees.html" title="class in dk.aau.ds304e18.math">RecommendedEmployees</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#optimizeWorkGroups(dk.aau.ds304e18.models.Project,int)">optimizeWorkGroups</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                  int&nbsp;numOfWorkGroups)</code></th>
+<td class="colLast">
+<div class="block">Finds the smallest amount of work groups needed to get
+ within a margin of the estimated time of the calculated project.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static javafx.beans.property.ReadOnlyDoubleProperty</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#progressProperty()">progressProperty</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The progress property of the calculation process.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>private static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setStartTimesOfTasks(dk.aau.ds304e18.models.Project,int)">setStartTimesOfTasks</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                    int&nbsp;numOfWorkGroups)</code></th>
+<td class="colLast">
+<div class="block">Sets the start times of tasks to an available time slot depending on amount of work groups and dependencies
+ This is used to create a reasonable gantt view</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -296,22 +348,22 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a id="progress">
+<a id="numOfThreads">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>progress</h4>
-<pre>private static final&nbsp;javafx.beans.property.ReadOnlyDoubleWrapper progress</pre>
+<h4>numOfThreads</h4>
+<pre>private static final&nbsp;int numOfThreads</pre>
 </li>
 </ul>
-<a id="numOfThreads">
+<a id="progress">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>numOfThreads</h4>
-<pre>private static final&nbsp;int numOfThreads</pre>
+<h4>progress</h4>
+<pre>private static final&nbsp;javafx.beans.property.ReadOnlyDoubleWrapper progress</pre>
 </li>
 </ul>
 </li>
@@ -350,46 +402,218 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>progressProperty</h4>
 <pre class="methodSignature">public static&nbsp;javafx.beans.property.ReadOnlyDoubleProperty&nbsp;progressProperty()</pre>
+<div class="block">The progress property of the calculation process.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>progress The amount progress currently made.</dd>
+</dl>
 </li>
 </ul>
-<a id="findFastestSequence(dk.aau.ds304e18.models.Project,boolean)">
+<a id="calculateProjectInformation(dk.aau.ds304e18.models.Project,int,boolean,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>findFastestSequence</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;findFastestSequence&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-                                       boolean&nbsp;fast)</pre>
+<h4>calculateProjectInformation</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;calculateProjectInformation&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                               int&nbsp;amountSequences,
+                                               boolean&nbsp;fast,
+                                               int&nbsp;monteCarloRepeats)</pre>
+<div class="block">Calculates the project information:
+ The best sequence,
+ The time of this sequence,
+ The probability of completing at different times,
+ Sets the start time of each task for the gantt view,
+ The recommended amount of employees.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>project</code> - The project you want to calculate and set values for</dd>
+<dd><code>amountSequences</code> - The amount of sequences you want</dd>
+<dd><code>fast</code> - Less accurate, but possibly faster</dd>
+</dl>
 </li>
 </ul>
-<a id="findFastestSequence(dk.aau.ds304e18.models.Project,int,boolean)">
+<a id="findRandomSequences(int,int,dk.aau.ds304e18.models.Project,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>findFastestSequence</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;findFastestSequence&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-                                       int&nbsp;monteCarloRepeats,
-                                       boolean&nbsp;fast)</pre>
+<h4>findRandomSequences</h4>
+<pre class="methodSignature">private static&nbsp;java.lang.String[]&nbsp;findRandomSequences&#8203;(int&nbsp;amountSequences,
+                                                      int&nbsp;numOfWorkGroups,
+                                                      <a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                                      boolean&nbsp;fast)</pre>
+<div class="block">Finds an array of random sequences in a project.
+ If there's only 1 work group it just finds a random sequence
+ As all sequences would take the same amount of time assuming they're legal</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>amountSequences</code> - Amount of sequences wanted (max)</dd>
+<dd><code>numOfWorkGroups</code> - Amount of work groups in the project
+                        (Slightly faster to just send the integer than getting it from project)</dd>
+<dd><code>project</code> - The project we want to find random sequences for</dd>
+<dd><code>fast</code> - Finds less sequences, which is faster, but less accurate
+                        (Only faster with relatively small projects)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>An array of strings with random sequences for the project, all legal</dd>
+</dl>
 </li>
 </ul>
-<a id="allLowestToNextLowest(java.util.List)">
+<a id="calculateLambdaForAllTasks(dk.aau.ds304e18.models.Project)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>allLowestToNextLowest</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;allLowestToNextLowest&#8203;(java.util.List&lt;java.lang.Double&gt;&nbsp;startTimes)</pre>
+<h4>calculateLambdaForAllTasks</h4>
+<pre class="methodSignature">private static&nbsp;void&nbsp;calculateLambdaForAllTasks&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</pre>
+<div class="block">Calculates the lambda value (And an optimized mu value) for each task in a given project
+ Sets the tasks inverse gaussian parameters (mu and lambda)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>project</code> - The project with the tasks that will be calculated</dd>
+</dl>
 </li>
 </ul>
-<a id="check(dk.aau.ds304e18.models.Task,java.util.List)">
+<a id="estimateTimeForAllSequences(int,java.lang.String[],dk.aau.ds304e18.models.Project,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>check</h4>
-<pre class="methodSignature">private static&nbsp;boolean&nbsp;check&#8203;(<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task,
-                             java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;alreadyStarted)</pre>
+<h4>estimateTimeForAllSequences</h4>
+<pre class="methodSignature">private static&nbsp;java.util.List&lt;java.lang.Double&gt;&nbsp;estimateTimeForAllSequences&#8203;(int&nbsp;amountSequences,
+                                                                            java.lang.String[]&nbsp;randomSequences,
+                                                                            <a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                                                            int&nbsp;monteCarloRepeats)</pre>
+<div class="block">Estimates the time for all sequences and returns a list of doubles.
+ This makes it possible to find the best sequence as that is
+ the one with the same index as the smallest time.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>amountSequences</code> - The amount of sequences to be tried</dd>
+<dd><code>randomSequences</code> - The sequences to be tried</dd>
+<dd><code>project</code> - The project with the sequences</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The list of estimated times</dd>
+</dl>
+</li>
+</ul>
+<a id="allLowestToSecondLowest(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>allLowestToSecondLowest</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;allLowestToSecondLowest&#8203;(java.util.List&lt;java.lang.Double&gt;&nbsp;list)</pre>
+<div class="block">Sets all the doubles in a list that has the same value as the smallest value to the first value that is
+ higher than the smallest value - Also sorts the list from smallest to highest
+ i.e.
+ [1, 1, 1, 9, 5, 3]
+ would become
+ [3, 3, 3, 3, 5, 9]</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>list</code> - The list in which to set the smallest values to the first value above</dd>
+</dl>
+</li>
+</ul>
+<a id="setStartTimesOfTasks(dk.aau.ds304e18.models.Project,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setStartTimesOfTasks</h4>
+<pre class="methodSignature">private static&nbsp;void&nbsp;setStartTimesOfTasks&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                         int&nbsp;numOfWorkGroups)</pre>
+<div class="block">Sets the start times of tasks to an available time slot depending on amount of work groups and dependencies
+ This is used to create a reasonable gantt view</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>project</code> - The project in which the tasks exist</dd>
+<dd><code>numOfWorkGroups</code> - The amount of work groups</dd>
+</dl>
+</li>
+</ul>
+<a id="optimizeWorkGroups(dk.aau.ds304e18.models.Project,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>optimizeWorkGroups</h4>
+<pre class="methodSignature">private static&nbsp;<a href="RecommendedEmployees.html" title="class in dk.aau.ds304e18.math">RecommendedEmployees</a>&nbsp;optimizeWorkGroups&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                                       int&nbsp;numOfWorkGroups)</pre>
+<div class="block">Finds the smallest amount of work groups needed to get
+ within a margin of the estimated time of the calculated project.
+ Finds the smallest amount of work groups to get the project under a certain time.
+ <p>
+ I.e. The project takes 100 duration
+ Finds the smallest amount of work groups needed to be below 110 duration
+ Finds the smallest amount of work groups needed to be below 90 duration</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>project</code> - The project to optimize number of work groups</dd>
+<dd><code>numOfWorkGroups</code> - The number of work groups in the project</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Returns the recommended amount of employees and their estimated time</dd>
+</dl>
+</li>
+</ul>
+<a id="findLowUp(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>findLowUp</h4>
+<pre class="methodSignature">private static&nbsp;int[]&nbsp;findLowUp&#8203;(int&nbsp;numOfWorkGroups)</pre>
+<div class="block">Finds lower bound of a number of work groups.
+ Finds upper bound of a number of work groups.
+ So the program doesn't calculate forever.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>numOfWorkGroups</code> - Amount of work groups currently in the project</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>An array of integers, first one being the lower bound, second being the upper bound.</dd>
+</dl>
+</li>
+</ul>
+<a id="estimateWithDifferentAmountOfWorkGroups(int,int,dk.aau.ds304e18.models.Project,dk.aau.ds304e18.math.RecommendedEmployees)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>estimateWithDifferentAmountOfWorkGroups</h4>
+<pre class="methodSignature">private static&nbsp;int&nbsp;estimateWithDifferentAmountOfWorkGroups&#8203;(int&nbsp;amountEmployees,
+                                                           int&nbsp;numOfWorkGroups,
+                                                           <a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                                           <a href="RecommendedEmployees.html" title="class in dk.aau.ds304e18.math">RecommendedEmployees</a>&nbsp;tempRecEmp)</pre>
+<div class="block">Estimates the time for a project to complete with the sequence found for the current amount of employees.
+ This gives a guess at an optimal amount of employees.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>amountEmployees</code> - The amount of employees to guess with</dd>
+<dd><code>numOfWorkGroups</code> - The amount of employees the project has at the start</dd>
+<dd><code>project</code> - The project to calculate</dd>
+<dd><code>tempRecEmp</code> - The result</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>0 = Skip this one, 1 = Estimation is done, 2 = No need to guess under the current amount of employees</dd>
+</dl>
+</li>
+</ul>
+<a id="NotLegal(dk.aau.ds304e18.models.Task,java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>NotLegal</h4>
+<pre class="methodSignature">private static&nbsp;boolean&nbsp;NotLegal&#8203;(<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task,
+                                java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;alreadyStarted)</pre>
+<div class="block">Checks if the task currently being put into a schedule can legally be put in there.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>task</code> - The task to check if legal to put in.</dd>
+<dd><code>alreadyStarted</code> - The list of tasks already in.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A boolean | True = Not legal | False = Legal</dd>
+</dl>
 </li>
 </ul>
 <a id="findSmallestPossible(dk.aau.ds304e18.models.Task,java.util.List)">
@@ -400,48 +624,14 @@ extends java.lang.Object</pre>
 <h4>findSmallestPossible</h4>
 <pre class="methodSignature">private static&nbsp;int&nbsp;findSmallestPossible&#8203;(<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&nbsp;task,
                                         java.util.List&lt;java.lang.Double&gt;&nbsp;startTimes)</pre>
-</li>
-</ul>
-<a id="estimateTime(dk.aau.ds304e18.models.Project,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>estimateTime</h4>
-<pre class="methodSignature">public static&nbsp;double&nbsp;estimateTime&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-                                  boolean&nbsp;rec)</pre>
-</li>
-</ul>
-<a id="estimateTime(dk.aau.ds304e18.models.Project,boolean,int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>estimateTime</h4>
-<pre class="methodSignature">public static&nbsp;double&nbsp;estimateTime&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-                                  boolean&nbsp;random,
-                                  int&nbsp;index)</pre>
-<div class="block">If you have a project you want to estimate the time in with random sequences</div>
+<div class="block">Checks if the task is ready to be put in after the task that is done the fastest currently.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>project</code> - The project you want estimated</dd>
-<dd><code>random</code> - Want to specify that it's random sequences</dd>
-<dd><code>index</code> - The index we're at in the random sequences</dd>
+<dd><code>task</code> - The task to check</dd>
+<dd><code>startTimes</code> - The current startTimes available</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>The estimated time</dd>
+<dd>The index of the startTime to be placed in, -1 if illegal</dd>
 </dl>
-</li>
-</ul>
-<a id="estimateTime(dk.aau.ds304e18.models.Project,int,boolean,int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>estimateTime</h4>
-<pre class="methodSignature">public static&nbsp;double&nbsp;estimateTime&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-                                  int&nbsp;monteCarloRepeats,
-                                  boolean&nbsp;random,
-                                  int&nbsp;index)</pre>
 </li>
 </ul>
 <a id="estimateTime(dk.aau.ds304e18.models.Project,int,boolean,int,boolean)">
@@ -450,18 +640,19 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>estimateTime</h4>
-<pre class="methodSignature">public static&nbsp;double&nbsp;estimateTime&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-                                  int&nbsp;monteCarloRepeats,
-                                  boolean&nbsp;random,
-                                  int&nbsp;index,
-                                  boolean&nbsp;rec)</pre>
+<pre class="methodSignature">private static&nbsp;double&nbsp;estimateTime&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                   int&nbsp;monteCarloRepeats,
+                                   boolean&nbsp;random,
+                                   int&nbsp;index,
+                                   boolean&nbsp;rec)</pre>
 <div class="block">The main estimateTime function used to estimate the time of a project</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>project</code> - The project you want estimated</dd>
-<dd><code>monteCarloRepeats</code> - The amount of times you want it repeated</dd>
-<dd><code>index</code> - The index of the possible loop this is called in (If no loop, send 0)</dd>
+<dd><code>project</code> - The project you want estimated.</dd>
+<dd><code>monteCarloRepeats</code> - The amount of times you want it repeated.</dd>
 <dd><code>random</code> - Is it a random sequence or not.</dd>
+<dd><code>index</code> - The index of the possible loop this is called in (If no loop, send 0).</dd>
+<dd><code>rec</code> - If it should use the recommended path or not.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Returns the estimated time of the project</dd>
 </dl>

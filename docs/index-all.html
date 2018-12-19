@@ -93,7 +93,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </nav>
 </header>
 <main role="main">
-<div class="contentContainer"><a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:Z">Z</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes</a>&nbsp;<a href="allpackages-index.html">All&nbsp;Packages</a><a id="I:A">
+<div class="contentContainer"><a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:Z">Z</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes</a>&nbsp;<a href="allpackages-index.html">All&nbsp;Packages</a><a id="I:A">
 <!--   -->
 </a>
 <h2 class="title">A</h2>
@@ -142,10 +142,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Adds new tasks to the project.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/ProjectManager.html#addOldProject(dk.aau.ds304e18.models.Project)">addOldProject(Project)</a></span> - Method in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></dt>
-<dd>
-<div class="block">This function adds a project to the old projects list.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/database/DatabaseManager.html#addProject(dk.aau.ds304e18.models.Project)">addProject(Project)</a></span> - Static method in class dk.aau.ds304e18.database.<a href="dk/aau/ds304e18/database/DatabaseManager.html" title="class in dk.aau.ds304e18.database">DatabaseManager</a></dt>
 <dd>
 <div class="block">Adds a project to the database and fetches the unique project ID and adds to project.</div>
@@ -172,8 +168,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">The method for adding a task.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#allLowestToNextLowest(java.util.List)">allLowestToNextLowest(List&lt;Double&gt;)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
-<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#allLowestToSecondLowest(java.util.List)">allLowestToSecondLowest(List&lt;Double&gt;)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
+<dd>
+<div class="block">Sets all the doubles in a list that has the same value as the smallest value to the first value that is
+ higher than the smallest value - Also sorts the list from smallest to highest
+ i.e.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/estimatetime/EstimateTimeCallable.html#amountEmployees">amountEmployees</a></span> - Variable in class dk.aau.ds304e18.estimatetime.<a href="dk/aau/ds304e18/estimatetime/EstimateTimeCallable.html" title="class in dk.aau.ds304e18.estimatetime">EstimateTimeCallable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/RecommendedEmployees.html#amountEmployees">amountEmployees</a></span> - Variable in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/RecommendedEmployees.html" title="class in dk.aau.ds304e18.math">RecommendedEmployees</a></dt>
@@ -192,21 +192,25 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Method for archiving an on going project.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/ProjectManager.html#archiveProject(dk.aau.ds304e18.models.Project)">archiveProject(Project)</a></span> - Method in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></dt>
+<dd>
+<div class="block">This function adds a project to the old projects list.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/AssignmentTab.html#assignEmployee()">assignEmployee()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.input">AssignmentTab</a></dt>
+<dd>
+<div class="block">Assign the selected employee(s) to the selected task.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/EmployeeTab.html#assignEmployee()">assignEmployee()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/EmployeeTab.html" title="class in dk.aau.ds304e18.gui.input">EmployeeTab</a></dt>
 <dd>
 <div class="block">Assigns the selected employee(s) to the current project.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/output/AssignmentTab.html#assignEmployee()">assignEmployee()</a></span> - Method in class dk.aau.ds304e18.gui.output.<a href="dk/aau/ds304e18/gui/output/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.output">AssignmentTab</a></dt>
-<dd>
-<div class="block">Assign the selected employee(s) to the selected task.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/output/OutputTab.html#assignmentTab">assignmentTab</a></span> - Variable in class dk.aau.ds304e18.gui.output.<a href="dk/aau/ds304e18/gui/output/OutputTab.html" title="class in dk.aau.ds304e18.gui.output">OutputTab</a></dt>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#assignmentTab">assignmentTab</a></span> - Variable in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="dk/aau/ds304e18/gui/output/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.output"><span class="typeNameLink">AssignmentTab</span></a> - Class in <a href="dk/aau/ds304e18/gui/output/package-summary.html">dk.aau.ds304e18.gui.output</a></dt>
+<dt><a href="dk/aau/ds304e18/gui/input/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.input"><span class="typeNameLink">AssignmentTab</span></a> - Class in <a href="dk/aau/ds304e18/gui/input/package-summary.html">dk.aau.ds304e18.gui.input</a></dt>
 <dd>
 <div class="block">The assignment tab of the GUI.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/output/AssignmentTab.html#%3Cinit%3E(javafx.scene.layout.BorderPane)">AssignmentTab(BorderPane)</a></span> - Constructor for class dk.aau.ds304e18.gui.output.<a href="dk/aau/ds304e18/gui/output/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.output">AssignmentTab</a></dt>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/AssignmentTab.html#%3Cinit%3E(javafx.scene.layout.BorderPane)">AssignmentTab(BorderPane)</a></span> - Constructor for class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.input">AssignmentTab</a></dt>
 <dd>
 <div class="block">Creates and sets up the assignment tab.</div>
 </dd>
@@ -218,13 +222,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dl>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/output/OutputTab.html#barChart">barChart</a></span> - Variable in class dk.aau.ds304e18.gui.output.<a href="dk/aau/ds304e18/gui/output/OutputTab.html" title="class in dk.aau.ds304e18.gui.output">OutputTab</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/EmployeeTab.html#borderPane">borderPane</a></span> - Variable in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/EmployeeTab.html" title="class in dk.aau.ds304e18.gui.input">EmployeeTab</a></dt>
+<dd>
+<div class="block">The border pane containing the employee tab.</div>
+</dd>
 </dl>
 <a id="I:C">
 <!--   -->
 </a>
 <h2 class="title">C</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#calculate(dk.aau.ds304e18.models.Project,double,boolean)">calculate(Project, double, boolean)</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#calculate(dk.aau.ds304e18.models.Project,double,boolean,int)">calculate(Project, double, boolean, int)</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
 <dd>
 <div class="block">This method calculates and produces the output.</div>
 </dd>
@@ -236,19 +244,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/CalculateLambda.html#%3Cinit%3E()">CalculateLambda()</a></span> - Constructor for class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/CalculateLambda.html" title="class in dk.aau.ds304e18.math">CalculateLambda</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#calculateLambdaForAllTasks(dk.aau.ds304e18.models.Project)">calculateLambdaForAllTasks(Project)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
+<dd>
+<div class="block">Calculates the lambda value (And an optimized mu value) for each task in a given project
+ Sets the tasks inverse gaussian parameters (mu and lambda)</div>
+</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#calculateProjectInformation(dk.aau.ds304e18.models.Project,int,boolean,int)">calculateProjectInformation(Project, int, boolean, int)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
+<dd>
+<div class="block">Calculates the project information:
+ The best sequence,
+ The time of this sequence,
+ The probability of completing at different times,
+ Sets the start time of each task for the gantt view,
+ The recommended amount of employees.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/estimatetime/EstimateTimeCallable.html#call()">call()</a></span> - Method in class dk.aau.ds304e18.estimatetime.<a href="dk/aau/ds304e18/estimatetime/EstimateTimeCallable.html" title="class in dk.aau.ds304e18.estimatetime">EstimateTimeCallable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/InverseGaussian.html#cdf(double,double,double)">cdf(double, double, double)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/InverseGaussian.html" title="class in dk.aau.ds304e18.math">InverseGaussian</a></dt>
 <dd>
-<div class="block">Calculate the y-value given an x value, i.e.</div>
+<div class="block">Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
+ Calculate the y-value given an x value, i.e.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/InverseGaussian.html#cdf01(double)">cdf01(double)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/InverseGaussian.html" title="class in dk.aau.ds304e18.math">InverseGaussian</a></dt>
 <dd>
-<div class="block">The CDF for the Gaussian Distribution aka normal distribution (Used to calculate the CDF of the Inverse Gaussian Distribution)</div>
+<div class="block">Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
+ The CDF for the Gaussian Distribution aka normal distribution (Used to calculate the CDF of the Inverse Gaussian Distribution)</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/estimatetime/Estimate.html#chances">chances</a></span> - Variable in class dk.aau.ds304e18.estimatetime.<a href="dk/aau/ds304e18/estimatetime/Estimate.html" title="class in dk.aau.ds304e18.estimatetime">Estimate</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#check(dk.aau.ds304e18.models.Task,java.util.List)">check(Task, List&lt;Task&gt;)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/Maths.html#clamp(T,T,T)">clamp(T, T, T)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/Maths.html" title="class in dk.aau.ds304e18.math">Maths</a></dt>
 <dd>&nbsp;</dd>
@@ -298,6 +320,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">D</h2>
 <dl>
+<dt><a href="dk/aau/ds304e18/database/DatabaseDistributor.html" title="class in dk.aau.ds304e18.database"><span class="typeNameLink">DatabaseDistributor</span></a> - Class in <a href="dk/aau/ds304e18/database/package-summary.html">dk.aau.ds304e18.database</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/database/DatabaseDistributor.html#%3Cinit%3E()">DatabaseDistributor()</a></span> - Constructor for class dk.aau.ds304e18.database.<a href="dk/aau/ds304e18/database/DatabaseDistributor.html" title="class in dk.aau.ds304e18.database">DatabaseDistributor</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dk/aau/ds304e18/database/DatabaseManager.html" title="class in dk.aau.ds304e18.database"><span class="typeNameLink">DatabaseManager</span></a> - Class in <a href="dk/aau/ds304e18/database/package-summary.html">dk.aau.ds304e18.database</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/database/DatabaseManager.html#%3Cinit%3E()">DatabaseManager()</a></span> - Constructor for class dk.aau.ds304e18.database.<a href="dk/aau/ds304e18/database/DatabaseManager.html" title="class in dk.aau.ds304e18.database">DatabaseManager</a></dt>
@@ -342,7 +368,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">This method is used in the distributeModels method to add tasks locally and not interfere with the database.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/database/DatabaseManager.html#distributeModels(dk.aau.ds304e18.models.ProjectManager)">distributeModels(ProjectManager)</a></span> - Static method in class dk.aau.ds304e18.database.<a href="dk/aau/ds304e18/database/DatabaseManager.html" title="class in dk.aau.ds304e18.database">DatabaseManager</a></dt>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/database/DatabaseDistributor.html#distributeModels(dk.aau.ds304e18.models.ProjectManager)">distributeModels(ProjectManager)</a></span> - Static method in class dk.aau.ds304e18.database.<a href="dk/aau/ds304e18/database/DatabaseDistributor.html" title="class in dk.aau.ds304e18.database">DatabaseDistributor</a></dt>
 <dd>
 <div class="block">Retrieves everything from the database and converts it to objects, and at distributes it to the correct lists in the localObjStorgae.</div>
 </dd>
@@ -364,13 +390,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><a href="dk/aau/ds304e18/sequence/package-summary.html">dk.aau.ds304e18.sequence</a> - package dk.aau.ds304e18.sequence</dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/AssignmentTab.html#drawEmployees()">drawEmployees()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.input">AssignmentTab</a></dt>
+<dd>
+<div class="block">Updates/draws the employees in the assignment tab.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/EmployeeTab.html#drawEmployees()">drawEmployees()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/EmployeeTab.html" title="class in dk.aau.ds304e18.gui.input">EmployeeTab</a></dt>
 <dd>
 <div class="block">Draws/updates the table views.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/output/AssignmentTab.html#drawEmployees()">drawEmployees()</a></span> - Method in class dk.aau.ds304e18.gui.output.<a href="dk/aau/ds304e18/gui/output/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.output">AssignmentTab</a></dt>
-<dd>
-<div class="block">Updates/draws the employees in the assignment tab.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#drawInputTab()">drawInputTab()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
 <dd>
@@ -440,7 +466,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Create and sets up the Employee tab.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/output/AssignmentTab.html#employeeTableView">employeeTableView</a></span> - Variable in class dk.aau.ds304e18.gui.output.<a href="dk/aau/ds304e18/gui/output/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.output">AssignmentTab</a></dt>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/AssignmentTab.html#employeeTableView">employeeTableView</a></span> - Variable in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.input">AssignmentTab</a></dt>
 <dd>
 <div class="block">The table view of the employee(s) on the project.</div>
 </dd>
@@ -464,14 +490,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">The estimated completion time of the task - This is used as mu in the inverse gaussian</div>
 </dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#estimateTime(dk.aau.ds304e18.models.Project,boolean)">estimateTime(Project, boolean)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#estimateTime(dk.aau.ds304e18.models.Project,boolean,int)">estimateTime(Project, boolean, int)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
-<dd>
-<div class="block">If you have a project you want to estimate the time in with random sequences</div>
-</dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#estimateTime(dk.aau.ds304e18.models.Project,int,boolean,int)">estimateTime(Project, int, boolean, int)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#estimateTime(dk.aau.ds304e18.models.Project,int,boolean,int,boolean)">estimateTime(Project, int, boolean, int, boolean)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
 <dd>
 <div class="block">The main estimateTime function used to estimate the time of a project</div>
@@ -480,9 +498,18 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/estimatetime/EstimateTimeCallable.html#%3Cinit%3E(java.util.List,double,int)">EstimateTimeCallable(List&lt;Task&gt;, double, int)</a></span> - Constructor for class dk.aau.ds304e18.estimatetime.<a href="dk/aau/ds304e18/estimatetime/EstimateTimeCallable.html" title="class in dk.aau.ds304e18.estimatetime">EstimateTimeCallable</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#estimateTimeForAllSequences(int,java.lang.String%5B%5D,dk.aau.ds304e18.models.Project,int)">estimateTimeForAllSequences(int, String[], Project, int)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
+<dd>
+<div class="block">Estimates the time for all sequences and returns a list of doubles.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#estimateWithDifferentAmountOfWorkGroups(int,int,dk.aau.ds304e18.models.Project,dk.aau.ds304e18.math.RecommendedEmployees)">estimateWithDifferentAmountOfWorkGroups(int, int, Project, RecommendedEmployees)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
+<dd>
+<div class="block">Estimates the time for a project to complete with the sequence found for the current amount of employees.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/InverseGaussian.html#evalCheby(double)">evalCheby(double)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/InverseGaussian.html" title="class in dk.aau.ds304e18.math">InverseGaussian</a></dt>
 <dd>
-<div class="block">Used to calculate the CDF of the normal distribution</div>
+<div class="block">Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
+ Used to calculate the CDF of the normal distribution</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html#executor">executor</a></span> - Static variable in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html" title="class in dk.aau.ds304e18.math">MonteCarloExecutorService</a></dt>
 <dd>&nbsp;</dd>
@@ -492,20 +519,30 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">F</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#findFastestSequence(dk.aau.ds304e18.models.Project,boolean)">findFastestSequence(Project, boolean)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#findFastestSequence(dk.aau.ds304e18.models.Project,int,boolean)">findFastestSequence(Project, int, boolean)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
-<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#findLowUp(int)">findLowUp(int)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
+<dd>
+<div class="block">Finds lower bound of a number of work groups.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/Sequence.html#findRandomSequence(dk.aau.ds304e18.models.Project,boolean)">findRandomSequence(Project, boolean)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/Sequence.html" title="class in dk.aau.ds304e18.sequence">Sequence</a></dt>
 <dd>
 <div class="block">Finds a random sequence with a project</div>
 </dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#findRandomSequences(int,int,dk.aau.ds304e18.models.Project,boolean)">findRandomSequences(int, int, Project, boolean)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
+<dd>
+<div class="block">Finds an array of random sequences in a project.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#findSmallestPossible(dk.aau.ds304e18.models.Task,java.util.List)">findSmallestPossible(Task, List&lt;Double&gt;)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Checks if the task is ready to be put in after the task that is done the fastest currently.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/Sequence.html#findTasksWithoutDeps(java.util.List)">findTasksWithoutDeps(List&lt;Task&gt;)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/Sequence.html" title="class in dk.aau.ds304e18.sequence">Sequence</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Finds tasks in a list that doesn't have dependencies</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/Sequence.html#findUsefulTasksWithoutDeps(java.util.List,java.util.List)">findUsefulTasksWithoutDeps(List&lt;Task&gt;, List&lt;Task&gt;)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/Sequence.html" title="class in dk.aau.ds304e18.sequence">Sequence</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Finds the tasks without dependencies that other tasks are dependent on</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#flowPane">flowPane</a></span> - Variable in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/ProjectTab.html#flProjects">flProjects</a></span> - Variable in class dk.aau.ds304e18.gui.<a href="dk/aau/ds304e18/gui/ProjectTab.html" title="class in dk.aau.ds304e18.gui">ProjectTab</a></dt>
@@ -538,7 +575,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/database/DatabaseManager.html#getAvailableEmployees(dk.aau.ds304e18.models.ProjectManager)">getAvailableEmployees(ProjectManager)</a></span> - Static method in class dk.aau.ds304e18.database.<a href="dk/aau/ds304e18/database/DatabaseManager.html" title="class in dk.aau.ds304e18.database">DatabaseManager</a></dt>
 <dd>
-<div class="block">Gets the employees with no current project or those part of his current project.</div>
+<div class="block">Gets the employees with no current project or those part of the ProjectManagers current projects.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/estimatetime/Estimate.html#getChances()">getChances()</a></span> - Method in class dk.aau.ds304e18.estimatetime.<a href="dk/aau/ds304e18/estimatetime/Estimate.html" title="class in dk.aau.ds304e18.estimatetime">Estimate</a></dt>
 <dd>&nbsp;</dd>
@@ -574,8 +611,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/InverseGaussian.html#getDuration(double)">getDuration(double)</a></span> - Method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/InverseGaussian.html" title="class in dk.aau.ds304e18.math">InverseGaussian</a></dt>
 <dd>
-<div class="block">The getter for the duration
- TODO: Look into optimizing this</div>
+<div class="block">The getter for the duration</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/database/LocalObjStorage.html#getEmployeeById(int)">getEmployeeById(int)</a></span> - Static method in class dk.aau.ds304e18.database.<a href="dk/aau/ds304e18/database/LocalObjStorage.html" title="class in dk.aau.ds304e18.database">LocalObjStorage</a></dt>
 <dd>
@@ -604,7 +640,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">The getter for the estimated completion time</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html#getExecutor()">getExecutor()</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html" title="class in dk.aau.ds304e18.math">MonteCarloExecutorService</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Gets the executor.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/Employee.html#getId()">getId()</a></span> - Method in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a></dt>
 <dd>
 <div class="block">The getter for the id</div>
@@ -649,7 +687,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Returns a random salt to be used to hash a password.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/Project.html#getNumberOfEmployees()">getNumberOfEmployees()</a></span> - Method in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></dt>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/Project.html#getNumberOfWorkGroups()">getNumberOfWorkGroups()</a></span> - Method in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html#getNumOfThreads()">getNumOfThreads()</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html" title="class in dk.aau.ds304e18.math">MonteCarloExecutorService</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/ProjectManager.html#getOldProjectsId()">getOldProjectsId()</a></span> - Method in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/ProjectManager.html" title="class in dk.aau.ds304e18.models">ProjectManager</a></dt>
 <dd>
@@ -733,6 +773,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/Project.html#getTempPossibleCompletions()">getTempPossibleCompletions()</a></span> - Method in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/JavaFXMain.html#getTooltipShowDelay()">getTooltipShowDelay()</a></span> - Static method in class dk.aau.ds304e18.<a href="dk/aau/ds304e18/JavaFXMain.html" title="class in dk.aau.ds304e18">JavaFXMain</a></dt>
+<dd>
+<div class="block">Getter for tooltipShowDelay</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/ProjectState.html#getValue()">getValue()</a></span> - Method in enum dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a></dt>
 <dd>
 <div class="block">The getter for the value.</div>
@@ -782,7 +826,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">The login in screen background.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html#init()">init()</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html" title="class in dk.aau.ds304e18.math">MonteCarloExecutorService</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Makes sure the executor service is not terminated.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/JavaFXMain.html#inputTab">inputTab</a></span> - Static variable in class dk.aau.ds304e18.<a href="dk/aau/ds304e18/JavaFXMain.html" title="class in dk.aau.ds304e18">JavaFXMain</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input"><span class="typeNameLink">InputTab</span></a> - Class in <a href="dk/aau/ds304e18/gui/input/package-summary.html">dk.aau.ds304e18.gui.input</a></dt>
@@ -801,8 +847,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">The inverse gaussian distribution for this task</div>
 </dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#isEditMode">isEditMode</a></span> - Variable in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/database/Password.html#isExpectedPassword(char%5B%5D,byte%5B%5D,byte%5B%5D)">isExpectedPassword(char[], byte[], byte[])</a></span> - Static method in class dk.aau.ds304e18.database.<a href="dk/aau/ds304e18/database/Password.html" title="class in dk.aau.ds304e18.database">Password</a></dt>
 <dd>
 <div class="block">Returns true if the given password and salt match the hashed value, false otherwise.</div>
@@ -898,7 +942,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/JavaFXMain.html#main(java.lang.String%5B%5D)">main(String[])</a></span> - Static method in class dk.aau.ds304e18.<a href="dk/aau/ds304e18/JavaFXMain.html" title="class in dk.aau.ds304e18">JavaFXMain</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/Sequence.html#makeSequenceString(dk.aau.ds304e18.models.Project)">makeSequenceString(Project)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/Sequence.html" title="class in dk.aau.ds304e18.sequence">Sequence</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Makes the sequence into a string so it can be sent everywhere and be understood</div>
+</dd>
 <dt><a href="dk/aau/ds304e18/math/Maths.html" title="class in dk.aau.ds304e18.math"><span class="typeNameLink">Maths</span></a> - Class in <a href="dk/aau/ds304e18/math/package-summary.html">dk.aau.ds304e18.math</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/Maths.html#%3Cinit%3E()">Maths()</a></span> - Constructor for class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/Maths.html" title="class in dk.aau.ds304e18.math">Maths</a></dt>
@@ -937,9 +983,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/InverseGaussian.html#NORMAL2_A">NORMAL2_A</a></span> - Static variable in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/InverseGaussian.html" title="class in dk.aau.ds304e18.math">InverseGaussian</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#NotLegal(dk.aau.ds304e18.models.Task,java.util.List)">NotLegal(Task, List&lt;Task&gt;)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
+<dd>
+<div class="block">Checks if the task currently being put into a schedule can legally be put in there.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/Project.html#numberOfWorkGroups">numberOfWorkGroups</a></span> - Variable in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#numOfThreads">numOfThreads</a></span> - Static variable in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html#numOfThreads">numOfThreads</a></span> - Static variable in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html" title="class in dk.aau.ds304e18.math">MonteCarloExecutorService</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <a id="I:O">
@@ -970,6 +1022,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/DependenciesPopup.html#openDependenciesPopup()">openDependenciesPopup()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/DependenciesPopup.html" title="class in dk.aau.ds304e18.gui.input">DependenciesPopup</a></dt>
 <dd>
 <div class="block">Opens the dependencies popup</div>
+</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#optimizeWorkGroups(dk.aau.ds304e18.models.Project,int)">optimizeWorkGroups(Project, int)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
+<dd>
+<div class="block">Finds the smallest amount of work groups needed to get
+ within a margin of the estimated time of the calculated project.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/JavaFXMain.html#outputTab">outputTab</a></span> - Static variable in class dk.aau.ds304e18.<a href="dk/aau/ds304e18/JavaFXMain.html" title="class in dk.aau.ds304e18">JavaFXMain</a></dt>
 <dd>&nbsp;</dd>
@@ -1016,7 +1073,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Parses a projects sequence to multiple lists</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/ParseSequence.html#parseToSingleList(dk.aau.ds304e18.models.Project,boolean)">parseToSingleList(Project, boolean)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/ParseSequence.html" title="class in dk.aau.ds304e18.sequence">ParseSequence</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Parses to a single list with standard values</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/ParseSequence.html#parseToSingleList(dk.aau.ds304e18.models.Project,boolean,boolean,int)">parseToSingleList(Project, boolean, boolean, int)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/ParseSequence.html" title="class in dk.aau.ds304e18.sequence">ParseSequence</a></dt>
 <dd>
 <div class="block">Parses a sequence to a single list</div>
@@ -1068,7 +1127,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#progress">progress</a></span> - Static variable in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#progressProperty()">progressProperty()</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The progress property of the calculation process.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/output/GanttTab.html#project">project</a></span> - Variable in class dk.aau.ds304e18.gui.output.<a href="dk/aau/ds304e18/gui/output/GanttTab.html" title="class in dk.aau.ds304e18.gui.output">GanttTab</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/Employee.html#project">project</a></span> - Variable in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/Employee.html" title="class in dk.aau.ds304e18.models">Employee</a></dt>
@@ -1138,6 +1199,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/ProjectTab.html#projectToolBar">projectToolBar</a></span> - Variable in class dk.aau.ds304e18.gui.<a href="dk/aau/ds304e18/gui/ProjectTab.html" title="class in dk.aau.ds304e18.gui">ProjectTab</a></dt>
 <dd>
 <div class="block">The project toolbar.</div>
+</dd>
+</dl>
+<a id="I:Q">
+<!--   -->
+</a>
+<h2 class="title">Q</h2>
+<dl>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/database/DatabaseManager.html#query(java.lang.String)">query(String)</a></span> - Static method in class dk.aau.ds304e18.database.<a href="dk/aau/ds304e18/database/DatabaseManager.html" title="class in dk.aau.ds304e18.database">DatabaseManager</a></dt>
+<dd>
+<div class="block">Sends a query to the DB and returns the result.</div>
 </dd>
 </dl>
 <a id="I:R">
@@ -1237,9 +1308,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/Sequence.html#%3Cinit%3E()">Sequence()</a></span> - Constructor for class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/Sequence.html" title="class in dk.aau.ds304e18.sequence">Sequence</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/Sequence.html#sequenceEmployees(dk.aau.ds304e18.models.Project,java.util.List,java.util.List,java.util.List)">sequenceEmployees(Project, List&lt;Task&gt;, List&lt;Task&gt;, List&lt;Task&gt;)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/Sequence.html" title="class in dk.aau.ds304e18.sequence">Sequence</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/Sequence.html#sequenceTasks(dk.aau.ds304e18.models.Project,boolean)">sequenceTasks(Project, boolean)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/Sequence.html" title="class in dk.aau.ds304e18.sequence">Sequence</a></dt>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/Sequence.html#sequenceAndCalculateProject(dk.aau.ds304e18.models.Project,boolean,int)">sequenceAndCalculateProject(Project, boolean, int)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/Sequence.html" title="class in dk.aau.ds304e18.sequence">Sequence</a></dt>
+<dd>
+<div class="block">Finds the sequence of the project and calculates everything related to the project</div>
+</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/Sequence.html#sequenceWorkGroups(dk.aau.ds304e18.models.Project,java.util.List,java.util.List,java.util.List)">sequenceWorkGroups(Project, List&lt;Task&gt;, List&lt;Task&gt;, List&lt;Task&gt;)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/Sequence.html" title="class in dk.aau.ds304e18.sequence">Sequence</a></dt>
+<dd>
+<div class="block">Sequences tasks at the start so every work group has something to do at the start if possible</div>
+</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#setAddTaskButtonText()">setAddTaskButtonText()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/Project.html#setCreator(dk.aau.ds304e18.models.ProjectManager)">setCreator(ProjectManager)</a></span> - Method in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></dt>
 <dd>&nbsp;</dd>
@@ -1265,11 +1342,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">The setter for the id</div>
 </dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/Project.html#setNumberOfEmployees(double)">setNumberOfEmployees(double)</a></span> - Method in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></dt>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/Project.html#setNumberOfWorkGroups(double)">setNumberOfWorkGroups(double)</a></span> - Method in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/InverseGaussian.html#setParams(double,double)">setParams(double, double)</a></span> - Method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/InverseGaussian.html" title="class in dk.aau.ds304e18.math">InverseGaussian</a></dt>
 <dd>
-<div class="block">Sets the parameters for the Inverse Gaussian Distribution, if mu or lambda is less than or equal to 0, throw exception</div>
+<div class="block">Taken from: https://www.iro.umontreal.ca/~simardr/ssj/doc/html/overview-summary.html - Last accessed on 05-Dec-2018
+ Sets the parameters for the Inverse Gaussian Distribution, if mu or lambda is less than or equal to 0, throw exception</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/Project.html#setPossibleSequences(java.lang.String%5B%5D)">setPossibleSequences(String[])</a></span> - Method in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></dt>
 <dd>&nbsp;</dd>
@@ -1295,11 +1373,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">The setter for startTime</div>
 </dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarlo.html#setStartTimesOfTasks(dk.aau.ds304e18.models.Project,int)">setStartTimesOfTasks(Project, int)</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarlo.html" title="class in dk.aau.ds304e18.math">MonteCarlo</a></dt>
+<dd>
+<div class="block">Sets the start times of tasks to an available time slot depending on amount of work groups and dependencies
+ This is used to create a reasonable gantt view</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/Project.html#setState(dk.aau.ds304e18.models.ProjectState)">setState(ProjectState)</a></span> - Method in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></dt>
 <dd>
 <div class="block">Sets the current state of the project.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/DependenciesPopup.html#setupDeDependenciesPopup()">setupDeDependenciesPopup()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/DependenciesPopup.html" title="class in dk.aau.ds304e18.gui.input">DependenciesPopup</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#setupDependencies()">setupDependencies()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/EmployeeTab.html#setupEmployeeTab()">setupEmployeeTab()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/EmployeeTab.html" title="class in dk.aau.ds304e18.gui.input">EmployeeTab</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/EmployeeTab.html#setupEmployeeTableView(javafx.scene.control.TableView)">setupEmployeeTableView(TableView&lt;Employee&gt;)</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/EmployeeTab.html" title="class in dk.aau.ds304e18.gui.input">EmployeeTab</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#setupInputTab()">setupInputTab()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
 <dd>
@@ -1313,24 +1402,40 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Method for setting up the table on the project tab.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/DependenciesPopup.html#setupTableView(javafx.scene.control.TableView)">setupTableView(TableView&lt;Task&gt;)</a></span> - Static method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/DependenciesPopup.html" title="class in dk.aau.ds304e18.gui.input">DependenciesPopup</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#setupTaskField(javafx.scene.control.TextField,javafx.scene.control.Tooltip)">setupTaskField(TextField, Tooltip)</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#setupTaskTable()">setupTaskTable()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
 <dd>
 <div class="block">The method that sets up the task table.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/DependenciesPopup.html#showContextualButtons(dk.aau.ds304e18.models.Task,javafx.scene.control.ToolBar)">showContextualButtons(Task, ToolBar)</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/DependenciesPopup.html" title="class in dk.aau.ds304e18.gui.input">DependenciesPopup</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html#shutdownExecutor()">shutdownExecutor()</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html" title="class in dk.aau.ds304e18.math">MonteCarloExecutorService</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Gracefully shuts down the executor.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html#shutdownNow()">shutdownNow()</a></span> - Static method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/MonteCarloExecutorService.html" title="class in dk.aau.ds304e18.math">MonteCarloExecutorService</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/Sequence.html#simpleSequenceFinder(dk.aau.ds304e18.models.Project)">simpleSequenceFinder(Project)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/Sequence.html" title="class in dk.aau.ds304e18.sequence">Sequence</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Forces shutdown of the executor and terminates all running tasks.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/Sequence.html#simpleSequenceFinder(dk.aau.ds304e18.models.Project,java.util.List)">simpleSequenceFinder(Project, List&lt;Task&gt;)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/Sequence.html" title="class in dk.aau.ds304e18.sequence">Sequence</a></dt>
+<dd>
+<div class="block">Finds a legal sequence, makes no effort to optimize</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/Sequence.html#simpleSequencing(int,java.util.List,java.util.List)">simpleSequencing(int, List&lt;Task&gt;, List&lt;Task&gt;)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/Sequence.html" title="class in dk.aau.ds304e18.sequence">Sequence</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Sequences a list of tasks and puts them into a list in a legal order</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/ProjectTab.html#sortedList">sortedList</a></span> - Variable in class dk.aau.ds304e18.gui.<a href="dk/aau/ds304e18/gui/ProjectTab.html" title="class in dk.aau.ds304e18.gui">ProjectTab</a></dt>
 <dd>
 <div class="block">The sorted list of projects.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/Sequence.html#sortTasks(java.util.List)">sortTasks(List&lt;Task&gt;)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/Sequence.html" title="class in dk.aau.ds304e18.sequence">Sequence</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Sorts the tasks by priority</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/CreateProjectManager.html#start(javafx.stage.Stage)">start(Stage)</a></span> - Method in class dk.aau.ds304e18.<a href="dk/aau/ds304e18/CreateProjectManager.html" title="class in dk.aau.ds304e18">CreateProjectManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/JavaFXMain.html#start(javafx.stage.Stage)">start(Stage)</a></span> - Method in class dk.aau.ds304e18.<a href="dk/aau/ds304e18/JavaFXMain.html" title="class in dk.aau.ds304e18">JavaFXMain</a></dt>
@@ -1345,6 +1450,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">The current state of the project.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/EmployeeTab.html#swapButtons(javafx.scene.layout.VBox)">swapButtons(VBox)</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/EmployeeTab.html" title="class in dk.aau.ds304e18.gui.input">EmployeeTab</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <a id="I:T">
 <!--   -->
@@ -1387,13 +1494,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">The list of tasks.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/output/AssignmentTab.html#taskTableView">taskTableView</a></span> - Variable in class dk.aau.ds304e18.gui.output.<a href="dk/aau/ds304e18/gui/output/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.output">AssignmentTab</a></dt>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/AssignmentTab.html#taskTableView">taskTableView</a></span> - Variable in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.input">AssignmentTab</a></dt>
 <dd>
 <div class="block">The table view of the task(s) on the project.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/Project.html#tempPossibleCompletions">tempPossibleCompletions</a></span> - Variable in class dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/Project.html" title="class in dk.aau.ds304e18.models">Project</a></dt>
 <dd>
 <div class="block">Used to find the quickest one to put into the above one</div>
+</dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/JavaFXMain.html#tooltipShowDelay">tooltipShowDelay</a></span> - Static variable in class dk.aau.ds304e18.<a href="dk/aau/ds304e18/JavaFXMain.html" title="class in dk.aau.ds304e18">JavaFXMain</a></dt>
+<dd>
+<div class="block">The duration it takes for a tooltip to show.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/math/Probabilities.html#toString()">toString()</a></span> - Method in class dk.aau.ds304e18.math.<a href="dk/aau/ds304e18/math/Probabilities.html" title="class in dk.aau.ds304e18.math">Probabilities</a></dt>
 <dd>&nbsp;</dd>
@@ -1411,13 +1522,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">U</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/AssignmentTab.html#unassignEmployee()">unassignEmployee()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.input">AssignmentTab</a></dt>
+<dd>
+<div class="block">Unassign the selected employee(s) from the selected task.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/EmployeeTab.html#unassignEmployee()">unassignEmployee()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/EmployeeTab.html" title="class in dk.aau.ds304e18.gui.input">EmployeeTab</a></dt>
 <dd>
 <div class="block">Removes the selected employee(s) from the current project.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/output/AssignmentTab.html#unassignEmployee()">unassignEmployee()</a></span> - Method in class dk.aau.ds304e18.gui.output.<a href="dk/aau/ds304e18/gui/output/AssignmentTab.html" title="class in dk.aau.ds304e18.gui.output">AssignmentTab</a></dt>
-<dd>
-<div class="block">Unassign the selected employee(s) from the selected task.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/sequence/ParseSequence.html#unparseList(java.lang.StringBuilder,java.util.List,int)">unparseList(StringBuilder, List&lt;Task&gt;, int)</a></span> - Static method in class dk.aau.ds304e18.sequence.<a href="dk/aau/ds304e18/sequence/ParseSequence.html" title="class in dk.aau.ds304e18.sequence">ParseSequence</a></dt>
 <dd>
@@ -1457,13 +1568,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">V</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#validate(javafx.scene.control.TextField...)">validate(TextField...)</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#validate()">validate()</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#validateNumericInput(javafx.scene.control.TextField,java.lang.String,boolean)">validateNumericInput(TextField, String, boolean)</a></span> - Method in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
 <dd>
-<div class="block">This method is used to make sure that the estimated time and all the text boxes that only are supposed to take numeric values,
- actually contain numeric values.</div>
+<div class="block">This method is used to make sure that the estimated time and all the text boxes that only are supposed to
+ take numeric values, actually contain numeric values.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="dk/aau/ds304e18/gui/input/InputTab.html#validates">validates</a></span> - Variable in class dk.aau.ds304e18.gui.input.<a href="dk/aau/ds304e18/gui/input/InputTab.html" title="class in dk.aau.ds304e18.gui.input">InputTab</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="dk/aau/ds304e18/models/ProjectState.html#value">value</a></span> - Variable in enum dk.aau.ds304e18.models.<a href="dk/aau/ds304e18/models/ProjectState.html" title="enum in dk.aau.ds304e18.models">ProjectState</a></dt>
 <dd>
 <div class="block">The attribute Value, which is used to determine which state the project is in.</div>
@@ -1500,7 +1613,7 @@ the order they are declared.</div>
 <div class="block">The function for zooming out.</div>
 </dd>
 </dl>
-<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:Z">Z</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes</a>&nbsp;<a href="allpackages-index.html">All&nbsp;Packages</a></div>
+<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:Z">Z</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes</a>&nbsp;<a href="allpackages-index.html">All&nbsp;Packages</a></div>
 </main>
 <footer role="contentinfo">
 <nav role="navigation">

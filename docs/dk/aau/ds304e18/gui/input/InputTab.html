@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -155,38 +155,38 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="AssignmentTab.html" title="class in dk.aau.ds304e18.gui.input">AssignmentTab</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#assignmentTab">assignmentTab</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>private <a href="DependenciesPopup.html" title="class in dk.aau.ds304e18.gui.input">DependenciesPopup</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dependenciesPopup">dependenciesPopup</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private javafx.scene.control.TextField</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#duration1">duration1</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>private javafx.scene.control.TextField</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#duration2">duration2</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private javafx.scene.control.TextField</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#duration3">duration3</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="EmployeeTab.html" title="class in dk.aau.ds304e18.gui.input">EmployeeTab</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#employeeTab">employeeTab</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>private javafx.scene.layout.BorderPane</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#flowPane">flowPane</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>private boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEditMode">isEditMode</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -222,6 +222,11 @@ extends java.lang.Object</pre>
 <tr class="rowColor">
 <td class="colFirst"><code>private javafx.scene.control.TabPane</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tabPane">tabPane</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>private java.util.HashMap&lt;javafx.scene.control.TextField,&#8203;java.lang.Boolean&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validates">validates</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -274,10 +279,11 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>javafx.concurrent.Task&lt;java.lang.Void&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculate(dk.aau.ds304e18.models.Project,double,boolean)">calculate</a></span>&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-         double&nbsp;numOfEmployees,
-         boolean&nbsp;useFast)</code></th>
+<td class="colFirst"><code>private javafx.concurrent.Task&lt;java.lang.Void&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculate(dk.aau.ds304e18.models.Project,double,boolean,int)">calculate</a></span>&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+         double&nbsp;numOfWorkGroups,
+         boolean&nbsp;useFast,
+         int&nbsp;numOfMonte)</code></th>
 <td class="colLast">
 <div class="block">This method calculates and produces the output.</div>
 </td>
@@ -327,41 +333,52 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>private void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupDependencies()">setupDependencies</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAddTaskButtonText()">setAddTaskButtonText</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupDependencies()">setupDependencies</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupInputTab()">setupInputTab</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The method that sets up the contents of the whole input tab.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUpProbabilitiesFields()">setUpProbabilitiesFields</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>private void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupTaskField(javafx.scene.control.TextField,javafx.scene.control.Tooltip)">setupTaskField</a></span>&#8203;(javafx.scene.control.TextField&nbsp;textField,
+              javafx.scene.control.Tooltip&nbsp;avgTimeTooltip)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>private void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setupTaskTable()">setupTaskTable</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The method that sets up the task table.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>private int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validate(javafx.scene.control.TextField...)">validate</a></span>&#8203;(javafx.scene.control.TextField...&nbsp;textFields)</code></th>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>private boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validate()">validate</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>private void</code></td>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>private boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validateNumericInput(javafx.scene.control.TextField,java.lang.String,boolean)">validateNumericInput</a></span>&#8203;(javafx.scene.control.TextField&nbsp;textField,
                     java.lang.String&nbsp;newValue,
                     boolean&nbsp;intField)</code></th>
 <td class="colLast">
-<div class="block">This method is used to make sure that the estimated time and all the text boxes that only are supposed to take numeric values,
- actually contain numeric values.</div>
+<div class="block">This method is used to make sure that the estimated time and all the text boxes that only are supposed to
+ take numeric values, actually contain numeric values.</div>
 </td>
 </tr>
 </table>
@@ -442,6 +459,15 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;<a href="EmployeeTab.html" title="class in dk.aau.ds304e18.gui.input">EmployeeTab</a> employeeTab</pre>
 </li>
 </ul>
+<a id="assignmentTab">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>assignmentTab</h4>
+<pre>public&nbsp;<a href="AssignmentTab.html" title="class in dk.aau.ds304e18.gui.input">AssignmentTab</a> assignmentTab</pre>
+</li>
+</ul>
 <a id="duration1">
 <!--   -->
 </a>
@@ -505,13 +531,13 @@ extends java.lang.Object</pre>
 <pre>private&nbsp;javafx.scene.layout.BorderPane flowPane</pre>
 </li>
 </ul>
-<a id="isEditMode">
+<a id="validates">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>isEditMode</h4>
-<pre>private&nbsp;boolean isEditMode</pre>
+<h4>validates</h4>
+<pre>private&nbsp;java.util.HashMap&lt;javafx.scene.control.TextField,&#8203;java.lang.Boolean&gt; validates</pre>
 </li>
 </ul>
 </li>
@@ -554,7 +580,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>drawInputTab</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;drawInputTab()</pre>
-<div class="block">The method that draws the inputTab. If the project is ongoing you can interact with the gui, if it isn't you cannot.
+<div class="block">The method that draws the inputTab. If the project is ongoing you can interact with the gui, if it isn't you
+ cannot.
  Uses the method disableInput - if the project is archived.
  Uses the method enableInput - if the project is ongoing.</div>
 </li>
@@ -597,6 +624,25 @@ extends java.lang.Object</pre>
 <div class="block">The method that sets up the contents of the whole input tab.</div>
 </li>
 </ul>
+<a id="setupTaskField(javafx.scene.control.TextField,javafx.scene.control.Tooltip)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setupTaskField</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;setupTaskField&#8203;(javafx.scene.control.TextField&nbsp;textField,
+                            javafx.scene.control.Tooltip&nbsp;avgTimeTooltip)</pre>
+</li>
+</ul>
+<a id="validate()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>validate</h4>
+<pre class="methodSignature">private&nbsp;boolean&nbsp;validate()</pre>
+</li>
+</ul>
 <a id="convertToProbabilities()">
 <!--   -->
 </a>
@@ -615,29 +661,21 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">private&nbsp;void&nbsp;setUpProbabilitiesFields()</pre>
 </li>
 </ul>
-<a id="validate(javafx.scene.control.TextField...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>validate</h4>
-<pre class="methodSignature">private&nbsp;int&nbsp;validate&#8203;(javafx.scene.control.TextField...&nbsp;textFields)</pre>
-</li>
-</ul>
-<a id="calculate(dk.aau.ds304e18.models.Project,double,boolean)">
+<a id="calculate(dk.aau.ds304e18.models.Project,double,boolean,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>calculate</h4>
-<pre class="methodSignature">public&nbsp;javafx.concurrent.Task&lt;java.lang.Void&gt;&nbsp;calculate&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-                                                        double&nbsp;numOfEmployees,
-                                                        boolean&nbsp;useFast)</pre>
+<pre class="methodSignature">private&nbsp;javafx.concurrent.Task&lt;java.lang.Void&gt;&nbsp;calculate&#8203;(<a href="../../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                                         double&nbsp;numOfWorkGroups,
+                                                         boolean&nbsp;useFast,
+                                                         int&nbsp;numOfMonte)</pre>
 <div class="block">This method calculates and produces the output.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>project</code> - - the project to calculate.</dd>
-<dd><code>numOfEmployees</code> - - the amount of employees.</dd>
+<dd><code>numOfWorkGroups</code> - - the amount of work groups.</dd>
 <dd><code>useFast</code> - - Is the useFast toggled or not. (boolean)</dd>
 </dl>
 </li>
@@ -648,11 +686,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>validateNumericInput</h4>
-<pre class="methodSignature">private&nbsp;void&nbsp;validateNumericInput&#8203;(javafx.scene.control.TextField&nbsp;textField,
-                                  java.lang.String&nbsp;newValue,
-                                  boolean&nbsp;intField)</pre>
-<div class="block">This method is used to make sure that the estimated time and all the text boxes that only are supposed to take numeric values,
- actually contain numeric values.</div>
+<pre class="methodSignature">private&nbsp;boolean&nbsp;validateNumericInput&#8203;(javafx.scene.control.TextField&nbsp;textField,
+                                     java.lang.String&nbsp;newValue,
+                                     boolean&nbsp;intField)</pre>
+<div class="block">This method is used to make sure that the estimated time and all the text boxes that only are supposed to
+ take numeric values, actually contain numeric values.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>intField</code> - - a text box where only numbers can be entered.</dd>
@@ -668,7 +706,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>clearInputFields</h4>
 <pre class="methodSignature">private&nbsp;void&nbsp;clearInputFields&#8203;(javafx.scene.control.TextField...&nbsp;textFields)</pre>
-<div class="block">This method clears the whole input field for creating a new task. This means all the text boxes and the dependencies table.</div>
+<div class="block">This method clears the whole input field for creating a new task. This means all the text boxes and the
+ dependencies table.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>textFields</code> - - the specific text box</dd>
@@ -693,6 +732,15 @@ extends java.lang.Object</pre>
 <dd><code>priority</code> - - filled into text box.</dd>
 <dd><code>probabilities</code> - - filled into text box.</dd>
 </dl>
+</li>
+</ul>
+<a id="setAddTaskButtonText()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setAddTaskButtonText</h4>
+<pre class="methodSignature">private&nbsp;void&nbsp;setAddTaskButtonText()</pre>
 </li>
 </ul>
 <a id="editTask(javafx.scene.control.TextField...)">

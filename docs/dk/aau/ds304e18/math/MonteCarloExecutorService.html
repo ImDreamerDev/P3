@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -155,8 +155,13 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static java.util.concurrent.ExecutorService</code></td>
+<td class="colFirst"><code>private static java.util.concurrent.ExecutorService</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#executor">executor</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>private static int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#numOfThreads">numOfThreads</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -201,22 +206,35 @@ extends java.lang.Object</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static java.util.concurrent.ExecutorService</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getExecutor()">getExecutor</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Gets the executor.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#init()">init</a></span>()</code></th>
+<td class="colFirst"><code>static int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNumOfThreads()">getNumOfThreads</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#shutdownExecutor()">shutdownExecutor</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#init()">init</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Makes sure the executor service is not terminated.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#shutdownExecutor()">shutdownExecutor</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Gracefully shuts down the executor.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#shutdownNow()">shutdownNow</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Forces shutdown of the executor and terminates all running tasks.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -245,10 +263,19 @@ extends java.lang.Object</pre>
 <a id="executor">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>executor</h4>
-<pre>public static&nbsp;java.util.concurrent.ExecutorService executor</pre>
+<pre>private static&nbsp;java.util.concurrent.ExecutorService executor</pre>
+</li>
+</ul>
+<a id="numOfThreads">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>numOfThreads</h4>
+<pre>private static&nbsp;int numOfThreads</pre>
 </li>
 </ul>
 </li>
@@ -280,6 +307,15 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="getNumOfThreads()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNumOfThreads</h4>
+<pre class="methodSignature">public static&nbsp;int&nbsp;getNumOfThreads()</pre>
+</li>
+</ul>
 <a id="getExecutor()">
 <!--   -->
 </a>
@@ -287,6 +323,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getExecutor</h4>
 <pre class="methodSignature">public static&nbsp;java.util.concurrent.ExecutorService&nbsp;getExecutor()</pre>
+<div class="block">Gets the executor.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The executor service</dd>
+</dl>
 </li>
 </ul>
 <a id="init()">
@@ -296,6 +337,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>init</h4>
 <pre class="methodSignature">public static&nbsp;void&nbsp;init()</pre>
+<div class="block">Makes sure the executor service is not terminated.
+ HAS to be called once before using the executor.</div>
 </li>
 </ul>
 <a id="shutdownExecutor()">
@@ -305,6 +348,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>shutdownExecutor</h4>
 <pre class="methodSignature">public static&nbsp;void&nbsp;shutdownExecutor()</pre>
+<div class="block">Gracefully shuts down the executor.</div>
 </li>
 </ul>
 <a id="shutdownNow()">
@@ -314,6 +358,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>shutdownNow</h4>
 <pre class="methodSignature">public static&nbsp;void&nbsp;shutdownNow()</pre>
+<div class="block">Forces shutdown of the executor and terminates all running tasks.
+ Used when pressing the stop button while calculating.</div>
 </li>
 </ul>
 </li>

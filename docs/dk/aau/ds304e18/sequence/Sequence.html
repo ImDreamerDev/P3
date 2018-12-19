@@ -186,49 +186,67 @@ extends java.lang.Object</pre>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>private static java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findTasksWithoutDeps(java.util.List)">findTasksWithoutDeps</a></span>&#8203;(java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listToSearch)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Finds tasks in a list that doesn't have dependencies</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>private static java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findUsefulTasksWithoutDeps(java.util.List,java.util.List)">findUsefulTasksWithoutDeps</a></span>&#8203;(java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksWithoutDependencies,
                           java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listToLookThrough)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Finds the tasks without dependencies that other tasks are dependent on</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>private static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#makeSequenceString(dk.aau.ds304e18.models.Project)">makeSequenceString</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Makes the sequence into a string so it can be sent everywhere and be understood</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>private static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sequenceEmployees(dk.aau.ds304e18.models.Project,java.util.List,java.util.List,java.util.List)">sequenceEmployees</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-                 java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksSequenced,
-                 java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksNotSequenced,
-                 java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksWithoutDependencies)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sequenceAndCalculateProject(dk.aau.ds304e18.models.Project,boolean,int)">sequenceAndCalculateProject</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                           boolean&nbsp;fast,
+                           int&nbsp;monteCarloRepeats)</code></th>
+<td class="colLast">
+<div class="block">Finds the sequence of the project and calculates everything related to the project</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sequenceTasks(dk.aau.ds304e18.models.Project,boolean)">sequenceTasks</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-             boolean&nbsp;fast)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>private static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sequenceWorkGroups(dk.aau.ds304e18.models.Project,java.util.List,java.util.List,java.util.List)">sequenceWorkGroups</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                  java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksSequenced,
+                  java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksNotSequenced,
+                  java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksWithoutDependencies)</code></th>
+<td class="colLast">
+<div class="block">Sequences tasks at the start so every work group has something to do at the start if possible</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>private static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#simpleSequenceFinder(dk.aau.ds304e18.models.Project)">simpleSequenceFinder</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#simpleSequenceFinder(dk.aau.ds304e18.models.Project,java.util.List)">simpleSequenceFinder</a></span>&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                    java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksNotSequenced)</code></th>
+<td class="colLast">
+<div class="block">Finds a legal sequence, makes no effort to optimize</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>private static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#simpleSequencing(int,java.util.List,java.util.List)">simpleSequencing</a></span>&#8203;(int&nbsp;tasksToSequence,
                 java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;putInto,
                 java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;takeFrom)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Sequences a list of tasks and puts them into a list in a legal order</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>private static java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sortTasks(java.util.List)">sortTasks</a></span>&#8203;(java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasks)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Sorts the tasks by priority</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -273,14 +291,21 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="sequenceTasks(dk.aau.ds304e18.models.Project,boolean)">
+<a id="sequenceAndCalculateProject(dk.aau.ds304e18.models.Project,boolean,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>sequenceTasks</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;sequenceTasks&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-                                 boolean&nbsp;fast)</pre>
+<h4>sequenceAndCalculateProject</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;sequenceAndCalculateProject&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                               boolean&nbsp;fast,
+                                               int&nbsp;monteCarloRepeats)</pre>
+<div class="block">Finds the sequence of the project and calculates everything related to the project</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>project</code> - The project to sequence and calculate</dd>
+<dd><code>fast</code> - If a fast sequencing is wanted - Less accurate</dd>
+</dl>
 </li>
 </ul>
 <a id="makeSequenceString(dk.aau.ds304e18.models.Project)">
@@ -290,6 +315,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>makeSequenceString</h4>
 <pre class="methodSignature">private static&nbsp;java.lang.String&nbsp;makeSequenceString&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</pre>
+<div class="block">Makes the sequence into a string so it can be sent everywhere and be understood</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>project</code> - The project to make the sequence for</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The string of the sequence</dd>
+</dl>
 </li>
 </ul>
 <a id="sortTasks(java.util.List)">
@@ -299,6 +331,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>sortTasks</h4>
 <pre class="methodSignature">private static&nbsp;java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;sortTasks&#8203;(java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasks)</pre>
+<div class="block">Sorts the tasks by priority</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>tasks</code> - the tasks to sort</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A sorted (by priority) list of tasks</dd>
+</dl>
 </li>
 </ul>
 <a id="findRandomSequence(dk.aau.ds304e18.models.Project,boolean)">
@@ -319,13 +358,22 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="simpleSequenceFinder(dk.aau.ds304e18.models.Project)">
+<a id="simpleSequenceFinder(dk.aau.ds304e18.models.Project,java.util.List)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>simpleSequenceFinder</h4>
-<pre class="methodSignature">private static&nbsp;java.lang.String&nbsp;simpleSequenceFinder&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project)</pre>
+<pre class="methodSignature">private static&nbsp;java.lang.String&nbsp;simpleSequenceFinder&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                                     java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksNotSequenced)</pre>
+<div class="block">Finds a legal sequence, makes no effort to optimize</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>project</code> - The project to find a sequence for</dd>
+<dd><code>tasksNotSequenced</code> - The tasks not yet sequenced</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Returns a legal sequence</dd>
+</dl>
 </li>
 </ul>
 <a id="simpleSequencing(int,java.util.List,java.util.List)">
@@ -337,6 +385,13 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">private static&nbsp;void&nbsp;simpleSequencing&#8203;(int&nbsp;tasksToSequence,
                                      java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;putInto,
                                      java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;takeFrom)</pre>
+<div class="block">Sequences a list of tasks and puts them into a list in a legal order</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>tasksToSequence</code> - The amount of tasks to sequence</dd>
+<dd><code>putInto</code> - The list to put into</dd>
+<dd><code>takeFrom</code> - The list of tasks to take from</dd>
+</dl>
 </li>
 </ul>
 <a id="findTasksWithoutDeps(java.util.List)">
@@ -346,6 +401,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>findTasksWithoutDeps</h4>
 <pre class="methodSignature">private static&nbsp;java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;findTasksWithoutDeps&#8203;(java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listToSearch)</pre>
+<div class="block">Finds tasks in a list that doesn't have dependencies</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>listToSearch</code> - The tasks to search</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The list of tasks without dependencies</dd>
+</dl>
 </li>
 </ul>
 <a id="findUsefulTasksWithoutDeps(java.util.List,java.util.List)">
@@ -356,18 +418,34 @@ extends java.lang.Object</pre>
 <h4>findUsefulTasksWithoutDeps</h4>
 <pre class="methodSignature">private static&nbsp;java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;findUsefulTasksWithoutDeps&#8203;(java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksWithoutDependencies,
                                                                java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;listToLookThrough)</pre>
+<div class="block">Finds the tasks without dependencies that other tasks are dependent on</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>tasksWithoutDependencies</code> - The tasks without dependencies</dd>
+<dd><code>listToLookThrough</code> - The full list of tasks</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The tasks without dependencies that other tasks are dependent on</dd>
+</dl>
 </li>
 </ul>
-<a id="sequenceEmployees(dk.aau.ds304e18.models.Project,java.util.List,java.util.List,java.util.List)">
+<a id="sequenceWorkGroups(dk.aau.ds304e18.models.Project,java.util.List,java.util.List,java.util.List)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>sequenceEmployees</h4>
-<pre class="methodSignature">private static&nbsp;void&nbsp;sequenceEmployees&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
-                                      java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksSequenced,
-                                      java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksNotSequenced,
-                                      java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksWithoutDependencies)</pre>
+<h4>sequenceWorkGroups</h4>
+<pre class="methodSignature">private static&nbsp;void&nbsp;sequenceWorkGroups&#8203;(<a href="../models/Project.html" title="class in dk.aau.ds304e18.models">Project</a>&nbsp;project,
+                                       java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksSequenced,
+                                       java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksNotSequenced,
+                                       java.util.List&lt;<a href="../models/Task.html" title="class in dk.aau.ds304e18.models">Task</a>&gt;&nbsp;tasksWithoutDependencies)</pre>
+<div class="block">Sequences tasks at the start so every work group has something to do at the start if possible</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>project</code> - The project to sequence</dd>
+<dd><code>tasksSequenced</code> - The tasks that has been sequenced</dd>
+<dd><code>tasksNotSequenced</code> - The tasks that has yet to be sequenced</dd>
+<dd><code>tasksWithoutDependencies</code> - The tasks without dependencies which will be put at the start</dd>
+</dl>
 </li>
 </ul>
 </li>
